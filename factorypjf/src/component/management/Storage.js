@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const Storage = () => {
-  return (
-    <div>Storage</div>
-  )
-}
+  return <div>Storage</div>;
+};
 
-export default Storage
+export default Storage;

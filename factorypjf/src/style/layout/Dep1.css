@@ -1,0 +1,42 @@
+.dap1{
+  height: 100vh;
+  background-color: #000;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon_wrap > div{
+  margin: 55px 0px;
+  cursor: pointer;
+  position: relative;
+}
+
+.icon_wrap > div::after{
+  position: absolute;
+  top: -39px;
+  left: 62px;
+  transform: translate(-50%, 0);
+  background-color: #333;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  white-space: nowrap; 
+}
+
+.icon_wrap > div:nth-child(1):hover::after{
+  content: '생산관리';
+}
+.icon_wrap > div:nth-child(2):hover::after{
+  content: '입고관리';
+}
+.icon_wrap > div:nth-child(3):hover::after{
+  content: '출고관리';
+}
+.icon_wrap > div:nth-child(4):hover::after{
+  content: '재고관리';
+}
+.icon_wrap > div:nth-child(5):hover::after{
+  content: '기준정보관리';
+}

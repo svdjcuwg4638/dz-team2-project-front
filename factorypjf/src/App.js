@@ -1,9 +1,10 @@
 import { Route, Routes } from "react-router-dom";
-import "./App.css";
+import "./style/App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Layout from "./component/layout/Layout";
 import Storage from "./component/management/Storage";
 import Management from "./pages/Management";
+
 
 function App() {
   return (
