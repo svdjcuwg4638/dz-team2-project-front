@@ -21,6 +21,7 @@
 }
 .section_wrap{
   width: 100%;
+  height: 85vh;
   background-color: #dadada;
   display: flex;
   flex-flow: column;
@@ -31,10 +32,15 @@
 .section_style{
   border-radius: 10px;
   width: 95%;
-  height: 90%;
+  height: 86%;
   margin-top: 10px;
   background-color: #fff;
 }
+
+.section_style > :nth-child(1){
+  height: 100%;
+}
+
 
 .section_top > div:nth-child(2){
   margin-right: 20px;
@@ -52,9 +58,29 @@
   border-radius: 10px;
 }
 
+.button{
+  cursor: pointer;
+  margin-top: 15px;
+  background-color: #5390F0;
+  color: #fff;
+  width: 60px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.button:hover{
+  border: 4px solid #dadada;
+}
+
 .tap_wrap > div > *{
   margin: 0px 15px;
   line-height: 2;
 }
+
+
+
 
 

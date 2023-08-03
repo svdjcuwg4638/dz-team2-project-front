@@ -1,7 +1,7 @@
 .dep2_wrap{
   background-color: #5390F0;
   width: 200px;
-  height: 86.5vh;
+  height: 85vh;
   display: flex;
   flex-flow: column;
   justify-content: center;
@@ -24,7 +24,7 @@
 }
 
 .menu_title{
-  margin: 20px 0;
+  padding: 20px 0;
 
   font-size: 18px;
   font-weight: bold;
@@ -40,7 +40,7 @@
 }
 
 .menu_sub_wrap > div{
-  margin: 10px 0;
+  padding: 10px 0;
 }
 
 .menu_sub_wrap > div > span{
