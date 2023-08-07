@@ -1,4 +1,4 @@
-.storage_wrap{
+.storage_wrap {
   display: flex;
   justify-content: space-around;
   width: 100%;
@@ -6,29 +6,48 @@
   padding-top: 30px;
 }
 
-table{
-  border: 1px solid ;
+table {
+  border: 1px solid;
   margin-top: 10px;
 }
-td{
+td,
+th {
   border: 1px solid;
   width: 200px;
   padding-left: 10px;
 }
 
-td > input{
-  border: 0px;
+.search_box {
+  display: flex;
+  justify-content: flex-end;
 }
 
-td > input {
-  outline: none;
-}
-.table_scroll{
-  height: 300px;
-  display: block;
-  overflow-y: scroll;
+.search_box > :nth-child(1) {
+  margin-right: 20px;
+  height: 30px;
 }
 
-.text-box{
+.text-box {
   margin-top: 20px;
+}
+
+.add_from {
+  margin-top: 40px;
+  display: flex;
+}
+
+.add_from > :nth-child(1) {
+  height: 30px;
+}
+
+.add_from > :nth-child(2) {
+  margin-left: 20px;
+}
+
+.right_input_sel {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  display: block;
+  height: 100px;
+  width: 200px;
 }

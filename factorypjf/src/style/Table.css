@@ -1,0 +1,10 @@
+td,th{
+  width: 250px;
+  height: 30px;
+}
+
+.table_scroll{
+  height: 320px;
+  display: block;
+  overflow-y: scroll;
+}

@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import "./style/App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Layout from "./component/layout/Layout";
-import Storage from "./component/management/Storage";
+import Storage from "./component/management/storage/Storage";
 import Management from "./pages/Management";
 
 

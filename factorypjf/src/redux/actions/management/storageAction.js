@@ -4,16 +4,16 @@ function getstorageAll(){
     try{
       dispatch({type:"GET_STORAGE_ALL_REQUEST"})
       const storageAllList = api.get("/storage/all")
-
-      let [storageAllListResponse] = await Promise.all([
-        storageAllList,
+      const locationAllList = api.get("/location/all")
+      let [storageAllListResponse, locationAllListResponse] = await Promise.all([
+        storageAllList,locationAllList
       ]);
 
       dispatch({
         type:"GET_STORAGE_ALL_SUCCESS",
         payload:{
           storageAll : storageAllListResponse.data,
-
+          locationAll : locationAllListResponse.data,
         },
       });
     }catch (error) {
