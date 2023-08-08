@@ -3,21 +3,13 @@ import LocationTable from "./LocationTable";
 import api from "../../../redux/api";
 import { useState } from "react";
 import AutoCompleteInput from "./AutoCompleteInput";
+import { useDispatch } from "react-redux";
+import { storageAction } from "../../../redux/actions/management/storageAction";
 
 const RightBox = ({ storageAll, locationAll }) => {
   const [selectedStorage, setSelectedStorage] = useState(null);
   const [locationInput, setlocationInput] = useState("");
-
-  const columns = [
-    {
-      accessor: "storage_name",
-      Header: "창고코드",
-    },
-    {
-      accessor: "location_name",
-      Header: "세부장소",
-    },
-  ];
+  const dispatch = useDispatch();
 
   // 창고 추가
   const submit = async (event) => {
@@ -30,6 +22,7 @@ const RightBox = ({ storageAll, locationAll }) => {
         location_name: locationInput,
       };
       const response = await api.post("/location/add", location);
+      dispatch(storageAction.getstorageAll());
     } else {
       console.log("No storage selected");
     }
@@ -37,7 +30,7 @@ const RightBox = ({ storageAll, locationAll }) => {
 
   return (
     <div>
-      {locationAll && <LocationTable columns={columns} data={locationAll} />}
+      {locationAll && <LocationTable  data={locationAll} setSelectedStorage={setSelectedStorage} storageAll={storageAll} />}
       <form className="add_from">
         { storageAll &&
         <AutoCompleteInput

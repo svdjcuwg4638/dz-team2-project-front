@@ -14,7 +14,7 @@ td,
 th {
   border: 1px solid;
   width: 200px;
-  padding-left: 10px;
+  padding-left: 20px;
 }
 
 .search_box {
@@ -45,9 +45,20 @@ th {
 }
 
 .right_input_sel {
-  overflow-y: scroll;
-  overflow-x: hidden;
   display: block;
-  height: 100px;
-  width: 200px;
+  position: absolute;
+  z-index: 3;
+  overflow-y: scroll;
+  background-color: #fff;
+  margin: 0;
+  height: 150px;
+}
+
+.right_check_row{
+  position: absolute;
+  z-index: 3;
+}
+
+.right_input_sel td{
+  width: 200px !important;
 }

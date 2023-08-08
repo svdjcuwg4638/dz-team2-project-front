@@ -13,7 +13,6 @@ const Storage = () => {
 
   useEffect(() => {
     dispatch(storageAction.getstorageAll());
-    console.log(locationAll);
   }, []);
 
 

@@ -1,23 +1,23 @@
 let initalState = {
   storageAll: {},
-  locationAll:{},
-  loading:false,
+  locationAll: {},
+  loading: false,
 };
 
 function storageReducer(state = initalState, action) {
   let { type, payload } = action;
   switch (type) {
     case "GET_STORAGE_ALL_REQUEST":
-      return{
+      return {
         ...state,
-        loading:true,
+        loading: true,
       };
     case "GET_STORAGE_ALL_SUCCESS":
       return {
         ...state,
         storageAll: payload.storageAll,
-        locationAll : payload.locationAll,
-        loading:false,
+        locationAll: payload.locationAll,
+        loading: false,
       };
     default:
       return { ...state };

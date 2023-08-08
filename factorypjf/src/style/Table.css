@@ -1,10 +1,47 @@
+td:nth-child(1), th:nth-child(1){
+  width: 50px;
+}
+
 td,th{
-  width: 250px;
+  width: 200px;
   height: 30px;
+  position: relative;
+  background-color: inherit;
 }
 
 .table_scroll{
   height: 320px;
   display: block;
   overflow-y: scroll;
+  
+}
+
+.autoComplete_box{
+  height: 300px;
+}
+
+td {
+  position: relative;
+}
+
+td > div:nth-child(2){
+  position: absolute;
+  background-color: #fff;
+
+}
+
+.right_deit_sel{
+  margin: 0;
+  z-index: 2;
+  display: block;
+  height: auto;
+  max-height: 150px;
+  overflow-y: scroll;
+  position: absolute;
+  width: 179px;
+}
+
+.right_deit_sel td{
+  background-color: #fff;
+  cursor: pointer;
 }
