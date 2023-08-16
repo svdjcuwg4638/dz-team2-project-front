@@ -2,7 +2,7 @@ import api from "../../api";
 function getstorageAll() {
   return async (dispatch) => {
     try {
-      dispatch({ type: "GET_STORAGE_ALL_REQUEST" });
+      dispatch({ type: "GET_REQUEST" });
       const storageAllList = api.get("/storage/all");
       const locationAllList = api.get("/location/all");
       let [storageAllListResponse, locationAllListResponse] = await Promise.all(
@@ -18,7 +18,7 @@ function getstorageAll() {
       });
     } catch (error) {
       console.error(error);
-      dispatch({ type: "GET_STORAGE_ALL_FAILURE", payload: error.toString() });
+      dispatch({ type: "GET_STORAGE_ALL_FAIL", payload: error.toString() });
     }
   };
 }

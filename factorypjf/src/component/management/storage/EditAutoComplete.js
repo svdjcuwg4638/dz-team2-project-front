@@ -44,7 +44,7 @@ const EditAutoComplete = ({ storageAll, locationAll, setEditedData }) => {
       />
       <div>
         <table
-          className="right_deit_sel"
+          className="right_edit_sel"
           style={
             input === "" ||
             suggestions.length === 0 ||

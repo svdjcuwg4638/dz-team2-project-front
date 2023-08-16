@@ -86,5 +86,18 @@
   height: 76vh;
 }
 
+/*페이지 내용 wrap*/
+.content_wrap{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  height: 100%;
+}
 
+/* 모든 input 포커스시 태두리와 기본상태 태두리 삭제*/
+input{
+  border: 0;
+  outline: none;
+}
 

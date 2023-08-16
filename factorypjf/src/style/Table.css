@@ -1,7 +1,12 @@
-td:nth-child(1), th:nth-child(1){
+td:nth-child(1){
   width: 50px;
 }
 
+th:nth-child(1){
+  padding: 0;
+  width: 50px;
+  padding-left: 7px;
+}
 td,th{
   width: 200px;
   height: 30px;
@@ -30,7 +35,7 @@ td > div:nth-child(2){
 
 }
 
-.right_deit_sel{
+.right_edit_sel{
   margin: 0;
   z-index: 2;
   display: block;
@@ -41,7 +46,7 @@ td > div:nth-child(2){
   width: 179px;
 }
 
-.right_deit_sel td{
+.right_edit_sel td{
   background-color: #fff;
   cursor: pointer;
 }
