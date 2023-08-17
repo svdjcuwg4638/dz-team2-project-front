@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
 
-const AutoCompleteInput = ({ storageAll, setSelectedStorage }) => {
+const AutoCompleteStorage = ({ storageAll, setSelectedStorage }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [input, setInput] = useState("");
+
+  console.log('storage',storageAll);
 
   useEffect(() => {
     setSuggestions(storageAll?.filter((s) => s.storage_name.includes(input)));
   }, [input, storageAll]);
 
   useEffect(() => {
-    const matchingStorage = storageAll?.find(s => s.storage_name === input);
+    const matchingStorage = storageAll?.find((s) => s.storage_name === input);
     if (matchingStorage) {
       setSelectedStorage(matchingStorage);
     }
   }, [input, storageAll, setSelectedStorage]);
-
 
   const onSelect = (storage) => {
     setInput(storage.storage_name);
@@ -31,7 +32,11 @@ const AutoCompleteInput = ({ storageAll, setSelectedStorage }) => {
       />
       <table
         className="right_input_sel"
-        style={input === "" ? { display: "none" } : { display: "block" }}
+        style={
+          input === "" || suggestions.length < 0 || suggestions.length == 0 || suggestions[0].storage_name == input
+            ? { display: "none" }
+            : { display: "block" }
+        }
       >
         <tbody>
           {suggestions.map((s) => (
@@ -47,4 +52,4 @@ const AutoCompleteInput = ({ storageAll, setSelectedStorage }) => {
   );
 };
 
-export default AutoCompleteInput;
+export default AutoCompleteStorage;

@@ -33,7 +33,6 @@ const PartnerList = ({ partnerAll }) => {
     } else {
       setSelectIds((prev) => [...prev, id]);
     }
-    console.log(selectIds);
   };
 
   const handleDelete = async () => {

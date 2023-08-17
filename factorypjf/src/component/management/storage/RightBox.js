@@ -2,7 +2,7 @@ import React from "react";
 import LocationTable from "./LocationTable";
 import api from "../../../redux/api";
 import { useState } from "react";
-import AutoCompleteInput from "./AutoCompleteInput";
+import AutoCompleteStorage from "./AutoCompleteStorage";
 import { useDispatch } from "react-redux";
 import { storageAction } from "../../../redux/actions/management/storageAction";
 
@@ -33,7 +33,7 @@ const RightBox = ({ storageAll, locationAll }) => {
       {locationAll && <LocationTable  data={locationAll} setSelectedStorage={setSelectedStorage} storageAll={storageAll} />}
       <form className="add_from">
         { storageAll &&
-        <AutoCompleteInput
+        <AutoCompleteStorage
           storageAll={storageAll}
           setSelectedStorage={setSelectedStorage}
         />

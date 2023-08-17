@@ -6,6 +6,7 @@ import Layout from "./component/layout/Layout";
 import Storage from "./component/management/storage/Storage";
 import Management from "./pages/Management";
 import Partner from "./component/management/partner/Partner";
+import Item from "./component/management/item/Item";
 
 
 function App() {
@@ -13,8 +14,9 @@ function App() {
     <Layout>
       <Routes>
         <Route path="/management" element={<Management />}>
-          <Route index path="storage" element={<Storage />} />
-          <Route index path="partner" element={<Partner />} />
+          <Route index path="item" element={<Item />} />
+          <Route path="storage" element={<Storage />} />
+          <Route path="partner" element={<Partner />} />
         </Route>
       </Routes>
     </Layout>
