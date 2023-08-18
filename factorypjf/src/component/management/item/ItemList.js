@@ -37,6 +37,7 @@ const ItemList = ({ itemAll,locationAll,storageAll }) => {
             <th>창고코드</th>
             <th>세부장소</th>
             <th>모델명</th>
+            <th>카테고리</th>
             <th>등록일</th>
           </tr>
         </thead>
@@ -56,6 +57,7 @@ const ItemList = ({ itemAll,locationAll,storageAll }) => {
                   <td>{storageAll.data.find((s)=>s.storage_id == data.storage_id).storage_name}</td>
                   <td>{locationAll.data.find((l)=>l.location_id == data.location_id).location_name}</td>
                   <td>{data.itemSKU}</td>
+                  <td>{data.category}</td>
                   <td>{data.registDate.split("T")[0]}</td>
                 </tr>
               ))}

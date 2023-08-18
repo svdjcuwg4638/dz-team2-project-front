@@ -1,12 +1,4 @@
-td:nth-child(1){
-  width: 50px;
-}
 
-th:nth-child(1){
-  padding: 0;
-  width: 50px;
-  padding-left: 7px;
-}
 td,th{
   width: 200px;
   height: 30px;
@@ -25,8 +17,13 @@ td,th{
   height: 300px;
 }
 
+th{
+  background-color: #dadada;
+}
+
 td {
   position: relative;
+  background-color: #fff;
 }
 
 td > div:nth-child(2){

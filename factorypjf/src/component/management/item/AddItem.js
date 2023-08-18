@@ -14,6 +14,7 @@ const AddItem = ({ storageAll, locationAll }) => {
     storage_id: "",
     location_id: "",
     itemSKU: "",
+    category:"",
   });
 
   const handleInputChange = (event) => {
@@ -29,6 +30,7 @@ const AddItem = ({ storageAll, locationAll }) => {
       storage_id: selectedStorage?.storage_id,
       location_id: selectedLocation?.location_id,
       itemSKU: formData.itemSKU,
+      category: formData.category,
     };
 
     try {
@@ -39,6 +41,7 @@ const AddItem = ({ storageAll, locationAll }) => {
         storage_id: "",
         location_id: "",
         itemSKU: "",
+        category:"",
       });
     } catch (error) {
       console.error("Error submitting data:", error);
@@ -55,6 +58,7 @@ const AddItem = ({ storageAll, locationAll }) => {
             <th>창고코드</th>
             <th>세부장소</th>
             <th>모델명</th>
+            <th>카태고리</th>
           </tr>
         </thead>
         <tbody className="input_partner">
@@ -90,6 +94,14 @@ const AddItem = ({ storageAll, locationAll }) => {
                 type="text"
                 name="itemSKU"
                 value={formData.itemSKU}
+                onChange={handleInputChange}
+              ></input>
+            </td>
+            <td>
+              <input
+                type="text"
+                name="category"
+                value={formData.category}
                 onChange={handleInputChange}
               ></input>
             </td>

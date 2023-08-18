@@ -7,6 +7,7 @@ import Storage from "./component/management/storage/Storage";
 import Management from "./pages/Management";
 import Partner from "./component/management/partner/Partner";
 import Item from "./component/management/item/Item";
+import Product from "./component/management/product/Product";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route index path="item" element={<Item />} />
           <Route path="storage" element={<Storage />} />
           <Route path="partner" element={<Partner />} />
+          <Route path="product" element={<Product />} />
         </Route>
       </Routes>
     </Layout>
