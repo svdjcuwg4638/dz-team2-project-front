@@ -1,35 +1,32 @@
-import React, { useState } from "react";
+import React, { cloneElement, isValidElement, useState } from "react";
 
-import style from "style/layout/DataTable.module.css";
+import tableStyle from "style/layout/dataTable/DataTable.module.css";
+import addStyle from "style/layout/dataTable/AddTableData.module.css";
 
-export default function DataTable({ headers, items }) {
+export default function DataTable({ headers, items, children }) {
+  // let inputType=''
+  // const INPUT_TYPE=function(key){
+  //     // if(key.includes('select'))return 'checkbox'
+  //     // if(key.includes(''))
+  // }
 
-let inputType=''
-const INPUT_TYPE=function(key){
-    // if(key.includes('select'))return 'checkbox'
-    // if(key.includes(''))
-}
-
-// header가 있어야만 table 출력
+  // header가 있어야만 table 출력
   if (!headers || !headers.length) {
     throw new Error("<DataTable/> header is required.");
   }
   const headerKey = headers.map((header) => header.value);
 
-  //행 추가 state
-  const [rowCount, setrowCount] = useState(1);
-  const rowCountArr = Array.from({ length: rowCount });
-  //행 추가 handler
-  const addRowHandler = () => {
-    setrowCount(rowCount + 1);
-  };
+  //children에 props 넘기기위해 children clone
+  // const childrenWithProps = children.map((child) => {
+  //   if (isValidElement(child)) {
+  //     return cloneElement(child, { headerKey });
+  //   }
+  // });
 
-  //focus된 행 state
-  const [focusRow, setFocusRow] = useState();
-  //row 색상 변경 handler
-  const focusHandler = (idx) => {
-    setFocusRow(idx);
-  };
+  const childrenWithProps = cloneElement(children, { headerKey });
+    
+ 
+
 
   return (
     <>
@@ -41,9 +38,9 @@ const INPUT_TYPE=function(key){
             ))}
           </tr>
         </thead>
-
-        {items ? (
-          //   조회테이블일때
+        <tbody>{childrenWithProps}</tbody>
+        {/* {items ? (
+          // 조회테이블일때
           <tbody>
             {items.map((item, idx) => (
               <tr key={idx}>
@@ -55,7 +52,11 @@ const INPUT_TYPE=function(key){
                   ) : key === "index" ? (
                     <td key={key + idx}>{idx + 1}</td>
                   ) : (
-                    <td key={key + idx}>{item[key]}</td>
+                    <td key={key + idx}><input defaultValue={item[key]}
+                    onFocus={() => {
+                      focusHandler(idx);
+                    }}
+                  ></input></td>
                   )
                 )}
               </tr>
@@ -65,6 +66,7 @@ const INPUT_TYPE=function(key){
           // 입력테이블일때
           <tbody>
             {rowCountArr.map((key, idx) => (
+              // 행 추가를 위해 rowCount만큼 tr 생성
               <tr
                 key={idx}
                 className={focusRow === idx ? style["focused-row"] : ""}
@@ -77,7 +79,7 @@ const INPUT_TYPE=function(key){
                   ) : key === "index" ? (
                     <td key={key + idx}>{idx + 1}</td>
                   ) : (
-                    <td key={key}>
+                    <td key={key+idx}>
                       <input
                         onFocus={() => {
                           focusHandler(idx);
@@ -96,7 +98,7 @@ const INPUT_TYPE=function(key){
               </td>
             </tr>
           </tbody>
-        )}
+        )} */}
       </table>
     </>
   );

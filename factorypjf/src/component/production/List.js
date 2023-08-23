@@ -4,11 +4,12 @@ import axios from "axios";
 
 import productionListClasses from "style/production/List.module.css";
 import productionClasses from "style/production/Production.module.css";
-import DataTable from "component/layout/DataTable";
+import DataTable from "component/layout/Table.js/DataTableData";
+import AddTd from "component/layout/Table.js/AddTableData";
+import ListTd from "component/layout/Table.js/ListTableData";
 
 export default function List() {
-
-  const [grid02_items,setItems] = useState([])
+  const [grid02_items, setItems] = useState([]);
 
   const grid01_headers = [
     { text: "선택", value: "select" },
@@ -35,24 +36,31 @@ export default function List() {
     { text: "비고", value: "description" },
   ];
 
+  
   useEffect(() => {
-    axios.get("/dummy/addDummy.json")
-    .then((response) => {
-      // console.log(response)  
-      return response.data
-    }).then(data=>{
-      setItems(data.componentRelation);
-    })
+    axios
+      .get("/dummy/addDummy.json")
+      .then((response) => {
+        // console.log(response)
+        return response.data;
+      })
+      .then((data) => {
+        setItems(data.componentRelation);
+      });
   }, []);
 
   return (
     <div className={productionClasses.wrap}>
       <p className={productionClasses["sub-menu-name"]}>생산등록</p>
       <div className={productionClasses.grid01}>
-        <DataTable headers={grid01_headers} />
+        <DataTable headers={grid01_headers}>
+          <AddTd></AddTd>
+        </DataTable>
       </div>
       <div className={productionClasses.grid02}>
-        <DataTable headers={grid02_headers} items={grid02_items}/>
+        <DataTable headers={grid02_headers}>
+          <ListTd items={grid02_items}></ListTd>
+        </DataTable>
       </div>
     </div>
   );
