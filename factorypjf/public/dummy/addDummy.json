@@ -1,0 +1,9 @@
+{    "componentRelation":[
+        {"itemCode":"L12345","itemName":"조약돌노트북","componentCode":"K12345","componentName":"동그란키보드","quantity":1,"storage":"제1창고","location":"B섹션","inventory":10,"description":""},
+        {"itemCode":"L12345","itemName":"조약돌노트북","componentCode":"C12345","componentName":"조약돌캠코더","quantity":1,"storage":"제2창고","location":"B섹션","inventory":1,"description":""},
+        {"itemCode":"L12345","itemName":"조약돌노트북","componentCode":"S12345","componentName":"음질굿스피커","quantity":2,"storage":"제2창고","location":"B섹션","inventory":5,"description":""},
+        {"itemCode":"D22334","itemName":"핑크에디션데스크탑","componentCode":"K22345","componentName":"핑크키보드","quantity":1,"storage":"제1창고","location":"A섹션","inventory":10,"description":""},
+        {"itemCode":"D22334","itemName":"핑크에디션데스크탑","componentCode":"R22345","componentName":"핑크램","quantity":4,"storage":"제1창고","location":"A섹션","inventory":100,"description":""},
+        {"itemCode":"C22334","itemName":"딸기케이크","componentCode":"S52345","componentName":"저당설탕","quantity":5,"storage":"제1창고","location":"A섹션","inventory":100,"description":"레시피 변동 가능성 O"}
+    ]
+}

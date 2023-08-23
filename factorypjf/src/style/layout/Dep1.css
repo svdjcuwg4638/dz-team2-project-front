@@ -7,13 +7,13 @@
   align-items: center;
 }
 
-.icon_wrap > div{
+.icon_wrap > a> div{
   margin: 55px 0px;
   cursor: pointer;
   position: relative;
 }
 
-.icon_wrap > div::after{
+.icon_wrap > a> div::after{
   position: absolute;
   top: -39px;
   left: 62px;
@@ -25,18 +25,19 @@
   white-space: nowrap; 
 }
 
-.icon_wrap > div:nth-child(1):hover::after{
+/* menu bar 재사용성을 위해 redux를 이용한 출력 -> 일단 div title 속성으로 대체 (230821 HJ) */
+/* .icon_wrap >a> div:nth-child(1):hover::after{
   content: '생산관리';
 }
-.icon_wrap > div:nth-child(2):hover::after{
+.icon_wrap >a> div:nth-child(2):hover::after{
   content: '입고관리';
 }
-.icon_wrap > div:nth-child(3):hover::after{
+.icon_wrap >a> div:nth-child(3):hover::after{
   content: '출고관리';
 }
-.icon_wrap > div:nth-child(4):hover::after{
+.icon_wrap >a> div:nth-child(4):hover::after{
   content: '재고관리';
 }
-.icon_wrap > div:nth-child(5):hover::after{
+.icon_wrap >a> div:nth-child(5):hover::after{
   content: '기준정보관리';
-}
+} */

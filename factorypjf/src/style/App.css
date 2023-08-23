@@ -38,7 +38,8 @@
 }
 
 .section_style > :nth-child(1){
-  height: 100%;
+  /* 하위 요소에 영향을 주는 문제로 제거 (230822 HJ) */
+  /* height: 100%; */
 }
 
 
