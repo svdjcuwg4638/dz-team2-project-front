@@ -43,9 +43,10 @@
   padding: 10px 0;
 }
 
-.menu_sub_wrap > div > span{
+.menu_sub_wrap > div> a > span{
   font-size: 20px;
   cursor: pointer;
+  color: white;
 }
 
 .menu_sub_wrap > div:hover > span{
