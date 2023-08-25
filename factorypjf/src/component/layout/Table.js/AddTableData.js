@@ -48,7 +48,7 @@ export default function AddTableData({ headerKey }) {
       ))}
       <tr>
         <td colSpan={headerKey.length}>
-          <button className="btn_add" onClick={addRowHandler}>
+          <button className={addStyle.btn_add} onClick={addRowHandler}>
             +
           </button>
         </td>

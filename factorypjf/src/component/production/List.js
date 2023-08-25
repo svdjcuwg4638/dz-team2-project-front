@@ -4,7 +4,7 @@ import axios from "axios";
 
 import productionListClasses from "style/production/List.module.css";
 import productionClasses from "style/production/Production.module.css";
-import DataTable from "component/layout/Table.js/DataTableData";
+import DataTable from "component/layout/Table.js/Table";
 import AddTd from "component/layout/Table.js/AddTableData";
 import ListTd from "component/layout/Table.js/ListTableData";
 
@@ -12,28 +12,28 @@ export default function List() {
   const [grid02_items, setItems] = useState([]);
 
   const grid01_headers = [
-    { text: "선택", value: "select" },
-    { text: "순번", value: "index" },
-    { text: "날짜", value: "date" },
-    { text: "생산품명", value: "productName" },
-    { text: "품목코드", value: "itemCode" },
-    { text: "생산라인", value: "productLine" },
-    { text: "생산수량", value: "quantity" },
-    { text: "창고", value: "storage" },
-    { text: "세부장소", value: "location" },
-    { text: "비고", value: "description" },
-    { text: "✔️", value: "validation" },
+    { text: "선택", value: "select",width:'9%' },
+    { text: "순번", value: "index",width:'9%' },
+    { text: "날짜", value: "date",width:'9%' },
+    { text: "생산품명", value: "productName",width:'9%' },
+    { text: "품목코드", value: "itemCode" ,width:'9%'},
+    { text: "라인", value: "productLine",width:'9%' },
+    { text: "수량", value: "quantity",width:'9%' },
+    { text: "창고", value: "storage",width:'9%' },
+    { text: "세부장소", value: "location",width:'9%' },
+    { text: "비고", value: "description",width:'9%' },
+    { text: "✔️", value: "validation",width:'9%' },
   ];
   const grid02_headers = [
-    { text: "선택", value: "select" },
-    { text: "순번", value: "index" },
-    { text: "자재명", value: "componentName" },
-    { text: "품목코드", value: "itemCode" },
-    { text: "필요수량", value: "quantity" },
-    { text: "창고", value: "storage" },
-    { text: "세부장소", value: "location" },
-    { text: "재고", value: "inventory" },
-    { text: "비고", value: "description" },
+    { text: "선택", value: "select" ,width:'5%' },
+    { text: "순번", value: "index",width:'5%'  },
+    { text: "자재명", value: "componentName",width:'15%'  },
+    { text: "품목코드", value: "itemCode",width:'8%'  },
+    { text: "필요수량", value: "quantity",width:'8%'  },
+    { text: "창고", value: "storage",width:'10%'  },
+    { text: "세부장소", value: "location",width:'8%'  },
+    { text: "재고", value: "inventory",width:'5%'  },
+    { text: "비고", value: "description",width:'20%'  },
   ];
 
   
