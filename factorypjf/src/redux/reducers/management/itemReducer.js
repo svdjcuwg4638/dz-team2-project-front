@@ -1,10 +1,11 @@
 let initalState = {
+  itemAll: {},
   storageAll: {},
   locationAll: {},
   loading: false,
 };
 
-function storageReducer(state = initalState, action) {
+function itemReducer(state = initalState, action) {
   let { type, payload } = action;
   switch (type) {
     case "GET_REQUEST":
@@ -12,9 +13,10 @@ function storageReducer(state = initalState, action) {
         ...state,
         loading: true,
       };
-    case "GET_STORAGE_ALL_SUCCESS":
+    case "GET_ITEM_ALL_SUCCESS":
       return {
         ...state,
+        itemAll: payload.itemAll,
         storageAll: payload.storageAll,
         locationAll: payload.locationAll,
         loading: false,
@@ -24,4 +26,4 @@ function storageReducer(state = initalState, action) {
   }
 }
 
-export default storageReducer;
+export default itemReducer;
