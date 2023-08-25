@@ -6,6 +6,10 @@ export default function StorageRoutes() {
     <div>입고</div>
     <div>입고3 수민</div>
      <div>입고4 수민</div>
-    <div>입고2</div>
-  )
+    <div>입고2</div>  )
+    <div>입고2</div>  )
+    <div>입고2</div>  )
+    <div>입고2</div>  )
+    <div>입고2</div>  )
+    <div>입고2</div>  )
 }
