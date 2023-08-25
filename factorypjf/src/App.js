@@ -6,6 +6,15 @@ import Layout from "component/layout/Layout";
 import ProductionRoutes from "router/ProductionRoutes";
 import InboundRoutes from 'router/InboundRoutes'
 import StorageRoutes from 'router/StorageRoutes'
+import "./style/App.css";
+import "./style/Table.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Layout from "./component/layout/Layout";
+import Storage from "./component/management/storage/Storage";
+import Management from "./pages/Management";
+import Partner from "./component/management/partner/Partner";
+import Item from "./component/management/item/Item";
+import Product from "./component/management/product/Product";
 
 
 function App() {
@@ -15,6 +24,12 @@ function App() {
         <Route path="/production/*" element={<ProductionRoutes/>}/>
         {/* <Route path="/inbound/*" element={<InboundRoutes/>}/>
         <Route path="/storage/*" element={<StorageRoutes/>}/> */}
+        <Route path="/management" element={<Management />}>
+          <Route index path="item" element={<Item />} />
+          <Route path="storage" element={<Storage />} />
+          <Route path="partner" element={<Partner />} />
+          <Route path="product" element={<Product />} />
+        </Route>
       </Routes>
     </Layout>
   );
