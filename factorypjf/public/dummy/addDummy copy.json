@@ -1,0 +1,6 @@
+{    "data":[
+        {"date":"2023.08.01","productName":"가벼운노트북","proudctCode":"partner1234","partner":"한성컴퓨터","partnerCode":"A01023"},
+        {"date":"2023.08.03","partner":"Apple","partnerCode":"A01333"},
+        {"date":"2023.08.01","partner":"진성컴퓨터","partnerCode":"A2222"}
+    ]
+}
