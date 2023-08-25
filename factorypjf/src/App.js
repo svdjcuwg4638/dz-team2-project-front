@@ -8,6 +8,7 @@ import Management from "./pages/Management";
 import Partner from "./component/management/partner/Partner";
 import Item from "./component/management/item/Item";
 import Product from "./component/management/product/Product";
+import UnitPrice from "./component/management/unitPrice/UnitPrice";
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="storage" element={<Storage />} />
           <Route path="partner" element={<Partner />} />
           <Route path="product" element={<Product />} />
+          <Route path="unitprice" element={<UnitPrice />} />
         </Route>
       </Routes>
     </Layout>

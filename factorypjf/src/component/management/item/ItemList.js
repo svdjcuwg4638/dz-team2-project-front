@@ -7,10 +7,6 @@ const ItemList = ({ itemAll,locationAll,storageAll }) => {
   const [selectIds, setSelectIds] = useState([]);
   const dispatch = useDispatch()
 
-  console.log(itemAll);
-
-  console.log('storage',storageAll);
-
   const handleCheckboxChange = (id) => {
     if (selectIds.includes(id)) {
       setSelectIds((prev) => prev.filter((itemId) => itemId !== id));
