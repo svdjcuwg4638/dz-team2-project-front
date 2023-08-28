@@ -3,3 +3,19 @@
   justify-content: space-evenly;
   height: 100%;
 }
+
+tbody{
+  height: 400px;
+  display: table-caption;
+  overflow-y: hidden;
+}
+
+.scrollable-table {
+  height: 400px; 
+  overflow: auto; 
+  scrollbar-width: none;
+}
+
+.scrollable-table::-webkit-scrollbar {
+  display: none; 
+}
