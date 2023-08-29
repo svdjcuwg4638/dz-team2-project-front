@@ -18,13 +18,11 @@ const Code = () => {
 
   useEffect(() => {
     dispatch(codeAction.getCodeAll());
-  }, []);
-
-  useEffect(()=>{
-    if(manageCodeAll.data){
+    if(manageCodeAll && manageCodeAll.data && manageCodeAll.data[0]){
       setSelectId(manageCodeAll.data[0].management_code_id)
     }
-  },[manageCodeAll])
+  }, []);
+
 
   if (loading) {
     return (
@@ -43,8 +41,8 @@ const Code = () => {
 
   return (
     <div className='flex code_wrap'>
-      {selectId && manageCodeAll.data && <ManageCode manageCodeAll={manageCodeAll.data} setSelectId={setSelectId} selectId={selectId}/>}
-      {manageCodeAll.data && codeAll.data &&  <CommonCode manageCodeAll={manageCodeAll.data} codeAll={codeAll.data} selectId={selectId}/>}
+      {manageCodeAll && <ManageCode manageCodeAll={manageCodeAll.data} setSelectId={setSelectId} selectId={selectId}/>}
+      {codeAll &&  <CommonCode manageCodeAll={manageCodeAll.data} codeAll={codeAll.data} selectId={selectId}/>}
     </div>
   )
 }

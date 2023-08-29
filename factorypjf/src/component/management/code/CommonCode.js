@@ -64,26 +64,32 @@ const CommonCode = ({ selectId, codeAll }) => {
         </tbody>
       </table>
       <form className="mt-3" onSubmit={handleSubmit}>
-        <tr>
-          <td>
-            <input
-              type="text"
-              name="code"
-              value={formData.code}
-              onChange={handleChange}
-            />
-          </td>
-          <td>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-            />
-          </td>
-        </tr>
-        <div>
-          <button type="submit">추가</button>
+        <div className="input_wrap">
+          <div>
+            <div>코드</div>
+            <div className="inputBox" style={{marginRight:'10px'}}>
+              <input
+                type="text"
+                name="code"
+                value={formData.code}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div>
+            <div>이름</div>
+            <div className="inputBox" style={{marginRight:'10px'}}>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="button_wrap">
+          <button type="submit" className="button">추가</button>
         </div>
       </form>
     </div>

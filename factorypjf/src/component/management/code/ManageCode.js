@@ -76,26 +76,32 @@ const ManageCode = ({ manageCodeAll, setSelectId, selectId }) => {
         </tbody>
       </table>
       <form className="mt-3" onSubmit={handleSubmit}>
-        <tr>
-          <td>
-            <input
-              type="text"
-              name="management_code"
-              value={formData.management_code}
-              onChange={handleChange}
-            />
-          </td>
-          <td>
-            <input
-              type="text"
-              name="management_name"
-              value={formData.management_name}
-              onChange={handleChange}
-            />
-          </td>
-        </tr>
-        <div>
-          <button type="submit">추가</button>
+        <div className="input_wrap">
+          <div>
+            <div>관리코드</div>
+            <div className="inputBox" style={{marginRight:'10px'}}>
+              <input
+                type="text"
+                name="management_code"
+                value={formData.management_code}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div>
+            <div>관리코드명</div>
+            <div className="inputBox" style={{marginRight:'20px'}}>
+              <input
+                type="text"
+                name="management_name"
+                value={formData.management_name}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="button_wrap">
+          <button type="submit" className="button">추가</button>
         </div>
       </form>
     </div>
