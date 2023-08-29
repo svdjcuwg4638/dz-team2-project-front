@@ -2,19 +2,14 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import api from "../../../redux/api";
 import { itemAction } from "../../../redux/actions/management/itemAction";
-import AutoCompleteStorage from "../storage/AutoCompleteStorage";
-import AutoCompleteLocation from "../storage/AutoCompleteLocation";
-
 const AddItem = ({ storageAll, locationAll }) => {
   const dispatch = useDispatch();
-  const [selectedStorage, setSelectedStorage] = useState(null);
-  const [selectedLocation, setSelectedLocation] = useState(null);
   const [formData, setFormData] = useState({
     item_name: "",
     storage_id: "",
     location_id: "",
     itemSKU: "",
-    category:"",
+    category: "",
   });
 
   const handleInputChange = (event) => {
@@ -27,8 +22,6 @@ const AddItem = ({ storageAll, locationAll }) => {
 
     const updatedFormData = {
       item_name: formData.item_name,
-      storage_id: selectedStorage?.storage_id,
-      location_id: selectedLocation?.location_id,
       itemSKU: formData.itemSKU,
       category: formData.category,
     };
@@ -41,7 +34,7 @@ const AddItem = ({ storageAll, locationAll }) => {
         storage_id: "",
         location_id: "",
         itemSKU: "",
-        category:"",
+        category: "",
       });
     } catch (error) {
       console.error("Error submitting data:", error);
@@ -71,23 +64,9 @@ const AddItem = ({ storageAll, locationAll }) => {
                 onChange={handleInputChange}
               ></input>
             </td>
+            <td></td>
             <td>
-              {storageAll && (
-                <AutoCompleteStorage
-                  storageAll={storageAll.data}
-                  setSelectedStorage={setSelectedStorage}
-                />
-              )}
-            </td>
-            <td>
-              <td>
-                {locationAll && (
-                  <AutoCompleteLocation
-                    locationAll={locationAll.data}
-                    setSelectedLocation={setSelectedLocation}
-                  />
-                )}
-              </td>
+              <td></td>
             </td>
             <td>
               <input

@@ -9,6 +9,7 @@
 table {
   border: 1px solid;
 }
+
 td,
 th {
   border: 1px solid;
@@ -30,19 +31,6 @@ th {
   margin-top: 20px;
 }
 
-.add_from {
-  margin-top: 40px;
-  display: flex;
-}
-
-.add_from > :nth-child(1) {
-  height: 30px;
-}
-
-.add_from > :nth-child(2) {
-  margin-left: 20px;
-}
-
 .right_input_sel {
   display: block;
   position: absolute;
@@ -61,3 +49,51 @@ th {
 .right_input_sel td{
   width: 200px !important;
 }
+
+.button_wrap{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button_wrap .button{
+  margin: 10px;
+}
+
+.inputBox{
+  border: 1px solid #000;
+}
+.input_wrap{
+  display: flex;
+  justify-content: flex-end;
+}
+.bottom{
+  margin-top: 30px;
+}
+
+.storage_scrollable_table {
+  height: 300px; 
+  overflow: auto; 
+  scrollbar-width: none;
+  border: 1px solid #000;
+}
+
+.storage_scrollable_table::-webkit-scrollbar {
+  display: none; 
+}
+
+.search_wrap > div{
+  display: flex;
+}
+
+.search_wrap input{
+  width: 100px;
+}
+
+.search_wrap > div > div:nth-child(1){
+  margin-right: 10px;
+}
+
+.search_wrap{
+  justify-content: flex-end;
+}
+
