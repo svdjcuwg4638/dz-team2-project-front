@@ -37,12 +37,6 @@
   background-color: #fff;
 }
 
-.section_style > :nth-child(1){
-  /* 하위 요소에 영향을 주는 문제로 제거 (230822 HJ) */
-  /* height: 100%; */
-}
-
-
 .section_top > div:nth-child(2){
   margin-right: 20px;
   cursor: pointer;

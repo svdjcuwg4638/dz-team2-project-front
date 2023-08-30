@@ -4,20 +4,15 @@
   height: 100%;
 }
 
-tbody{
-  height: 400px;
-  display: table-caption;
-  overflow-y: hidden;
-}
-
-.scrollable-table {
+.code-scrollable-table {
   height: 300px; 
   overflow: auto; 
   scrollbar-width: none;
   border: 1px solid #000;
+  display: table-caption;
 }
 
-.scrollable-table::-webkit-scrollbar {
+.code-scrollable-table::-webkit-scrollbar {
   display: none; 
 }
 

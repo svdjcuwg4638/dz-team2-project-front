@@ -41,6 +41,10 @@ th {
   height: 150px;
 }
 
+th:nth-child(1), td:nth-child(1){
+  width: 50px;
+}
+
 .right_check_row{
   position: absolute;
   z-index: 3;
@@ -75,6 +79,7 @@ th {
   overflow: auto; 
   scrollbar-width: none;
   border: 1px solid #000;
+  display: table-caption;
 }
 
 .storage_scrollable_table::-webkit-scrollbar {

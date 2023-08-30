@@ -2,11 +2,16 @@ import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { codeAction } from "redux/actions/management/codeAction";
 import api from "redux/api";
+import SearchBox from "./SearchBox";
 
 const ManageCode = ({ manageCodeAll, setSelectId, selectId }) => {
   const dispatch = useDispatch();
 
   const tableRef = useRef(null);
+
+  const [selectCodes, setSelectCodes] = useState([]);
+
+
 
   const handleScroll = (e) => {
     const { deltaY } = e;
@@ -15,6 +20,24 @@ const ManageCode = ({ manageCodeAll, setSelectId, selectId }) => {
     }
   };
 
+  // #region 삭제 
+  const handleCheckboxChange = (cd) => {
+    if (selectCodes.includes(cd)) {
+      setSelectCodes((prev) => prev.filter((itemCd) => itemCd !== cd));
+    } else {
+      setSelectCodes((prev) => [...prev, cd]);
+    }
+  };
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    await api.post("/managecode/delete", selectCodes);
+    dispatch(codeAction.getCodeAll());
+    setSelectCodes([]);
+  };
+  // #endregion
+
+  //#region 관리코드 추가
   const [formData, setFormData] = useState({
     management_name: "",
     management_code: "",
@@ -37,20 +60,44 @@ const ManageCode = ({ manageCodeAll, setSelectId, selectId }) => {
       console.log("error :", error);
     }
   };
+  //#endregion
+
+  //#region 관리코드검색
+  const [formSearchData, setSearchFormData] = useState({
+    management_name: "",
+    management_code: "",
+    url: "/managecode/manageSearch",
+    searchName: ["관리코드", "관리코드명"],
+  });
+  //#endregion
 
   return (
     <div>
+      <SearchBox
+        formSearchData={formSearchData}
+        setSearchFormData={setSearchFormData}
+      />
       <table>
         <thead>
           <tr>
+            <th></th>
             <th>관리코드</th>
             <th>관리코드명</th>
           </tr>
         </thead>
-        <tbody className="scrollable-table" onWheel={handleScroll}>
+        <tbody className="code-scrollable-table" onWheel={handleScroll}>
           {manageCodeAll &&
             manageCodeAll.map((data) => (
               <tr onClick={() => setSelectId(data.management_code_id)}>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={selectCodes.includes(data.management_code_id)}
+                    onChange={() =>
+                      handleCheckboxChange(data.management_code_id)
+                    }
+                  />
+                </td>
                 <td
                   style={{
                     backgroundColor:
@@ -79,8 +126,9 @@ const ManageCode = ({ manageCodeAll, setSelectId, selectId }) => {
         <div className="input_wrap">
           <div>
             <div>관리코드</div>
-            <div className="inputBox" style={{marginRight:'10px'}}>
+            <div className="inputBox" style={{ marginRight: "10px" }}>
               <input
+                required
                 type="text"
                 name="management_code"
                 value={formData.management_code}
@@ -90,8 +138,9 @@ const ManageCode = ({ manageCodeAll, setSelectId, selectId }) => {
           </div>
           <div>
             <div>관리코드명</div>
-            <div className="inputBox" style={{marginRight:'20px'}}>
+            <div className="inputBox" style={{ marginRight: "20px" }}>
               <input
+                required
                 type="text"
                 name="management_name"
                 value={formData.management_name}
@@ -101,7 +150,16 @@ const ManageCode = ({ manageCodeAll, setSelectId, selectId }) => {
           </div>
         </div>
         <div className="button_wrap">
-          <button type="submit" className="button">추가</button>
+          <button type="submit" className="button">
+            추가
+          </button>
+          <button
+            className="button"
+            style={{ backgroundColor: "red" }}
+            onClick={handleDelete}
+          >
+            삭제
+          </button>
         </div>
       </form>
     </div>
