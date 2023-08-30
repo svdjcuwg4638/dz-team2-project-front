@@ -11,8 +11,6 @@ const ManageCode = ({ manageCodeAll, setSelectId, selectId }) => {
 
   const [selectCodes, setSelectCodes] = useState([]);
 
-
-
   const handleScroll = (e) => {
     const { deltaY } = e;
     if (tableRef.current) {
@@ -39,6 +37,7 @@ const ManageCode = ({ manageCodeAll, setSelectId, selectId }) => {
 
   //#region 관리코드 추가
   const [formData, setFormData] = useState({
+    company_id:"1",
     management_name: "",
     management_code: "",
   });
@@ -88,20 +87,20 @@ const ManageCode = ({ manageCodeAll, setSelectId, selectId }) => {
         <tbody className="code-scrollable-table" onWheel={handleScroll}>
           {manageCodeAll &&
             manageCodeAll.map((data) => (
-              <tr onClick={() => setSelectId(data.management_code_id)}>
+              <tr onClick={() => setSelectId(data.management_code)}>
                 <td>
                   <input
                     type="checkbox"
-                    checked={selectCodes.includes(data.management_code_id)}
+                    checked={selectCodes.includes(data.management_code)}
                     onChange={() =>
-                      handleCheckboxChange(data.management_code_id)
+                      handleCheckboxChange(data.management_code)
                     }
                   />
                 </td>
                 <td
                   style={{
                     backgroundColor:
-                      selectId == data.management_code_id
+                      selectId == data.management_code
                         ? "#dadada"
                         : "transparent",
                   }}
@@ -111,7 +110,7 @@ const ManageCode = ({ manageCodeAll, setSelectId, selectId }) => {
                 <td
                   style={{
                     backgroundColor:
-                      selectId == data.management_code_id
+                      selectId == data.management_code
                         ? "#dadada"
                         : "transparent",
                   }}

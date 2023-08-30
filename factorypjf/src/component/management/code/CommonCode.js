@@ -6,7 +6,7 @@ import SearchBox from "./SearchBox";
 
 const CommonCode = ({ selectId, codeAll }) => {
   const filteredData = codeAll?.filter(
-    (data) => data.management_code_id === selectId
+    (data) => data.management_code === selectId
   );
 
   const tableRef = useRef(null);
@@ -22,9 +22,10 @@ const CommonCode = ({ selectId, codeAll }) => {
 
   // #region 코드추가
   const [formData, setFormData] = useState({
-    code: "",
-    name: "",
-    management_code_id: "",
+    company_id:"1",
+    common_code: "",
+    common_name: "",
+    management_code: "",
   });
 
   const handleChange = (e) => {
@@ -32,7 +33,7 @@ const CommonCode = ({ selectId, codeAll }) => {
     setFormData({
       ...formData,
       [name]: value,
-      management_code_id: selectId,
+      management_code: selectId,
     });
   };
 
@@ -93,8 +94,8 @@ const CommonCode = ({ selectId, codeAll }) => {
                     onChange={() => handleCheckboxChange(data.common_code_id)}
                   />
                 </td>
-                <td>{data.code}</td>
-                <td>{data.name}</td>
+                <td>{data.common_code}</td>
+                <td>{data.common_name}</td>
               </tr>
             ))}
         </tbody>
@@ -107,8 +108,8 @@ const CommonCode = ({ selectId, codeAll }) => {
               <input
                 required
                 type="text"
-                name="code"
-                value={formData.code}
+                name="common_code"
+                value={formData.common_code}
                 onChange={handleChange}
               />
             </div>
@@ -117,10 +118,10 @@ const CommonCode = ({ selectId, codeAll }) => {
             <div>이름</div>
             <div className="inputBox" style={{ marginRight: "10px" }}>
               <input
-                readOnly
+                required
                 type="text"
-                name="name"
-                value={formData.name}
+                name="common_name"
+                value={formData.common_name}
                 onChange={handleChange}
               />
             </div>

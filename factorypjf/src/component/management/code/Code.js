@@ -16,10 +16,12 @@ const Code = () => {
     (state) => state.code
   );
 
-  useEffect(() => {
+  useEffect(() =>  {
+
     dispatch(codeAction.getCodeAll());
+    
     if(manageCodeAll && manageCodeAll.data && manageCodeAll.data[0]){
-      setSelectId(manageCodeAll.data[0].management_code_id)
+      setSelectId(manageCodeAll.data[0].management_code)
     }
   }, []);
 
