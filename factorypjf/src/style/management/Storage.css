@@ -1,4 +1,4 @@
-.storage_wrap{
+.storage_wrap {
   display: flex;
   justify-content: space-around;
   width: 100%;
@@ -6,29 +6,99 @@
   padding-top: 30px;
 }
 
-table{
-  border: 1px solid ;
-  margin-top: 10px;
+table {
+  border: 1px solid;
 }
-td{
+
+td,
+th {
   border: 1px solid;
   width: 200px;
-  padding-left: 10px;
+  padding-left: 20px;
 }
 
-td > input{
-  border: 0px;
+.search_box {
+  display: flex;
+  justify-content: flex-end;
 }
 
-td > input {
-  outline: none;
-}
-.table_scroll{
-  height: 300px;
-  display: block;
-  overflow-y: scroll;
+.search_box > :nth-child(1) {
+  margin-right: 20px;
+  height: 30px;
 }
 
-.text-box{
+.text-box {
   margin-top: 20px;
 }
+
+.right_input_sel {
+  display: block;
+  position: absolute;
+  z-index: 3;
+  overflow-y: scroll;
+  background-color: #fff;
+  margin: 0;
+  height: 150px;
+}
+
+th:nth-child(1), td:nth-child(1){
+  width: 50px;
+}
+
+.right_check_row{
+  position: absolute;
+  z-index: 3;
+}
+
+.right_input_sel td{
+  width: 200px !important;
+}
+
+.button_wrap{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button_wrap .button{
+  margin: 10px;
+}
+
+.inputBox{
+  border: 1px solid #000;
+}
+.input_wrap{
+  display: flex;
+  justify-content: flex-end;
+}
+.bottom{
+  margin-top: 30px;
+}
+
+.storage_scrollable_table {
+  height: 300px; 
+  overflow: auto; 
+  scrollbar-width: none;
+  border: 1px solid #000;
+  display: table-caption;
+}
+
+.storage_scrollable_table::-webkit-scrollbar {
+  display: none; 
+}
+
+.search_wrap > div{
+  display: flex;
+}
+
+.search_wrap input{
+  width: 100px;
+}
+
+.search_wrap > div > div:nth-child(1){
+  margin-right: 10px;
+}
+
+.search_wrap{
+  justify-content: flex-end;
+}
+

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 
 import "style/layout/Dep1.css";
 import { BsInfoCircle } from "react-icons/bs";
@@ -11,12 +11,19 @@ import { menuActions } from "../../redux/reducers/menu";
 
 const Dep1 = () => {
   const dispatch = useDispatch();
-  const productionHandler=()=>{dispatch(menuActions.production())}
-  const inboundHandler=()=>{dispatch(menuActions.inbound())}
-  const outboundHandler=()=>{dispatch(menuActions.outbound())}
-  const storageHandler=()=>{dispatch(menuActions.storage())}
+  const productionHandler = () => {
+    dispatch(menuActions.production());
+  };
+  const inboundHandler = () => {
+    dispatch(menuActions.inbound());
+  };
+  const outboundHandler = () => {
+    dispatch(menuActions.outbound());
+  };
+  const storageHandler = () => {
+    dispatch(menuActions.storage());
+  };
 
- 
   return (
     <div className="dap1">
       <div className="icon_wrap">

@@ -1,0 +1,45 @@
+.codeACBox {
+  display: flex;
+}
+
+.codeACBox_wrap{
+  position: absolute;
+  z-index: 2;
+
+}
+
+.codeACBox > div {
+  border: 1px solid #000;
+  padding: 5px;
+  width: 100px;
+}
+
+.codeACBox:hover{
+  background-color: #dadada;
+  cursor: pointer;
+}
+
+.nameACBox_wrap {
+  position: relative;
+}
+
+.nameACBox {
+  display: flex;
+  position: absolute;
+  background: #fff;
+  z-index: 2;
+}
+
+.nameACBox > div {
+  border: 1px solid #000;
+  padding: 5px;
+  width: 100px;
+}
+
+.content_wrap > :nth-child(2) {
+  margin-top: 50px;
+}
+
+tr > td {
+  position: relative;
+}
