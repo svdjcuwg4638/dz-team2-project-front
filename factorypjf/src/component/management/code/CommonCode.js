@@ -1,14 +1,22 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { codeAction } from "redux/actions/management/codeAction";
 import api from "redux/api";
 import SearchBox from "./SearchBox";
 
 const CommonCode = ({ selectId, codeAll }) => {
-  const filteredData = codeAll?.filter(
-    (data) => data.management_code === selectId
+  const [searchData, setSearchData] = useState(
+    codeAll?.filter((data) => data.management_code === selectId)
   );
 
+  useEffect(() => {
+    const filteredData = codeAll?.filter(
+      (data) => data.management_code === selectId
+    );
+    setSearchData(filteredData);
+  }, [selectId]);
+
+  // #region 스크롤
   const tableRef = useRef(null);
 
   const handleScroll = (e) => {
@@ -17,12 +25,13 @@ const CommonCode = ({ selectId, codeAll }) => {
       tableRef.current.scrollTop += deltaY;
     }
   };
+  // #endregion
 
   const dispatch = useDispatch();
 
   // #region 코드추가
   const [formData, setFormData] = useState({
-    company_id:"1",
+    company_id: "1",
     common_code: "",
     common_name: "",
     management_code: "",
@@ -50,10 +59,11 @@ const CommonCode = ({ selectId, codeAll }) => {
 
   //#region 관리코드검색
   const [formSearchData, setSearchFormData] = useState({
-    management_name: "",
-    management_code: "",
-    url: "/managecode/codeSearch",
+    common_code: "",
+    common_name: "",
+    url: "/code/search",
     searchName: ["코드", "코드명"],
+    keys: ["common_code", "common_name"],
   });
   //#endregion
 
@@ -67,6 +77,14 @@ const CommonCode = ({ selectId, codeAll }) => {
       setSelectCodes((prev) => [...prev, cd]);
     }
   };
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    await api.post("/code/delete", selectCodes);
+    dispatch(codeAction.getCodeAll());
+    setSelectCodes([]);
+  };
+
   // #endregion
 
   return (
@@ -74,6 +92,8 @@ const CommonCode = ({ selectId, codeAll }) => {
       <SearchBox
         formSearchData={formSearchData}
         setSearchFormData={setSearchFormData}
+        setSearchData={setSearchData}
+        selectId={selectId}
       />
       <table>
         <thead>
@@ -84,14 +104,14 @@ const CommonCode = ({ selectId, codeAll }) => {
           </tr>
         </thead>
         <tbody className="code-scrollable-table" onWheel={handleScroll}>
-          {codeAll &&
-            filteredData.map((data) => (
+          {searchData &&
+            searchData.map((data) => (
               <tr>
                 <td>
                   <input
                     type="checkbox"
-                    checked={selectCodes.includes(data.common_code_id)}
-                    onChange={() => handleCheckboxChange(data.common_code_id)}
+                    checked={selectCodes.includes(data.common_code)}
+                    onChange={() => handleCheckboxChange(data.common_code)}
                   />
                 </td>
                 <td>{data.common_code}</td>
@@ -130,6 +150,13 @@ const CommonCode = ({ selectId, codeAll }) => {
         <div className="button_wrap">
           <button type="submit" className="button">
             추가
+          </button>
+          <button
+            className="button"
+            style={{ backgroundColor: "red" }}
+            onClick={handleDelete}
+          >
+            삭제
           </button>
         </div>
       </form>

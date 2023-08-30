@@ -1,13 +1,11 @@
 import "../../../style/Table.css";
-import { useEffect, useRef, useState } from "react";
+import {  useRef, useState } from "react";
 import api from "redux/api";
 
 function LocationTable({
   data,
   setSelectIds,
   selectIds,
-  shouldScrollToBottom,
-  setShouldScrollToBottom,
 }) {
   const [SearchList, setSearchList] = useState(data);
 
@@ -64,13 +62,13 @@ function LocationTable({
           <div>
             <div>창고코드</div>
             <div className="inputBox">
-              <input type="text" name="storage_code" onChange={handleChange} />
+              <input type="text" name="" onChange={handleChange} />
             </div>
           </div>
           <div>
             <div>세부장소</div>
             <div className="inputBox">
-              <input type="text" name="location_name" onChange={handleChange} />
+              <input type="text" name="" onChange={handleChange} />
             </div>
           </div>
         </div>

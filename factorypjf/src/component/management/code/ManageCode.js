@@ -7,24 +7,27 @@ import SearchBox from "./SearchBox";
 const ManageCode = ({ manageCodeAll, setSelectId, selectId }) => {
   const dispatch = useDispatch();
 
+  const [searchData, setSearchData] = useState(manageCodeAll);
+
   const tableRef = useRef(null);
 
-  const [selectCodes, setSelectCodes] = useState([]);
-
+  
   const handleScroll = (e) => {
     const { deltaY } = e;
     if (tableRef.current) {
       tableRef.current.scrollTop += deltaY;
     }
   };
-
+  
   // #region 삭제 
+  const [selectCodes, setSelectCodes] = useState([]);
   const handleCheckboxChange = (cd) => {
     if (selectCodes.includes(cd)) {
       setSelectCodes((prev) => prev.filter((itemCd) => itemCd !== cd));
     } else {
       setSelectCodes((prev) => [...prev, cd]);
     }
+    console.log(selectCodes);
   };
 
   const handleDelete = async (e) => {
@@ -65,8 +68,9 @@ const ManageCode = ({ manageCodeAll, setSelectId, selectId }) => {
   const [formSearchData, setSearchFormData] = useState({
     management_name: "",
     management_code: "",
-    url: "/managecode/manageSearch",
+    url: "/managecode/search",
     searchName: ["관리코드", "관리코드명"],
+    keys:["management_code","management_name"],
   });
   //#endregion
 
@@ -75,6 +79,7 @@ const ManageCode = ({ manageCodeAll, setSelectId, selectId }) => {
       <SearchBox
         formSearchData={formSearchData}
         setSearchFormData={setSearchFormData}
+        setSearchData={setSearchData}
       />
       <table>
         <thead>
@@ -85,8 +90,8 @@ const ManageCode = ({ manageCodeAll, setSelectId, selectId }) => {
           </tr>
         </thead>
         <tbody className="code-scrollable-table" onWheel={handleScroll}>
-          {manageCodeAll &&
-            manageCodeAll.map((data) => (
+          {searchData &&
+            searchData.map((data) => (
               <tr onClick={() => setSelectId(data.management_code)}>
                 <td>
                   <input
