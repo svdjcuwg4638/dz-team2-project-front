@@ -4,7 +4,7 @@ import api from 'redux/api';
 const SearchPartner = ({setSearchData}) => {
 
   const [ formData , setFormData] = useState({
-    searchCategory:"",
+    searchCategory:"partner_code",
     searchValue:"",
   })
 
