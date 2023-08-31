@@ -9,15 +9,16 @@ const ManageCode = ({ manageCodeAll, setSelectId, selectId }) => {
 
   const [searchData, setSearchData] = useState(manageCodeAll);
 
+  //#region 스크롤
   const tableRef = useRef(null);
 
-  
   const handleScroll = (e) => {
     const { deltaY } = e;
     if (tableRef.current) {
       tableRef.current.scrollTop += deltaY;
     }
   };
+  //#endregion
   
   // #region 삭제 
   const [selectCodes, setSelectCodes] = useState([]);

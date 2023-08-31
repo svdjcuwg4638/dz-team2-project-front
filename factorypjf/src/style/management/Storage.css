@@ -79,7 +79,7 @@ th:nth-child(1), td:nth-child(1){
   overflow: auto; 
   scrollbar-width: none;
   border: 1px solid #000;
-  display: table-caption;
+  display: contents;
 }
 
 .storage_scrollable_table::-webkit-scrollbar {
