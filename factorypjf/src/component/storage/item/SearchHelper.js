@@ -1,52 +1,53 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { partnerAction } from "../../../redux/actions/management/partnerAction";
+import { itemAction } from "../../../redux/actions/management/itemAction";
+import { storageAction } from "../../../redux/actions/management/storageAction";
 
-const PartnerHelper = ({ searchPartner, handleRowClick, menu }) => {
+const SearchHelper = ({ searchPartner, handleRowClick, menu }) => {
   const dispatch = useDispatch();
 
-  const { partnerAll, loading } = useSelector((state) => state[menu.eng_name]);
-
-  const [InputPartner, setInputPartner] = useState("");
-  const [selectedPartner, setSelectedPartner] = useState();
+  const [InputboxText, setInputboxText] = useState("");
+  const [SelectedColumn, setSelectedColumn] = useState();
   const [Category, setCategory] = useState("default");
 
   useEffect(() => {
-    dispatch(partnerAction.getPartnerAll());
-  }, [InputPartner]);
+    if (menu.name === "거래처") dispatch(partnerAction.getPartnerAll());
+    if (menu.name === "품목") dispatch(itemAction.getItemAll());
+    if (menu.name === "창고") dispatch(storageAction.getstorageAll());
+  }, [InputboxText]);
 
-  let filteredPartner = [];
+  let filteredData = [];
+  if (menu.dataAll[menu.type_all].data) {
+    filteredData = menu.dataAll[menu.type_all].data;
 
-  if (partnerAll.data) {
     if (Category === "default") {
-      filteredPartner = partnerAll.data.filter(
+      filteredData = menu.dataAll[menu.type_all].data.filter(
         (item) =>
-          item.partner_code.includes(InputPartner) ||
-          item.partner_name.includes(InputPartner)
+          item[menu.code_column].includes(InputboxText) ||
+          item[menu.name_column].includes(InputboxText)
       );
     } else if (Category === "code") {
-      filteredPartner = partnerAll.data.filter((item) =>
-        item.partner_code.includes(InputPartner)
+      filteredData = menu.dataAll[menu.type_all].data.filter((item) =>
+        item[menu.code_column].includes(InputboxText)
       );
     } else if (Category === "name") {
-      filteredPartner = partnerAll.data.filter((item) =>
-        item.partner_name.includes(InputPartner)
+      filteredData = menu.dataAll[menu.type_all].data.filter((item) =>
+        item[menu.name_column].includes(InputboxText)
       );
     }
   }
 
-  const rowClickHandler = (partner) => {
-    setSelectedPartner(partner);
-    searchPartner(partner.partner_code);
-    handleRowClick(partner);
+  const rowClickHandler = (datarow) => {
+    setSelectedColumn(datarow);
+    searchPartner(datarow[menu.code_column]);
   };
   const selectHandler = (event) => {
     setCategory(event.target.value);
   };
   const clickFn = (e) => {
     e.preventDefault();
-    console.log(e.target[0].value);
-    setInputPartner(e.target[0].value);
+    setInputboxText(e.target[0].value);
   };
   return (
     <div
@@ -59,7 +60,11 @@ const PartnerHelper = ({ searchPartner, handleRowClick, menu }) => {
     >
       <div className="header" style={{ backgroundColor: "#5390F0" }}>
         <div>
-          <select className="mt-3" style={{ width: "25%", height: "30px" }}>
+          <select
+            onChange={(e) => setCategory(e.target.value)}
+            className="mt-3"
+            style={{ width: "25%", height: "30px" }}
+          >
             <option value="default">공통</option>
             <option value="code">{menu.name}코드</option>
             <option value="name">{menu.name}명</option>
@@ -87,10 +92,10 @@ const PartnerHelper = ({ searchPartner, handleRowClick, menu }) => {
               <th>{menu.name}명</th>
             </thead>
             <tbody>
-              {filteredPartner.map((partner) => (
-                <tr onClick={() => rowClickHandler(partner)}>
-                  <td>{partner[menu.code_column]}</td>{" "}
-                  <td> {partner[menu.name_column]}</td>
+              {filteredData.map((datarow) => (
+                <tr onClick={() => rowClickHandler(datarow)}>
+                  <td>{datarow[menu.code_column]}</td>{" "}
+                  <td> {datarow[menu.name_column]}</td>
                 </tr>
               ))}
             </tbody>
@@ -101,4 +106,4 @@ const PartnerHelper = ({ searchPartner, handleRowClick, menu }) => {
   );
 };
 
-export default PartnerHelper;
+export default SearchHelper;

@@ -7,11 +7,9 @@ const Table = () => {
   const { itemAll, loading } = useSelector((state) => state.item);
 
   useEffect(() => {
-    console.log("item load", { loading });
     dispatch(itemAction.getItemAll());
   }, []);
 
-  if (itemAll.data) itemAll.data.map((item) => console.log(item));
   return (
     <div style={{ height: "600px", overflowY: "scroll" }}>
       <table className="">

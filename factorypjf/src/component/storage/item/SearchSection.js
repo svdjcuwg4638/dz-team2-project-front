@@ -1,26 +1,35 @@
 import React, { useState } from "react";
-import PartnerHelper from "./PartnerHelper";
-
+import SearchHelper from "./SearchHelper";
 const SearchSection = ({ menu }) => {
-  const [partnerHelper, setPartnerHelper] = useState(false);
+  const [HelperScreenState, setHelperScreenState] = useState(false);
   const [searchpartner, setSearchpartner] = useState("");
 
-  const partnerCodeHandler = () => {
-    if (partnerHelper === true) setPartnerHelper(false);
-    else if (partnerHelper === false) setPartnerHelper(true);
+  const CodeHandler = () => {
+    if (HelperScreenState === true) setHelperScreenState(false);
+    else if (HelperScreenState === false) setHelperScreenState(true);
   };
   const selectedPartnerFn = (partnerInput) => {
     setSearchpartner(partnerInput);
-  };
-  const handleRowClick = (partner) => {
-    // PartnerHelper 내의 rowClickHandler가 발생할 때 호출되는 함수
-    setPartnerHelper(false); // row 클릭 시 partnerHelper를 false로 변경
+    setHelperScreenState(false);
   };
 
   return (
     <div>
-      <div className="partnerGuide" style={{ position: "relative" }}>
-        {partnerHelper && (
+      <div
+        style={{
+          zIndex: "9",
+          background: "rgba(0,0,0,0.3)",
+          position: "fixed",
+          display: HelperScreenState ? "block" : "none",
+          top: "0",
+          left: "0",
+          right: "0",
+          bottom: "0",
+        }}
+        onClick={() => setHelperScreenState(false)}
+      ></div>
+      <div className="inputGuide" style={{ position: "relative" }}>
+        {HelperScreenState && (
           <div
             style={{
               position: "absolute",
@@ -28,23 +37,17 @@ const SearchSection = ({ menu }) => {
               left: "50%",
               //   transform: "translate(-60%, +20%)",
               boxShadow: "0 0 10px rgba(0,0,0,0.8)",
-              zIndex: 1, // 조절 가능한 레이어 순서
+              zIndex: 10, // 조절 가능한 레이어 순서
             }}
           >
-            {/* PartnerHelper 내용 */}
-            <PartnerHelper
-              menu={menu}
-              searchPartner={selectedPartnerFn}
-              partnerHelper={partnerHelper}
-              handleRowClick={handleRowClick}
-            />
+            {/* HelperScreenState 내용 */}
+            <SearchHelper menu={menu} searchPartner={selectedPartnerFn} />
           </div>
         )}
       </div>
-
       <div className="section">
         <div className="searchSection">
-          <label>{menu.name} 코드: </label>
+          <label>{menu.name} :</label>
           <input
             className="m-3"
             style={{ border: "1px solid black" }}
@@ -53,12 +56,28 @@ const SearchSection = ({ menu }) => {
             onChange={(e) => setSearchpartner(e.target.value)}
           />
           {menu.guide && (
-            <button onClick={partnerCodeHandler} style={{ width: "30px" }}>
+            <button onClick={CodeHandler} style={{ width: "30px" }}>
               ?
             </button>
           )}
         </div>
       </div>
+
+      {/* <table className="inputTbl">
+        <tr>
+          <td>
+            <input value={searchpartner} />
+          </td>
+          <td>
+            <input />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input />
+          </td>
+        </tr>
+      </table> */}
     </div>
   );
 };
