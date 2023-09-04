@@ -14,14 +14,16 @@ const Table = () => {
     <div style={{ height: "600px", overflowY: "scroll" }}>
       <table className="">
         <thead>
-          <th>카테고리</th>
-          <th>품목코드</th>
-          <th>품목명</th>
-          <th>규격</th>
-          <th>단위</th>
-          <th>거래처코드</th>
-          <th>거래처명</th>
-          <th>수량</th>
+          <tr>
+            <th>카테고리</th>
+            <th>품목코드</th>
+            <th>품목명</th>
+            <th>규격</th>
+            <th>단위</th>
+            <th>거래처코드</th>
+            <th>거래처명</th>
+            <th>수량</th>
+          </tr>
         </thead>
         <tbody>
           {itemAll.data &&

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Table from "./Table";
-import SearchSection from "./SearchSection";
+import Modal from "./Modal";
 import { storageAction } from "../../../redux/actions/management/storageAction";
-import { itemAction } from "../../../redux/actions/management/itemAction";
-import { partnerAction } from "../../../redux/actions/management/partnerAction";
+// import { itemAction } from "../../../redux/actions/management/itemAction";
+// import { partnerAction } from "../../../redux/actions/management/partnerAction";
+import InputTable from "./InputTable";
 const List = () => {
   const dispatch = useDispatch();
 
@@ -27,6 +28,7 @@ const List = () => {
       code_column: "storage_code",
       name_column: "storage_name",
       dataAll: { storageAll },
+      trigger_type: "search",
     },
     {
       name: "거래처",
@@ -36,6 +38,7 @@ const List = () => {
       code_column: "partner_code",
       name_column: "partner_name",
       dataAll: { partnerAll },
+      trigger_type: "search",
     },
     {
       name: "품목",
@@ -44,22 +47,64 @@ const List = () => {
       code_column: "item_code",
       name_column: "item_name",
       dataAll: { itemAll },
+      trigger_type: "search",
     },
     {
       name: "단위",
       guide: false,
+      trigger_type: "search",
     },
     {
       name: "규격",
       guide: false,
+      trigger_type: "search",
     },
   ];
-
+  const tbl_menulist = [
+    {
+      name: "창고",
+      guide: true,
+      type_all: "storageAll",
+      code_column: "storage_code",
+      name_column: "storage_name",
+      dataAll: { storageAll },
+      trigger_type: "input",
+    },
+    {
+      name: "거래처",
+      //가이드유무
+      guide: true,
+      type_all: "partnerAll",
+      code_column: "partner_code",
+      name_column: "partner_name",
+      dataAll: { partnerAll },
+      trigger_type: "input",
+    },
+    {
+      name: "품목",
+      guide: true,
+      type_all: "itemAll",
+      code_column: "item_code",
+      name_column: "item_name",
+      dataAll: { itemAll },
+      trigger_type: "input",
+    },
+    {
+      name: "단위",
+      guide: false,
+      trigger_type: "input",
+    },
+    {
+      name: "규격",
+      guide: false,
+      trigger_type: "input",
+    },
+  ];
   return (
-    <div>
+    <div style={{ height: "700px", overflowY: "scroll" }}>
       <div style={{ display: "flex" }}>
         {menulist.map((menu) => (
-          <SearchSection menu={menu} />
+          <Modal menu={menu} />
         ))}
         <button>조회</button>
       </div>
@@ -71,8 +116,10 @@ const List = () => {
         >
           <table className="">
             <thead>
-              <th>창고코드</th>
-              <th>창고명</th>
+              <tr>
+                <th>창고코드</th>
+                <th>창고명</th>
+              </tr>
             </thead>
             <tbody>
               {storageAll.data &&
@@ -91,8 +138,10 @@ const List = () => {
         >
           <table className="">
             <thead>
-              <th>장소코드</th>
-              <th>장소명</th>
+              <tr>
+                <th>장소코드</th>
+                <th>장소명</th>
+              </tr>
             </thead>
             <tbody>
               {locationAll.data &&
@@ -107,6 +156,7 @@ const List = () => {
         </div>
         <Table></Table>
       </div>
+      <InputTable menulist={tbl_menulist} />
     </div>
   );
 };

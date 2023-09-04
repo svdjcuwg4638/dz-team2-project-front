@@ -5,6 +5,7 @@ import { itemAction } from "../../../redux/actions/management/itemAction";
 import { storageAction } from "../../../redux/actions/management/storageAction";
 
 const SearchHelper = ({ searchPartner, handleRowClick, menu }) => {
+  console.log("menupopup");
   const dispatch = useDispatch();
 
   const [InputboxText, setInputboxText] = useState("");
@@ -42,9 +43,7 @@ const SearchHelper = ({ searchPartner, handleRowClick, menu }) => {
     setSelectedColumn(datarow);
     searchPartner(datarow[menu.code_column]);
   };
-  const selectHandler = (event) => {
-    setCategory(event.target.value);
-  };
+
   const clickFn = (e) => {
     e.preventDefault();
     setInputboxText(e.target[0].value);
@@ -88,8 +87,10 @@ const SearchHelper = ({ searchPartner, handleRowClick, menu }) => {
         >
           <table>
             <thead>
-              <th>{menu.name}코드</th>
-              <th>{menu.name}명</th>
+              <tr>
+                <th>{menu.name}코드</th>
+                <th>{menu.name}명</th>
+              </tr>
             </thead>
             <tbody>
               {filteredData.map((datarow) => (
