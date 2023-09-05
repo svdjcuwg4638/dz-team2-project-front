@@ -1,4 +1,4 @@
-.btn_add{
+/* .btn_add{
     width: 100%;
     border: none;
     background-color: transparent;
@@ -7,4 +7,10 @@
     font-size: 20px;
     color: var(--font-color);
     font-weight: bold;
+} */
+input{
+    width:100%;
+}
+td{
+    padding:0;
 }

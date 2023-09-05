@@ -5,9 +5,9 @@ import axios from "axios";
 import productionListClasses from "style/production/List.module.css";
 import productionClasses from "style/production/Production.module.css";
 
-import Table from "component/layout/Table.js/Table";
-import AddTd from "component/layout/Table.js/AddTableData";
-import ListTd from "component/layout/Table.js/ListTableData";
+import Table from "component/layout/Table/Table";
+import AddTd from "component/layout/Table/AddTableData";
+import ListTd from "component/layout/Table/ListTableData";
 import HelperModal from "component/common/helper/HelperModal";
 
 const modalInit = {
@@ -25,7 +25,7 @@ export default function List() {
   // };
   //코드 조회 쿼리
   const searchHandler = () => {
-    console.log(modalState);
+    // console.log(modalState);
     //modalState.codeValue가 카멜형식이라면 하이픈 형식으로 바꾸는 코드 추가 필요 (HJ)
     // axios
     //   .get(`http://localhost:9090/common-code/${modalState.codeValue}`)
@@ -34,29 +34,29 @@ export default function List() {
     //   })
   };
 
-  //모달 끄고 닫는 핸들러
-  const onModalHanlder = ({ value, text }) => {
-    // console.log('onmodalHandler',value)
-    dispatch({ type: "ON_MODAL", value, text });
-  };
-  const offModalHandler = () => {
-    dispatch({ type: "OFF_MODAL" });
-  };
-  //모달 reducer (on/off, 코드 타입)
-  const modalReducer = (state, action) => {
-    if (action.type === "ON_MODAL") {
-      console.log(action);
-      return {
-        showModal: true,
-        codeValue: action.value,
-        codeText: action.text,
-      };
-    }
-    if (action.type === "OFF_MODAL") {
-      return { showModal: false, codeValue: "", codeText: "" };
-    }
-  };
-  const [modalState, dispatch] = useReducer(modalReducer, modalInit);
+  // //모달 끄고 닫는 핸들러
+  // const onModalHanlder = ({ value, text }) => {
+  //   // console.log('onmodalHandler',value)
+  //   dispatch({ type: "ON_MODAL", value, text });
+  // };
+  // const offModalHandler = () => {
+  //   dispatch({ type: "OFF_MODAL" });
+  // };
+  // //모달 reducer (on/off, 코드 타입)
+  // const modalReducer = (state, action) => {
+  //   if (action.type === "ON_MODAL") {
+  //     console.log(action);
+  //     return {
+  //       showModal: true,
+  //       codeValue: action.value,
+  //       codeText: action.text,
+  //     };
+  //   }
+  //   if (action.type === "OFF_MODAL") {
+  //     return { showModal: false, codeValue: "", codeText: "" };
+  //   }
+  // };
+  // const [modalState, dispatch] = useReducer(modalReducer, modalInit);
 
   const grid01_headers = [
     { text: "선택", value: "select", width: "9%" },
@@ -64,7 +64,7 @@ export default function List() {
     { text: "날짜", value: "date", width: "9%" },
     { text: "생산품명", value: "itemName", width: "9%", helper: true },
     { text: "품목코드", value: "itemCode", width: "9%", helper: true },
-    { text: "생산팀", value: "productionTeam", width: "9%", helper: true },
+    { text: "생산팀", value: "team", width: "9%", helper: true },
     { text: "라인", value: "productLine", width: "9%" },
     { text: "수량", value: "quantity", width: "9%" },
     { text: "창고", value: "storage", width: "9%", helper: true },
@@ -99,21 +99,21 @@ export default function List() {
   return (
     <>
       <div className={productionClasses.wrap}>
-        {modalState.showModal && (
+        {/* {modalState.showModal && (
           <HelperModal
             modalState={modalState}
             offModal={offModalHandler}
             onSearchCode={searchHandler}
           />
-        )}
+        )} */}
         <p className={productionClasses["sub-menu-name"]}>생산등록</p>
         <div className={productionClasses.grid01}>
-          <Table headers={grid01_headers} onModal={onModalHanlder}>
+          <Table headers={grid01_headers} >
             <AddTd></AddTd>
           </Table>
         </div>
         <div className={productionClasses.grid02}>
-          <Table headers={grid02_headers} onModal={onModalHanlder}>
+          <Table headers={grid02_headers} >
             <ListTd items={grid02_items}></ListTd>
           </Table>
         </div>

@@ -1,9 +1,10 @@
 import React, { cloneElement, isValidElement, useState } from "react";
 
-import tableStyle from "style/layout/dataTable/DataTable.module.css";
+import tableStyle from "style/layout/dataTable/Table.module.css";
 import addStyle from "style/layout/dataTable/AddTableData.module.css";
+import searchSymbol from "img/search-symbol.png";
 
-export default function DataTable({ headers, items, children }) {
+export default function DataTable({ headers, onModal, children }) {
   // let inputType=''
   // const INPUT_TYPE=function(key){
   //     // if(key.includes('select'))return 'checkbox'
@@ -23,20 +24,29 @@ export default function DataTable({ headers, items, children }) {
   //   }
   // });
 
-  const childrenWithProps = cloneElement(children, { headerKey });
+  const childrenWithProps = cloneElement(children, { headers });
 
   return (
     <>
       <table className={tableStyle.tbl_header}>
         <colgroup>
-          {headers.map((header) => {
-            return <col width={header.width}></col>;
+          {headers.map((header,idx) => {
+            return <col key={idx} width={header.width}></col>;
           })}
         </colgroup>
         <thead>
           <tr>
             {headers.map((header, idx) => (
-              <th key={idx}>{header.text}</th>
+              <th key={idx}>
+                {header.text}
+                {/* {header.helper && (
+                  <img
+                    // onClick={()=>{onModal({value:header.value, text:header.text})}}
+                    className={tableStyle["search-symbol"]}
+                    src={searchSymbol}
+                  />
+                )} */}
+              </th>
             ))}
           </tr>
         </thead>
@@ -45,8 +55,8 @@ export default function DataTable({ headers, items, children }) {
       <div className={tableStyle.tbl_body_wrap}>
         <table className={tableStyle.tbl_body}>
           <colgroup>
-            {headers.map((header) => {
-              return <col width={header.width}></col>;
+            {headers.map((header,idx ) => {
+              return <col key={idx} width={header.width}></col>;
             })}
           </colgroup>
           <tbody>{childrenWithProps}</tbody>

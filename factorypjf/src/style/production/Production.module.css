@@ -1,6 +1,8 @@
 .wrap{
     margin:20px;
     height: 100%;
+    overflow: hidden;
+    position:relative;
 }
 .sub-menu-name{
     font-size: 20px;
