@@ -1,27 +1,29 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { codeAction } from "redux/actions/management/codeAction";
 import api from "redux/api";
 
-const SearchBox = ({ formSearchData, setSearchFormData }) => {
-  const dispatch = useDispatch();
+const SearchBox = ({ formSearchData, setSearchFormData, setSearchData,selectId }) => {
 
   //#region 관리코드검색
   const handleSearchChange = (e) => {
     const { name, value } = e.target;
     setSearchFormData({
       ...formSearchData,
+      management_code:selectId,
       [name]: value,
     });
   };
 
   const handleSearchSubmit = async (e) => {
     e.preventDefault();
+    const submitData = {
+      ...formSearchData,
+      management_code :selectId,
+    }
+
     try {
-      const response = await api.post(
-        formSearchData.url,
+      setSearchData(
+        (await api.post(formSearchData.url, submitData)).data.data
       );
-      dispatch(codeAction.getCodeAll());
     } catch (error) {
       console.log("error :", error);
     }
@@ -30,33 +32,33 @@ const SearchBox = ({ formSearchData, setSearchFormData }) => {
 
   return (
     <>
-        <form onSubmit={handleSearchSubmit}>
-          <div className="search_wrap">
-            <div>
-              <div>{formSearchData.searchName[0]}</div>
-              <div className="inputBox">
-                <input
-                  type="text"
-                  name="storage_code"
-                  onChange={handleSearchChange}
-                />
-              </div>
-            </div>
-            <div>
-              <div>{formSearchData.searchName[1]}</div>
-              <div className="inputBox">
-                <input
-                  type="text"
-                  name="storage_name"
-                  onChange={handleSearchChange}
-                />
-              </div>
+      <form onSubmit={handleSearchSubmit}>
+        <div className="search_wrap">
+          <div>
+            <div>{formSearchData.searchName[0]}</div>
+            <div className="inputBox">
+              <input
+                type="text"
+                name={formSearchData.keys && formSearchData.keys[0]}
+                onChange={handleSearchChange}
+              />
             </div>
           </div>
-          <div className="button_wrap">
-            <button className="button">조회</button>
+          <div>
+            <div>{formSearchData.searchName[1]}</div>
+            <div className="inputBox">
+              <input
+                type="text"
+                name={formSearchData.keys && formSearchData?.keys[1]}
+                onChange={handleSearchChange}
+              />
+            </div>
           </div>
-        </form>
+        </div>
+        <div className="button_wrap">
+          <button className="button">조회</button>
+        </div>
+      </form>
     </>
   );
 };

@@ -96,3 +96,11 @@ input{
   outline: none;
 }
 
+/* 스크롤바 제거*/
+html::-webkit-scrollbar {
+  display: none;
+}
+
+html {
+  scrollbar-width: none;
+}
