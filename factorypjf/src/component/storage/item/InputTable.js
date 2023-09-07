@@ -3,7 +3,7 @@ import Modal from "./Modal";
 
 const InputTable = ({ menulist }) => {
   return (
-    <div>
+    <div style={{ position: "relative", top: "20px" }}>
       <table>
         <thead>
           <tr>

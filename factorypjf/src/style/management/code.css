@@ -1,5 +1,29 @@
 .code_wrap{
-  margin-top: 150px;
+  align-items: center;
   justify-content: space-evenly;
+  height: 100%;
+}
+
+.code-scrollable-table {
+  height: 300px; 
+  overflow: auto; 
+  scrollbar-width: none;
+  border: 1px solid #000;
+  display: contents;
+}
+
+.code-scrollable-table::-webkit-scrollbar {
+  display: none; 
+}
+
+.inputBox{
+  border: 1px solid #000;
+}
+
+.input_wrap{
+  display: flex;
+}
+
+.section_style > div{
   height: 100%;
 }

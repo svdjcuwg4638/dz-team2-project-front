@@ -76,7 +76,11 @@ const SearchHelper = ({ searchPartner, handleRowClick, menu }) => {
                 height: "31px",
               }}
             ></input>
-            <button type="submit">조회 </button>
+            <div style={{ textAlign: "right", marginRight: "10px" }}>
+              <button className="btn" type="submit">
+                조회
+              </button>
+            </div>
           </form>
         </div>
       </div>

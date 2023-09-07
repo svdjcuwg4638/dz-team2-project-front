@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import Table from "./Table";
 import Modal from "./Modal";
 import { storageAction } from "../../../redux/actions/management/storageAction";
-// import { itemAction } from "../../../redux/actions/management/itemAction";
-// import { partnerAction } from "../../../redux/actions/management/partnerAction";
+import "../registration/RegiBtn.css";
+
 import InputTable from "./InputTable";
+import { CodehelperAction } from "redux/actions/storage/CodeHelperAction";
+
 const List = () => {
   const dispatch = useDispatch();
 
@@ -17,6 +19,7 @@ const List = () => {
 
   useEffect(() => {
     dispatch(storageAction.getstorageAll());
+    dispatch(CodehelperAction.getCodehelperAll());
   }, []);
 
   //두 column의 실제 자료형이 문자열이어야 한다.
@@ -100,13 +103,16 @@ const List = () => {
       trigger_type: "input",
     },
   ];
+  console.log(locationAll);
   return (
     <div style={{ height: "700px", overflowY: "scroll" }}>
       <div style={{ display: "flex" }}>
         {menulist.map((menu) => (
           <Modal menu={menu} />
         ))}
-        <button>조회</button>
+        <button style={{ height: "30px", lineHeight: "15px" }} className="btn">
+          조회
+        </button>
       </div>
 
       <div className="mt-3 " style={{ display: "flex", position: "relative" }}>
@@ -147,7 +153,7 @@ const List = () => {
               {locationAll.data &&
                 locationAll.data.map((location) => (
                   <tr>
-                    <td>{location.storage_code}</td>
+                    <td>{location.location_code}</td>
                     <td>{location.location_name}</td>
                   </tr>
                 ))}

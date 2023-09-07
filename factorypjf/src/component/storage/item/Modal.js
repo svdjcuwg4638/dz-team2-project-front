@@ -34,6 +34,7 @@ const Modal = ({ menu }) => {
               boxShadow: "0 0 10px rgba(0,0,0,0.8)",
               zIndex: 10,
             }}
+            onClick={(e) => e.stopPropagation()}
           >
             <SearchHelper menu={menu} searchPartner={selectedPartnerFn} />
           </div>
@@ -46,7 +47,7 @@ const Modal = ({ menu }) => {
             <>
               <label>{menu.name} :</label>
               <input
-                className="m-3"
+                className="my-3"
                 style={{ border: "1px solid black" }}
                 type="text"
                 value={searchpartner}
@@ -54,8 +55,16 @@ const Modal = ({ menu }) => {
               />
               {menu.guide && (
                 <button
+                  className="btn"
                   onClick={() => setHelperScreenState(!HelperScreenState)}
-                  style={{ width: "30px" }}
+                  style={{
+                    padding: "0",
+                    width: "30px",
+                    height: "30px",
+                    textAlign: "center",
+                    marginRight: "10px",
+                    marginLeft: "5px",
+                  }}
                 >
                   ?
                 </button>

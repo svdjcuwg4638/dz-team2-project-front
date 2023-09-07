@@ -24,9 +24,6 @@ export default function DataTable({ headers, items, children }) {
   // });
 
   const childrenWithProps = cloneElement(children, { headerKey });
-    
- 
-
 
   return (
     <>
