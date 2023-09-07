@@ -11,15 +11,17 @@ import UnitPrice from "./component/management/unitPrice/UnitPrice";
 import Code from "component/management/code/Code";
 
 
+import ProductionRoutes from "router/ProductionRoutes";
+
 function App() {
   return (
     <Layout>
       <Routes>
-        {/*
+        
         <Route path="/production/*" element={<ProductionRoutes/>}/>
-        <Route path="/inbound/*" element={<InboundRoutes/>}/>
-        <Route path="/storage/*" element={<StorageRoutes/>}/>
-        */}
+        {/* <Route path="/inbound/*" element={<InboundRoutes/>}/>
+        <Route path="/storage/*" element={<StorageRoutes/>}/> */}
+       
         <Route path="/management" element={<Management />}>
           <Route index path="item" element={<Item />} />
           <Route path="storage" element={<Storage />} />
