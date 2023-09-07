@@ -1,8 +1,7 @@
 import React, { useReducer, useRef, useState } from "react";
 import axios from "axios";
 
-import tableStyle from "style/layout/dataTable/Table.module.css";
-import addStyle from "style/layout/dataTable/AddTableData.module.css";
+import tableStyle from "style/layout/dataTable/table.module.css";
 import HelperModal from "component/common/helper/HelperModal";
 
 //도움창 단축키 코드

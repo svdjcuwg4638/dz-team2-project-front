@@ -2,8 +2,8 @@ import React, { useEffect, useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import productionListClasses from "style/production/List.module.css";
-import productionClasses from "style/production/Production.module.css";
+import productionListClasses from "style/production/list.module.css";
+import productionClasses from "style/production/production.module.css";
 
 import Table from "component/layout/Table/Table";
 import AddTd from "component/layout/Table/AddTableData";

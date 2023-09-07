@@ -1,7 +1,7 @@
 import React, { useReducer, useState } from "react";
 
-import tableStyle from "style/layout/dataTable/Table.module.css";
-import listStyle from "style/layout/dataTable/ListTableData.module.css";
+import tableStyle from "style/layout/dataTable/table.module.css";
+import listStyle from "style/layout/dataTable/listTableData.module.css";
 import HelperModal from "component/common/helper/HelperModal";
 
 const HELPER_KEY = 113;

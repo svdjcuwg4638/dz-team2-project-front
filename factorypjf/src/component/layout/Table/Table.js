@@ -1,7 +1,7 @@
 import React, { cloneElement, isValidElement, useState } from "react";
 
-import tableStyle from "style/layout/dataTable/Table.module.css";
-import addStyle from "style/layout/dataTable/AddTableData.module.css";
+import tableStyle from "style/layout/dataTable/table.module.css";
+import addStyle from "style/layout/dataTable/addTableData.module.css";
 
 
 export default function DataTable({ headers, onModal, children }) {

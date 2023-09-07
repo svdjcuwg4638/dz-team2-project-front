@@ -5,7 +5,7 @@ import HelperTable from "./HelperTable";
 import getUrl from "./codeUrl";
 import {getAxios} from "function/axiosFuction";
 
-import helperStyle from "style/common/HelperModal.module.css";
+import helperStyle from "style/common/helperModal.module.css";
 
 //======================모달 back =========================
 function HelperBackdrop({ offModal }) {

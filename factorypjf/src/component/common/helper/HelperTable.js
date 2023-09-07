@@ -1,6 +1,6 @@
 import React from "react";
 
-import helperStyle from "style/common/HelperModal.module.css";
+import helperStyle from "style/common/helperModal.module.css";
 
 
 export default function HelperTable({ headers, items, onSelectCode }) {

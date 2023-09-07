@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../../../style/management/Partner.css";
+import "../../../style/management/partner.css";
 import AddPartner from "./AddPartner";
 import PartnerList from "./PartnerList";
 import { useDispatch, useSelector } from "react-redux";
