@@ -1,5 +1,6 @@
 import React from "react";
 import api from "redux/api";
+import "../../../style/management/storage.css"
 
 const SearchBox = ({ formSearchData, setSearchFormData, setSearchData,selectId }) => {
 
@@ -33,7 +34,7 @@ const SearchBox = ({ formSearchData, setSearchFormData, setSearchData,selectId }
   return (
     <>
       <form onSubmit={handleSearchSubmit}>
-        <div className="search_wrap">
+        <div className="storage_search_wrap">
           <div>
             <div>{formSearchData.searchName[0]}</div>
             <div className="inputBox">

@@ -21,8 +21,10 @@ const RightBox = ({  locationAll }) => {
 
   // #region 세부장소 추가코드
   const [formData, setFormData] = useState({
-    storage_name:"",
+    storage_code:"",
     location_name:"",
+    location_code:"",
+    company_id : "1",
   })
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -65,6 +67,15 @@ const RightBox = ({  locationAll }) => {
                 className="inputBox"
                 type="text"
                 name="storage_code"
+                onChange={handleChange}
+              />
+            </div>
+            <div style={{ marginRight: "10px" }}>
+              <div style={{ marginRight: "10px" }}>세부장소코드</div>
+              <input
+                className="inputBox"
+                type="text"
+                name="location_code"
                 onChange={handleChange}
               />
             </div>

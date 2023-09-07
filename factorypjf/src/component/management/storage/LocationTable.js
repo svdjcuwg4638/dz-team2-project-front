@@ -1,12 +1,7 @@
-import "../../../style/Table.css";
-import {  useRef, useState } from "react";
+import { useRef, useState } from "react";
 import api from "redux/api";
 
-function LocationTable({
-  data,
-  setSelectIds,
-  selectIds,
-}) {
+function LocationTable({ data, setSelectIds, selectIds }) {
   const [SearchList, setSearchList] = useState(data);
 
   // #region 스크롤 이벤트 함수
@@ -58,17 +53,23 @@ function LocationTable({
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div className="search_wrap">
+        <div className="storage_search_wrap">
           <div>
             <div>창고코드</div>
             <div className="inputBox">
-              <input type="text" name="" onChange={handleChange} />
+              <input type="text" name="storage_code" onChange={handleChange} />
             </div>
           </div>
           <div>
-            <div>세부장소</div>
+            <div>세부장소코드</div>
             <div className="inputBox">
-              <input type="text" name="" onChange={handleChange} />
+              <input type="text" name="location_code" onChange={handleChange} />
+            </div>
+          </div>
+          <div>
+            <div>세부장소이름</div>
+            <div className="inputBox">
+              <input type="text" name="location_name" onChange={handleChange} />
             </div>
           </div>
         </div>
@@ -81,6 +82,7 @@ function LocationTable({
           <tr>
             <th></th>
             <th>창고코드</th>
+            <th>세부장소코드</th>
             <th>세부장소명</th>
           </tr>
         </thead>
@@ -96,6 +98,7 @@ function LocationTable({
                   />
                 </td>
                 <td>{data.storage_code}</td>
+                <td>{data.location_code}</td>
                 <td>{data.location_name}</td>
               </tr>
             ))}
