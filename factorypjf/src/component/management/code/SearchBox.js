@@ -1,6 +1,6 @@
 import React from "react";
 import api from "redux/api";
-import "../../../style/management/storage.css"
+import "../../../style/management/Storage.css"
 
 const SearchBox = ({ formSearchData, setSearchFormData, setSearchData,selectId }) => {
 

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import "style/layout/Dep1.css";
+import "style/layout/dep1.css";
 import { BsInfoCircle } from "react-icons/bs";
 import { BiSolidFactory } from "react-icons/bi";
 import { MdOutlineInventory2 } from "react-icons/md";
