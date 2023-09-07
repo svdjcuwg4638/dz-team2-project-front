@@ -1,6 +1,6 @@
-.dep2_wrap{
-  background-color: #5390F0;
-  width: 200px;
+.dep2_wrap {
+  background-color: #5390f0;
+  width: 170px;
   height: 87.4vh;
   display: flex;
   flex-flow: column;
@@ -10,20 +10,20 @@
   color: #fff;
 }
 
-.menu1{
+.menu1 {
   height: 50%;
   width: 100%;
 }
 
-.menu2{
+.menu2 {
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
-  background-color: #4473BF;
+  background-color: #4473bf;
   height: 50%;
   width: 100%;
 }
 
-.menu_title{
+.menu_title {
   padding: 20px 0;
 
   font-size: 18px;
@@ -31,41 +31,41 @@
   display: flex;
   justify-content: center;
 }
-.menu_title > div:nth-child(1){
+.menu_title > div:nth-child(1) {
   padding-bottom: 10px;
   margin-right: 10px;
 }
-.menu_title > div:nth-child(2){
+.menu_title > div:nth-child(2) {
   line-height: 2;
 }
 
-.menu_sub_wrap > div{
+.menu_sub_wrap > div {
   padding: 10px 0;
 }
 
-.menu_sub_wrap > div> a > span{
+.menu_sub_wrap > div > a > span {
   font-size: 20px;
   cursor: pointer;
   color: white;
 }
 
-.menu_sub_wrap > div:hover > span{
+.menu_sub_wrap > div:hover > span {
   border-bottom: 3px solid #fff;
 }
-.section_top{
+.section_top {
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
 
-.tap_wrap{
+.tap_wrap {
   display: flex;
   margin-left: 20px;
 }
 
-.tap_wrap > div{
+.tap_wrap > div {
   background-color: #fff;
-  margin : 0px 15px;
+  margin: 0px 15px;
   width: 100px;
   margin-top: 10px;
 }

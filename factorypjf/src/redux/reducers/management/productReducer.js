@@ -1,32 +1,32 @@
-let initalState={
+let initalState = {
   itemAll: {},
   storageAll: {},
   locationAll: {},
-  partnerAll:{},
+  partnerAll: {},
   loading: false,
-}
+};
 
-function productReducer(state = initalState, action){
+function productReducer(state = initalState, action) {
   let { type, payload } = action;
-  switch(type){
+  switch (type) {
     case "GET_REQUEST":
-      return{
+      return {
         ...state,
-        loading:true,
-      }
+        loading: true,
+      };
     case "GET_PRODUCT_ALL_SUCCESS":
-      return{
+      return {
         ...state,
         itemAll: payload.itemAll,
         storageAll: payload.storageAll,
         locationAll: payload.locationAll,
-        partnerAll : payload.partnerAll,
+        partnerAll: payload.partnerAll,
         loading: false,
-      }
+      };
     case "GET_PRODUCT_ALL_FAIL":
-      console.log('프로덕트에러');
+      console.log("프로덕트에러");
     default:
-      return{...state}
+      return { ...state };
   }
 }
 
