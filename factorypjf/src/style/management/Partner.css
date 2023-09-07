@@ -89,17 +89,3 @@
   border: none;
 }
 
-.detail_wrap> div{
-  display: flex;
-  margin: 30px 0;
-}
-
-.detail_wrap> div > div{
-  margin : 0 10px;
-}
-
-.detail_wrap input{
-  border: 1px solid #000;
-  border-radius: 5px;
-
-}

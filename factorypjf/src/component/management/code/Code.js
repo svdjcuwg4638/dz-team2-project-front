@@ -11,11 +11,11 @@ const Code = () => {
 
   const [selectId, setSelectId] = useState(null);
 
-  
-
   const { codeAll, manageCodeAll, loading } = useSelector(
     (state) => state.code
   );
+
+  const [codeAllData,setCodeAllData] = useState(codeAll.data)
 
   useEffect(() => {
     dispatch(codeAction.getCodeAll())
@@ -23,9 +23,9 @@ const Code = () => {
 
   useEffect(()=>{
     if(!loading && manageCodeAll && manageCodeAll.data){
-      setSelectId(manageCodeAll?.data[0]?.management_code)
+      setSelectId(manageCodeAll?.data[0])
     }
-
+    setCodeAllData(codeAll.data)
   },[loading])
 
 
@@ -53,11 +53,12 @@ const Code = () => {
           selectId={selectId}
         />
       )}
-      {codeAll && (
+      { codeAll && !loading && (
         <CommonCode
           manageCodeAll={manageCodeAll.data}
-          codeAll={codeAll.data}
+          codeAll={codeAllData}
           selectId={selectId}
+          setCodeAllData={setCodeAllData}
         />
       )}
     </div>
