@@ -7,6 +7,7 @@ const api = axios.create({
   }
 })
 
+// Add a request interceptor
 api.interceptors.request.use(function (config) {
   console.log("request start",config);
   return config;
@@ -15,6 +16,7 @@ api.interceptors.request.use(function (config) {
   return Promise.reject(error);
 });
 
+// Add a response interceptor
 api.interceptors.response.use(function (response) {
   console.log("get response",response);
   return response;
