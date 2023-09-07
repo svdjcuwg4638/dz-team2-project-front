@@ -1,5 +1,4 @@
 import api from "redux/api";
-import "../../../style/Table.css";
 import { useRef, useState } from "react";
 
 function StorageTable({ data, selectCodes, setSelectCodes }) {
@@ -55,7 +54,7 @@ function StorageTable({ data, selectCodes, setSelectCodes }) {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div className="search_wrap">
+        <div className="storage_search_wrap">
           <div>
             <div>창고코드</div>
             <div className="inputBox">

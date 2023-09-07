@@ -4,14 +4,14 @@ import { codeAction } from "redux/actions/management/codeAction";
 import api from "redux/api";
 import SearchBox from "./SearchBox";
 
-const CommonCode = ({ selectId, codeAll }) => {
+const CommonCode = ({ selectId, codeAll,setCodeAllData }) => {
   const [searchData, setSearchData] = useState(
-    codeAll?.filter((data) => data.management_code === selectId)
+    codeAll?.filter((data) => data.management_code === selectId?.management_code)
   );
 
   useEffect(() => {
     const filteredData = codeAll?.filter(
-      (data) => data.management_code === selectId
+      (data) => data.management_code === selectId?.management_code
     );
     setSearchData(filteredData);
   }, [selectId]);
@@ -42,15 +42,24 @@ const CommonCode = ({ selectId, codeAll }) => {
     setFormData({
       ...formData,
       [name]: value,
-      management_code: selectId,
+      management_code: selectId.management_code,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post("/code/add", formData);
-      dispatch(codeAction.getCodeAll());
+      const response = await api.post("/code/add", formData)
+      const adData = response.data.data
+      console.log(response);
+      setSearchData((state)=>[
+        ...state,
+        adData,
+      ])
+      setCodeAllData((state)=>[
+        ...state,
+        adData,
+      ])
     } catch (error) {
       console.log("error :", error);
     }
@@ -99,13 +108,14 @@ const CommonCode = ({ selectId, codeAll }) => {
         <thead>
           <tr>
             <th></th>
-            <th>코드</th>
-            <th>이름</th>
+            <th>{selectId?.management_name}코드</th>
+            <th>{selectId?.management_name}이름</th>
           </tr>
         </thead>
+
         <tbody className="code-scrollable-table" onWheel={handleScroll}>
           {searchData &&
-            searchData.map((data) => (
+            searchData?.map((data) => (
               <tr>
                 <td>
                   <input

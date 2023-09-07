@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import "../../style/layout/Dep2.css";
+import "../../style/layout/dep2.css";
 import { BiSolidFactory } from "react-icons/bi";
 import { BsFillBookmarkFill } from "react-icons/bs";
 import { Link } from "react-router-dom";

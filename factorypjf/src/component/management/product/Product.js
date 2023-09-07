@@ -4,7 +4,7 @@ import { productAction } from "../../../redux/actions/management/productAction";
 import ProductInput from "./ProductInput";
 import ComponentInput from "./ComponentInput";
 import { ClipLoader } from "react-spinners";
-import "../../../style/management/Product.css";
+import "../../../style/management/product.css";
 import api from "../../../redux/api";
 
 const Product = () => {

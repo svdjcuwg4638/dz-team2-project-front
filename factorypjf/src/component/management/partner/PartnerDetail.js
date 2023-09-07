@@ -114,9 +114,9 @@ const PartnerDetail = ({ selectPartner }) => {
               readOnly
               style={{ width: "100px" }}
               type="text"
-              name="account_name"
+              name="account_code"
               required
-              value={selectPartner?.account_name}
+              value={selectPartner?.account_code}
             />
           </div>
           <div>

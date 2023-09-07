@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../../../style/management/Partner.css";
+import "../../../style/management/partner.css";
 import AddPartner from "./AddPartner";
 import PartnerList from "./PartnerList";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +8,8 @@ import { partnerAction } from "../../../redux/actions/management/partnerAction";
 import PartnerDetail from "./PartnerDetail";
 import api from "redux/api";
 import SearchPartner from "./SearchPartner";
+
+
 
 const Partner = () => {
   const dispatch = useDispatch();
@@ -32,6 +34,7 @@ const Partner = () => {
     }
   }, [loading]);
 
+  //#region 추가모달표시
   const [view, setView] = useState("-100%");
 
   const addFormViewHandler = () => {
@@ -41,6 +44,7 @@ const Partner = () => {
       setView("-100%");
     }
   };
+  //#endregion
 
   // #region 삭제
   const [selectCodes, setSelectCodes] = useState([]);

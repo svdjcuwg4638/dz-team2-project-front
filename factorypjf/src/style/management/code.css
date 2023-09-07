@@ -1,15 +1,17 @@
 .code_wrap{
-  align-items: center;
   justify-content: space-evenly;
   height: 100%;
+  margin-top: 100px;
+}
+.code_wrap> div:nth-child(1){
+  margin-top: 86px;
 }
 
 .code-scrollable-table {
   height: 300px; 
   overflow: auto; 
   scrollbar-width: none;
-  border: 1px solid #000;
-  display: contents;
+  display: table-caption;
 }
 
 .code-scrollable-table::-webkit-scrollbar {
@@ -26,4 +28,18 @@
 
 .section_style > div{
   height: 100%;
+}
+
+.code_wrap th,
+.code_wrap td{
+  border: 1px solid #000;
+}
+
+.code_wrap th{
+  text-align: center;
+}
+
+.code_wrap > div:nth-child(2) th:nth-child(1),
+.code_wrap > div:nth-child(2) td:nth-child(1){
+  width: 50px;
 }

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "../../../style/management/Storage.css";
+import "../../../style/management/storage.css";
 import { useDispatch, useSelector } from "react-redux";
 import { storageAction } from "../../../redux/actions/management/storageAction";
 import LeftBox from "./LeftBox";
