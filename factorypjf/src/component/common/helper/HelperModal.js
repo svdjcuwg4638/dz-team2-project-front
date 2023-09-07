@@ -1,10 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
+import HelperTable from "./HelperTable";
+import getUrl from "./codeUrl";
+import {getAxios} from "function/axiosFuction";
+
 import helperStyle from "style/common/HelperModal.module.css";
 
-import HelperTable from "./HelperTable";
-
+//======================모달 back =========================
 function HelperBackdrop({ offModal }) {
   const clickHandler = (e) => {
     e.preventDefault();
@@ -17,107 +20,96 @@ function HelperBackdrop({ offModal }) {
   );
 }
 
+//=====================모달 창===========================
 function HelperOverlay({ onSearchCode, modalState, onSelectCode }) {
   const codeName = modalState.codeName;
   const codeValue = modalState.codeValue;
 
+  //response data
   const [codeData, setCodeData] = useState();
-  const [codeURL, setCodeURL]=useState();
-  function isUpperCase(char) {
-    return char === char.toUpperCase();
+  //누른 컬럼에 따른 요청 url 상태
+  const [codeURL, setCodeURL] = useState();
+
+  //응답데이터를 테이블에 넣기 위해 가공
+  function setTableItems(data) {
+    const tableItems = data.data.map((el) => {
+      let objCode = "";
+      let objName = "";
+      //객체이므로 순서 보장이 안되니 코드데이터인지 코드명데이터인지 확인해서 넣어줌
+      for (let key in el) {
+        if (key.toLowerCase().includes("code")) {
+          objCode = el[key];
+        }
+        if (key.toLowerCase().includes("name")) {
+          objName = el[key];
+        }
+      }
+      return {
+        code: objCode,
+        name: objName,
+      };
+    });
+    setCodeData(tableItems);
   }
 
-  
+  function logError(error) {
+    console.log(error);
+  }
+
   useEffect(() => {
-    //api 요청 위해 카멜케이스->케밥케이스
-    let url=''
-    for (let i = 0; i < codeValue.length; i++) {
-      let char = codeValue.charAt(i);
-      
-      if (isUpperCase(char)) {
-        char = "-" + char.toLowerCase();
-      }
-      url += char;
-    }
-    setCodeURL(url)
-    console.log(codeURL)
-    
-    //api요청
-    axios
-      .get(`http://localhost:9090/common-code/${codeURL}`, {
-        // params: { codeValue},
-      })
-      .then((response) => {
-        return response.data;
-      })
-      .then((data) => {
-        //테이블 items
-        const tableItems = data.data.map((el) => {
-          return {
-            [codeValue + "Code"]: el.common_code,
-            [codeValue + "Name"]: el.common_name,
-          };
-        });
-        setCodeData(tableItems);
-      })
-      .catch(error=>console.log(error));
-  }, [modalState,codeURL,codeValue]);
+    //url 가져와서 상태 변경
+    setCodeURL(getUrl(codeValue));
+    codeURL&&getAxios(codeURL, null, setTableItems, logError);
+  }, [modalState, codeURL, codeValue]);
+
 
   //테이블 headers
   const headers = [
     {
-      text: `${codeName}코드`,
-      value: `${codeValue}Code`,
+      text: "코드",
+      value: "code",
       width: "50%",
+      //누른 컬럼이 code에 관한 컬럼이면 도움창의 코드 컬럼만 selectable
+      selectable: codeValue.toLowerCase().includes("code"),
     },
     {
-      text: `${codeName}명`,
-      value: `${codeValue}Name`,
+      text: "이름",
+      value: "name",
       width: "50%",
+      //누른 컬럼이 코드명에 관한 컬럼이면 도움창의 코드명 컬럼만 selectable
+      selectable: !codeValue.toLowerCase().includes("code"),
     },
   ];
 
   //조회버튼 click handler
   function submitHandler(e) {
     e.preventDefault();
-    console.log(selectOption);
-    const keyword=document.querySelector('#keyword').value
-    console.log(document.querySelector('#keyword').value)
-  
-    axios
-      .get(`http://localhost:9090/common-code/${codeURL}`, {
-        params: { searchOption:selectOption, keyword:keyword},
-      })
-      .then((response) => {
-        return response.data;
-      })
-      .then((data) => {
-        //테이블 items
-        const tableItems = data.data.map((el) => {
-          return {
-            [codeValue + "Code"]: el.common_code,
-            [codeValue + "Name"]: el.common_name,
-          };
-        });
-        setCodeData(tableItems);
-      })
-      .catch(error=>console.log(error));
+
+    //검색키워드
+    const keyword = document.querySelector("#keyword").value;
+    const getParam= { searchOption: selectOption, keyword: keyword };
+    
+    getAxios(codeURL,getParam,setTableItems,logError)
   }
 
-  const [selectOption,setSelectOption]=useState('all');
-
-  const selectHandler=(e)=>{
-    setSelectOption(e.target.value)
-  }
+  //검색 옵션
+  const [selectOption, setSelectOption] = useState("all");
+  const selectOptionHandler = (e) => {
+    setSelectOption(e.target.value);
+  };
 
   return (
     <div className={helperStyle.overlay}>
-      <h3>{codeName} 코드</h3>
+      <h3>{codeName} </h3>
       <form action="submit" onSubmit={submitHandler}>
-        <select name="searchOption" defaultValue={'all'} onChange={selectHandler}>
-          <option value='all'>전체</option>
-          <option value='codeValue'>{codeName+'코드'}</option>
-          <option value='codeName'>{codeName+'명'}</option>
+        <select
+          name="searchOption"
+          defaultValue={"all"}
+          onChange={selectOptionHandler}
+        >
+          <option value="all">전체</option>
+          <option value="codeValue">코드</option>
+          <option value="codeName">이름</option>
         </select>
         <input type="text" name="" id="keyword" />
         <button>검색</button>
@@ -135,45 +127,15 @@ function HelperOverlay({ onSearchCode, modalState, onSelectCode }) {
   );
 }
 
+//======================모달 root=========================
 export default function HelperModal({
   offModal,
-  onSearchCode,
   modalState,
   onSelectCode,
 }) {
-  // const [codeData, setCodeData] = useState();
 
-  // function isUpperCase(char){
-  //   return char===char.toUpperCase();
-  // }
-  // useEffect(() => {
-  //   //api 요청 위해 카멜케이스->케밥케이스
-  //   let codeURL=''
-  //   for (let i = 0; i < modalState.codeValue.length; i++) {
-  //     let char=modalState.codeValue.charAt(i)
-  //     if(isUpperCase(char)){
-  //       char='-'+char.toLowerCase();
-  //     }
-  //     codeURL+=char
-  //   }
-  //   console.log(codeURL)
-
-  //   axios
-  //     .get(`http://localhost:9090/common-code/${codeURL}`, {
-  //       params: { codeValue: modalState.codeValue },
-  //     })
-  //     .then((response) => {
-  //       return response.data;
-  //     })
-  //     .then((data) => {
-  //       setCodeData(data.data);
-  //     });
-  // }, [modalState]);
-
-  // const [codeData,setCodeData]=useState();
-
-  const selectCodeHandler = (code) => {
-    onSelectCode(code);
+  const selectCodeHandler = (codeRow) => {
+    onSelectCode(codeRow);
     offModal();
   };
 

@@ -11,14 +11,9 @@ export default function HelperTable({ headers, items, onSelectCode }) {
   //header에 맞는 items를 출력하기 위해 header의 value만 뽑아낸다
   const headerValue = headers.map((header) => header.value);
 
-  const onSelectHandler = (code) => {
-    onSelectCode(code)
+  const onSelectHandler = (codeRow) => {
+    onSelectCode(codeRow)
   };
-  
-  function isCodeColumn(key) {
-    //코드(elec0101)인지, 코드에 대한 이름(전자팀)인지 확인
-    if (key.toLowerCase().includes('code')) return true;
-  }
 
   return (
     <>
@@ -47,20 +42,20 @@ export default function HelperTable({ headers, items, onSelectCode }) {
             /*headerValue를 key로 가진 item 값을 출력 */
             //code 컬럼이면 click handler
             <tr key={idx}>
-              {headerValue.map((key) =>
-                isCodeColumn(key) ? (
+              {headers.map((header) =>
+                // isCodeColumn(key) ? (
                   <td
-                    className={helperStyle['clickable-col']}
-                    key={key + idx}
+                    className={header.selectable&&helperStyle['clickable-col']}
+                    key={header.value + idx}
                     onClick={() => {
-                      onSelectHandler(item[key]);
+                      header.selectable&&onSelectHandler(item[header.value]);
                     }}
                   >
-                    {item[key]}
+                    {item[header.value]}
                   </td>
-                ) : (
-                  <td key={key + idx}>{item[key]}</td>
-                )
+                // ) : (
+                //   <td key={key + idx}>{item[key]}</td>
+                // )
               )}
             </tr>
           ))}
