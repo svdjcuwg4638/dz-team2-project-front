@@ -6,42 +6,21 @@
   padding-top: 30px;
 }
 
-table {
-  border: 1px solid;
-  margin-top: 10px;
-}
-td,
-th {
+.storage_wrap th {
   border: 1px solid;
   width: 200px;
   padding-left: 20px;
 }
 
-.search_box {
-  display: flex;
-  justify-content: flex-end;
+.storage_wrap td {
+  border: 1px solid;
+  width: 200px;
+  padding-left: 20px;
 }
 
-.search_box > :nth-child(1) {
-  margin-right: 20px;
-  height: 30px;
-}
 
 .text-box {
   margin-top: 20px;
-}
-
-.add_from {
-  margin-top: 40px;
-  display: flex;
-}
-
-.add_from > :nth-child(1) {
-  height: 30px;
-}
-
-.add_from > :nth-child(2) {
-  margin-left: 20px;
 }
 
 .right_input_sel {
@@ -62,3 +41,59 @@ th {
 .right_input_sel td{
   width: 200px !important;
 }
+
+.button_wrap{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button_wrap .button{
+  margin: 10px;
+}
+
+.inputBox{
+  border: 1px solid #000;
+}
+.input_wrap{
+  display: flex;
+  justify-content: flex-end;
+}
+.bottom{
+  margin-top: 30px;
+}
+
+.storage_scrollable_table {
+  height: 300px; 
+  overflow: auto; 
+  scrollbar-width: none;
+  display: table-caption;
+}
+
+.storage_scrollable_table::-webkit-scrollbar {
+  display: none; 
+}
+
+.storage_search_wrap {
+  display: flex;
+  justify-content: right;
+}
+
+.storage_search_wrap > div{
+  display: flex;
+  margin: 0 10px;
+}
+
+.storage_search_wrap > div > div{
+  margin: 0 5px;
+}
+
+.storage_search_wrap input{
+  width: 100px;
+}
+
+.storage_wrap th:nth-child(1),
+.storage_wrap td:nth-child(1){
+  width: 50px;
+}
+
+

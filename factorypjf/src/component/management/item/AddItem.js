@@ -2,19 +2,22 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import api from "../../../redux/api";
 import { itemAction } from "../../../redux/actions/management/itemAction";
-import AutoCompleteStorage from "../storage/AutoCompleteStorage";
-import AutoCompleteLocation from "../storage/AutoCompleteLocation";
-
-const AddItem = ({ storageAll, locationAll }) => {
+const AddItem = ({ addFormViewHandler }) => {
   const dispatch = useDispatch();
-  const [selectedStorage, setSelectedStorage] = useState(null);
-  const [selectedLocation, setSelectedLocation] = useState(null);
   const [formData, setFormData] = useState({
+    company_id: "1",
+    item_code: "",
     item_name: "",
-    storage_id: "",
-    location_id: "",
-    itemSKU: "",
-    category:"",
+    location_code: "",
+    storage_code: "",
+    width: "",
+    length: "",
+    height: "",
+    volume: "",
+    weight: "",
+    quantity: "",
+    discription: "",
+    partner_code: "",
   });
 
   const handleInputChange = (event) => {
@@ -25,23 +28,22 @@ const AddItem = ({ storageAll, locationAll }) => {
   const submitHandler = async (event) => {
     event.preventDefault();
 
-    const updatedFormData = {
-      item_name: formData.item_name,
-      storage_id: selectedStorage?.storage_id,
-      location_id: selectedLocation?.location_id,
-      itemSKU: formData.itemSKU,
-      category: formData.category,
-    };
-
     try {
-      console.log(updatedFormData);
-      const response = await api.post("/item/add", updatedFormData);
+      const response = await api.post("/item/add", formData);
       setFormData({
+        company_id: "1",
+        item_code: "",
         item_name: "",
-        storage_id: "",
-        location_id: "",
-        itemSKU: "",
-        category:"",
+        location_code: "",
+        storage_code: "",
+        width: "",
+        length: "",
+        height: "",
+        volume: "",
+        weight: "",
+        quantity: "",
+        discription: "",
+        partner_code: "",
       });
     } catch (error) {
       console.error("Error submitting data:", error);
@@ -50,68 +52,156 @@ const AddItem = ({ storageAll, locationAll }) => {
   };
 
   return (
-    <form onSubmit={submitHandler} className="mt-5">
-      <table>
-        <thead>
-          <tr>
-            <th>품목명</th>
-            <th>창고코드</th>
-            <th>세부장소</th>
-            <th>모델명</th>
-            <th>카태고리</th>
-          </tr>
-        </thead>
-        <tbody className="input_partner">
-          <tr>
-            <td>
-              <input
-                type="text"
-                name="item_name"
-                value={formData.item_name}
-                onChange={handleInputChange}
-              ></input>
-            </td>
-            <td>
-              {storageAll && (
-                <AutoCompleteStorage
-                  storageAll={storageAll.data}
-                  setSelectedStorage={setSelectedStorage}
+    <div
+      style={{
+        width: "90%",
+        height: "90%",
+        backgroundColor: "#fff",
+        borderRadius: "10px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <button 
+        style={{
+          position:'absolute',
+          top:'0',
+          left:'0',
+          border:'none',
+          backgroundColor:'#dadada',
+        }}
+      onClick={addFormViewHandler}>
+        icon들어갈것(접기버튼)
+      </button>
+      <form onSubmit={submitHandler}>
+        <div>
+          <div>
+            <div>
+              <div>품목코드</div>
+              <div>
+                <input
+                  type="text"
+                  name="item_code"
+                  onChange={handleInputChange}
                 />
-              )}
-            </td>
-            <td>
-              <td>
-                {locationAll && (
-                  <AutoCompleteLocation
-                    locationAll={locationAll.data}
-                    setSelectedLocation={setSelectedLocation}
-                  />
-                )}
-              </td>
-            </td>
-            <td>
-              <input
-                type="text"
-                name="itemSKU"
-                value={formData.itemSKU}
-                onChange={handleInputChange}
-              ></input>
-            </td>
-            <td>
-              <input
-                type="text"
-                name="category"
-                value={formData.category}
-                onChange={handleInputChange}
-              ></input>
-            </td>
-            <td>
-              <input type="submit"></input>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </form>
+              </div>
+            </div>
+            <div>
+              <div>품목이름</div>
+              <div>
+                <input
+                  type="text"
+                  name="item_name"
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div>
+              <div>거래처</div>
+              <div>
+                <input
+                  type="text"
+                  name="partner_code"
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div>
+              <div>창고</div>
+              <div>
+                <input
+                  type="text"
+                  name="storage_code"
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+            <div>
+              <div>세부장소</div>
+              <div>
+                <input
+                  type="text"
+                  name="location_id"
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+          </div>
+          <div style={{ fontSize: "20px", fontWeight: "bold" }}>규격</div>
+          <div>
+            <div>
+              <div>폭</div>
+              <div>
+                <input type="text" name="width" onChange={handleInputChange} />
+              </div>
+            </div>
+            <div>
+              <div>길이</div>
+              <div>
+                <input type="text" name="length" onChange={handleInputChange} />
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <div>높이</div>
+              <div>
+                <input type="text" name="height" onChange={handleInputChange} />
+              </div>
+            </div>
+            <div>
+              <div>부피</div>
+              <div>
+                <input type="text" name="volume" onChange={handleInputChange} />
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <div>중량</div>
+              <div>
+                <input type="text" name="weight" onChange={handleInputChange} />
+              </div>
+            </div>
+            <div>
+              <div>갯수</div>
+              <div>
+                <input
+                  type="text"
+                  name="quantity"
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div style={{ width: "100%" }}>
+            <div style={{ width: "100%" }}>
+              <div>비고</div>
+              <div>
+                <textarea
+                  name="discription"
+                  style={{ width: "100%", height: "90px" }}
+                  onChange={handleInputChange}
+                ></textarea>
+              </div>
+            </div>
+          </div>
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <button type="submit" className="button">
+              등록
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   );
 };
 
