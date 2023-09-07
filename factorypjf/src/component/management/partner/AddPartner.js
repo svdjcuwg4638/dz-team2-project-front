@@ -8,11 +8,12 @@ const AddPartner = ({ addFormViewHandler }) => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     partner_code: "",
+    company_id: "1",
     bizNum: "",
     partner_name: "",
-    company_id: "1",
     representative: "",
     address: "",
+    address_dteail: "",
     email: "",
     post_num: "",
     url: "",
@@ -20,7 +21,7 @@ const AddPartner = ({ addFormViewHandler }) => {
     account_num: "",
     account_holder: "",
     collect_date: "",
-    account_name: "",
+    account_code: "",
   });
 
   const handleInputChange = (event) => {
@@ -35,11 +36,12 @@ const AddPartner = ({ addFormViewHandler }) => {
       const response = await api.post("/partner/add", formData);
       setFormData({
         partner_code: "",
+        company_id: "1",
         bizNum: "",
         partner_name: "",
-        company_id: "1",
         representative: "",
         address: "",
+        address_dteail: "",
         email: "",
         post_num: "",
         url: "",
@@ -47,8 +49,7 @@ const AddPartner = ({ addFormViewHandler }) => {
         account_num: "",
         account_holder: "",
         collect_date: "",
-        account_name: "",
-        address_detail: "",
+        account_code: "",
       });
     } catch (error) {
       console.error("Error submitting data:", error);
@@ -217,11 +218,11 @@ const AddPartner = ({ addFormViewHandler }) => {
         </div>
         <div>
           <div>
-            <div>은행이름 </div>
+            <div>은행코드 </div>
             <input
               style={{ width: "100px" }}
               type="text"
-              name="account_name"
+              name="account_code"
               onChange={handleInputChange}
               required
             />

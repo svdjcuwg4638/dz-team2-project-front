@@ -104,3 +104,18 @@ html::-webkit-scrollbar {
 html {
   scrollbar-width: none;
 }
+
+th{
+  background-color: #dadada;
+}
+td{
+  background-color: #fff;
+}
+
+th,td{
+  width: 200px;
+}
+
+td{
+  padding-left: 20px;
+}
