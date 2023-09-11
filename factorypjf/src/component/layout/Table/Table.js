@@ -15,7 +15,7 @@ export default function DataTable({ headers, onModal, children }) {
   if (!headers || !headers.length) {
     throw new Error("<DataTable/> header is required.");
   }
-  const headerKey = headers.map((header) => header.value);
+  // const headerKey = headers.map((header) => header.value);
 
   //children에 props 넘기기위해 children clone
   // const childrenWithProps = children.map((child) => {

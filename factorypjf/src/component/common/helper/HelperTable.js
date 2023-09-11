@@ -11,8 +11,8 @@ export default function HelperTable({ headers, items, onSelectCode }) {
   //header에 맞는 items를 출력하기 위해 header의 value만 뽑아낸다
   const headerValue = headers.map((header) => header.value);
 
-  const onSelectHandler = (codeRow) => {
-    onSelectCode(codeRow)
+  const onSelectHandler = (code) => {
+    onSelectCode(code)
   };
 
   return (
@@ -48,7 +48,7 @@ export default function HelperTable({ headers, items, onSelectCode }) {
                     className={header.selectable&&helperStyle['clickable-col']}
                     key={header.value + idx}
                     onClick={() => {
-                      header.selectable&&onSelectHandler(item[header.value]);
+                      header.selectable&&onSelectHandler(item);
                     }}
                   >
                     {item[header.value]}
