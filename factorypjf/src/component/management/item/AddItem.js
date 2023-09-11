@@ -15,8 +15,8 @@ const AddItem = ({ addFormViewHandler }) => {
     height: "",
     volume: "",
     weight: "",
-    quantity: "",
-    discription: "",
+    unit: "",
+    description: "",
     partner_code: "",
   });
 
@@ -41,8 +41,8 @@ const AddItem = ({ addFormViewHandler }) => {
         height: "",
         volume: "",
         weight: "",
-        quantity: "",
-        discription: "",
+        unit: "",
+        description: "",
         partner_code: "",
       });
     } catch (error) {
@@ -128,7 +128,7 @@ const AddItem = ({ addFormViewHandler }) => {
               <div>
                 <input
                   type="text"
-                  name="location_id"
+                  name="location_code"
                   onChange={handleInputChange}
                 />
               </div>
@@ -175,7 +175,7 @@ const AddItem = ({ addFormViewHandler }) => {
               <div>
                 <input
                   type="text"
-                  name="quantity"
+                  name="unit"
                   onChange={handleInputChange}
                 />
               </div>
@@ -187,7 +187,7 @@ const AddItem = ({ addFormViewHandler }) => {
               <div>비고</div>
               <div>
                 <textarea
-                  name="discription"
+                  name="description"
                   style={{ width: "100%", height: "90px" }}
                   onChange={handleInputChange}
                 ></textarea>

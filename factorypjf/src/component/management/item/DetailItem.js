@@ -43,7 +43,7 @@ const DetailItem = ({}) => {
         volume: "",
         weight: "",
         quantity: "",
-        discription: "",
+        description: "",
         partner_code: "",
       });
     } catch (error) {
@@ -154,7 +154,7 @@ const DetailItem = ({}) => {
           <div>
             <div>갯수</div>
             <div>
-              <input type="text" name="quantity" onChange={handleInputChange} />
+              <input type="text" name="unit" onChange={handleInputChange} />
             </div>
           </div>
         </div>
@@ -164,7 +164,7 @@ const DetailItem = ({}) => {
             <div>비고</div>
             <div>
               <textarea
-                name="discription"
+                name="description"
                 style={{ width: "100%", height: "150px" }}
                 onChange={handleInputChange}
               ></textarea>
