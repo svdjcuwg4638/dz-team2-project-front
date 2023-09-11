@@ -59,7 +59,7 @@ export default function List() {
     }
 
     axios
-      .get(`http://localhost:9090/production/add/component`, {
+      .get(`http://localhost:8080/production/add/component`, {
         params: { [paramKey]: e.target.value },
       })
       .then((res) => {
@@ -73,12 +73,12 @@ export default function List() {
             itemName: componentList[i].item_name,
             itemCode: componentList[i].item_code,
             quantity: data.relation[i].quantity,
-            storage:componentList[i].storage_id,
+            storage: componentList[i].storage_id,
             location: componentList[i].location_id,
-            description:componentList[i].discription
+            description: componentList[i].discription,
           });
         }
-        setItems(tableItems)
+        setItems(tableItems);
       })
       .catch((error) => console.log(error));
   };
