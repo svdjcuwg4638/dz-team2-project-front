@@ -45,8 +45,8 @@ function HelperOverlay({ onSearchCode, modalState, onSelectCode }) {
         }
       }
       return {
-        code: objCode,
-        name: objName,
+        [codeValue+'Code']: objCode,
+        [codeValue+'Name']: objName,
       };
     });
     setCodeData(tableItems);
@@ -66,18 +66,19 @@ function HelperOverlay({ onSearchCode, modalState, onSelectCode }) {
   //테이블 headers
   const headers = [
     {
-      text: "코드",
-      value: "code",
+      text: `${codeName}코드`,
+      value: `${codeValue}Code`,
       width: "50%",
       //누른 컬럼이 code에 관한 컬럼이면 도움창의 코드 컬럼만 selectable
-      selectable: codeValue.toLowerCase().includes("code"),
+      selectable: false
     },
     {
-      text: "이름",
-      value: "name",
+      
+      text: `${codeName}명`,
+      value: `${codeValue}Name`,
       width: "50%",
       //누른 컬럼이 코드명에 관한 컬럼이면 도움창의 코드명 컬럼만 selectable
-      selectable: !codeValue.toLowerCase().includes("code"),
+      selectable: true
     },
   ];
 
@@ -134,8 +135,8 @@ export default function HelperModal({
   onSelectCode,
 }) {
 
-  const selectCodeHandler = (codeRow) => {
-    onSelectCode(codeRow);
+  const selectCodeHandler = (code) => {
+    onSelectCode(code);
     offModal();
   };
 
