@@ -1,0 +1,66 @@
+.headerSection {
+  border-left: 3px solid #5390f0;
+  margin: 1rem;
+}
+
+.header {
+  font-weight: bold;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  margin-right: 3rem;
+  margin-left: 3rem;
+}
+
+.table {
+  width: 100%;
+}
+
+.middlePart {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 3rem;
+}
+
+.arrow {
+  width: 50px;
+}
+.btn {
+  /* Rectangle 7 */
+
+  position: absolute;
+  width: 50px;
+  height: 30px;
+  left: 1300px;
+  top: 400px;
+  background: #4373c0;
+  box-shadow: 1px 1px 1px #767272;
+  border-radius: 6px;
+  /* 확인 */
+
+  /* position: absolute;
+  width: 83.78px;
+  height: 29px;
+  left: 530px;
+  top: 1552px; */
+
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 20;
+  font-size: 13px;
+  line-height: 29px;
+  /* identical to box height */
+  /* display: flex; */
+  align-items: center;
+  text-align: center;
+
+  color: #ffffff;
+}
+.btnSection {
+  /* float: right; */
+  /* width: 100%; */
+}
