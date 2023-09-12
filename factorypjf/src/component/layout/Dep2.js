@@ -1,14 +1,16 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import "../../style/layout/Dep2.css";
+import "../../style/layout/dep2.css";
 import { BiSolidFactory } from "react-icons/bi";
 import { BsFillBookmarkFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
 const Dep2 = () => {
   const currentMenu = useSelector((state) => state.currentMenu.currentMenu);
-  const currentMenuName = useSelector((state) => state.currentMenu.currentMenuName);
+  const currentMenuName = useSelector(
+    (state) => state.currentMenu.currentMenuName
+  );
 
   const subMenu = {
     production: [
@@ -32,9 +34,8 @@ const Dep2 = () => {
       { link: "/after", name: "기준정보3" },
     ],
     storage: [
-      { link: "", name: "재고관리1" },
-      { link: "/ing", name: "재고관리2" },
-      { link: "/after", name: "재고관리3" },
+      { link: "", name: "재고조회" },
+      { link: "/registration", name: "기초재고등록" },
     ],
   };
 
@@ -51,7 +52,7 @@ const Dep2 = () => {
           <div className="menu_sub_wrap">
             {subMenu[currentMenu].map((el, index) => (
               <div key={index}>
-                <Link to={currentMenu+el.link}>
+                <Link to={currentMenu + el.link}>
                   <span>{el.name}</span>
                 </Link>
               </div>

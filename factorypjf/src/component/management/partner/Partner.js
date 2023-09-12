@@ -9,6 +9,8 @@ import PartnerDetail from "./PartnerDetail";
 import api from "redux/api";
 import SearchPartner from "./SearchPartner";
 
+
+
 const Partner = () => {
   const dispatch = useDispatch();
 

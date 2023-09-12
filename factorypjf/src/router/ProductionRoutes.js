@@ -5,7 +5,7 @@ import ProductionAdd from 'component/production/Add'
 import ProductionLine from 'component/production/Line'
 import ProductionList from 'component/production/List'
 
-export default function productionRoutes() {
+export default function ProductionRoutes() {
   return (
     <Routes>
       <Route  path="" index element={<ProductionAdd /> } />

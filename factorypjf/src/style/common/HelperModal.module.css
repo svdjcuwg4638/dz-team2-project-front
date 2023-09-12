@@ -1,0 +1,29 @@
+.helper-modal{
+    position: absolute;
+    z-index: 99;
+    width:100%;
+    height: 100%;
+    top:0;
+}
+.back-drop{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.overlay{
+    position: absolute;
+    left: 25%;
+    top:10%;
+    box-shadow: 1px 1px 1px grey;
+    width: 50%;
+    height: 50%;
+    border-radius: 20px;  
+    background-color: white;
+}
+/* .helper-table__data td{
+    cursor:default;
+
+} */
+.clickable-col:hover{
+    cursor:pointer
+}

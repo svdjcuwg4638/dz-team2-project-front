@@ -9,12 +9,24 @@ import DetailItem from "./DetailItem";
 const Item = () => {
   const dispatch = useDispatch();
 
-  const { itemAll, storageAll, loading, locationAll } = useSelector(
+  const { itemAll} = useSelector(
     (state) => state.item
   );
 
+  const [isLoading, setIsloading] = useState(false)
+
   useEffect(() => {
-    dispatch(itemAction.getItemAll());
+    const patchItems = async ()=>{
+      setIsloading(true)
+      try{
+        await dispatch(itemAction.getItemAll())
+      }catch(error){
+        console.error(error);
+      }finally{
+        setIsloading(false)
+      }
+    }
+    patchItems()
   }, []);
 
   //#region 추가모달표시
@@ -29,12 +41,12 @@ const Item = () => {
   };
   //#endregion
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="loader_wrap container">
         <ClipLoader
           color="#000"
-          loading={loading}
+          loading={isLoading}
           size={150}
           aria-label="Loading Spinner"
           data-testid="loader"

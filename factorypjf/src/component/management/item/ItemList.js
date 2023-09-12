@@ -59,7 +59,7 @@ const ItemList = ({ itemAll }) => {
                   {data.width != "" ? "v: " + data.volume+" " : ""}
                   {data.width != "" ? "we: " + data.weight+" " : ""}
                 </td>
-                <td>{data.quantity}</td>
+                <td>{data.unit}</td>
               </tr>
             ))}
         </tbody>

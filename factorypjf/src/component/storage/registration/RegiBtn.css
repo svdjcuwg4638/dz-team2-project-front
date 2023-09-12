@@ -1,0 +1,23 @@
+.btn {
+  width: 100%;
+  font: bold;
+  padding: 0.5rem 1.5rem;
+  border: 1px solid #7aa1e1;
+  color: white;
+  background-color: #7aa1e1;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.26);
+  border-radius: 15px;
+}
+
+.btn:hover,
+.btn:active {
+  background: #4373c0;
+  border-color: #4373c0;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.26);
+}
+
+@media (min-width: 768px) {
+  .btn {
+    width: auto;
+  }
+}

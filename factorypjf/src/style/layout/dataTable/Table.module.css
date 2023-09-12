@@ -1,15 +1,14 @@
+/* table common */
 table{
-    border-radius: 5px;
-    border-style: hidden;
-    box-shadow: 0 0 0 1px #B9B9B9;
-    border-collapse: collapse;
-    text-align: center;
+    
 }
-table th,tr,td{
+table th,tr,td,input{
     border: solid 1px var(--border-color-light);
+    text-align: center;
+    padding:0px;
 }
 table th{
-    padding:2px;
+   
 }
 td>input{
     width:100%;
@@ -20,7 +19,20 @@ thead{
     background-color: lightgrey;
 }
 
+/* table header */
+.search-symbol{
+    width: 15px;
+}
+.search-symbol:hover{
+    cursor: pointer;
+}
 
+/* table_body */
+.tbl_body_wrap{
+    /* 각자 css를 설정할 수 있게 100%로 수정 (0911 HJ)*/
+    max-height: 100%;
+    overflow-y: auto;
+}
 .btn_add{
     width: 100%;
     border: none;
@@ -31,6 +43,7 @@ thead{
     color: var(--font-color);
     font-weight: bold;
 }
+
 
 *::-webkit-scrollbar{
     
