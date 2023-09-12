@@ -13,7 +13,7 @@ const List = () => {
 
   const { partnerAll } = useSelector((state) => state.partner);
   const { itemAll } = useSelector((state) => state.item);
-  const { storageAll, locationAll, loading } = useSelector(
+  const { storageAll, locationAll } = useSelector(
     (state) => state.storage
   );
 

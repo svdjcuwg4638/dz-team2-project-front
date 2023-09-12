@@ -4,8 +4,9 @@ import { partnerAction } from "../../../redux/actions/management/partnerAction";
 import { itemAction } from "../../../redux/actions/management/itemAction";
 import { storageAction } from "../../../redux/actions/management/storageAction";
 
-const SearchHelper = ({ searchPartner, handleRowClick, menu }) => {
+const SearchHelper = ({ searchPartner, handleRowClick, menu,handleInputChange }) => {
   console.log("menupopup");
+  console.log(menu);
   const dispatch = useDispatch();
 
   const [InputboxText, setInputboxText] = useState("");
@@ -16,6 +17,7 @@ const SearchHelper = ({ searchPartner, handleRowClick, menu }) => {
     if (menu.name === "거래처") dispatch(partnerAction.getPartnerAll());
     if (menu.name === "품목") dispatch(itemAction.getItemAll());
     if (menu.name === "창고") dispatch(storageAction.getstorageAll());
+    if (menu.name === "세부장소") dispatch(storageAction.getstorageAll());
   }, [InputboxText]);
 
   let filteredData = [];
@@ -40,8 +42,14 @@ const SearchHelper = ({ searchPartner, handleRowClick, menu }) => {
   }
 
   const rowClickHandler = (datarow) => {
+    handleInputChange({
+      target:{
+        name: menu.code_column,
+        value: datarow[menu.name_column]
+      }
+    })
     setSelectedColumn(datarow);
-    searchPartner(datarow[menu.code_column]);
+    searchPartner(datarow[menu.name_column]);
   };
 
   const clickFn = (e) => {
@@ -98,8 +106,11 @@ const SearchHelper = ({ searchPartner, handleRowClick, menu }) => {
             </thead>
             <tbody>
               {filteredData.map((datarow) => (
-                <tr onClick={() => rowClickHandler(datarow)}>
-                  <td>{datarow[menu.code_column]}</td>{" "}
+                <tr onClick={(e) =>{
+                  rowClickHandler(datarow)
+                } 
+                }>
+                  <td>{datarow[menu.code_column]}</td>
                   <td> {datarow[menu.name_column]}</td>
                 </tr>
               ))}

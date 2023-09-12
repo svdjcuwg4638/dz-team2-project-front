@@ -2,7 +2,6 @@ let initalState = {
   itemAll: {},
   storageAll: {},
   locationAll: {},
-  loading: false,
 };
 
 function itemReducer(state = initalState, action) {
@@ -11,7 +10,6 @@ function itemReducer(state = initalState, action) {
     case "GET_REQUEST":
       return {
         ...state,
-        loading: true,
       };
     case "GET_ITEM_ALL_SUCCESS":
       return {
@@ -19,7 +17,6 @@ function itemReducer(state = initalState, action) {
         itemAll: payload.itemAll,
         storageAll: payload.storageAll,
         locationAll: payload.locationAll,
-        loading: false,
       };
     default:
       return { ...state };
