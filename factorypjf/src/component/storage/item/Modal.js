@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchHelper from "./SearchHelper";
-const Modal = ({ menu }) => {
+const Modal = ({ menu, name,handleInputChange }) => {
   const [HelperScreenState, setHelperScreenState] = useState(false);
   const [searchpartner, setSearchpartner] = useState("");
 
@@ -36,7 +36,11 @@ const Modal = ({ menu }) => {
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <SearchHelper menu={menu} searchPartner={selectedPartnerFn} />
+            <SearchHelper
+            handleInputChange={handleInputChange}
+              menu={menu}
+              searchPartner={selectedPartnerFn}
+            />
           </div>
         )}
       </div>
@@ -45,18 +49,24 @@ const Modal = ({ menu }) => {
         <div className="searchSection">
           {menu.trigger_type === "search" ? (
             <>
-              <label>{menu.name} :</label>
               <input
+                name={name}
                 className="my-3"
                 style={{ border: "1px solid black" }}
                 type="text"
                 value={searchpartner}
-                onChange={(e) => setSearchpartner(e.target.value)}
+                onChange={(e) => {
+                  setSearchpartner(e.target.value);
+                }}
               />
               {menu.guide && (
                 <button
+                  type="button"
                   className="btn"
-                  onClick={() => setHelperScreenState(!HelperScreenState)}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    setHelperScreenState(!HelperScreenState);
+                  }}
                   style={{
                     padding: "0",
                     width: "30px",
@@ -72,7 +82,6 @@ const Modal = ({ menu }) => {
             </>
           ) : (
             <>
-              {" "}
               {menu.guide ? (
                 <input
                   className="m-3"
