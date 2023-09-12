@@ -13,26 +13,7 @@ const HELPER_KEY = 113;
 export default function AddTableData({ headers, onGridTrigger }) {
   const DEFAULT_ROW = 3;
 
-  // const initRowObj = useMemo(() => {
-  //   //header에 맞는 빈 item 객체 만들기
-  //   let obj = {};
-  //   headers.forEach((header) => {
-  //     obj[header.value] = "";
-  //   });
-  //   return obj;
-  // }, [headers]);
-
-  // const initTableItems = useMemo(() => {
-  //   //default row 수만큼 테이블 row 만들어지도록 배열 생성
-  //   let tempArr = [];
-  //   for (let i = 0; i < DEFAULT_ROW; i++) {
-  //     tempArr.push(JSON.parse(JSON.stringify(initRowObj)));
-  //   }
-  //   return tempArr;
-  // }, [initRowObj]);
-
   //행 추가 handler
-
   const [tableItems, setTableItems] = useState(
     Array.from({ length: DEFAULT_ROW })
   );
@@ -89,18 +70,20 @@ export default function AddTableData({ headers, onGridTrigger }) {
     }
   };
 
-  //코드 선택
+  //코드 선택 handler
   const selectCodeHandler = (codeRow) => {
-    console.log(codeRow);
-    console.log(tableItems);
-    console.log(currentCol);
-    console.log(modalState.codeValue);
+    // console.log(codeRow);
+    // console.log(tableItems);
+    // console.log(currentCol);
+    // console.log(modalState.codeValue);
 
+    //================선택한 코드 테이블에 출력===============
     let copyItems = JSON.parse(JSON.stringify(tableItems));
 
     for (let key in codeRow) {
       let itemKey = "";
-      //코드데이터면 key가 ~~Code, 아니면 value 그대로
+
+      //코드데이터면 key가 ~~Code, 아니면 value 그대로 객체 생성
       //ex) teamCode, team
       if (!key.toLowerCase().includes("code")) {
         itemKey = modalState.codeValue;
@@ -108,23 +91,34 @@ export default function AddTableData({ headers, onGridTrigger }) {
         itemKey = key;
       }
 
+      //같은 행에 이미 데이터가 들어있으면
       if (copyItems[currentCol.row]) {
         copyItems[currentCol.row] = {
           ...copyItems[currentCol.row],
           [itemKey]: codeRow[key],
         };
+      //비어있는 행이면
       } else {
         copyItems[currentCol.row] = { [itemKey]: codeRow[key] };
       }
     }
     setTableItems(copyItems);
-    console.log(tableItems)
+
+
+    //======================grid2 trigger========================
+    headers.forEach((header)=>{
+      //현재 도움창을 띄운 column이 trigger 컬럼이면
+      if(header.gridTrigger&&header.value===modalState.codeValue){
+        //현재 컬럼의 header, 현재 row를 보냄
+        onGridTrigger(header,copyItems[currentCol.row]);
+      }
+    })
+    // console.log(tableItems)
   };
 
-  //onBlurHandler
-  const onBlurHandler = (e, header) => {
-    onGridTrigger(e, header);
-  };
+  // //onBlurHandler
+  // const onBlurHandler = (trigger,rowIdx) => {
+  // };
 
   return (
     <>
@@ -153,7 +147,7 @@ export default function AddTableData({ headers, onGridTrigger }) {
               <td key={headerIdx}>{idx + 1}</td>
             ) : (
               <td key={headerIdx}>
-                {header.helper ? (
+                {header.helper||header.readonly ? (
                   <input
                     readOnly
                     onKeyUp={(e) => {
@@ -163,7 +157,7 @@ export default function AddTableData({ headers, onGridTrigger }) {
                       {
                         /* grid02 trigger 여부에 따라 onBlur 핸들러 유무 결정 */
                       }
-                      header.gridTrigger && onBlurHandler(e, header);
+                      // header.gridTrigger && onBlurHandler(header.value,idx);
                     }}
                     value={item ? item[header.value] : ""}
                   ></input>
@@ -176,7 +170,7 @@ export default function AddTableData({ headers, onGridTrigger }) {
                       {
                         /* grid02 trigger 여부에 따라 onBlur 핸들러 유무 결정 */
                       }
-                      header.gridTrigger && onBlurHandler(e, header);
+                      // header.gridTrigger && onBlurHandler(header.value,idx);
                     }}
                     value={item ? item[header.value] : ""}
                   ></input>

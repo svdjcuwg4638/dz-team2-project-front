@@ -3,9 +3,11 @@ import React, { useEffect, useState } from "react";
 
 import HelperTable from "./HelperTable";
 import getUrl from "./codeUrl";
-import {getAxios} from "function/axiosFuction";
+import {getAxios,postAxios} from "function/axiosFuction";
 
 import helperStyle from "style/common/helperModal.module.css";
+
+const HELPER_URL= 'common/help'
 
 //======================모달 back =========================
 function HelperBackdrop({ offModal }) {
@@ -21,7 +23,7 @@ function HelperBackdrop({ offModal }) {
 }
 
 //=====================모달 창===========================
-function HelperOverlay({ onSearchCode, modalState, onSelectCode }) {
+function HelperOverlay({ modalState, onSelectCode }) {
   const codeName = modalState.codeName;
   const codeValue = modalState.codeValue;
 
@@ -37,11 +39,17 @@ function HelperOverlay({ onSearchCode, modalState, onSelectCode }) {
       let objName = "";
       //객체이므로 순서 보장이 안되니 코드데이터인지 코드명데이터인지 확인해서 넣어줌
       for (let key in el) {
-        if (key.toLowerCase().includes("code")) {
-          objCode = el[key];
-        }
+        // if (key.toLowerCase().includes("code")) {
+        //   objCode = el[key];
+        // }
+        // if (key.toLowerCase().includes("name")) {
+        //   objName = el[key];
+        // }
         if (key.toLowerCase().includes("name")) {
           objName = el[key];
+        }
+        else {
+          objCode = el[key];
         }
       }
       return {
@@ -56,11 +64,11 @@ function HelperOverlay({ onSearchCode, modalState, onSelectCode }) {
     console.log(error);
   }
 
-  useEffect(() => {
-    //url 가져와서 상태 변경
-    setCodeURL(getUrl(codeValue));
-    codeURL&&getAxios(codeURL, null, setTableItems, logError);
-  }, [modalState, codeURL, codeValue]);
+  // useEffect(() => {
+  //   //url 가져와서 상태 변경
+  //   setCodeURL(getUrl(codeValue));
+  //   codeURL&&getAxios(codeURL, null, setTableItems, logError);
+  // }, [modalState, codeURL, codeValue]);
 
 
   //테이블 headers
@@ -88,13 +96,13 @@ function HelperOverlay({ onSearchCode, modalState, onSelectCode }) {
 
     //검색키워드
     const keyword = document.querySelector("#keyword").value;
-    const getParam= { searchOption: selectOption, keyword: keyword };
+    const getParam= { searchOption: selectOption, keyword: keyword, codeType:codeValue };
     
-    getAxios(codeURL,getParam,setTableItems,logError)
+    postAxios(HELPER_URL,getParam,setTableItems,logError)
   }
 
   //검색 옵션
-  const [selectOption, setSelectOption] = useState("all");
+  const [selectOption, setSelectOption] = useState("0");
   const selectOptionHandler = (e) => {
     setSelectOption(e.target.value);
   };
@@ -105,12 +113,12 @@ function HelperOverlay({ onSearchCode, modalState, onSelectCode }) {
       <form action="submit" onSubmit={submitHandler}>
         <select
           name="searchOption"
-          defaultValue={"all"}
+          defaultValue={"0"}
           onChange={selectOptionHandler}
         >
-          <option value="all">전체</option>
-          <option value="codeValue">코드</option>
-          <option value="codeName">이름</option>
+          <option value="0">전체</option>
+          <option value="1">코드</option>
+          <option value="2">이름</option>
         </select>
         <input type="text" name="" id="keyword" />
         <button>검색</button>
