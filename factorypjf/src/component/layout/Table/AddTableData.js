@@ -1,19 +1,25 @@
-import React, { useReducer, useRef, useState } from "react";
+import React, { useEffect, useMemo, useReducer, useRef, useState } from "react";
 import axios from "axios";
 
-import tableStyle from "style/layout/dataTable/table.module.css";
 import HelperModal from "component/common/helper/HelperModal";
+import { getAxios } from "function/axiosFuction";
+
+import tableStyle from "style/layout/dataTable/Table.module.css";
+import addStyle from "style/layout/dataTable/AddTableData.module.css";
 
 //도움창 단축키 코드
 const HELPER_KEY = 113;
 
-export default function AddTableData({ headers,onGridTrigger }) {
-  //행 추가 state
-  const [rowCount, setrowCount] = useState(3);
-  const rowCountArr = Array.from({ length: rowCount });
+export default function AddTableData({ headers, onGridTrigger }) {
+  const DEFAULT_ROW = 3;
+
   //행 추가 handler
+  const [tableItems, setTableItems] = useState(
+    Array.from({ length: DEFAULT_ROW })
+  );
+
   const addRowHandler = () => {
-    setrowCount(rowCount + 1);
+    setTableItems([...tableItems, {}]);
   };
 
   //focus된 행 state
@@ -21,7 +27,7 @@ export default function AddTableData({ headers,onGridTrigger }) {
 
   const modalInit = {
     showModal: false,
-    codeValue: "", 
+    codeValue: "",
     codeName: "",
   };
   //모달 끄고 닫는 핸들러
@@ -52,42 +58,67 @@ export default function AddTableData({ headers,onGridTrigger }) {
 
   const [currentCol, setCurrentCol] = useState();
   //도움창 단축키 handler
-  const keyUpHandler = (e, colInfo) => {
+  const keyUpHandler = (e, colInfo, coordinate) => {
     if (e.which === HELPER_KEY && colInfo.helper) {
       console.log(e, colInfo);
-      //도움창을 연 컬럼 저장
-      setCurrentCol(e.target);
+      //도움창을 연 컬럼 좌표 저장
+      setCurrentCol({ ...coordinate });
       //모달 켜기
       onModalHanlder(colInfo.value, colInfo.text);
-    } else if(!colInfo.helper){
+    } else if (e.which === HELPER_KEY && !colInfo.helper) {
       console.log("도움창이 제공되지 않는 코드입니다.");
     }
   };
 
-  //코드 선택
+  //코드 선택 handler
   const selectCodeHandler = (codeRow) => {
-    // const currentFocus = currentCol
-    // let relatedCol;
-    // console.log(currentCol)
-    // //고른게 생산품코드였으면
-    // if(modalState.codeName==='생산품코드'){
-    //   //생산품 컬럼의 idx 찾아서
-    //   relatedCol=headers.findIndex(header=>header.text==='생산품');
-    //   //input<td<tr의 컬럼의 값 변경
-    //   console.log(currentFocus.parentElement.parentElement.childNodes[relatedCol])
-    //   currentFocus.parentElement.parentElement.childNodes[relatedCol].value=codeRow.name;
-    // }else{
-      //테이블에 선택한 값 넣기
-      const target = currentCol;
-      target.value = codeRow;
-    // }
+    // console.log(codeRow);
+    // console.log(tableItems);
+    // console.log(currentCol);
+    // console.log(modalState.codeValue);
 
+    //================선택한 코드 테이블에 출력===============
+    let copyItems = JSON.parse(JSON.stringify(tableItems));
+
+    for (let key in codeRow) {
+      let itemKey = "";
+
+      //코드데이터면 key가 ~~Code, 아니면 value 그대로 객체 생성
+      //ex) teamCode, team
+      if (!key.toLowerCase().includes("code")) {
+        itemKey = modalState.codeValue;
+      } else {
+        itemKey = key;
+      }
+
+      //같은 행에 이미 데이터가 들어있으면
+      if (copyItems[currentCol.row]) {
+        copyItems[currentCol.row] = {
+          ...copyItems[currentCol.row],
+          [itemKey]: codeRow[key],
+        };
+      //비어있는 행이면
+      } else {
+        copyItems[currentCol.row] = { [itemKey]: codeRow[key] };
+      }
+    }
+    setTableItems(copyItems);
+
+
+    //======================grid2 trigger========================
+    headers.forEach((header)=>{
+      //현재 도움창을 띄운 column이 trigger 컬럼이면
+      if(header.gridTrigger&&header.value===modalState.codeValue){
+        //현재 컬럼의 header, 현재 row를 보냄
+        onGridTrigger(header,copyItems[currentCol.row]);
+      }
+    })
+    // console.log(tableItems)
   };
 
-  //onBlurHandler
-  const onBlurHandler=(e,header)=>{
-    onGridTrigger(e,header)
-  }
+  // //onBlurHandler
+  // const onBlurHandler = (trigger,rowIdx) => {
+  // };
 
   return (
     <>
@@ -99,13 +130,13 @@ export default function AddTableData({ headers,onGridTrigger }) {
           onSelectCode={selectCodeHandler}
         />
       )}
-      {rowCountArr.map((key, idx) => (
+      {tableItems.map((item, idx) => (
         // 행 추가를 위해 rowCount만큼 tr 생성
         <tr
           key={idx}
-          className={focusRow === idx ? tableStyle["focused-row"] : ""}
+          // className={focusRow === idx ? tableStyle["focused-row"] : ""}
         >
-          {headers.map((header,headerIdx) =>
+          {headers.map((header, headerIdx) =>
             // selectBox 컬럼
             header.value === "select" ? (
               <td key={headerIdx}>
@@ -116,20 +147,32 @@ export default function AddTableData({ headers,onGridTrigger }) {
               <td key={headerIdx}>{idx + 1}</td>
             ) : (
               <td key={headerIdx}>
-                {/* grid02 trigger 여부에 따라 onBlur 핸들러 유무 결정 */}
-                {header.gridTrigger ? (
+                {header.helper||header.readonly ? (
                   <input
+                    readOnly
                     onKeyUp={(e) => {
-                      keyUpHandler(e, header );
+                      keyUpHandler(e, header, { row: idx, col: headerIdx });
                     }}
-                    onBlur={(e)=>{
-                      onBlurHandler(e,header)}}
+                    onBlur={(e) => {
+                      {
+                        /* grid02 trigger 여부에 따라 onBlur 핸들러 유무 결정 */
+                      }
+                      // header.gridTrigger && onBlurHandler(header.value,idx);
+                    }}
+                    value={item ? item[header.value] : ""}
                   ></input>
                 ) : (
                   <input
                     onKeyUp={(e) => {
                       keyUpHandler(e, header);
                     }}
+                    onBlur={(e) => {
+                      {
+                        /* grid02 trigger 여부에 따라 onBlur 핸들러 유무 결정 */
+                      }
+                      // header.gridTrigger && onBlurHandler(header.value,idx);
+                    }}
+                    value={item ? item[header.value] : ""}
                   ></input>
                 )}
               </td>

@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 
 import tableStyle from "style/layout/dataTable/table.module.css";
 import listStyle from "style/layout/dataTable/listTableData.module.css";
@@ -12,8 +12,15 @@ export default function ListTable({ headers, items }) {
     codeValue: "", //
     codeName: "",
   };
+
+  const [tableItems, setTableItems] = useState([]);
+
+  useEffect(()=>{
+    setTableItems(items)
+  },[items])
+
   //모달 끄고 닫는 핸들러
-  const onModalHanlder = ( codeValue, codeName) => {
+  const onModalHanlder = (codeValue, codeName) => {
     // console.log('onmodalHandler',value)
     dispatch({ type: "ON_MODAL", codeValue, codeName });
   };
@@ -44,16 +51,55 @@ export default function ListTable({ headers, items }) {
       onModalHanlder(colInfo.value, colInfo.text);
     }
   };
+
+ 
+  // //코드 선택 handler
+  // const selectCodeHandler = (codeRow) => {
+  //   // console.log(codeRow);
+  //   // console.log(tableItems);
+  //   // console.log(currentCol);
+  //   // console.log(modalState.codeValue);
+
+  //   //================선택한 코드 테이블에 출력===============
+  //   let copyItems = JSON.parse(JSON.stringify(tableItems));
+
+  //   for (let key in codeRow) {
+  //     let itemKey = "";
+
+  //     //코드데이터면 key가 ~~Code, 아니면 value 그대로 객체 생성
+  //     //ex) teamCode, team
+  //     if (!key.toLowerCase().includes("code")) {
+  //       itemKey = modalState.codeValue;
+  //     } else {
+  //       itemKey = key;
+  //     }
+
+  //     //같은 행에 이미 데이터가 들어있으면
+  //     if (copyItems[currentCol.row]) {
+  //       copyItems[currentCol.row] = {
+  //         ...copyItems[currentCol.row],
+  //         [itemKey]: codeRow[key],
+  //       };
+  //     //비어있는 행이면
+  //     } else {
+  //       copyItems[currentCol.row] = { [itemKey]: codeRow[key] };
+  //     }
+  //   }
+  //   setTableItems(copyItems);
+
+  // };
+
+
   return (
     <>
       {modalState.showModal && (
         <HelperModal
           modalState={modalState}
           offModal={offModalHandler}
-          // onSearchCode={searchHandler}
+          // onSelectCode={selectCodeHandler}
         />
       )}
-      {items.map((item, idx) => (
+      {tableItems.map((item, idx) => (
         <tr key={idx}>
           {headers.map((header) =>
             //선택 컬럼
@@ -67,12 +113,22 @@ export default function ListTable({ headers, items }) {
             ) : (
               <td key={header.value + idx}>
                 {/* headerKey를 key로 가진 item 값을 출력 */}
-                <input
-                  defaultValue={item[header.value]}
-                  onKeyUp={(e) => {
-                    keyUpHandler(e,header);
-                  }}
-                ></input>
+                {header.helper||header.readonly ? (
+                  <input
+                    readOnly
+                    defaultValue={item[header.value]}
+                    onKeyUp={(e) => {
+                      keyUpHandler(e, header);
+                    }}
+                  ></input>
+                ) : (
+                  <input
+                    defaultValue={item[header.value]}
+                    onKeyUp={(e) => {
+                      keyUpHandler(e, header);
+                    }}
+                  ></input>
+                )}
               </td>
             )
           )}
