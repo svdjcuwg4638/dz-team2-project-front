@@ -16,3 +16,17 @@ export function getAxios(url, param, successFunction, failFunction) {
     .catch((error) => failFunction(error));
 }
 
+export function postAxios(url, param, successFunction, failFunction) {
+  axios
+    .post(`${DEV_URL+url}`, 
+     param
+    )
+    .then((response) => {
+      return response.data;
+    })
+    .then((data) => {
+      successFunction(data);
+    })
+    .catch((error) => failFunction(error));
+}
+
