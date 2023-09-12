@@ -6,14 +6,19 @@ import HelperModal from "component/common/helper/HelperModal";
 
 const HELPER_KEY = 113;
 
-export default function ListTable({ headers, items }) {
+export default function ListTable({
+  headers,
+  items,
+  selectedRows,
+  onCheckboxChange,
+}) {
   const modalInit = {
     showModal: false,
     codeValue: "", //
     codeName: "",
   };
   //모달 끄고 닫는 핸들러
-  const onModalHanlder = ( codeValue, codeName) => {
+  const onModalHanlder = (codeValue, codeName) => {
     // console.log('onmodalHandler',value)
     dispatch({ type: "ON_MODAL", codeValue, codeName });
   };
@@ -59,7 +64,11 @@ export default function ListTable({ headers, items }) {
             //선택 컬럼
             header.value === "select" ? (
               <td key={header.value + idx}>
-                <input type="checkbox"></input>
+                <input
+                  type="checkbox"
+                  checked={selectedRows.includes(item)}
+                  onChange={() => onCheckboxChange(item)}
+                ></input>
               </td>
             ) : //순번 컬럼
             header.value === "index" ? (
@@ -70,7 +79,7 @@ export default function ListTable({ headers, items }) {
                 <input
                   defaultValue={item[header.value]}
                   onKeyUp={(e) => {
-                    keyUpHandler(e,header);
+                    keyUpHandler(e, header);
                   }}
                 ></input>
               </td>

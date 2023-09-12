@@ -3,8 +3,7 @@ import React, { cloneElement, isValidElement, useState } from "react";
 import tableStyle from "style/layout/dataTable/table.module.css";
 import addStyle from "style/layout/dataTable/addTableData.module.css";
 
-
-export default function DataTable({ headers, onModal, children }) {
+export default function DataTable({ headers, onModal, children, maxHeight }) {
   // let inputType=''
   // const INPUT_TYPE=function(key){
   //     // if(key.includes('select'))return 'checkbox'
@@ -30,7 +29,7 @@ export default function DataTable({ headers, onModal, children }) {
     <>
       <table className={tableStyle.tbl_header}>
         <colgroup>
-          {headers.map((header,idx) => {
+          {headers.map((header, idx) => {
             return <col key={idx} width={header.width}></col>;
           })}
         </colgroup>
@@ -52,10 +51,13 @@ export default function DataTable({ headers, onModal, children }) {
         </thead>
       </table>
 
-      <div className={tableStyle.tbl_body_wrap}>
+      <div
+        className={tableStyle.tbl_body_wrap}
+        style={{ maxHeight: maxHeight }}
+      >
         <table className={tableStyle.tbl_body}>
           <colgroup>
-            {headers.map((header,idx ) => {
+            {headers.map((header, idx) => {
               return <col key={idx} width={header.width}></col>;
             })}
           </colgroup>

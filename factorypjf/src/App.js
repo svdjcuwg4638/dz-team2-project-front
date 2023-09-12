@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import "style/App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "style/Table.css";
+// import "style/Table.css";
 import Layout from "./component/layout/Layout";
 import Storage from "./component/management/storage/Storage";
 import Management from "./pages/Management";
@@ -11,8 +11,8 @@ import Product from "./component/management/product/Product";
 import UnitPrice from "./component/management/unitPrice/UnitPrice";
 import Code from "component/management/code/Code";
 import StorageRoutes from "./pages/Storage";
-// import StorageItem from "./component/storage/item/List";
-import StorageInquiry from "./component/storage/item/Inquiry ";
+import StorageItem from "./component/storage/item/List";
+import StorageInquiry from "./component/storage//item/Inquiry";
 import Registration from "./component/storage/registration/Registration";
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
         <Route path="/storage/*" element={<StorageRoutes/>}/>
         */}
         <Route path="/storage/" element={<StorageRoutes />}>
-          {/* <Route path="" element={<StorageItem />} /> */}
+          <Route path="list" element={<StorageItem />} />
           <Route path="" element={<StorageInquiry />} />
           <Route path="registration" element={<Registration />} />
         </Route>
