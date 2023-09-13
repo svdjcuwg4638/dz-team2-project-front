@@ -153,24 +153,12 @@ export default function AddTableData({ headers, onGridTrigger }) {
                     onKeyUp={(e) => {
                       keyUpHandler(e, header, { row: idx, col: headerIdx });
                     }}
-                    onBlur={(e) => {
-                      {
-                        /* grid02 trigger 여부에 따라 onBlur 핸들러 유무 결정 */
-                      }
-                      // header.gridTrigger && onBlurHandler(header.value,idx);
-                    }}
                     value={item ? item[header.value] : ""}
                   ></input>
                 ) : (
                   <input
                     onKeyUp={(e) => {
                       keyUpHandler(e, header);
-                    }}
-                    onBlur={(e) => {
-                      {
-                        /* grid02 trigger 여부에 따라 onBlur 핸들러 유무 결정 */
-                      }
-                      // header.gridTrigger && onBlurHandler(header.value,idx);
                     }}
                     value={item ? item[header.value] : ""}
                   ></input>

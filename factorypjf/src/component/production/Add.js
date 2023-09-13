@@ -9,6 +9,7 @@ import Table from "component/layout/Table/Table";
 import AddTd from "component/layout/Table/AddTableData";
 import ListTd from "component/layout/Table/ListTableData";
 import HelperModal from "component/common/helper/HelperModal";
+import { getAxios } from "function/axiosFuction";
 
 export default function List() {
   //text: 컬럼명, value: 내부적으로 가지는 값(DB 필드명과 같음), width: 컬럼 style(width), helper: 도움창 사용여부, gridTrigger: 입력이 완료되면 grid02 데이터 가져오는 trigger 컬럼
@@ -16,9 +17,15 @@ export default function List() {
     { text: "선택", value: "select", width: "9%" },
     { text: "순번", value: "index", width: "9%" },
     { text: "날짜", value: "date", width: "9%" },
-    { text: "생산품", value: "item", width: "9%", helper: true,gridTrigger:true },
+    {
+      text: "생산품",
+      value: "item",
+      width: "9%",
+      helper: true,
+      gridTrigger: true,
+    },
     { text: "생산팀", value: "team", width: "9%", helper: true },
-    { text: "라인", value: "line", width: "9%",helper:true },
+    { text: "라인", value: "line", width: "9%", helper: true },
     { text: "수량", value: "quantity", width: "9%" },
     { text: "창고", value: "storage", width: "9%", helper: true },
     { text: "장소", value: "location", width: "9%", helper: true },
@@ -30,32 +37,37 @@ export default function List() {
   const grid02_headers = [
     { text: "선택", value: "select", width: "5%" },
     { text: "순번", value: "index", width: "5%" },
-    { text: "자재", value: "item", width: "15%",helper:true },
-    { text: "필요수량", value: "quantity", width: "8%",helper:true },
+    { text: "자재", value: "item", width: "15%", helper: true },
+    { text: "필요수량", value: "quantity", width: "8%", helper: true },
     { text: "창고", value: "storage", width: "10%", helper: true },
-    { text: "세부장소", value: "location", width: "8%", helper: true },
-    { text: "재고", value: "total", width: "5%", readonly:true },
-    { text: "비고", value: "description", width: "20%",readonly:true },
+    {
+      text: "세부장소",
+      value: "location",
+      width: "8%",
+      helper: true,
+      trigger: true,
+    },
+    { text: "재고", value: "inventory", width: "5%", readonly: true },
+    { text: "비고", value: "description", width: "20%", readonly: true },
   ];
 
-  //gridTrigger 컬럼의 onBlurHandler
-  const gridTriggerHandler = (header,tableItem) => {
-    
-    let itemCode=''
-    if(header.value==='item'){
-      itemCode=tableItem.itemCode;
+  //grid 1 trigger handler
+  const gridTriggerHandler = (header, tableItem) => {
+    let itemCode = "";
+    if (header.value === "item") {
+      itemCode = tableItem.itemCode;
     }
-    
+
     axios
       .get(`http://localhost:9090/production/add/component`, {
-        params: {itemCode}
+        params: { itemCode },
       })
       .then((res) => {
         return res.data.data;
       })
       .then((data) => {
         let tableItems = [];
-        
+
         for (let i = 0; i < data.length; i++) {
           tableItems.push({
             item: data[i].component_name,
@@ -66,21 +78,46 @@ export default function List() {
             // location: data[i].location_name,
             // locationCode: data[i].location_code,
             // total:data[i].total,
-            description:data[i].description
+            description: data[i].description,
           });
         }
-        setItems(tableItems)
+        setItems([...tableItems]);
       })
       .catch((error) => console.log(error));
   };
 
-  useEffect(() => {
-  }, []);
+  useEffect(() => {}, []);
 
+  //grid2 trigger handler
+  const triggerHandler = (header, tableItems, currentCol) => {
+    let itemCode,storageCode,locationCode = "";
+    const rowItem=tableItems[currentCol.row]
+    if (header.value === "location") {
+      itemCode = rowItem.itemCode;
+      storageCode = rowItem.storageCode;
+      locationCode = rowItem.locationCode;
+    }
 
-  const triggerHandler=()=>{
+    axios
+      .get(`http://localhost:9090/production/add/inventory`, {
+        params: { itemCode,storageCode,locationCode },
+      })
+      .then((res) => {
+        return res.data.data;
+      })
+      .then((data) => {
+        
+        //================선택한 코드 테이블에 출력===============
+        let copyItems = JSON.parse(JSON.stringify(tableItems));
 
-  }
+        let currentRow = currentCol.row;
+
+        copyItems[currentRow].inventory = data.total;
+        
+        setItems([...copyItems]);
+      })
+      .catch((error) => console.log(error));
+  };
 
   return (
     <>

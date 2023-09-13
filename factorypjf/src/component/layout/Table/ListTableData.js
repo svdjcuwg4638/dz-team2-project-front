@@ -6,7 +6,7 @@ import HelperModal from "component/common/helper/HelperModal";
 
 const HELPER_KEY = 113;
 
-export default function ListTable({ headers, items }) {
+export default function ListTable({ headers, items, onTrigger }) {
   const modalInit = {
     showModal: false,
     codeValue: "", //
@@ -44,50 +44,65 @@ export default function ListTable({ headers, items }) {
   const [modalState, dispatch] = useReducer(modalReducer, modalInit);
 
   const [currentCol, setCurrentCol] = useState();
-  const keyUpHandler = (e, colInfo) => {
-    if (e.which === HELPER_KEY && colInfo.helper) {
+
+  const keyUpHandler = (e, colInfo, coordinate) => {
+      if (e.which === HELPER_KEY && colInfo.helper) {
       console.log(e, colInfo);
-      setCurrentCol(e.target);
+      //도움창을 연 컬럼 좌표 저장
+      setCurrentCol({ ...coordinate });
+      //모달 켜기
       onModalHanlder(colInfo.value, colInfo.text);
+    } else if (e.which === HELPER_KEY && !colInfo.helper) {
+      console.log("도움창이 제공되지 않는 코드입니다.");
     }
   };
 
  
-  // //코드 선택 handler
-  // const selectCodeHandler = (codeRow) => {
-  //   // console.log(codeRow);
-  //   // console.log(tableItems);
-  //   // console.log(currentCol);
-  //   // console.log(modalState.codeValue);
+  //코드 선택 handler
+  const selectCodeHandler = (codeRow) => {
+    // console.log(codeRow);
+    // console.log(tableItems);
+    // console.log(currentCol);
+    // console.log(modalState.codeValue);
 
-  //   //================선택한 코드 테이블에 출력===============
-  //   let copyItems = JSON.parse(JSON.stringify(tableItems));
+    //================선택한 코드 테이블에 출력===============
+    let copyItems = JSON.parse(JSON.stringify(tableItems));
 
-  //   for (let key in codeRow) {
-  //     let itemKey = "";
+    for (let key in codeRow) {
+      let itemKey = "";
 
-  //     //코드데이터면 key가 ~~Code, 아니면 value 그대로 객체 생성
-  //     //ex) teamCode, team
-  //     if (!key.toLowerCase().includes("code")) {
-  //       itemKey = modalState.codeValue;
-  //     } else {
-  //       itemKey = key;
-  //     }
+      //코드데이터면 key가 ~~Code, 아니면 value 그대로 객체 생성
+      //ex) teamCode, team
+      console.log(key.toLowerCase().includes("code"))
+      if (!key.toLowerCase().includes("code")) {
+        itemKey = modalState.codeValue;
+      } else {
+        itemKey = key;
+      }
 
-  //     //같은 행에 이미 데이터가 들어있으면
-  //     if (copyItems[currentCol.row]) {
-  //       copyItems[currentCol.row] = {
-  //         ...copyItems[currentCol.row],
-  //         [itemKey]: codeRow[key],
-  //       };
-  //     //비어있는 행이면
-  //     } else {
-  //       copyItems[currentCol.row] = { [itemKey]: codeRow[key] };
-  //     }
-  //   }
-  //   setTableItems(copyItems);
+      //같은 행에 이미 데이터가 들어있으면
+      if (copyItems[currentCol.row]) {
+        copyItems[currentCol.row] = {
+          ...copyItems[currentCol.row],
+          [itemKey]: codeRow[key],
+        };
+      //비어있는 행이면
+      } else {
+        copyItems[currentCol.row] = { [itemKey]: codeRow[key] };
+      }
+    }
+    setTableItems(copyItems);
 
-  // };
+
+    //======================grid2 trigger========================
+    headers.forEach((header)=>{
+      //현재 도움창을 띄운 column이 trigger 컬럼이면
+      if(header.trigger&&header.value===modalState.codeValue){
+        //현재 컬럼의 header, 현재 row를 보냄
+        onTrigger(header,copyItems,currentCol);
+      }
+    })
+  };
 
 
   return (
@@ -96,12 +111,12 @@ export default function ListTable({ headers, items }) {
         <HelperModal
           modalState={modalState}
           offModal={offModalHandler}
-          // onSelectCode={selectCodeHandler}
+          onSelectCode={selectCodeHandler}
         />
       )}
       {tableItems.map((item, idx) => (
         <tr key={idx}>
-          {headers.map((header) =>
+          {headers.map((header,headerIdx) =>
             //선택 컬럼
             header.value === "select" ? (
               <td key={header.value + idx}>
@@ -109,16 +124,16 @@ export default function ListTable({ headers, items }) {
               </td>
             ) : //순번 컬럼
             header.value === "index" ? (
-              <td key={header.value + idx}>{idx + 1}</td>
+              <td key={headerIdx}>{idx + 1}</td>
             ) : (
-              <td key={header.value + idx}>
+              <td key={headerIdx}>
                 {/* headerKey를 key로 가진 item 값을 출력 */}
                 {header.helper||header.readonly ? (
                   <input
                     readOnly
                     defaultValue={item[header.value]}
                     onKeyUp={(e) => {
-                      keyUpHandler(e, header);
+                      keyUpHandler(e, header, { row: idx, col: headerIdx });
                     }}
                   ></input>
                 ) : (
