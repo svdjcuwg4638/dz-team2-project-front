@@ -98,7 +98,7 @@ export default function ListTable({ headers, items, onTrigger }) {
     headers.forEach((header)=>{
       //현재 도움창을 띄운 column이 trigger 컬럼이면
       if(header.trigger&&header.value===modalState.codeValue){
-        //현재 컬럼의 header, 현재 row를 보냄
+        //현재 컬럼의 header, 테이블 items, 현재 row를 보냄
         onTrigger(header,copyItems,currentCol);
       }
     })
@@ -129,7 +129,7 @@ export default function ListTable({ headers, items, onTrigger }) {
               <td key={headerIdx}>
                 {/* headerKey를 key로 가진 item 값을 출력 */}
                 {header.helper||header.readonly ? (
-                  <input
+                  <input id={`grid02_${header.value}`}
                     readOnly
                     defaultValue={item[header.value]}
                     onKeyUp={(e) => {
@@ -137,7 +137,7 @@ export default function ListTable({ headers, items, onTrigger }) {
                     }}
                   ></input>
                 ) : (
-                  <input
+                  <input id={`grid02_${header.value}`}
                     defaultValue={item[header.value]}
                     onKeyUp={(e) => {
                       keyUpHandler(e, header);

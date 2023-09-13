@@ -20,3 +20,24 @@
 .grid01{
     height: 40%;
 }
+
+/* btn */
+.product_btn-wrap button{
+    margin:10px;
+    width: 50px;
+    border-radius: 8px;
+}
+.product_btn_delete{
+    background-color: var(--red-color);
+    color: white;
+    border: none;
+    box-shadow: 1px 1px 2px 1px grey;
+}
+
+.product_btn_save{
+    background-color: var(--main-color);
+    color: white;
+    border: none;
+    box-shadow: 1px 1px 2px 1px grey;
+}
+

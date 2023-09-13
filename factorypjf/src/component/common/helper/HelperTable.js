@@ -45,10 +45,10 @@ export default function HelperTable({ headers, items, onSelectCode }) {
               {headers.map((header) =>
                 // isCodeColumn(key) ? (
                   <td
-                    className={header.selectable&&helperStyle['clickable-col']}
+                    className={helperStyle['clickable-col']}
                     key={header.value + idx}
                     onClick={() => {
-                      header.selectable&&onSelectHandler(item);
+                      onSelectHandler(item);
                     }}
                   >
                     {item[header.value]}
