@@ -39,7 +39,7 @@ export default function List() {
   ];
 
   //gridTrigger 컬럼의 onBlurHandler
-  const onGridTrigger = (header,tableItem) => {
+  const gridTriggerHandler = (header,tableItem) => {
     
     let itemCode=''
     if(header.value==='item'){
@@ -75,16 +75,12 @@ export default function List() {
   };
 
   useEffect(() => {
-    // axios
-    //   .get("/dummy/addDummy.json")
-    //   .then((response) => {
-    //     // console.log(response)
-    //     return response.data;
-    //   })
-    //   .then((data) => {
-    //     setItems(data.componentRelation);
-    //   });
   }, []);
+
+
+  const triggerHandler=()=>{
+
+  }
 
   return (
     <>
@@ -99,12 +95,12 @@ export default function List() {
         <p className={productionClasses["sub-menu-name"]}>생산등록</p>
         <div className={productionClasses.grid01}>
           <Table headers={grid01_headers}>
-            <AddTd onGridTrigger={onGridTrigger}></AddTd>
+            <AddTd onGridTrigger={gridTriggerHandler}></AddTd>
           </Table>
         </div>
         <div className={productionClasses.grid02}>
           <Table headers={grid02_headers}>
-            <ListTd items={grid02_items}></ListTd>
+            <ListTd items={grid02_items} onTrigger={triggerHandler}></ListTd>
           </Table>
         </div>
       </div>
