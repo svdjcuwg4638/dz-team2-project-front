@@ -6,15 +6,18 @@ import { storageAction } from "redux/actions/management/storageAction";
 import StorageHelp from "../storage/StorageHelp";
 import { partnerAction } from "redux/actions/management/partnerAction";
 import Modal from "../../storage/item/Modal";
+import { codeAction } from "redux/actions/management/codeAction";
 const AddItem = ({ addFormViewHandler }) => {
   const dispatch = useDispatch();
-  const {partnerAll} = useSelector((state)=>state.partner)
-  const [showFlag,setShowFlag] = useState(false)
+  const { partnerAll } = useSelector((state) => state.partner);
+  const { codeAll } = useSelector((state) => state.code);
+  const { locationAll, storageAll } = useSelector((state) => state.storage);
+  const [showFlag, setShowFlag] = useState(false);
   useEffect(() => {
     dispatch(storageAction.getstorageAll());
     dispatch(partnerAction.getPartnerAll());
+    dispatch(codeAction.getCodeAll());
   }, []);
-
 
   const [formData, setFormData] = useState({
     company_id: "1",
@@ -32,12 +35,22 @@ const AddItem = ({ addFormViewHandler }) => {
     partner_code: "",
   });
 
-
+  const [unitData, setUnitData] = useState({
+    width: "m",
+    length: "m",
+    height: "m",
+    volume: "L",
+    weight: "Kg",
+    unit: "EA",
+  });
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
-    console.log("formData",formData);
+  };
+  const handleInputChangeForUnit = (event) => {
+    const { name, value } = event.target;
+    setUnitData((prevState) => ({ ...prevState, [name]: value }));
   };
 
   const submitHandler = async (event) => {
@@ -52,8 +65,35 @@ const AddItem = ({ addFormViewHandler }) => {
     };
 
     if (isValidFormData(formData)) {
+      var locationData = locationAll.data.find(
+        (data) =>
+          data.storage_code ==
+            storageAll.data.filter(
+              (data) => data.storage_name == formData["storage_code"]
+            )[0].storage_code && data.location_name == formData["location_code"]
+      );
+
+      var submitData = {
+        company_id: "1",
+        item_code: formData["item_code"],
+        item_name: formData["item_name"],
+        location_code: locationData.location_code,
+        storage_code: locationData.storage_code,
+        width: formData["width"] + unitData["width"],
+        length: formData["length"] + unitData["length"],
+        height: formData["height"] + unitData["height"],
+        volume: formData["volume"] + unitData["volume"],
+        weight: formData["weight"] + unitData["weight"],
+        unit: formData["unit"] + unitData["unit"],
+        description: formData["description"],
+        partner_code: partnerAll.data.find(
+          (data) => data.partner_name == formData["partner_code"]
+        ).partner_code,
+      };
+
       try {
-        const response = await api.post("/item/add", formData);
+        console.log("submitData", submitData);
+        const response = await api.post("/item/add", submitData);
         setFormData({
           company_id: "1",
           item_code: "",
@@ -84,8 +124,18 @@ const AddItem = ({ addFormViewHandler }) => {
     name_column: "partner_name",
     dataAll: { partnerAll },
     trigger_type: "search",
-  }
+  };
 
+  const unitCode = {
+    name: "단위코드",
+    guide: true,
+    type_all: "codeAll",
+    code_column: "common_code",
+    name_column: "common_name",
+    dataAll: { codeAll },
+    common_code_type: "UNIT",
+    trigger_type: "search",
+  };
 
   return (
     <div
@@ -118,6 +168,7 @@ const AddItem = ({ addFormViewHandler }) => {
               <div>품목코드</div>
               <div>
                 <input
+                  value={formData["item_code"]}
                   type="text"
                   name="item_code"
                   onChange={handleInputChange}
@@ -128,6 +179,7 @@ const AddItem = ({ addFormViewHandler }) => {
               <div>품목이름</div>
               <div>
                 <input
+                  value={formData["item_name"]}
                   type="text"
                   name="item_name"
                   onChange={handleInputChange}
@@ -139,24 +191,47 @@ const AddItem = ({ addFormViewHandler }) => {
           <div>
             <div>
               <div>거래처</div>
-              <Modal
-                menu={partner}
-                name="partner_code"
-                handleInputChange={handleInputChange}
-              />
+              <div style={{ display: "flex" }}>
+                <input
+                  type="text"
+                  name="partner_code"
+                  value={formData["partner_code"]}
+                ></input>
+                <Modal
+                  menu={partner}
+                  name="partner_code"
+                  handleInputChange={handleInputChange}
+                />
+              </div>
             </div>
           </div>
 
           <div>
             <div>
               <div>창고</div>
-              <input type="text" value={formData["storage_code"]} name="storage_code" onChange={handleInputChange} />
+              <input
+                type="text"
+                value={formData["storage_code"]}
+                name="storage_code"
+                onChange={handleInputChange}
+              />
             </div>
             <div>
               <div>세부장소</div>
-              <input type="text" value={formData["location_code"]} name="location_code" onChange={handleInputChange} />
+              <input
+                type="text"
+                value={formData["location_code"]}
+                name="location_code"
+                onChange={handleInputChange}
+              />
             </div>
-            <button className="button" type="button" onClick={()=>setShowFlag(true)}>?</button>
+            <button
+              className="button"
+              type="button"
+              onClick={() => setShowFlag(true)}
+            >
+              ?
+            </button>
             {showFlag && (
               <StorageHelp
                 handleInputChange={handleInputChange}
@@ -165,46 +240,114 @@ const AddItem = ({ addFormViewHandler }) => {
             )}
           </div>
           <div style={{ fontSize: "20px", fontWeight: "bold" }}>규격</div>
-          <div>
+
+          <div className="item_add_unit_wrap" style={{ display: "block" }}>
             <div>
-              <div>폭</div>
               <div>
-                <input type="text" name="width" onChange={handleInputChange} />
-                m
+                <div>폭</div>
+                <div>
+                  <input
+                    value={formData["width"]}
+                    type="text"
+                    name="width"
+                    onChange={handleInputChange}
+                  ></input>
+                  <div>{unitData["width"]}</div>
+                  <Modal
+                    menu={unitCode}
+                    handleInputChange={handleInputChangeForUnit}
+                    code_type={"width"}
+                  />
+                </div>
+              </div>
+              <div>
+                <div>길이</div>
+                <div>
+                  <input
+                  value={formData["length"]}
+                    type="text"
+                    name="length"
+                    onChange={handleInputChange}
+                  ></input>
+                  <div>{unitData["length"]}</div>
+                  <Modal
+                    menu={unitCode}
+                    code_type={"length"}
+                    handleInputChange={handleInputChangeForUnit}
+                  />
+                </div>
               </div>
             </div>
             <div>
-              <div>길이</div>
               <div>
-                <input type="text" name="length" onChange={handleInputChange} />
+                <div>높이</div>
+                <div>
+                  <input
+                    value={formData["height"]}
+                    type="text"
+                    name="height"
+                    onChange={handleInputChange}
+                  ></input>
+                  <div>{unitData["height"]}</div>
+                  <Modal
+                    menu={unitCode}
+                    code_type={"height"}
+                    handleInputChange={handleInputChangeForUnit}
+                  />
+                </div>
+              </div>
+              <div>
+                <div>부피</div>
+                <div>
+                  <input
+                  value={formData["volume"]}
+                    type="text"
+                    name="volume"
+                    onChange={handleInputChange}
+                  ></input>
+                  <div>{unitData["volume"]}</div>
+                  <Modal
+                    menu={unitCode}
+                    code_type={"volume"}
+                    handleInputChange={handleInputChangeForUnit}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div>
             <div>
-              <div>높이</div>
               <div>
-                <input type="text" name="height" onChange={handleInputChange} />
+                <div>중량</div>
+                <div>
+                  <input
+                  value={formData["weight"]}
+                    type="text"
+                    name="weight"
+                    onChange={handleInputChange}
+                  ></input>
+                  <div>{unitData["weight"]}</div>
+                  <Modal
+                    menu={unitCode}
+                    code_type={"weight"}
+                    handleInputChange={handleInputChangeForUnit}
+                  />
+                </div>
               </div>
-            </div>
-            <div>
-              <div>부피</div>
               <div>
-                <input type="text" name="volume" onChange={handleInputChange} />
-              </div>
-            </div>
-          </div>
-          <div>
-            <div>
-              <div>중량</div>
-              <div>
-                <input type="text" name="weight" onChange={handleInputChange} />
-              </div>
-            </div>
-            <div>
-              <div>갯수</div>
-              <div>
-                <input type="text" name="unit" onChange={handleInputChange} />
+                <div>갯수</div>
+                <div>
+                  <input
+                  value={formData["unit"]}
+                    type="text"
+                    name="unit"
+                    onChange={handleInputChange}
+                  ></input>
+                  <div>{unitData["unit"]}</div>
+                  <Modal
+                    menu={unitCode}
+                    code_type={"unit"}
+                    handleInputChange={handleInputChangeForUnit}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -215,6 +358,7 @@ const AddItem = ({ addFormViewHandler }) => {
               <div>
                 <textarea
                   name="description"
+                  value={formData["description"]}
                   style={{ width: "100%", height: "90px" }}
                   onChange={handleInputChange}
                 ></textarea>
