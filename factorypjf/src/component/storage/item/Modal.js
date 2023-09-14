@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SearchHelper from "./SearchHelper";
-const Modal = ({ menu, name,handleInputChange,code_type }) => {
+const Modal = ({ menu, handleInputChange,code_type }) => {
   const [HelperScreenState, setHelperScreenState] = useState(false);
   const [searchpartner, setSearchpartner] = useState("");
 

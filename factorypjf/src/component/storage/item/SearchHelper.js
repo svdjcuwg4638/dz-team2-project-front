@@ -19,7 +19,7 @@ const SearchHelper = ({ searchPartner,code_type, handleRowClick, menu,handleInpu
     if (menu.name === "품목") dispatch(itemAction.getItemAll());
     if (menu.name === "창고") dispatch(storageAction.getstorageAll());
     if (menu.name === "세부장소") dispatch(storageAction.getstorageAll());
-    if (menu.name === "단위코드") dispatch(codeAction.getCodeAll());
+    if (menu.name === "공통코드") dispatch(codeAction.getCodeAll());
   }, [InputboxText]);
 
   let filteredData = [];
@@ -28,12 +28,19 @@ const SearchHelper = ({ searchPartner,code_type, handleRowClick, menu,handleInpu
 
     if (Category === "default") {
 
-      if(menu.name== "단위코드"){
+      if(menu.common_code_type == "UNIT"){
         filteredData = menu.dataAll[menu.type_all].data.filter(
           (item) =>
             (item[menu.code_column].includes(InputboxText) ||
             item[menu.name_column].includes(InputboxText) ) &&
             item["management_code"].includes("UNIT")
+        );
+      }else if(menu.common_code_type == "CATEGORY"){
+        filteredData = menu.dataAll[menu.type_all].data.filter(
+          (item) =>
+            (item[menu.code_column].includes(InputboxText) ||
+            item[menu.name_column].includes(InputboxText)) &&
+            item["management_code"].includes("CATEGORY")
         );
       }else{
         filteredData = menu.dataAll[menu.type_all].data.filter(
@@ -55,21 +62,29 @@ const SearchHelper = ({ searchPartner,code_type, handleRowClick, menu,handleInpu
   }
 
   const rowClickHandler = (datarow) => {
-    console.log(code_type);
-    if(datarow && datarow.management_code){
+    console.log("datarowddddddddddddd",datarow);
+    if(datarow && datarow.management_code == "UNIT"){
       handleInputChange({
         target:{
           name: code_type,
           value: datarow[menu.code_column]
         }
       })
+    }else if (datarow.management_code == "CATEGORY"){
+      handleInputChange({
+        target:{
+          name: code_type,
+          value: datarow[menu.name_column]
+        }
+      })
+    }else{
+      handleInputChange({
+        target:{
+          name: menu.code_column,
+          value: datarow[menu.name_column]
+        }
+      })
     }
-    handleInputChange({
-      target:{
-        name: menu.code_column,
-        value: datarow[menu.name_column]
-      }
-    })
     setSelectedColumn(datarow);
     searchPartner(datarow[menu.name_column]);
   };
