@@ -129,7 +129,7 @@ export default function ListTable({ headers, items, onTrigger }) {
               <td key={headerIdx}>
                 {/* headerKey를 key로 가진 item 값을 출력 */}
                 {header.helper||header.readonly ? (
-                  <input id={`grid02_${header.value}`}
+                  <input id={`grid02_${idx}_${header.value}`}
                     readOnly
                     defaultValue={item[header.value]}
                     onKeyUp={(e) => {
@@ -137,7 +137,7 @@ export default function ListTable({ headers, items, onTrigger }) {
                     }}
                   ></input>
                 ) : (
-                  <input id={`grid02_${header.value}`}
+                  <input id={`grid02_${idx}_${header.value}`}
                     defaultValue={item[header.value]}
                     onKeyUp={(e) => {
                       keyUpHandler(e, header);

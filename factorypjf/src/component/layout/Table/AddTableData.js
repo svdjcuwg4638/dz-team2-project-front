@@ -14,8 +14,6 @@ const HELPER_KEY = 113;
 export default function AddTableData({ headers, onGridTrigger }) {
   const DEFAULT_ROW = 3;
 
-  const [selectedDate, setDate] = useState(new Date());
-
   //행 추가 handler
   const [tableItems, setTableItems] = useState(
     Array.from({ length: DEFAULT_ROW })
@@ -151,7 +149,8 @@ export default function AddTableData({ headers, onGridTrigger }) {
               <td key={headerIdx}>
                 {header.helper || header.readonly ? (
                   <input
-                    id={`grid01_${header.value}`}
+                    //grid번호_행번호_컬럼명
+                    id={`grid01_${idx}_${header.value}`}
                     readOnly
                     onKeyUp={(e) => {
                       keyUpHandler(e, header, { row: idx, col: headerIdx });
@@ -160,14 +159,15 @@ export default function AddTableData({ headers, onGridTrigger }) {
                   ></input>
                 ) : header.value === "date" ? (
                   <input
-                    id={`grid01_${header.value}`}
+                    id={`grid01_${idx}_${header.value}`}
                     type="date"
-                    placeholder="yyyy.mm.dd"
+                    min="1900-01-01"
+                    max="9999-12-31"
                     className={addStyle.input_date}
                   ></input>
                 ) : (
                   <input
-                    id={`grid01_${header.value}`}
+                    id={`grid01_${idx}_${header.value}`}
                     onKeyUp={(e) => {
                       keyUpHandler(e, header);
                     }}

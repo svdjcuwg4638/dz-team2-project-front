@@ -5,29 +5,17 @@ import addStyle from "style/layout/dataTable/addTableData.module.css";
 
 
 export default function DataTable({ headers, onModal, children }) {
-  // let inputType=''
-  // const INPUT_TYPE=function(key){
-  //     // if(key.includes('select'))return 'checkbox'
-  //     // if(key.includes(''))
-  // }
+ 
 
   // header가 있어야만 table 출력
   if (!headers || !headers.length) {
     throw new Error("<DataTable/> header is required.");
   }
-  // const headerKey = headers.map((header) => header.value);
-
-  //children에 props 넘기기위해 children clone
-  // const childrenWithProps = children.map((child) => {
-  //   if (isValidElement(child)) {
-  //     return cloneElement(child, { headerKey });
-  //   }
-  // });
 
   const childrenWithProps = cloneElement(children, { headers });
 
   return (
-    <>
+    <div className="table-container">
       <table className={tableStyle.tbl_header}>
         <colgroup>
           {headers.map((header,idx) => {
@@ -39,13 +27,6 @@ export default function DataTable({ headers, onModal, children }) {
             {headers.map((header, idx) => (
               <th key={idx}>
                 {header.text}
-                {/* {header.helper && (
-                  <img
-                    // onClick={()=>{onModal({value:header.value, text:header.text})}}
-                    className={tableStyle["search-symbol"]}
-                    src={searchSymbol}
-                  />
-                )} */}
               </th>
             ))}
           </tr>
@@ -62,6 +43,6 @@ export default function DataTable({ headers, onModal, children }) {
           <tbody>{childrenWithProps}</tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 }

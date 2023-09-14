@@ -98,7 +98,7 @@ export default function List() {
       .catch((error) => console.log(error));
   };
 
-  //grid2 trigger handler
+  //grid2 trigger handler (창고와 세부장소에 맞는 재고 가져오기)
   const triggerHandler = (header, tableItems, currentCol) => {
     let itemCode,
       storageCode,
@@ -120,77 +120,77 @@ export default function List() {
         .then((data) => {
           //================선택한 코드 테이블에 출력===============
           let copyItems = JSON.parse(JSON.stringify(tableItems));
-
           let currentRow = currentCol.row;
 
           copyItems[currentRow].inventory = data.total;
-
           setItems([...copyItems]);
         })
         .catch((error) => console.log(error));
     }
   };
 
-  const saveHandler = () => {
-    const inputElements = document.querySelectorAll("input");
-    const inputArr = [...inputElements];
-    
-    let nullCol = []
+  const saveHandler = () => {    
+    //====================테이블의 모든 input 가져오기====================
+    const inputArr=[...document.querySelectorAll('[id*="grid"]')]
+    const grid01Data=[]
+    const grid02Data=[]
 
-    inputArr.forEach((input) => {
-      let inputId = input.id;
-      //grid01 input
-      if(input.id.includes('grid01')){
-        //null 컬럼
-        if(inputId==='grid01_select'||inputId==='grid01_index'||inputId==='grid01_description'){
-          return
-        //Not null 컬럼
-        }else{
-          //에 값이 없을때
-          if (!document.querySelector(`#${inputId}`).value) {
-            let inputValue=inputId.replace("grid01_", "")
-            grid01_headers.forEach((header)=>{
-              if(header.value===inputValue){nullCol.push({table:1,value:inputValue,text:header.text})}
-            })
-          }
+    inputArr.forEach((el)=>{
+      //id(grid번호_행번호_header) 에서 행번호 찾기
+      let row=el.id.match(/(?<=grid\d+_)\d+(?=_)/g)[0];
+      //id(grid번호_행번호_header) 에서 header 찾기
+      let header = el.id.match(/(?<=\w_)[a-z_]+/g)[0];
+
+      if(el.id.includes('grid01')){
+        grid01Data[row]={...grid01Data[row],[header]:el.value}
+      }else if(el.id.includes('grid02')){
+        grid02Data[row]={...grid02Data[row],[header]:el.value}
+      }
+    })
+    console.log(grid01Data)
+    console.log(grid02Data)
+    
+    
+    //=================필수 입력 컬럼에 값 다 있는지 확인===============
+    let alertHeader=''
+    let itemCount=0
+
+    for (let i = 0; i < grid01Data.length; i++) {
+      for(let key in grid01Data[i]){
+        // //item 값이 입력된 행인데 NULL 컬럼 아닌 컬럼에 값이 입력돼있지 않으면
+        grid01Data[i].item&&itemCount++
+        if(grid01Data[i].item&&!(key==='description'||key==='lead_time||'||key==='work_force'||key==='team')&&!grid01Data[i][key]){
+          alertHeader = grid01_headers.find((header)=>{
+            return header.value===key
+          })
+          alert('상위테이블 '+alertHeader.text+'를 입력해주세요')
+          return false;
         }
       }
-      if(input.id.includes('grid0')){
-        //null 컬럼
-        if(inputId==='grid02_select'||inputId==='grid02_index'||inputId==='grid02_description'){
-          return
-        //Not null 컬럼
-        }else{
-          //에 값이 없을때
-          if (!document.querySelector(`#${inputId}`).value) {
-            let inputValue=inputId.replace("grid02_", "")
-            grid02_headers.forEach((header)=>{
-              if(header.value===inputValue){nullCol.push({table:2,value:inputValue,text:header.text})}
+    }
+    //생산품이 하나도 입력되지 않았을때
+    if(!itemCount){
+      alertHeader='생산품'
+      alert('저장할 '+alertHeader+'이 없습니다.')
+    }
+
+    if(!alertHeader){
+      for (let i = 0; i < grid02Data.length; i++) {
+        for(let key in grid02Data[i]){
+          // //item 값이 입력된 행인데 NULL 컬럼 아닌 컬럼에 값이 입력돼있지 않으면
+          if(grid02Data[i].item&&key!=='description'&&!grid02Data[i][key]){
+            alertHeader = grid02_headers.find((header)=>{
+              return header.value===key
             })
-          }
+            alert('하위테이블 '+alertHeader.text+'를 입력해주세요')
+            return;
         }
-      }
-    });
-
-    if(nullCol){
-      let alertText=''
-      nullCol.forEach((col)=>{
-        if(col.table===1){
-          alertText+=`상위테이블 [${col.text}]\n`
-        }else{
-          alertText+=`하위테이블 [${col.text}]\n`
-        }
-        
-      })
-      alert('아래 항목의 값을 채워주세요\n\n'+alertText)
-    }else{
-      
+      }}    
     }
-
-    function addProduction(){
-      
+    if(!alertHeader){
+      //putAxios
+      console.log('success!',grid02Data)
     }
-    
   };
 
   return (
@@ -199,12 +199,12 @@ export default function List() {
         <p className={productionClasses["sub-menu-name"]}>생산등록</p>
         <div className={productionClasses.grid01}>
           <Table headers={grid01_headers}>
-            <AddTd onGridTrigger={gridTriggerHandler}></AddTd>
+            <AddTd onGridTrigger={gridTriggerHandler} onSave={saveHandler}></AddTd>
           </Table>
         </div>
         <div className={productionClasses.grid02}>
           <Table headers={grid02_headers}>
-            <ListTd items={grid02_items} onTrigger={triggerHandler}></ListTd>
+            <ListTd items={grid02_items} onTrigger={triggerHandler} onSave={saveHandler}></ListTd>
           </Table>
         </div>
         <div className={productionClasses["product_btn-wrap"]}>
