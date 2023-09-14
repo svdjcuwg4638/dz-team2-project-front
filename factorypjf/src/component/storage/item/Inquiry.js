@@ -1,44 +1,59 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "../../../style/storage/inquiry.module.css";
 import AddTableData from "component/layout/Table/AddTableData";
 import Table from "../../layout/Table/Table";
 import axios from "axios";
 import ListTable from "component/layout/Table/ListTableData";
 import { ReactComponent as Arrow } from "img/rightArrow.svg";
-import "../registration/regiBtn.css";
+import SearchSection from "./SearchSection";
 
 const Inquiry = () => {
+  const search_headers = [
+    { text: "창고", value: "storage", helper: true },
+    { text: "장소", value: "location", helper: true },
+    { text: "카테고리", value: "category", helper: true },
+    { text: "은행", value: "bank", helper: true },
+    { text: "단위", value: "unit" },
+    { text: "품목", value: "item", helper: true },
+    { text: "거래처", value: "partner", helper: true },
+  ];
   const grid01_headers = [
-    { text: "선택", value: "select", width: "3%" },
-    { text: "창고명", value: "storage_name", width: "15%" },
+    { text: "선택", value: "select", width: "3%", readonly: true },
+    { text: "창고명", value: "storage_name", width: "15%", readonly: true },
   ];
   const [grid01_items, setItems1] = useState([]);
 
   const grid02_headers = [
-    { text: "선택", value: "select", width: "3%" },
-    { text: "장소", value: "location_name", width: "15%" },
+    { text: "선택", value: "select", width: "3%", readonly: true },
+    { text: "장소", value: "location_name", width: "15%", readonly: true },
   ];
   const grid03_headers = [
-    { text: "선택", value: "select", width: "3%" },
-    { text: "카테고리", value: "category", width: "15%" },
+    { text: "선택", value: "select", width: "3%", readonly: true },
+    { text: "카테고리", value: "category", width: "15%", readonly: true },
   ];
   const grid04_headers = [
-    { text: "창고명", value: "storage_name", width: "9%" },
+    { text: "창고명", value: "storage_name", width: "9%", readonly: true },
 
-    { text: "장소", value: "location_name", width: "15%" },
+    { text: "장소", value: "location_name", width: "15%", readonly: true },
 
-    { text: "품목코드", value: "item_code", width: "7%", helper: true },
+    {
+      text: "품목코드",
+      value: "item_code",
+      width: "7%",
+      helper: true,
+      readonly: true,
+    },
 
-    { text: "품목명", value: "item_name", width: "9%" },
-    { text: "카테고리", value: "category", width: "9%" },
+    { text: "품목명", value: "item_name", width: "9%", readonly: true },
+    { text: "카테고리", value: "category", width: "9%", readonly: true },
 
-    { text: "규격", value: "standard", width: "20%" },
+    { text: "규격", value: "standard", width: "20%", readonly: true },
 
-    { text: "단위", value: "unit", width: "5%" },
+    { text: "단위", value: "unit", width: "5%", readonly: true },
 
-    { text: "거래처명", value: "partner_name", width: "9%" },
+    { text: "거래처명", value: "partner_name", width: "9%", readonly: true },
 
-    { text: "수량", value: "total", width: "7%" },
+    { text: "수량", value: "total", width: "7%", readonly: true },
   ];
 
   const [grid02_items, setItems2] = useState([]);
@@ -54,6 +69,8 @@ const Inquiry = () => {
   const [selectedLocationRows, setSelectedLocationRows] = useState([]);
   const [selectedCategoryRows, setSelectedCategoryRows] = useState([]);
 
+  // 폼테이블 데이터 저장
+  const [formData, setFormData] = useState([]);
   // 첫화면, storage all조회;
   useEffect(() => {
     fetchData();
@@ -199,71 +216,105 @@ const Inquiry = () => {
       console.log(error);
     }
   };
+  const formHandler = (tableItems) => {
+    setFormData(tableItems);
+  };
+  const searchHandler = () => {
+    const formdataToSend = formData.map((data) => data[0]);
 
+    axios
+      .post("YOUR_BACKEND_URL", { data: formdataToSend })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   return (
-    <div>
-      <div className={styles.headerSection}>
-        <h4 className={styles.header}> 재고 조회</h4>
-      </div>
-      <div className={styles.container}>
-        <div>
-          <div className={styles.middlePart}>
-            <div>
-              <Table maxHeight="150px" headers={grid01_headers}>
-                <ListTable
-                  items={grid01_items}
-                  selectedRows={selectedStorageRows}
-                  onCheckboxChange={(item) =>
-                    handleCheckboxChange(
-                      item,
-                      setSelectedStorageRows,
-                      selectedStorageRows
-                    )
-                  }
-                />
-              </Table>
+    <div className={styles.SectionContainer}>
+      <div>
+        <div className={styles.headerSection}>
+          <h4 className={styles.header}> 재고 조회</h4>
+        </div>
+        <div className={styles.container}>
+          <div>
+            <div className={styles.SearchSection}>
+              <table>
+                <tbody>
+                  <SearchSection
+                    headers={search_headers}
+                    formHandler={formHandler}
+                  />
+                </tbody>
+              </table>
+              <button className={styles.btn} onClick={searchHandler}>
+                조회
+              </button>
             </div>
-            <Arrow width="30" height="175" />
-            <div>
-              <Table maxHeight="150px" headers={grid02_headers}>
-                <ListTable
-                  items={grid02_items}
-                  selectedRows={selectedLocationRows}
-                  onCheckboxChange={(item) =>
-                    handleCheckboxChange(
-                      item,
-                      setSelectedLocationRows,
-                      selectedLocationRows
-                    )
-                  }
-                />
-              </Table>
+            <div className={styles.middlePart}>
+              <div className={styles.grid01}>
+                <Table maxHeight="150px" headers={grid01_headers}>
+                  <ListTable
+                    items={grid01_items}
+                    selectedRows={selectedStorageRows}
+                    onCheckboxChange={(item) =>
+                      handleCheckboxChange(
+                        item,
+                        setSelectedStorageRows,
+                        selectedStorageRows
+                      )
+                    }
+                  />
+                </Table>
+              </div>
+              <Arrow width="3%" height="175" />
+              <div className={styles.grid02}>
+                <Table maxHeight="150px" headers={grid02_headers}>
+                  <ListTable
+                    items={grid02_items}
+                    selectedRows={selectedLocationRows}
+                    onCheckboxChange={(item) =>
+                      handleCheckboxChange(
+                        item,
+                        setSelectedLocationRows,
+                        selectedLocationRows
+                      )
+                    }
+                  />
+                </Table>
+              </div>
+              <Arrow width="3%" height="175" />
+              <div className={styles.grid03}>
+                <Table maxHeight="150px" headers={grid03_headers}>
+                  <ListTable
+                    items={grid03_items}
+                    selectedRows={selectedCategoryRows}
+                    onCheckboxChange={(item) =>
+                      handleCheckboxChange(
+                        item,
+                        setSelectedCategoryRows,
+                        selectedCategoryRows
+                      )
+                    }
+                  />
+                </Table>
+              </div>
             </div>
-            <Arrow width="30" height="175" />
-            <div>
-              <Table maxHeight="150px" headers={grid03_headers}>
-                <ListTable
-                  items={grid03_items}
-                  selectedRows={selectedCategoryRows}
-                  onCheckboxChange={(item) =>
-                    handleCheckboxChange(
-                      item,
-                      setSelectedCategoryRows,
-                      selectedCategoryRows
-                    )
-                  }
-                />
+            <div className={styles.btnSection}>
+              <button
+                className={styles.btn}
+                onClick={(e) => inventoryInquirykFn(e)}
+              >
+                조회
+              </button>
+            </div>
+            <div className={styles.grid04}>
+              <Table maxHeight="250px" headers={grid04_headers}>
+                <ListTable items={grid04_items} />
               </Table>
             </div>
           </div>
-          <div className={styles.btnSection}>
-            <button className={styles.btn} onClick={inventoryInquirykFn}>
-              조회
-            </button>
-          </div>
-          <Table maxHeight="250px" headers={grid04_headers}>
-            <ListTable items={grid04_items} />
-          </Table>
         </div>
       </div>
     </div>
