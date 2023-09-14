@@ -16,9 +16,15 @@ export default function List() {
     { text: "선택", value: "select", width: "9%" },
     { text: "순번", value: "index", width: "9%" },
     { text: "날짜", value: "date", width: "9%" },
-    { text: "생산품", value: "item", width: "9%", helper: true,gridTrigger:true },
+    {
+      text: "생산품",
+      value: "item",
+      width: "9%",
+      helper: true,
+      gridTrigger: true,
+    },
     { text: "생산팀", value: "team", width: "9%", helper: true },
-    { text: "라인", value: "line", width: "9%",helper:true },
+    { text: "라인", value: "line", width: "9%", helper: true },
     { text: "수량", value: "quantity", width: "9%" },
     { text: "창고", value: "storage", width: "9%", helper: true },
     { text: "장소", value: "location", width: "9%", helper: true },
@@ -30,32 +36,31 @@ export default function List() {
   const grid02_headers = [
     { text: "선택", value: "select", width: "5%" },
     { text: "순번", value: "index", width: "5%" },
-    { text: "자재", value: "item", width: "15%",helper:true },
-    { text: "필요수량", value: "quantity", width: "8%",helper:true },
+    { text: "자재", value: "item", width: "15%", helper: true },
+    { text: "필요수량", value: "quantity", width: "8%", helper: true },
     { text: "창고", value: "storage", width: "10%", helper: true },
     { text: "세부장소", value: "location", width: "8%", helper: true },
-    { text: "재고", value: "total", width: "5%", readonly:true },
-    { text: "비고", value: "description", width: "20%",readonly:true },
+    { text: "재고", value: "total", width: "5%", readonly: true },
+    { text: "비고", value: "description", width: "20%", readonly: true },
   ];
 
   //gridTrigger 컬럼의 onBlurHandler
-  const onGridTrigger = (header,tableItem) => {
-    
-    let itemCode=''
-    if(header.value==='item'){
-      itemCode=tableItem.itemCode;
+  const onGridTrigger = (header, tableItem) => {
+    let itemCode = "";
+    if (header.value === "item") {
+      itemCode = tableItem.itemCode;
     }
-    
+
     axios
       .get(`http://localhost:9090/production/add/component`, {
-        params: {itemCode}
+        params: { itemCode },
       })
       .then((res) => {
         return res.data.data;
       })
       .then((data) => {
         let tableItems = [];
-        
+
         for (let i = 0; i < data.length; i++) {
           tableItems.push({
             item: data[i].component_name,
@@ -66,10 +71,10 @@ export default function List() {
             // location: data[i].location_name,
             // locationCode: data[i].location_code,
             // total:data[i].total,
-            description:data[i].description
+            description: data[i].description,
           });
         }
-        setItems(tableItems)
+        setItems(tableItems);
       })
       .catch((error) => console.log(error));
   };

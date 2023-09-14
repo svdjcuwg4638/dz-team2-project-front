@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const DEV_URL='http://localhost:9090/';
+const DEV_URL = "http://localhost:8080/";
 
 export function getAxios(url, param, successFunction, failFunction) {
   axios
-    .get(`${DEV_URL+url}`, {
+    .get(`${DEV_URL + url}`, {
       params: param,
     })
     .then((response) => {
@@ -18,9 +18,7 @@ export function getAxios(url, param, successFunction, failFunction) {
 
 export function postAxios(url, param, successFunction, failFunction) {
   axios
-    .post(`${DEV_URL+url}`, 
-     param
-    )
+    .post(`${DEV_URL + url}`, param)
     .then((response) => {
       return response.data;
     })
@@ -29,4 +27,3 @@ export function postAxios(url, param, successFunction, failFunction) {
     })
     .catch((error) => failFunction(error));
 }
-

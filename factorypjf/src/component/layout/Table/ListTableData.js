@@ -6,7 +6,12 @@ import HelperModal from "component/common/helper/HelperModal";
 
 const HELPER_KEY = 113;
 
-export default function ListTable({ headers, items }) {
+export default function ListTable({
+  headers,
+  items,
+  selectedRows,
+  onCheckboxChange,
+}) {
   const modalInit = {
     showModal: false,
     codeValue: "", //
@@ -15,9 +20,9 @@ export default function ListTable({ headers, items }) {
 
   const [tableItems, setTableItems] = useState([]);
 
-  useEffect(()=>{
-    setTableItems(items)
-  },[items])
+  useEffect(() => {
+    setTableItems(items);
+  }, [items]);
 
   //모달 끄고 닫는 핸들러
   const onModalHanlder = (codeValue, codeName) => {
@@ -52,7 +57,6 @@ export default function ListTable({ headers, items }) {
     }
   };
 
- 
   // //코드 선택 handler
   // const selectCodeHandler = (codeRow) => {
   //   // console.log(codeRow);
@@ -89,7 +93,6 @@ export default function ListTable({ headers, items }) {
 
   // };
 
-
   return (
     <>
       {modalState.showModal && (
@@ -105,7 +108,11 @@ export default function ListTable({ headers, items }) {
             //선택 컬럼
             header.value === "select" ? (
               <td key={header.value + idx}>
-                <input type="checkbox"></input>
+                <input
+                  type="checkbox"
+                  checked={selectedRows.includes(item)}
+                  onChange={() => onCheckboxChange(item)}
+                ></input>
               </td>
             ) : //순번 컬럼
             header.value === "index" ? (
@@ -113,7 +120,7 @@ export default function ListTable({ headers, items }) {
             ) : (
               <td key={header.value + idx}>
                 {/* headerKey를 key로 가진 item 값을 출력 */}
-                {header.helper||header.readonly ? (
+                {header.helper || header.readonly ? (
                   <input
                     readOnly
                     defaultValue={item[header.value]}
