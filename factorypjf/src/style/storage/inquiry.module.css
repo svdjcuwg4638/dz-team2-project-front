@@ -51,8 +51,10 @@
   width: 50px;
 }
 .btn {
+  width: 60px;
   background: #4373c0;
-  box-shadow: 1px 1px 1px #767272;
+  /* box-shadow: 1px 1px 1px #767272; */
+  border: none;
   border-radius: 6px;
   font-family: "Noto Sans KR";
   font-style: normal;
@@ -64,10 +66,7 @@
   color: #ffffff;
   margin-bottom: 1rem;
 }
-.btnSection {
-  /* float: right; */
-  /* width: 100%; */
-}
+
 .helperBtn {
   border: 0px;
   color: #ffffff;
@@ -88,4 +87,10 @@
 }
 .grid04 {
   margin-bottom: 3rem;
+}
+
+.btnBox {
+  width: 100%;
+  display: flex;
+  justify-content: right;
 }
