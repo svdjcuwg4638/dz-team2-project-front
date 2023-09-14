@@ -103,7 +103,6 @@ const List = () => {
       trigger_type: "input",
     },
   ];
-  console.log(locationAll);
   return (
     <div style={{ height: "700px", overflowY: "scroll" }}>
       <div style={{ display: "flex" }}>
