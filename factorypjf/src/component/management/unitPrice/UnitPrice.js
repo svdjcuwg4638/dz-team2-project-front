@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ClipLoader } from "react-spinners";
 import UnitPriceList from './UnitPriceList';
@@ -9,19 +9,30 @@ import { unitPriceAction } from '../../../redux/actions/management/unitPriceActi
 const UnitPrice = () => {
 
     const dispatch = useDispatch()
-
-    const {itemAll, loading, unitPriceAll} = useSelector((state)=> state.unitPrice)
+    const [isLoading, setIsloading] = useState(false);
+    const {itemAll, unitPriceAll} = useSelector((state)=> state.unitPrice)
 
     useEffect(()=>{
-      dispatch(unitPriceAction.getUnitPriceAll())
+
+      const patchUnitPrice = async () => {
+        setIsloading(true);
+        try {
+          await dispatch(unitPriceAction.getUnitPriceAll())
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setIsloading(false);
+        }
+      };
+      patchUnitPrice();
     },[])
 
-    if (loading) {
+    if (isLoading) {
     return (
       <div className="loader_wrap container">
         <ClipLoader
           color="#000"
-          loading={loading}
+          loading={isLoading}
           size={150}
           aria-label="Loading Spinner"
           data-testid="loader"

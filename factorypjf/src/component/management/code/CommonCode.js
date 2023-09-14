@@ -63,6 +63,12 @@ const CommonCode = ({ selectId, codeAll,setCodeAllData }) => {
     } catch (error) {
       console.log("error :", error);
     }
+
+    setFormData({
+      ...formData,
+      common_code: "",
+      common_name: "",
+  })
   };
   // #endregion
 
