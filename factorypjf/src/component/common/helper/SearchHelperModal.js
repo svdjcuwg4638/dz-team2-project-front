@@ -7,7 +7,7 @@ import styles from "../../../style/storage/inquiry.module.css";
 
 const HELPER_KEY = 113;
 
-const SearchSection = ({ headers, formHandler }) => {
+const SearchHelperModal = ({ headers, formHandler }) => {
   const DEFAULT_ROW = 1;
 
   const modalInit = {
@@ -125,4 +125,4 @@ const SearchSection = ({ headers, formHandler }) => {
   );
 };
 
-export default SearchSection;
+export default SearchHelperModal;

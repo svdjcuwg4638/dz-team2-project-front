@@ -5,7 +5,7 @@ import Table from "../../layout/Table/Table";
 import axios from "axios";
 import ListTable from "component/layout/Table/ListTableData";
 import { ReactComponent as Arrow } from "img/rightArrow.svg";
-import SearchSection from "./SearchSection";
+import SearchHelperModal from "../../common/helper/SearchHelperModal";
 
 const Inquiry = () => {
   const search_headers = [
@@ -233,7 +233,7 @@ const Inquiry = () => {
             <div className={styles.SearchSection}>
               <table>
                 <tbody>
-                  <SearchSection
+                  <SearchHelperModal
                     headers={search_headers}
                     formHandler={formHandler}
                   />
