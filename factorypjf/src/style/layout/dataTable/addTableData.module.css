@@ -11,3 +11,15 @@
 td{
     padding:0;
 }
+
+.input_date{
+    max-width: 90px;
+    font-size: 14px;
+}
+
+Hide Calendar Icon In Chrome
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}

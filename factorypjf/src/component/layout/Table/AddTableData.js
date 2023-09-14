@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useReducer, useRef, useState } from "react";
 import axios from "axios";
+import DatePicker from "react-datepicker";
 
 import HelperModal from "component/common/helper/HelperModal";
 import { getAxios } from "function/axiosFuction";
@@ -12,6 +13,8 @@ const HELPER_KEY = 113;
 
 export default function AddTableData({ headers, onGridTrigger }) {
   const DEFAULT_ROW = 3;
+
+  const [selectedDate, setDate] = useState(new Date());
 
   //행 추가 handler
   const [tableItems, setTableItems] = useState(
@@ -97,22 +100,21 @@ export default function AddTableData({ headers, onGridTrigger }) {
           ...copyItems[currentCol.row],
           [itemKey]: codeRow[key],
         };
-      //비어있는 행이면
+        //비어있는 행이면
       } else {
         copyItems[currentCol.row] = { [itemKey]: codeRow[key] };
       }
     }
     setTableItems(copyItems);
 
-
     //======================grid2 trigger========================
-    headers.forEach((header)=>{
+    headers.forEach((header) => {
       //현재 도움창을 띄운 column이 trigger 컬럼이면
-      if(header.gridTrigger&&header.value===modalState.codeValue){
+      if (header.gridTrigger && header.value === modalState.codeValue) {
         //현재 컬럼의 header, 현재 row를 보냄
-        onGridTrigger(header,copyItems[currentCol.row]);
+        onGridTrigger(header, copyItems, currentCol);
       }
-    })
+    });
     // console.log(tableItems)
   };
 
@@ -147,32 +149,28 @@ export default function AddTableData({ headers, onGridTrigger }) {
               <td key={headerIdx}>{idx + 1}</td>
             ) : (
               <td key={headerIdx}>
-                {header.helper||header.readonly ? (
+                {header.helper || header.readonly ? (
                   <input
+                    id={`grid01_${header.value}`}
                     readOnly
                     onKeyUp={(e) => {
                       keyUpHandler(e, header, { row: idx, col: headerIdx });
                     }}
-                    onBlur={(e) => {
-                      {
-                        /* grid02 trigger 여부에 따라 onBlur 핸들러 유무 결정 */
-                      }
-                      // header.gridTrigger && onBlurHandler(header.value,idx);
-                    }}
                     value={item ? item[header.value] : ""}
+                  ></input>
+                ) : header.value === "date" ? (
+                  <input
+                    id={`grid01_${header.value}`}
+                    type="date"
+                    placeholder="yyyy.mm.dd"
+                    className={addStyle.input_date}
                   ></input>
                 ) : (
                   <input
+                    id={`grid01_${header.value}`}
                     onKeyUp={(e) => {
                       keyUpHandler(e, header);
                     }}
-                    onBlur={(e) => {
-                      {
-                        /* grid02 trigger 여부에 따라 onBlur 핸들러 유무 결정 */
-                      }
-                      // header.gridTrigger && onBlurHandler(header.value,idx);
-                    }}
-                    value={item ? item[header.value] : ""}
                   ></input>
                 )}
               </td>
