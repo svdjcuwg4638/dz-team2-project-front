@@ -14,7 +14,7 @@
   align-items: center;
 }
 .searchCom input {
-  width: 100px;
+  width: 110px;
 }
 .searchCom label {
   width: 4rem;
@@ -76,8 +76,12 @@
   width: 30px;
   height: 30px;
   text-align: center;
-  margin-right: 10px;
   margin-left: 5px;
+}
+.xBtn {
+  background-color: #ffffff;
+  border: 1px solid #5390f0;
+  color: #5390f0;
 }
 
 .grid01,

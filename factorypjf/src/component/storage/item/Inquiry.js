@@ -220,8 +220,36 @@ const Inquiry = () => {
   const formHandler = (tableItems) => {
     setFormData(tableItems);
   };
-  const searchHandler = () => {
-    console.log(formData);
+  const searchHandler = async () => {
+    setItems4([]);
+
+    try {
+      // formData를 백엔드로 전송
+      const response = await axios.post(
+        "http://localhost:8080/inventory/searchForm",
+        formData
+      );
+
+      const data = response.data.data;
+
+      let tableItems = [];
+      for (let i = 0; i < data.length; i++) {
+        tableItems.push({
+          item_code: data[i].item_code,
+          item_name: data[i].item_name,
+          category: data[i].category,
+          standard: `${data[i].weight} *${data[i].length}* ${data[i].height}, ${data[i].volume}, ${data[i].weight}`,
+          unit: data[i].unit,
+          partner_name: data[i].partner_name,
+          total: data[i].total,
+          storage_name: data[i].storage_code,
+          location_name: data[i].location_name,
+        });
+      }
+      setItems4(tableItems);
+    } catch (error) {
+      console.error("데이터 전송 중 오류 발생:", error);
+    }
   };
   return (
     <div className={styles.SectionContainer}>
