@@ -8,8 +8,6 @@ import styles from "../../../style/storage/inquiry.module.css";
 const HELPER_KEY = 113;
 
 const SearchHelperModal = ({ headers, formHandler }) => {
-  const DEFAULT_ROW = 1;
-
   const modalInit = {
     showModal: false,
     codeValue: "", //
@@ -84,6 +82,14 @@ const SearchHelperModal = ({ headers, formHandler }) => {
 
     setTableItems(copyItems);
   };
+  const inputChangeHandler = (header, value) => {
+    let copyItems = { ...tableItems };
+    copyItems = {
+      ...copyItems,
+      [header]: value,
+    };
+    setTableItems(copyItems);
+  };
 
   return (
     <>
@@ -95,28 +101,44 @@ const SearchHelperModal = ({ headers, formHandler }) => {
         />
       )}
 
+      {/* 도움창이 필요한 항목은 readonly, 도움창으로만 입력 가능 */}
       {headers.map((header, headerIdx) => (
         <td key={header.headerIdx}>
           <div className={styles.searchCom}>
             <label> {header.text}</label>
-            <input
-              value={tableItems[header.value] || ""}
-              onKeyUp={(e) => {
-                keyUpHandler(e, header);
-              }}
-            ></input>
-            {header.helper && (
-              <button
-                className={styles.helperBtn}
-                onClick={(e) =>
-                  buttonPressHandler(e, header, {
-                    row: 0,
-                    col: headerIdx,
-                  })
-                }
-              >
-                ?
-              </button>
+            {header.helper ? (
+              <>
+                <input
+                  readOnly
+                  value={tableItems[header.value] || ""}
+                  onKeyUp={(e) => {
+                    keyUpHandler(e, header);
+                  }}
+                ></input>
+                <button
+                  className={styles.helperBtn}
+                  onClick={(e) =>
+                    buttonPressHandler(e, header, {
+                      row: 0,
+                      col: headerIdx,
+                    })
+                  }
+                >
+                  ?
+                </button>
+              </>
+            ) : (
+              <>
+                <input
+                  onChange={(e) =>
+                    inputChangeHandler(header.value, e.target.value)
+                  }
+                  value={tableItems[header.value] || ""}
+                  onKeyUp={(e) => {
+                    keyUpHandler(e, header);
+                  }}
+                ></input>
+              </>
             )}
           </div>
         </td>
