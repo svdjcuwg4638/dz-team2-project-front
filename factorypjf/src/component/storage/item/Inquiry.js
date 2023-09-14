@@ -139,7 +139,7 @@ const Inquiry = () => {
       };
 
       const response = await axios.get(
-        "http://localhost:8080/inventory/search",
+        "http://localhost:8080/inventory/searchTable",
         {
           params: params,
         }
