@@ -220,16 +220,7 @@ const Inquiry = () => {
     setFormData(tableItems);
   };
   const searchHandler = () => {
-    const formdataToSend = formData.map((data) => data[0]);
-
-    axios
-      .post("YOUR_BACKEND_URL", { data: formdataToSend })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    console.log(formData);
   };
   return (
     <div className={styles.SectionContainer}>

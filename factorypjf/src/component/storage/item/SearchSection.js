@@ -17,7 +17,7 @@ const SearchSection = ({ headers, formHandler }) => {
   };
 
   //행 추가 handler
-  const [tableItems, setTableItems] = useState([]);
+  const [tableItems, setTableItems] = useState({});
   useEffect(() => {
     formHandler(tableItems);
   }, [tableItems]);
@@ -65,31 +65,24 @@ const SearchSection = ({ headers, formHandler }) => {
 
   //코드 선택 handler
   const selectCodeHandler = (codeRow) => {
-    //================선택한 코드 테이블에 출력===============
-    let copyItems = JSON.parse(JSON.stringify(tableItems));
+    let copyItems = { ...tableItems };
+
     for (let key in codeRow) {
       let itemKey = "";
 
-      //   //코드데이터면 key가 ~~Code, 아니면 value 그대로 객체 생성
-      //   //ex) teamCode, team
       if (!key.toLowerCase().includes("code")) {
         itemKey = modalState.codeValue;
       } else {
         itemKey = key;
       }
 
-      //같은 행에 이미 데이터가 들어있으면
-      if (copyItems[currentCol.row]) {
-        copyItems[currentCol.row] = {
-          ...copyItems[currentCol.row],
-          [itemKey]: codeRow[key],
-        };
-        //비어있는 행이면
-      } else {
-        copyItems[currentCol.row] = { [itemKey]: codeRow[key] };
-      }
-      setTableItems(copyItems);
+      copyItems = {
+        ...copyItems,
+        [itemKey]: codeRow[key],
+      };
     }
+
+    setTableItems(copyItems);
   };
 
   return (
@@ -102,52 +95,32 @@ const SearchSection = ({ headers, formHandler }) => {
         />
       )}
 
-      {tableItems &&
-        tableItems.map((item, idx) => (
-          <tr key={idx}>
-            {headers.map(
-              (
-                header,
-                headerIdx //선택 컬럼
-              ) => (
-                <td key={header.headerIdx}>
-                  {header.helper ? (
-                    <div className={styles.searchCom}>
-                      <label> {header.text}</label>
-                      <input
-                        value={item ? item[header.value] : ""}
-                        onKeyUp={(e) => {
-                          keyUpHandler(e, header, { row: idx, col: headerIdx });
-                        }}
-                      ></input>
-                      <button
-                        className={styles.helperBtn}
-                        onClick={(e) =>
-                          buttonPressHandler(e, header, {
-                            row: idx,
-                            col: headerIdx,
-                          })
-                        }
-                      >
-                        ?
-                      </button>
-                    </div>
-                  ) : (
-                    <div className={styles.searchCom}>
-                      <label> {header.text}</label>
-                      <input
-                        value={item ? item[header.value] : ""}
-                        onKeyUp={(e) => {
-                          keyUpHandler(e, header);
-                        }}
-                      ></input>
-                    </div>
-                  )}
-                </td>
-              )
+      {headers.map((header, headerIdx) => (
+        <td key={header.headerIdx}>
+          <div className={styles.searchCom}>
+            <label> {header.text}</label>
+            <input
+              value={tableItems[header.value] || ""}
+              onKeyUp={(e) => {
+                keyUpHandler(e, header);
+              }}
+            ></input>
+            {header.helper && (
+              <button
+                className={styles.helperBtn}
+                onClick={(e) =>
+                  buttonPressHandler(e, header, {
+                    row: 0,
+                    col: headerIdx,
+                  })
+                }
+              >
+                ?
+              </button>
             )}
-          </tr>
-        ))}
+          </div>
+        </td>
+      ))}
     </>
   );
 };
