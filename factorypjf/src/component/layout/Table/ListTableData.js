@@ -6,7 +6,7 @@ import HelperModal from "component/common/helper/HelperModal";
 
 const HELPER_KEY = 113;
 
-export default function ListTable({ headers, items, onTrigger }) {
+export default function ListTable({ headers, items, onTrigger,selectedRows,onCheckboxChange }) {
   const modalInit = {
     showModal: false,
     codeValue: "", //
@@ -15,9 +15,9 @@ export default function ListTable({ headers, items, onTrigger }) {
 
   const [tableItems, setTableItems] = useState([]);
 
-  useEffect(()=>{
-    setTableItems(items)
-  },[items])
+  useEffect(() => {
+    setTableItems(items);
+  }, [items]);
 
   //모달 끄고 닫는 핸들러
   const onModalHanlder = (codeValue, codeName) => {
@@ -56,6 +56,7 @@ export default function ListTable({ headers, items, onTrigger }) {
       console.log("도움창이 제공되지 않는 코드입니다.");
     }
   };
+
 
  
   //코드 선택 handler
@@ -120,7 +121,11 @@ export default function ListTable({ headers, items, onTrigger }) {
             //선택 컬럼
             header.value === "select" ? (
               <td key={header.value + idx}>
-                <input type="checkbox"></input>
+                <input
+                  type="checkbox"
+                  checked={selectedRows.includes(item)}
+                  onChange={() => onCheckboxChange(item)}
+                ></input>
               </td>
             ) : //순번 컬럼
             header.value === "index" ? (

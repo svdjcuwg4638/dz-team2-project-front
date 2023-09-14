@@ -25,6 +25,7 @@ export default function List() {
       helper: true,
       gridTrigger: true,
     },
+
     { text: "생산팀", value: "team", width: "4%", helper: true },
     { text: "라인", value: "line", width: "5%", helper: true },
     { text: "수량", value: "quantity", width: "3%" },
@@ -34,6 +35,7 @@ export default function List() {
     { text: "담당자", value: "emp", width: "5%", helper:true },
     { text: "소요시간", value: "lead_time", width: "5%"},
     { text: "작업인원", value: "work_force", width: "5%"},
+
     { text: "비고", value: "description", width: "9%" },
   ];
 
@@ -44,6 +46,7 @@ export default function List() {
     { text: "자재", value: "item", width: "15%", helper: true },
     { text: "필요수량", value: "quantity", width: "8%", helper: true },
     { text: "창고", value: "storage", width: "10%", helper: true },
+
     {
       text: "세부장소",
       value: "location",
@@ -68,6 +71,7 @@ export default function List() {
     let itemCode = "";
     if (header.value === "item") {
       itemCode = tableItems[currentCol.row].itemCode;
+
     }
 
     axios
@@ -78,7 +82,9 @@ export default function List() {
         return res.data.data;
       })
       .then((data) => {
+
         let newTableItems = [];
+
 
         for (let i = 0; i < data.length; i++) {
           newTableItems.push({
@@ -93,7 +99,9 @@ export default function List() {
             description: data[i].description,
           });
         }
+
         setItems([...newTableItems]);
+
       })
       .catch((error) => console.log(error));
   };

@@ -4,6 +4,9 @@ import Table from "./Table";
 import Modal from "./Modal";
 import { storageAction } from "../../../redux/actions/management/storageAction";
 import "../registration/regiBtn.css";
+import productionClasses from "style/production/production.module.css";
+import AddTd from "component/layout/Table/AddTableData";
+// import Table from "component/layout/Table/Table";
 
 import InputTable from "./InputTable";
 import { CodehelperAction } from "redux/actions/storage/CodeHelperAction";
@@ -104,8 +107,21 @@ const List = () => {
     },
   ];
   console.log(locationAll);
+
+  const grid01_headers = [
+    { text: "선택", value: "select", width: "9%" },
+    { text: "창고코드", value: "storage_code", width: "9%" },
+    { text: "창고명", value: "storage_name", width: "9%" },
+  ];
+  // const [grid02_items, setItems] = useState([]);
+
   return (
     <div style={{ height: "700px", overflowY: "scroll" }}>
+      {/* <div className={productionClasses.grid01}>
+        <Table headers={grid01_headers}>
+          <AddTd></AddTd>
+        </Table>
+      </div> */}
       <div style={{ display: "flex" }}>
         {menulist.map((menu) => (
           <Modal menu={menu} />

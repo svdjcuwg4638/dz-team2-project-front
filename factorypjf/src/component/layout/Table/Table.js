@@ -5,8 +5,6 @@ import addStyle from "style/layout/dataTable/addTableData.module.css";
 
 
 export default function DataTable({ headers, onModal, children }) {
- 
-
   // header가 있어야만 table 출력
   if (!headers || !headers.length) {
     throw new Error("<DataTable/> header is required.");
@@ -18,7 +16,7 @@ export default function DataTable({ headers, onModal, children }) {
     <div className="table-container">
       <table className={tableStyle.tbl_header}>
         <colgroup>
-          {headers.map((header,idx) => {
+          {headers.map((header, idx) => {
             return <col key={idx} width={header.width}></col>;
           })}
         </colgroup>
@@ -33,10 +31,13 @@ export default function DataTable({ headers, onModal, children }) {
         </thead>
       </table>
 
-      <div className={tableStyle.tbl_body_wrap}>
+      <div
+        className={tableStyle.tbl_body_wrap}
+        
+      >
         <table className={tableStyle.tbl_body}>
           <colgroup>
-            {headers.map((header,idx ) => {
+            {headers.map((header, idx) => {
               return <col key={idx} width={header.width}></col>;
             })}
           </colgroup>
