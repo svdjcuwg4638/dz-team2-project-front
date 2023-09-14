@@ -7,6 +7,7 @@ import StorageHelp from "../storage/StorageHelp";
 import { partnerAction } from "redux/actions/management/partnerAction";
 import Modal from "../../storage/item/Modal";
 import { codeAction } from "redux/actions/management/codeAction";
+import "../../..";
 const AddItem = ({ addFormViewHandler }) => {
   const dispatch = useDispatch();
   const { partnerAll } = useSelector((state) => state.partner);
@@ -33,6 +34,9 @@ const AddItem = ({ addFormViewHandler }) => {
     unit: "",
     description: "",
     partner_code: "",
+    category: "",
+    unit_price: "",
+    type:"",
   });
 
   const [unitData, setUnitData] = useState({
@@ -89,6 +93,13 @@ const AddItem = ({ addFormViewHandler }) => {
         partner_code: partnerAll.data.find(
           (data) => data.partner_name == formData["partner_code"]
         ).partner_code,
+        category: codeAll.data.find(
+          (data) =>
+            data.common_name == formData["category"] &&
+            data.management_code == "CATEGORY"
+        ).common_code,
+        unit_price : formData["unit_price"],
+        type:formData["type"]
       };
 
       try {
@@ -108,6 +119,9 @@ const AddItem = ({ addFormViewHandler }) => {
           unit: "",
           description: "",
           partner_code: "",
+          category: "",
+          unit_price: "",
+          type:"inbound"
         });
       } catch (error) {
         console.error("Error submitting data:", error);
@@ -127,13 +141,24 @@ const AddItem = ({ addFormViewHandler }) => {
   };
 
   const unitCode = {
-    name: "단위코드",
+    name: "공통코드",
     guide: true,
     type_all: "codeAll",
     code_column: "common_code",
     name_column: "common_name",
     dataAll: { codeAll },
     common_code_type: "UNIT",
+    trigger_type: "search",
+  };
+
+  const categoryCode = {
+    name: "공통코드",
+    guide: true,
+    type_all: "codeAll",
+    code_column: "common_code",
+    name_column: "common_name",
+    dataAll: { codeAll },
+    common_code_type: "CATEGORY",
     trigger_type: "search",
   };
 
@@ -190,6 +215,21 @@ const AddItem = ({ addFormViewHandler }) => {
 
           <div>
             <div>
+              <div>카태고리</div>
+              <div style={{ display: "flex" }}>
+                <input
+                  type="text"
+                  name="category"
+                  value={formData["category"]}
+                ></input>
+                <Modal
+                  code_type={"category"}
+                  menu={categoryCode}
+                  handleInputChange={handleInputChange}
+                />
+              </div>
+            </div>
+            <div>
               <div>거래처</div>
               <div style={{ display: "flex" }}>
                 <input
@@ -226,8 +266,17 @@ const AddItem = ({ addFormViewHandler }) => {
               />
             </div>
             <button
-              className="button"
+              className="btn"
               type="button"
+              style={{
+                padding: "0px",
+                width: "30px",
+                marginTop: "23px",
+                height: "30px",
+                textAlign: "center",
+                marginRight: "10px",
+                marginLeft: "5px",
+              }}
               onClick={() => setShowFlag(true)}
             >
               ?
@@ -239,6 +288,28 @@ const AddItem = ({ addFormViewHandler }) => {
               />
             )}
           </div>
+
+          <div>
+            <div>
+              <div>가격</div>
+              <div>
+                <input
+                  value={formData["unit_price"]}
+                  type="text"
+                  name="unit_price"
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+            <div>
+              <div>입고/출고</div>              
+              <select name="type" onChange={handleInputChange}>
+                <option value="inbound">입고</option>
+                <option value="outbound">출고</option>
+              </select>
+            </div>
+          </div>
+
           <div style={{ fontSize: "20px", fontWeight: "bold" }}>규격</div>
 
           <div className="item_add_unit_wrap" style={{ display: "block" }}>
@@ -264,7 +335,7 @@ const AddItem = ({ addFormViewHandler }) => {
                 <div>길이</div>
                 <div>
                   <input
-                  value={formData["length"]}
+                    value={formData["length"]}
                     type="text"
                     name="length"
                     onChange={handleInputChange}
@@ -300,7 +371,7 @@ const AddItem = ({ addFormViewHandler }) => {
                 <div>부피</div>
                 <div>
                   <input
-                  value={formData["volume"]}
+                    value={formData["volume"]}
                     type="text"
                     name="volume"
                     onChange={handleInputChange}
@@ -319,7 +390,7 @@ const AddItem = ({ addFormViewHandler }) => {
                 <div>중량</div>
                 <div>
                   <input
-                  value={formData["weight"]}
+                    value={formData["weight"]}
                     type="text"
                     name="weight"
                     onChange={handleInputChange}
@@ -336,7 +407,7 @@ const AddItem = ({ addFormViewHandler }) => {
                 <div>갯수</div>
                 <div>
                   <input
-                  value={formData["unit"]}
+                    value={formData["unit"]}
                     type="text"
                     name="unit"
                     onChange={handleInputChange}

@@ -96,7 +96,7 @@
 }
 .detail_items_wrap > form{
   height: 100%;
-  width: 80%;
+  width: 90%;
 }
 
 .itemList_wrap th{
@@ -159,4 +159,14 @@
 
 .item_search_wrap > form{
   justify-content: flex-end;
+}
+
+.item_detail_from  input{
+  width: 100px;
+  margin-right: 5px;
+}
+
+/* column */
+.item_detail_from > div > div{
+  width: 40%;
 }
