@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { partnerAction } from "../../../redux/actions/management/partnerAction";
 import { itemAction } from "../../../redux/actions/management/itemAction";
 import { storageAction } from "../../../redux/actions/management/storageAction";
+import { codeAction } from "redux/actions/management/codeAction";
 
-const SearchHelper = ({ searchPartner, handleRowClick, menu,handleInputChange }) => {
+const SearchHelper = ({ searchPartner,code_type, handleRowClick, menu,handleInputChange }) => {
   console.log("menupopup");
   console.log(menu);
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const SearchHelper = ({ searchPartner, handleRowClick, menu,handleInputChange })
     if (menu.name === "품목") dispatch(itemAction.getItemAll());
     if (menu.name === "창고") dispatch(storageAction.getstorageAll());
     if (menu.name === "세부장소") dispatch(storageAction.getstorageAll());
+    if (menu.name === "단위코드") dispatch(codeAction.getCodeAll());
   }, [InputboxText]);
 
   let filteredData = [];
@@ -25,11 +27,22 @@ const SearchHelper = ({ searchPartner, handleRowClick, menu,handleInputChange })
     filteredData = menu.dataAll[menu.type_all].data;
 
     if (Category === "default") {
-      filteredData = menu.dataAll[menu.type_all].data.filter(
-        (item) =>
-          item[menu.code_column].includes(InputboxText) ||
-          item[menu.name_column].includes(InputboxText)
-      );
+
+      if(menu.name== "단위코드"){
+        filteredData = menu.dataAll[menu.type_all].data.filter(
+          (item) =>
+            (item[menu.code_column].includes(InputboxText) ||
+            item[menu.name_column].includes(InputboxText) ) &&
+            item["management_code"].includes("UNIT")
+        );
+      }else{
+        filteredData = menu.dataAll[menu.type_all].data.filter(
+          (item) =>
+            item[menu.code_column].includes(InputboxText) ||
+            item[menu.name_column].includes(InputboxText)
+        );
+      }
+
     } else if (Category === "code") {
       filteredData = menu.dataAll[menu.type_all].data.filter((item) =>
         item[menu.code_column].includes(InputboxText)
@@ -42,6 +55,15 @@ const SearchHelper = ({ searchPartner, handleRowClick, menu,handleInputChange })
   }
 
   const rowClickHandler = (datarow) => {
+    console.log(code_type);
+    if(datarow && datarow.management_code){
+      handleInputChange({
+        target:{
+          name: code_type,
+          value: datarow[menu.code_column]
+        }
+      })
+    }
     handleInputChange({
       target:{
         name: menu.code_column,

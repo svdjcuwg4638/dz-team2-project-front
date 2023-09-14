@@ -6,27 +6,36 @@ import { itemAction } from "../../../redux/actions/management/itemAction";
 import { ClipLoader } from "react-spinners";
 import "../../../style/management/item.css";
 import DetailItem from "./DetailItem";
+import api from "redux/api";
 const Item = () => {
   const dispatch = useDispatch();
 
-  const { itemAll} = useSelector(
-    (state) => state.item
-  );
+  const [selectItem, setSelectItem] = useState(null);
 
-  const [isLoading, setIsloading] = useState(false)
+  const { itemAll } = useSelector((state) => state.item);
+
+  const [isLoading, setIsloading] = useState(false);
+
+  const [selectIds, setSelectIds] = useState([]);
+
+  const handleDelete = async () => {
+    await api.post("/item/delete", selectIds);
+    dispatch(itemAction.getItemAll());
+    setSelectIds([]);
+  };
 
   useEffect(() => {
-    const patchItems = async ()=>{
-      setIsloading(true)
-      try{
-        await dispatch(itemAction.getItemAll())
-      }catch(error){
+    const patchItems = async () => {
+      setIsloading(true);
+      try {
+        await dispatch(itemAction.getItemAll());
+      } catch (error) {
         console.error(error);
-      }finally{
-        setIsloading(false)
+      } finally {
+        setIsloading(false);
       }
-    }
-    patchItems()
+    };
+    patchItems();
   }, []);
 
   //#region 추가모달표시
@@ -57,16 +66,41 @@ const Item = () => {
   }
   return (
     <div className="item_wrap">
-      <div style={{height:"90%", margin:'50px'}}>
-        {itemAll.data && <ItemList itemAll={itemAll} />}
-        <div style={{display:'flex', justifyContent:'flex-end', marginTop:'20px'}}>
-          <button className="button" onClick={addFormViewHandler}>
+      <div style={{ height: "90%", margin: "50px" }}>
+        {itemAll.data && (
+          <ItemList
+            itemAll={itemAll}
+            setSelectItem={setSelectItem}
+            selectItem={selectItem}
+            setSelectIds={setSelectIds}
+            selectIds={selectIds}
+          />
+        )}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            marginTop: "20px",
+          }}
+        >
+          <button
+            className="button"
+            style={{ marginRight: "10px" }}
+            onClick={addFormViewHandler}
+          >
             추가
+          </button>
+          <button
+            className="button "
+            style={{ backgroundColor: "red" }}
+            onClick={handleDelete}
+          >
+            삭제
           </button>
         </div>
       </div>
       <div className="detail_items_wrap">
-        <DetailItem />
+        <DetailItem selectItem={selectItem} />
       </div>
       <div className="item_add_wrap" style={{ right: view }}>
         <AddItem addFormViewHandler={addFormViewHandler} />

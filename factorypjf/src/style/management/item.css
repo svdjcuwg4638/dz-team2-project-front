@@ -114,3 +114,49 @@
 .item_detail_from >div > div{
   margin: 0 10px;
 }
+.item_add_unit_wrap > div> div{
+  display: flex;
+  width: 50%;
+}
+
+.item_add_unit_wrap > div> div > div:nth-child(2){
+  display: flex;
+}
+
+.item_add_unit_wrap > div> div > div:nth-child(1){
+  width: 20%;
+}
+
+.item_add_unit_wrap > div{
+  display: flex;
+}
+
+.item_add_unit_wrap input{
+  width: 100px;
+  margin-right: 5px;
+}
+
+.item_add_unit_wrap > div> div > div:nth-child(2) > div:nth-child(3){
+  width: 10%;
+}
+.item_add_unit_wrap > div> div > div:nth-child(2) > div:nth-child(2){
+  width: 15%;
+}
+
+.itemList_wrap tbody tr:hover td{
+  background-color: #dadada;
+  cursor: pointer;
+}
+
+.item_search_wrap > form> div{
+  align-items: center;
+  display: flex;
+}
+.item_search_wrap input {
+  margin-left: 10px;
+  width: 100px;
+}
+
+.item_search_wrap > form{
+  justify-content: flex-end;
+}

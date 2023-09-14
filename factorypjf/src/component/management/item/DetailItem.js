@@ -1,10 +1,14 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { itemAction } from "redux/actions/management/itemAction";
 import api from "redux/api";
 
-const DetailItem = ({}) => {
+const DetailItem = ({selectItem}) => {
   const dispatch = useDispatch();
+
+  const {locationAll, storageAll} = useSelector((state)=>state.storage)
+  const {partnerAll}  = useSelector((state)=>state.partner)
+
   const [formData, setFormData] = useState({
     company_id: "1",
     item_code: "",
@@ -17,9 +21,27 @@ const DetailItem = ({}) => {
     volume: "",
     weight: "",
     quantity: "",
-    discription: "",
+    description: "",
     partner_code: "",
   });
+
+  useEffect(()=>{
+    setFormData({
+      company_id: "1",
+      item_code: selectItem?.item_code,
+      item_name: selectItem?.item_name,
+      location_code: locationAll?.data?.find((data)=> data?.location_code == selectItem?.location_code)?.location_name,
+      storage_code: storageAll?.data?.find((data)=>data?.storage_code == selectItem?.storage_code )?.storage_name,
+      width: selectItem?.width,
+      length: selectItem?.length,
+      height: selectItem?.height,
+      volume: selectItem?.volume,
+      weight: selectItem?.weight,
+      unit: selectItem?.unit,
+      description: selectItem?.description,
+      partner_code: selectItem?.partner_code,
+    })
+  },[selectItem])
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -42,7 +64,7 @@ const DetailItem = ({}) => {
         height: "",
         volume: "",
         weight: "",
-        quantity: "",
+        unit: "",
         description: "",
         partner_code: "",
       });
@@ -60,6 +82,7 @@ const DetailItem = ({}) => {
             <div>품목코드</div>
             <div>
               <input
+                value={formData["item_code"]}
                 type="text"
                 name="item_code"
                 onChange={handleInputChange}
@@ -70,6 +93,7 @@ const DetailItem = ({}) => {
             <div>품목이름</div>
             <div>
               <input
+              value={formData["item_name"]}
                 type="text"
                 name="item_name"
                 onChange={handleInputChange}
@@ -83,6 +107,7 @@ const DetailItem = ({}) => {
             <div>거래처</div>
             <div>
               <input
+                value={formData["partner_code"]}
                 type="text"
                 name="partner_code"
                 onChange={handleInputChange}
@@ -96,6 +121,7 @@ const DetailItem = ({}) => {
             <div>창고</div>
             <div>
               <input
+              value={formData["storage_code"]}
                 type="text"
                 name="storage_code"
                 onChange={handleInputChange}
@@ -106,8 +132,9 @@ const DetailItem = ({}) => {
             <div>세부장소</div>
             <div>
               <input
+              value={formData["location_code"]}
                 type="text"
-                name="location_id"
+                name="location_code"
                 onChange={handleInputChange}
               />
             </div>
@@ -118,13 +145,17 @@ const DetailItem = ({}) => {
           <div>
             <div>폭</div>
             <div>
-              <input type="text" name="width" onChange={handleInputChange} />
+              <input type="text" name="width" 
+              value={formData["width"]}
+              onChange={handleInputChange} />
             </div>
           </div>
           <div>
             <div>길이</div>
             <div>
-              <input type="text" name="length" onChange={handleInputChange} />
+              <input type="text" name="length"
+              value={formData["length"]}
+              onChange={handleInputChange} />
             </div>
           </div>
         </div>
@@ -133,13 +164,17 @@ const DetailItem = ({}) => {
           <div>
             <div>높이</div>
             <div>
-              <input type="text" name="height" onChange={handleInputChange} />
+              <input type="text" name="height" 
+                value={formData["height"]}
+              nChange={handleInputChange} />
             </div>
           </div>
           <div>
             <div>부피</div>
             <div>
-              <input type="text" name="volume" onChange={handleInputChange} />
+              <input type="text" name="volume" 
+                value={formData["volume"]}
+              onChange={handleInputChange} />
             </div>
           </div>
         </div>
@@ -148,13 +183,17 @@ const DetailItem = ({}) => {
           <div>
             <div>중량</div>
             <div>
-              <input type="text" name="weight" onChange={handleInputChange} />
+              <input type="text" name="weight"
+                value={formData["weight"]}
+              onChange={handleInputChange} />
             </div>
           </div>
           <div>
             <div>갯수</div>
             <div>
-              <input type="text" name="unit" onChange={handleInputChange} />
+              <input type="text" name="unit" 
+                value={formData["unit"]}
+              onChange={handleInputChange} />
             </div>
           </div>
         </div>
@@ -165,6 +204,7 @@ const DetailItem = ({}) => {
             <div>
               <textarea
                 name="description"
+                value={formData["description"]}
                 style={{ width: "100%", height: "150px" }}
                 onChange={handleInputChange}
               ></textarea>

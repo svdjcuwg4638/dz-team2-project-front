@@ -4,8 +4,8 @@ import axios from "axios";
 import HelperModal from "component/common/helper/HelperModal";
 import { getAxios } from "function/axiosFuction";
 
-import tableStyle from "style/layout/dataTable/Table.module.css";
-import addStyle from "style/layout/dataTable/AddTableData.module.css";
+import tableStyle from "style/layout/dataTable/table.module.css";
+import addStyle from "style/layout/dataTable/addTableData.module.css";
 
 //도움창 단축키 코드
 const HELPER_KEY = 113;

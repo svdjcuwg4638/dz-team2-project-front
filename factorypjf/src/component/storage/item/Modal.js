@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SearchHelper from "./SearchHelper";
-const Modal = ({ menu, name,handleInputChange }) => {
+const Modal = ({ menu, name,handleInputChange,code_type }) => {
   const [HelperScreenState, setHelperScreenState] = useState(false);
   const [searchpartner, setSearchpartner] = useState("");
 
@@ -40,6 +40,7 @@ const Modal = ({ menu, name,handleInputChange }) => {
             handleInputChange={handleInputChange}
               menu={menu}
               searchPartner={selectedPartnerFn}
+              code_type={code_type}
             />
           </div>
         )}
@@ -49,16 +50,6 @@ const Modal = ({ menu, name,handleInputChange }) => {
         <div className="searchSection">
           {menu.trigger_type === "search" ? (
             <>
-              <input
-                name={name}
-                className="my-3"
-                style={{ border: "1px solid black" }}
-                type="text"
-                value={searchpartner}
-                onChange={(e) => {
-                  setSearchpartner(e.target.value);
-                }}
-              />
               {menu.guide && (
                 <button
                   type="button"
