@@ -6,7 +6,8 @@ import HelperModal from "component/common/helper/HelperModal";
 
 const HELPER_KEY = 113;
 
-export default function ListTable({ headers, items, onTrigger,selectedRows,onCheckboxChange }) {
+//headers: 테이블 header, items: 테이블 내용, onTrigger:부모 요소로 이벤트 발송할 수 있는 handler, onCheckboxChange: 선택 컬럼 체크시 handler
+export default function ListTable({ headers, items, onTrigger,onCheckboxChange }) {
   const modalInit = {
     showModal: false,
     codeValue: "", //
@@ -123,9 +124,10 @@ export default function ListTable({ headers, items, onTrigger,selectedRows,onChe
               <td key={header.value + idx}>
                 <input
                   type="checkbox"
-                  checked={selectedRows.includes(item)}
+                  
                   onChange={() => onCheckboxChange(item)}
                 ></input>
+                
               </td>
             ) : //순번 컬럼
             header.value === "index" ? (

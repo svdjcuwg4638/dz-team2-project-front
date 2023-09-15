@@ -63,8 +63,29 @@ export default function List() {
     },
     { text: "비고", value: "description", width: "20%", readonly: true },
   ];
-
-  const [validation, setValidation] = useState(false);
+  
+  //grid01 row 선택시 그에 맞는 자재를 grid2에 출력하기 위해 입력 값을 저장하는 state
+  const cacheInit={
+    idx:null,
+    items:[]
+  }
+  const cacheReducer = (state, action) => {
+      if(state.idx===null){
+        return {...state,idx:action.idx}
+      }else{
+        let copyItems = state.items?JSON.parse(JSON.stringify(state.items)):[];
+        //이전에 선택되었던 행에 대한 grid2 넣어줌
+        copyItems[state.idx]=action.item
+        //지금 선택된 행에 대한 grid2 출력 바꿈
+        
+        setItems(copyItems[action.idx]?[...copyItems[action.idx]]:[])
+        //state 지금 선택된 행으로 변경, item도 변경
+        
+        return{idx:action.idx,items:[...copyItems]}
+      }
+  };
+  const [grid02Cache, cacheDispatch] = useReducer(cacheReducer, cacheInit);
+  
 
   //grid 1 trigger handler
   const gridTriggerHandler = (header, tableItems, currentCol) => {
@@ -101,9 +122,9 @@ export default function List() {
         }
 
         setItems([...newTableItems]);
-
       })
       .catch((error) => console.log(error));
+
   };
 
   //grid2 trigger handler (창고와 세부장소에 맞는 재고 가져오기)
@@ -201,18 +222,37 @@ export default function List() {
     }
   };
 
+  const selectRowHandler=(idx)=>{
+    const inputArr=[...document.querySelectorAll('input[id*="grid02"]')]
+    // console.log(inputArr)
+    const item=[]
+
+    cacheDispatch({type:'SELECT_ROW',idx,item:item})
+
+    inputArr.forEach((el)=>{
+      //id(grid번호_행번호_header) 에서 행번호 찾기
+      let row=el.id.match(/(?<=grid\d+_)\d+(?=_)/g)[0];
+      //id(grid번호_행번호_header) 에서 header 찾기
+      let header = el.id.match(/(?<=\w_)[a-z_]+/g)[0];
+
+      item[row]={...item[row],[header]:el.value}
+
+      console.log(grid02Cache.items)
+    })
+  }
+
   return (
     <>
       <div className={productionClasses.wrap}>
         <p className={productionClasses["sub-menu-name"]}>생산등록</p>
         <div className={productionClasses.grid01}>
           <Table headers={grid01_headers}>
-            <AddTd onGridTrigger={gridTriggerHandler} onSave={saveHandler}></AddTd>
+            <AddTd onGridTrigger={gridTriggerHandler}  selectRowHandler={selectRowHandler}></AddTd>
           </Table>
         </div>
         <div className={productionClasses.grid02}>
           <Table headers={grid02_headers}>
-            <ListTd items={grid02_items} onTrigger={triggerHandler} onSave={saveHandler}></ListTd>
+            <ListTd items={grid02_items} onTrigger={triggerHandler} ></ListTd>
           </Table>
         </div>
         <div className={productionClasses["product_btn-wrap"]}>

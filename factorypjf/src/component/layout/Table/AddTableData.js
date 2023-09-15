@@ -9,14 +9,14 @@ import addStyle from "style/layout/dataTable/addTableData.module.css";
 //도움창 단축키 코드
 const HELPER_KEY = 113;
 
-export default function AddTableData({ headers, onGridTrigger }) {
+//headers: 테이블 header, onGridTrigger: 부모 요소로 이벤트 발송할 수 있는 handler, 
+export default function AddTableData({ headers, onGridTrigger,selectRowHandler }) {
   const DEFAULT_ROW = 3;
 
   //행 추가 handler
   const [tableItems, setTableItems] = useState(
     Array.from({ length: DEFAULT_ROW })
   );
-
   const addRowHandler = () => {
     setTableItems([...tableItems, {}]);
   };
@@ -40,7 +40,7 @@ export default function AddTableData({ headers, onGridTrigger }) {
   //모달 reducer (on/off, 코드 타입)
   const modalReducer = (state, action) => {
     if (action.type === "ON_MODAL") {
-      console.log(action);
+      
       return {
         showModal: true,
         //코드가 내부적으로 가지는 값 (ex: partner)
@@ -59,7 +59,7 @@ export default function AddTableData({ headers, onGridTrigger }) {
   //도움창 단축키 handler
   const keyUpHandler = (e, colInfo, coordinate) => {
     if (e.which === HELPER_KEY && colInfo.helper) {
-      console.log(e, colInfo);
+      
       //도움창을 연 컬럼 좌표 저장
       setCurrentCol({ ...coordinate });
       //모달 켜기
@@ -114,9 +114,18 @@ export default function AddTableData({ headers, onGridTrigger }) {
     // console.log(tableItems)
   };
 
-  // //onBlurHandler
-  // const onBlurHandler = (trigger,rowIdx) => {
-  // };
+  const selectRow=(e,idx)=>{
+    selectRowHandler(idx);
+
+    //클릭 이벤트가 tr>td>input에서 발생하기 때문에 부모의 부모 노드 선택
+    let row=e.target.parentNode.parentNode;
+    row.className=addStyle['add-table-focus'];
+    if(focusRow){
+      focusRow.className=addStyle['']
+    }
+    setFocusRow(row)
+    
+  }
 
   return (
     <>
@@ -131,7 +140,9 @@ export default function AddTableData({ headers, onGridTrigger }) {
       {tableItems.map((item, idx) => (
         // 행 추가를 위해 rowCount만큼 tr 생성
         <tr
+          onClick={(e)=>{selectRow(e,idx)}}
           key={idx}
+
           // className={focusRow === idx ? tableStyle["focused-row"] : ""}
         >
           {headers.map((header, headerIdx) =>
