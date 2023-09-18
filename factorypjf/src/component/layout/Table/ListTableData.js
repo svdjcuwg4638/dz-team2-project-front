@@ -7,7 +7,7 @@ import HelperModal from "component/common/helper/HelperModal";
 const HELPER_KEY = 113;
 
 //headers: 테이블 header, items: 테이블 내용, onTrigger:부모 요소로 이벤트 발송할 수 있는 handler, onCheckboxChange: 선택 컬럼 체크시 handler
-export default function ListTable({ headers, items, onTrigger,onCheckboxChange }) {
+export default function ListTable({ headers, items, onTrigger,onCheckboxChange,emitItem }) {
   const modalInit = {
     showModal: false,
     codeValue: "", //
@@ -18,6 +18,7 @@ export default function ListTable({ headers, items, onTrigger,onCheckboxChange }
 
   useEffect(() => {
     setTableItems(items);
+    emitItem(items)
   }, [items]);
 
   //모달 끄고 닫는 핸들러
@@ -94,6 +95,7 @@ export default function ListTable({ headers, items, onTrigger,onCheckboxChange }
       }
     }
     setTableItems(copyItems);
+    emitItem(copyItems)
 
 
     //======================grid2 trigger========================

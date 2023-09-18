@@ -10,13 +10,31 @@ import addStyle from "style/layout/dataTable/addTableData.module.css";
 const HELPER_KEY = 113;
 
 //headers: 테이블 header, onGridTrigger: 부모 요소로 이벤트 발송할 수 있는 handler, 
-export default function AddTableData({ headers, onGridTrigger,selectRowHandler }) {
+export default function AddTableData({ headers, onGridTrigger,selectRowHandler,emitItem }) {
+  //첫 렌더링시 빈 테이블 3줄
   const DEFAULT_ROW = 3;
+  const DEFAULT_ARR = useMemo(() => {
+    let row = {};
+    headers.forEach((header) => {
+      row[header.value] = '';
+    });
+    let tempArr = [];
+    for (let i = 0; i < DEFAULT_ROW; i++) {
+      let copyItems = JSON.parse(JSON.stringify(row));
+      tempArr.push(copyItems);
+    }
+    return tempArr;
+  }, [headers]);
+
+  useEffect(()=>{
+    emitItem(DEFAULT_ARR)
+  },[])
 
   //행 추가 handler
   const [tableItems, setTableItems] = useState(
-    Array.from({ length: DEFAULT_ROW })
+    [...DEFAULT_ARR]
   );
+
   const addRowHandler = () => {
     setTableItems([...tableItems, {}]);
   };
@@ -102,6 +120,7 @@ export default function AddTableData({ headers, onGridTrigger,selectRowHandler }
       }
     }
     setTableItems(copyItems);
+    emitItem(copyItems)
 
     //======================grid2 trigger========================
     headers.forEach((header) => {

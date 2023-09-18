@@ -13,6 +13,7 @@ import { getAxios } from "function/axiosFuction";
 
 export default function List() {
   //text: 컬럼명, value: 내부적으로 가지는 값(DB 필드명과 같음), width: 컬럼 style(width), helper: 도움창 사용여부, gridTrigger: 입력이 완료되면 grid02 데이터 가져오는 trigger 컬럼
+  const [grid01_items,set01Item]=useState()
   const grid01_headers = [
     { text: "선택", value: "select", width: "3%" },
     { text: "순번", value: "index", width: "3%" },
@@ -39,9 +40,9 @@ export default function List() {
     { text: "비고", value: "description", width: "9%" },
   ];
 
-  const [grid02_items, setItems] = useState([]);
+  const [grid02_items, Set02Item] = useState([]);
   const grid02_headers = [
-    { text: "선택", value: "select", width: "5%" },
+    
     { text: "순번", value: "index", width: "5%" },
     { text: "자재", value: "item", width: "15%", helper: true },
     { text: "필요수량", value: "quantity", width: "8%", helper: true },
@@ -74,13 +75,12 @@ export default function List() {
         return {...state,idx:action.idx}
       }else{
         let copyItems = state.items?JSON.parse(JSON.stringify(state.items)):[];
+        
         //이전에 선택되었던 행에 대한 grid2 넣어줌
         copyItems[state.idx]=action.item
         //지금 선택된 행에 대한 grid2 출력 바꿈
-        
-        setItems(copyItems[action.idx]?[...copyItems[action.idx]]:[])
-        //state 지금 선택된 행으로 변경, item도 변경
-        
+        Set02Item(copyItems[action.idx]?[...copyItems[action.idx]]:[])
+        //state 지금 선택된 행으로 변경, item에 push
         return{idx:action.idx,items:[...copyItems]}
       }
   };
@@ -96,7 +96,7 @@ export default function List() {
     }
 
     axios
-      .get(`http://localhost:9090/production/add/component`, {
+      .get(`http://localhost:9091/production/add/component`, {
         params: { itemCode },
       })
       .then((res) => {
@@ -121,7 +121,7 @@ export default function List() {
           });
         }
 
-        setItems([...newTableItems]);
+        Set02Item([...newTableItems]);
       })
       .catch((error) => console.log(error));
 
@@ -140,7 +140,7 @@ export default function List() {
       locationCode = rowItem.locationCode;
 
       axios
-        .get(`http://localhost:9090/production/add/inventory`, {
+        .get(`http://localhost:9091/production/add/inventory`, {
           params: { itemCode, storageCode, locationCode },
         })
         .then((res) => {
@@ -152,16 +152,17 @@ export default function List() {
           let currentRow = currentCol.row;
 
           copyItems[currentRow].inventory = data.total;
-          setItems([...copyItems]);
+          Set02Item([...copyItems]);
         })
         .catch((error) => console.log(error));
     }
   };
 
-  const saveHandler = () => {    
+  const saveHandler = () => {   
+     
     //====================테이블의 모든 input 가져오기====================
     const inputArr=[...document.querySelectorAll('[id*="grid"]')]
-    const grid01Data=[]
+    let grid01Data=[]
     const grid02Data=[]
 
     inputArr.forEach((el)=>{
@@ -176,24 +177,23 @@ export default function List() {
         grid02Data[row]={...grid02Data[row],[header]:el.value}
       }
     })
-    console.log(grid01Data)
-    console.log(grid02Data)
     
-    
-    //=================필수 입력 컬럼에 값 다 있는지 확인===============
+    //=================grid01 필수 입력 컬럼에 값 다 있는지 확인===============
     let alertHeader=''
     let itemCount=0
-
+    //grid01 입력확인
     for (let i = 0; i < grid01Data.length; i++) {
+      //겉으로 보이는 value + state에 저장된 itemList
+      grid01Data[i]={...grid01_items[i],...grid01Data[i]}
       for(let key in grid01Data[i]){
         // //item 값이 입력된 행인데 NULL 컬럼 아닌 컬럼에 값이 입력돼있지 않으면
         grid01Data[i].item&&itemCount++
-        if(grid01Data[i].item&&!(key==='description'||key==='lead_time||'||key==='work_force'||key==='team')&&!grid01Data[i][key]){
+        if(grid01Data[i].item&&!(key==='description'||key==='lead_time||'||key==='work_force'||key==='team'||key==='select'||key==='index')&&!grid01Data[i][key]){
           alertHeader = grid01_headers.find((header)=>{
             return header.value===key
           })
           alert('상위테이블 '+alertHeader.text+'를 입력해주세요')
-          return false;
+          return;
         }
       }
     }
@@ -203,43 +203,51 @@ export default function List() {
       alert('저장할 '+alertHeader+'이 없습니다.')
     }
 
+    //grid02 입력확인
     if(!alertHeader){
-      for (let i = 0; i < grid02Data.length; i++) {
-        for(let key in grid02Data[i]){
-          // //item 값이 입력된 행인데 NULL 컬럼 아닌 컬럼에 값이 입력돼있지 않으면
-          if(grid02Data[i].item&&key!=='description'&&!grid02Data[i][key]){
-            alertHeader = grid02_headers.find((header)=>{
-              return header.value===key
-            })
-            alert('하위테이블 '+alertHeader.text+'를 입력해주세요')
-            return;
-        }
-      }}    
+      for (let i = 0; i < grid02Cache.items.length; i++) {
+        for (let j = 0; j < grid02Cache.items[i].length; j++) {
+          for(let key in grid02Cache.items[i][j]){
+            // //item 값이 입력된 행인데 NULL 컬럼 아닌 컬럼에 값이 입력돼있지 않으면
+            if(grid02Cache.items[i][j].item&&!(key==='description'||key==='select'||key==='index')&&!grid02Cache.items[i][j][key]){
+              alertHeader = grid02_headers.find((header)=>{
+                return header.value===key
+              })
+              if(alertHeader.value==='inventory'){alert('해당 장소에 자재가 없습니다.')}
+              else{alert('하위테이블 '+alertHeader.text+'를 입력해주세요')}
+              return;
+          }
+        }}    
+      }
     }
+
     if(!alertHeader){
-      //putAxios
-      console.log('success!',grid02Data)
+      console.log(grid02Cache)
+      console.log(grid01Data)
     }
   };
 
   const selectRowHandler=(idx)=>{
     const inputArr=[...document.querySelectorAll('input[id*="grid02"]')]
     // console.log(inputArr)
-    const item=[]
-
-    cacheDispatch({type:'SELECT_ROW',idx,item:item})
-
+    
+    //겉으로 보이는 input value
+    const elementItem=[]
     inputArr.forEach((el)=>{
       //id(grid번호_행번호_header) 에서 행번호 찾기
       let row=el.id.match(/(?<=grid\d+_)\d+(?=_)/g)[0];
       //id(grid번호_행번호_header) 에서 header 찾기
       let header = el.id.match(/(?<=\w_)[a-z_]+/g)[0];
-
-      item[row]={...item[row],[header]:el.value}
-
-      console.log(grid02Cache.items)
+      
+      //겉으로 보이는 value + state에 저장된 itemList
+      elementItem[row]={...grid02_items[row],...elementItem[row],[header]:el.value}
     })
+    cacheDispatch({type:'SELECT_ROW', idx, item:elementItem})
+    console.log(grid02Cache.items)
+
   }
+
+
 
   return (
     <>
@@ -247,12 +255,12 @@ export default function List() {
         <p className={productionClasses["sub-menu-name"]}>생산등록</p>
         <div className={productionClasses.grid01}>
           <Table headers={grid01_headers}>
-            <AddTd onGridTrigger={gridTriggerHandler}  selectRowHandler={selectRowHandler}></AddTd>
+            <AddTd onGridTrigger={gridTriggerHandler}  selectRowHandler={selectRowHandler} emitItem={set01Item}></AddTd>
           </Table>
         </div>
         <div className={productionClasses.grid02}>
           <Table headers={grid02_headers}>
-            <ListTd items={grid02_items} onTrigger={triggerHandler} ></ListTd>
+            <ListTd items={grid02_items} onTrigger={triggerHandler} emitItem={Set02Item}></ListTd>
           </Table>
         </div>
         <div className={productionClasses["product_btn-wrap"]}>
