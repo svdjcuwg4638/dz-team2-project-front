@@ -2,11 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { codeAction } from "redux/actions/management/codeAction";
 import api from "redux/api";
-import SearchBox from "./SearchBox";
 
-const CommonCode = ({ selectId, codeAll,setCodeAllData }) => {
+const CommonCode = ({ selectId, codeAll, setCodeAllData }) => {
   const [searchData, setSearchData] = useState(
-    codeAll?.filter((data) => data.management_code === selectId?.management_code)
+    codeAll?.filter(
+      (data) => data.management_code === selectId?.management_code
+    )
   );
 
   useEffect(() => {
@@ -49,17 +50,10 @@ const CommonCode = ({ selectId, codeAll,setCodeAllData }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post("/code/add", formData)
-      const adData = response.data.data
-      console.log(response);
-      setSearchData((state)=>[
-        ...state,
-        adData,
-      ])
-      setCodeAllData((state)=>[
-        ...state,
-        adData,
-      ])
+      const response = await api.post("/code/add", formData);
+      const adData = response.data.data;
+      setSearchData((state) => [...state, adData]);
+      setCodeAllData((state) => [...state, adData]);
     } catch (error) {
       console.log("error :", error);
     }
@@ -68,19 +62,9 @@ const CommonCode = ({ selectId, codeAll,setCodeAllData }) => {
       ...formData,
       common_code: "",
       common_name: "",
-  })
+    });
   };
   // #endregion
-
-  //#region 관리코드검색
-  const [formSearchData, setSearchFormData] = useState({
-    common_code: "",
-    common_name: "",
-    url: "/code/search",
-    searchName: ["코드", "코드명"],
-    keys: ["common_code", "common_name"],
-  });
-  //#endregion
 
   // #region 삭제 체크박스 함수
   const [selectCodes, setSelectCodes] = useState([]);
@@ -104,12 +88,6 @@ const CommonCode = ({ selectId, codeAll,setCodeAllData }) => {
 
   return (
     <div>
-      <SearchBox
-        formSearchData={formSearchData}
-        setSearchFormData={setSearchFormData}
-        setSearchData={setSearchData}
-        selectId={selectId}
-      />
       <table>
         <thead>
           <tr>

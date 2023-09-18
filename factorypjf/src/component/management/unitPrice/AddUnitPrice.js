@@ -29,8 +29,6 @@ const AddUnitPrice = ({ itemAll }) => {
 
   useEffect(()=>{
 
-    console.log("formData", formData);
-
     setFormData({
       ...formData,
       partner_name:partnerAll?.data?.find((data)=>data.partner_code == formData["partner_code"])?.partner_name 

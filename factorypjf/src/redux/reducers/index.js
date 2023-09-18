@@ -8,6 +8,7 @@ import unitPriceReducer from "./management/unitPriceReducer";
 import codeReducer from "./management/codeReducer";
 import codehelperReducer from "./storage/codehelperReducer";
 import inventoryReducer from "./storage/InventoryReducer";
+import relationReducer from "./management/relationReducer";
 
 export default combineReducers({
   currentMenu: menuReducer,
@@ -18,5 +19,7 @@ export default combineReducers({
   unitPrice: unitPriceReducer,
   code: codeReducer,
   codehelper: codehelperReducer,
+  relation: relationReducer,
+  
   inventory: inventoryReducer,
 });
