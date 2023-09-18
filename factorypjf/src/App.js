@@ -14,6 +14,7 @@ import StorageRoutes from "./pages/Storage";
 import StorageItem from "./component/storage/item/List";
 import StorageInquiry from "./component/storage//item/Inquiry";
 import Registration from "./component/storage/registration/Registration";
+import InBound from "component/management/inbound/InBound";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="product" element={<Product />} />
           <Route path="unitprice" element={<UnitPrice />} />
           <Route path="code" element={<Code />} />
+          <Route path="inbound" element={<InBound />} />
         </Route>
       </Routes>
     </Layout>

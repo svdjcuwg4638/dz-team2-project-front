@@ -3,16 +3,13 @@ import api from "../../api"
 function getUnitPriceAll(){
   return async(dispatch) =>{
     try{
-      dispatch({type:"GET_REUSET"})
-      const itemAllList = api.get("/item/all");
       const unitPriceAllList = api.get("/unitPrice/all");
-      let [itemAllListResponse, unitPriceAllListReponse] = await Promise.all(
-        [itemAllList , unitPriceAllList]
+      let [ unitPriceAllListReponse] = await Promise.all(
+        [ unitPriceAllList]
       )
       dispatch({
         type:"GET_UNITPRICE_ALL_SUCCESS",
         payload:{
-          itemAll: itemAllListResponse.data,
           unitPriceAll : unitPriceAllListReponse.data,
         },
       })
@@ -22,6 +19,44 @@ function getUnitPriceAll(){
   }
 }
 
+function getCurrentUnitPriceAll(){
+  return async(dispatch) =>{
+    try{
+      const unitPriceCurrentList = api.get("/unitPrice/current");
+      let [ unitPriceCurrentListReponse] = await Promise.all(
+        [ unitPriceCurrentList]
+      )
+      dispatch({
+        type:"GET_UNITPRICE_ALL_SUCCESS",
+        payload:{
+          unitPriceAll : unitPriceCurrentListReponse.data,
+        },
+      })
+    }catch(error){
+      dispatch({type:'GET_UNITPRICE_ALL_FAIL',payload:error.toString()})
+    }
+  }
+}
+
+function getExpectedUnitPriceAll(){
+  return async(dispatch) =>{
+    try{
+      const unitPriceExpectedList = api.get("/unitPrice/expected");
+      let [ unitPriceExpectedListReponse] = await Promise.all(
+        [ unitPriceExpectedList]
+      )
+      dispatch({
+        type:"GET_UNITPRICE_ALL_SUCCESS",
+        payload:{
+          unitPriceAll : unitPriceExpectedListReponse.data,
+        },
+      })
+    }catch(error){
+      dispatch({type:'GET_UNITPRICE_ALL_FAIL',payload:error.toString()})
+    }
+  }
+}
+
 export const unitPriceAction={
-  getUnitPriceAll,
+  getUnitPriceAll,getCurrentUnitPriceAll,getExpectedUnitPriceAll
 }

@@ -58,7 +58,6 @@ const AddPartner = ({ addFormViewHandler }) => {
     dispatch(partnerAction.getPartnerAll());
   };
 
-  
   //#region 주소 api처리
   const [popup, setPopup] = useState(false);
 
@@ -164,17 +163,16 @@ const AddPartner = ({ addFormViewHandler }) => {
           {popup && (
             <div className="postmodal">
               <div>
-                <button
-                  style={{ width: "30px", borderRadius: "5px" }}
-                  onClick={() => handleComplete()}
-                >
-                  X
-                </button>
                 <div>
-                  <AddressApi
-                    company={formData}
-                    setcompany={setFormData}
-                  />
+                  <button
+                    style={{ width: "30px", borderRadius: "5px" }}
+                    onClick={() => handleComplete()}
+                  >
+                    X
+                  </button>
+                </div>
+                <div>
+                  <AddressApi company={formData} setcompany={setFormData} />
                 </div>
               </div>
             </div>

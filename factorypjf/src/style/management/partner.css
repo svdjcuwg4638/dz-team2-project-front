@@ -65,11 +65,21 @@
   display: flex;
   flex-flow: column;
   position: fixed;
+  width: 527px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
+}
+
+.postmodal > div{
+  background: #000;
+}
+
+.postmodal > div > div:nth-child(1){
+  display: flex;
+  justify-content: flex-end;
 }
 
 .addpartner_wrap_sub form input {
@@ -89,3 +99,12 @@
   border: none;
 }
 
+.partner_search_wrap{
+  display: flex;
+  justify-content: flex-end;
+}
+.partner_search_wrap > div{
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
+}

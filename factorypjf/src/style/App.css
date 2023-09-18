@@ -119,3 +119,22 @@ th,td{
 td{
   padding-left: 20px;
 }
+
+.tbody{
+  height: 300px;
+  overflow: scroll;
+  border: 1px solid #000;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}
+
+.row {
+  display: flex;
+}

@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ClipLoader } from "react-spinners";
-import UnitPriceList from "./UnitPriceList";
-import AddUnitPrice from "./AddUnitPrice";
-import { unitPriceAction } from "../../../redux/actions/management/unitPriceAction";
-import "../../../style/management/unitPrice.css";
-import { itemAction } from "redux/actions/management/itemAction";
 
-const UnitPrice = () => {
+const ItemRelation = () => {
   const dispatch = useDispatch();
-  const [isLoading, setIsloading] = useState(false);
+
+  const [selectId, setSelectId] = useState(null);
+
   const { itemAll } = useSelector((state) => state.item);
+
   useEffect(() => {
-    const patchUnitPrice = async () => {
+    const patchItems = async () => {
       setIsloading(true);
       try {
         await dispatch(itemAction.getItemAll());
@@ -22,7 +19,7 @@ const UnitPrice = () => {
         setIsloading(false);
       }
     };
-    patchUnitPrice();
+    patchItems();
   }, []);
 
   if (isLoading) {
@@ -41,12 +38,15 @@ const UnitPrice = () => {
   }
 
   return (
-    <div className="content_wrap">
-      <UnitPriceList itemAll={itemAll}/>
-
-      {itemAll.data && <AddUnitPrice itemAll={itemAll} />}
+    <div>
+      {itemAll.data && 
+        <>
+          <ProductItem itemAll={itemAll} setSelectId={setSelectId} selectId={selectId}/>
+          <RelationItem itemAll={itemAll} selectId={selectId}/>
+        </>
+      }
     </div>
   );
 };
 
-export default UnitPrice;
+export default ItemRelation;
