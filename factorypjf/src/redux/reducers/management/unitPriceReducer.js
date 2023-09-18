@@ -1,7 +1,5 @@
 let initalState = {
-  itemAll: {},
   unitPriceAll: {},
-  loading: false,
 };
 
 function unitPriceReducer(state = initalState, action) {
@@ -10,14 +8,11 @@ function unitPriceReducer(state = initalState, action) {
     case "GET_REQUEST":
       return {
         ...state,
-        loading: true,
       };
     case "GET_UNITPRICE_ALL_SUCCESS":
       return {
         ...state,
-        itemAll: payload.itemAll,
         unitPriceAll: payload.unitPriceAll,
-        loading: false,
       };
     default:
       return { ...state };

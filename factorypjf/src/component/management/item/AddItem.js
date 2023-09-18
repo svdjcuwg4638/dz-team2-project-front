@@ -10,7 +10,6 @@ import { codeAction } from "redux/actions/management/codeAction";
 import "../../..";
 const AddItem = ({ addFormViewHandler }) => {
   const dispatch = useDispatch();
-  const { partnerAll } = useSelector((state) => state.partner);
   const { codeAll } = useSelector((state) => state.code);
   const { locationAll, storageAll } = useSelector((state) => state.storage);
   const [showFlag, setShowFlag] = useState(false);
@@ -33,10 +32,7 @@ const AddItem = ({ addFormViewHandler }) => {
     weight: "",
     unit: "",
     description: "",
-    partner_code: "",
     category: "",
-    unit_price: "",
-    type:"",
   });
 
   const [unitData, setUnitData] = useState({
@@ -90,16 +86,11 @@ const AddItem = ({ addFormViewHandler }) => {
         weight: formData["weight"] + unitData["weight"],
         unit: formData["unit"] + unitData["unit"],
         description: formData["description"],
-        partner_code: partnerAll.data.find(
-          (data) => data.partner_name == formData["partner_code"]
-        ).partner_code,
         category: codeAll.data.find(
           (data) =>
             data.common_name == formData["category"] &&
             data.management_code == "CATEGORY"
         ).common_code,
-        unit_price : formData["unit_price"],
-        type:formData["type"]
       };
 
       try {
@@ -118,26 +109,13 @@ const AddItem = ({ addFormViewHandler }) => {
           weight: "",
           unit: "",
           description: "",
-          partner_code: "",
           category: "",
-          unit_price: "",
-          type:"inbound"
         });
       } catch (error) {
         console.error("Error submitting data:", error);
       }
       dispatch(itemAction.getItemAll());
     }
-  };
-
-  const partner = {
-    name: "거래처",
-    guide: true,
-    type_all: "partnerAll",
-    code_column: "partner_code",
-    name_column: "partner_name",
-    dataAll: { partnerAll },
-    trigger_type: "search",
   };
 
   const unitCode = {
@@ -229,21 +207,6 @@ const AddItem = ({ addFormViewHandler }) => {
                 />
               </div>
             </div>
-            <div>
-              <div>거래처</div>
-              <div style={{ display: "flex" }}>
-                <input
-                  type="text"
-                  name="partner_code"
-                  value={formData["partner_code"]}
-                ></input>
-                <Modal
-                  menu={partner}
-                  name="partner_code"
-                  handleInputChange={handleInputChange}
-                />
-              </div>
-            </div>
           </div>
 
           <div>
@@ -287,27 +250,6 @@ const AddItem = ({ addFormViewHandler }) => {
                 setShowFlag={setShowFlag}
               />
             )}
-          </div>
-
-          <div>
-            <div>
-              <div>가격</div>
-              <div>
-                <input
-                  value={formData["unit_price"]}
-                  type="text"
-                  name="unit_price"
-                  onChange={handleInputChange}
-                />
-              </div>
-            </div>
-            <div>
-              <div>입고/출고</div>              
-              <select name="type" onChange={handleInputChange}>
-                <option value="inbound">입고</option>
-                <option value="outbound">출고</option>
-              </select>
-            </div>
           </div>
 
           <div style={{ fontSize: "20px", fontWeight: "bold" }}>규격</div>

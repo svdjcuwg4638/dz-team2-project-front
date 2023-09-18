@@ -5,9 +5,7 @@ import { itemAction } from "../../../redux/actions/management/itemAction";
 import { storageAction } from "../../../redux/actions/management/storageAction";
 import { codeAction } from "redux/actions/management/codeAction";
 
-const SearchHelper = ({ searchPartner,code_type, handleRowClick, menu,handleInputChange }) => {
-  console.log("menupopup");
-  console.log(menu);
+const SearchHelper = ({ searchPartner,code_type, handleRowClick, menu,handleInputChange,setDataLoad }) => {
   const dispatch = useDispatch();
 
   const [InputboxText, setInputboxText] = useState("");
@@ -62,7 +60,6 @@ const SearchHelper = ({ searchPartner,code_type, handleRowClick, menu,handleInpu
   }
 
   const rowClickHandler = (datarow) => {
-    console.log("datarowddddddddddddd",datarow);
     if(datarow && datarow.management_code == "UNIT"){
       handleInputChange({
         target:{
@@ -77,11 +74,26 @@ const SearchHelper = ({ searchPartner,code_type, handleRowClick, menu,handleInpu
           value: datarow[menu.name_column]
         }
       })
+    }else if(menu.input_type == "item"){
+      console.log("menu",menu);
+      console.log("datarow",datarow);
+      handleInputChange({
+        target:{
+          name: menu.code_column,
+          value: datarow[menu.code_column]
+        },
+      })
+      handleInputChange({
+        target:{
+          name: menu.name_column,
+          value: datarow[menu.name_column]
+        },
+      })
     }else{
       handleInputChange({
         target:{
           name: menu.code_column,
-          value: datarow[menu.name_column]
+          value: datarow[menu.code_column]
         }
       })
     }

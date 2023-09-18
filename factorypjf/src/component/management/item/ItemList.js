@@ -77,19 +77,19 @@ const ItemList = ({
         </form>
       </div>
       <div className="itemList_wrap">
-        <table>
+        <div className="table" style={{height:"500px"}}>
           <thead className="top_table_header">
             <tr>
-              <th style={{ width: "5%" }}></th>
-              <th style={{ width: "10%" }}>품목코드</th>
-              <th style={{ width: "10%" }}>품목이름</th>
-              <th style={{ width: "30%" }}>
+              <th ></th>
+              <th >품목코드</th>
+              <th >품목이름</th>
+              <th >
                 규격 w:폭 l:길이 h:높이 v:부피 we:중량
               </th>
-              <th style={{ width: "10%" }}>수량</th>
+              <th>수량</th>
             </tr>
           </thead>
-          <tbody>
+          <div className="tbody" style={{height:"430px"}}>
             {itemList.length > 0 &&
               itemList.map((data) => (
                 <tr onClick={() => setSelectItem(data)}>
@@ -157,8 +157,8 @@ const ItemList = ({
                   </td>
                 </tr>
               ))}
-          </tbody>
-        </table>
+          </div>
+        </div>
       </div>
     </div>
   );

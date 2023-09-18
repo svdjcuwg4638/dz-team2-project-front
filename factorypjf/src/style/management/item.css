@@ -17,7 +17,6 @@
 
 .itemList_wrap{
   display: block;
-  width: 100%;
   justify-content: center;
   text-align: center;
   height: 90%;
@@ -169,4 +168,23 @@
 /* column */
 .item_detail_from > div > div{
   width: 40%;
+}
+
+.itemList_wrap th:nth-child(1),
+.itemList_wrap td:nth-child(1){
+  width: 5%;
+}
+
+.itemList_wrap th:nth-child(2),
+.itemList_wrap td:nth-child(2){
+  width: 14%;
+}
+.itemList_wrap th:nth-child(3),
+.itemList_wrap td:nth-child(3){
+  width: 14%;
+}
+
+.itemList_wrap th:nth-child(4),
+.itemList_wrap td:nth-child(4){
+  width: 51%;
 }

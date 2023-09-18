@@ -9,7 +9,6 @@ const DetailItem = ({ selectItem }) => {
   const dispatch = useDispatch();
 
   const { locationAll, storageAll } = useSelector((state) => state.storage);
-  const { partnerAll } = useSelector((state) => state.partner);
   const { codeAll } = useSelector((state) => state.code);
 
   const [formData, setFormData] = useState({
@@ -25,7 +24,6 @@ const DetailItem = ({ selectItem }) => {
     weight: "",
     quantity: "",
     description: "",
-    partner_code: "",
     category: "",
   });
 
@@ -81,9 +79,6 @@ const DetailItem = ({ selectItem }) => {
       weight: selectItem?.weight,
       unit: selectItem?.unit,
       description: selectItem?.description,
-      partner_code: partnerAll?.data?.find(
-        (data) => data?.partner_code == selectItem?.partner_code
-      )?.partner_name,
       category: codeAll?.data?.find(
         (data) => data?.common_code == selectItem?.category
       )?.common_name,
@@ -125,9 +120,6 @@ const DetailItem = ({ selectItem }) => {
       weight: formData["weight"] + unitData["weight"],
       unit: formData["unit"] + unitData["unit"],
       description: formData["description"],
-      partner_code: partnerAll.data.find(
-        (data) => data.partner_name == formData["partner_code"]
-      ).partner_code,
       category: codeAll.data.find(
         (data) =>
           data.common_name == formData["category"] &&
@@ -156,16 +148,6 @@ const DetailItem = ({ selectItem }) => {
     unit: "EA",
   });
 
-  // #region 도움창 props
-  const partner = {
-    name: "거래처",
-    guide: true,
-    type_all: "partnerAll",
-    code_column: "partner_code",
-    name_column: "partner_name",
-    dataAll: { partnerAll },
-    trigger_type: "search",
-  };
 
   const unitCode = {
     name: "공통코드",
@@ -237,26 +219,6 @@ const DetailItem = ({ selectItem }) => {
                 <Modal
                   code_type={"category"}
                   menu={categoryCode}
-                  handleInputChange={handleInputChange}
-                />
-              )}
-            </div>
-          </div>
-          <div>
-            <div>거래처</div>
-            <div className="flex">
-              <input
-                readOnly
-                style={{ backgroundColor: readOnly ? "#dadada" : "" }}
-                value={formData["partner_code"]}
-                type="text"
-                name="partner_code"
-                onChange={handleInputChange}
-              />
-              {!readOnly && (
-                <Modal
-                  menu={partner}
-                  name="partner_code"
                   handleInputChange={handleInputChange}
                 />
               )}

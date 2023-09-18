@@ -1,0 +1,45 @@
+.unit_price_tab_wrap {
+  display: flex;
+}
+
+.unit_price_tab_wrap > div {
+  border: 1px solid #000;
+  margin: 0 10px;
+  width: 100px;
+  text-align: center;
+  border-radius: 5px;
+  color: #000;
+  height: 40px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+thead{
+  border: 1px solid #000;
+}
+
+.table th{
+  border: 1px solid #000;
+  background-color: #dadada;
+}
+
+.unit_price_search_form{
+  display: flex;
+  margin-bottom: 25px;
+}
+.unit_price_search_form > div{
+  margin: 0 15px;
+}
+.unit_price_search_form  input{
+  border-radius: 5px;
+}
+
+.unit_price_search_form  select{
+  width: 100px;
+  height: 26px;
+  border-radius: 5px;
+}
