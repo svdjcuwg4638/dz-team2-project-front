@@ -45,8 +45,8 @@ export default function List() {
   const grid02_headers = [
     
     { text: "순번", value: "index", width: "5%" },
-    { text: "자재", value: "item", width: "15%", helper: true },
-    { text: "필요수량", value: "quantity", width: "8%", helper: true },
+    { text: "자재", value: "item", width: "15%", readonly:true },
+    { text: "필요수량", value: "quantity", width: "8%", readonly:true },
     { text: "창고", value: "storage", width: "10%", helper: true },
 
     {
@@ -185,19 +185,20 @@ export default function List() {
     const inputArr=[...document.querySelectorAll('[id*="grid"]')]
     let grid01Data=[]
     const grid02Data=[]
-
+    
     inputArr.forEach((el)=>{
       //id(grid번호_행번호_header) 에서 행번호 찾기
-      let row=el.id.match(/(?<=grid\d+_)\d+(?=_)/g)[0];
+      let row=Number(el.id.match(/(?<=grid\d+_)\d+(?=_)/g)[0]);
       //id(grid번호_행번호_header) 에서 header 찾기
-      let header = el.id.match(/(?<=\w_)[a-z_]+/g)[0];
-
+      let header = el.id.match(/(?<=\w_)[a-zA-Z_]+/g)[0];
+      
       if(el.id.includes('grid01')){
         //grid01 state + input value
         grid01Data[row]={...grid01Data[row],[header]:el.value}
-      }else if(el.id.includes('grid02')){
         //grid02 state + input value
-        grid02Data[row]={...grid02Data[row],[header]:el.value}
+      }else if(el.id.includes('grid02')){
+        //겉으로 보이는 value + state에 저장된 itemList
+        grid02Data[row]={...grid02_items[row],...grid02Data[row],[header]:el.value}
       }
     })
    
@@ -214,7 +215,7 @@ export default function List() {
         if(grid01Data[i].item){
           itemCount++;
           // //item 값이 입력된 행인데 NULL 컬럼 아닌 컬럼에 값이 입력돼있지 않으면
-          if(grid01Data[i].item&&!(key==='description'||key==='lead_time||'||key==='work_force'||key==='team'||key==='select'||key==='index')&&!grid01Data[i][key]){
+          if(grid01Data[i].item&&!(key==='description'||key==='leadTime||'||key==='workForce'||key==='team'||key==='select'||key==='index')&&!grid01Data[i][key]){
             alertHeader = grid01_headers.find((header)=>{
               return header.value===key
             })
@@ -222,7 +223,7 @@ export default function List() {
             return;
           }else{
             //!!!!!!!!!!!!!!!!! 로그인한 companyId 가져오는 로직으로 수정 !!!!!!!!!!!!!!!!!
-            grid01Data[i].company_id=1;
+            grid01Data[i].companyId=1;
           }
         }else{
           grid01Data.splice(i,1);
@@ -260,7 +261,7 @@ export default function List() {
 
     if(!alertHeader){
       console.log(grid01Data)
-      console.log(grid02Cache)
+      console.log(grid02Cache.items)
       
       postAxios('production/add',{production:grid01Data,component:grid02Cache.items},null,null)
     }
