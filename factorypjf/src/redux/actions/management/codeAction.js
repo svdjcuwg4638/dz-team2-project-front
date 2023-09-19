@@ -3,7 +3,6 @@ import api from "redux/api"
 function getCodeAll(){
   return async(dispatch)=>{
     try{
-      dispatch({type:"GET_REQUEST"})
       const codeAllList = api.get("/code/all")
       const managementCodeAllList = api.get("/managementcode/all")
       let [codeAllListResponse, manageCodeAllListResponse] = await Promise.all(

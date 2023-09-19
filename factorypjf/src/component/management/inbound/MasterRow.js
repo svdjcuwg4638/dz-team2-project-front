@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const MasterRow = ({ boundId, key, setMaseterFocus }) => {
+const MasterRow = ({ boundId, setMaseterFocus }) => {
   const [formData, setFormData] = useState({
     bound_id: boundId != 0 && boundId != null ? boundId : 0,
     emp_id: "1",

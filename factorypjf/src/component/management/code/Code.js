@@ -11,30 +11,44 @@ const Code = () => {
 
   const [selectId, setSelectId] = useState(null);
 
-  const { codeAll, manageCodeAll, loading } = useSelector(
+  const [isLoading, setIsloading] = useState(false);
+
+  const { codeAll, manageCodeAll } = useSelector(
     (state) => state.code
   );
 
   const [codeAllData,setCodeAllData] = useState(codeAll.data)
 
   useEffect(() => {
-    dispatch(codeAction.getCodeAll())
+
+    const patchItems = async () => {
+      setIsloading(true);
+      try {
+        await dispatch(codeAction.getCodeAll())
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsloading(false);
+      }
+    };
+    patchItems();
+
   }, []);
 
   useEffect(()=>{
-    if(!loading && manageCodeAll && manageCodeAll.data){
+    if(!isLoading && manageCodeAll && manageCodeAll.data){
       setSelectId(manageCodeAll?.data[0])
     }
     setCodeAllData(codeAll.data)
-  },[loading])
+  },[isLoading])
 
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="loader_wrap container">
         <ClipLoader
           color="#000"
-          loading={loading}
+          loading={isLoading}
           size={150}
           aria-label="Loading Spinner"
           data-testid="loader"
@@ -53,7 +67,7 @@ const Code = () => {
           selectId={selectId}
         />
       )}
-      { codeAll && !loading && (
+      { codeAll && !isLoading&& (
         <CommonCode
           manageCodeAll={manageCodeAll.data}
           codeAll={codeAllData}

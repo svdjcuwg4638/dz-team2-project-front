@@ -1,0 +1,18 @@
+.productItem_search_wrap{
+}
+.productItem_search_wrap input{
+  width: 100px;
+}
+
+.productItem_search_wrap > div {
+  display: flex;
+}
+
+.productItem_search_wrap > div > div{
+  display: flex;
+}
+
+.productItem_search_wrap > div:nth-child(2) {
+  justify-content: flex-end;
+}
+
