@@ -14,12 +14,15 @@ export default function ListTable({ headers, items, onTrigger,onCheckboxChange,e
     codeName: "",
   };
 
-  const [tableItems, setTableItems] = useState([]);
+  const [tableItems, setTableItems] = useState();
 
   useEffect(() => {
-    setTableItems(items);
-    emitItem(items)
-  }, [items]);
+    if(items){
+      // console.log(items)
+      emitItem(items)
+      setTableItems([...items]);
+    }
+  }, [items,emitItem]);
 
   //모달 끄고 닫는 핸들러
   const onModalHanlder = (codeValue, codeName) => {
@@ -32,7 +35,7 @@ export default function ListTable({ headers, items, onTrigger,onCheckboxChange,e
   //모달 reducer (on/off, 코드 타입)
   const modalReducer = (state, action) => {
     if (action.type === "ON_MODAL") {
-      console.log(action);
+      
       return {
         showModal: true,
         codeValue: action.codeValue,
@@ -49,7 +52,7 @@ export default function ListTable({ headers, items, onTrigger,onCheckboxChange,e
 
   const keyUpHandler = (e, colInfo, coordinate) => {
       if (e.which === HELPER_KEY && colInfo.helper) {
-      console.log(e, colInfo);
+    
       //도움창을 연 컬럼 좌표 저장
       setCurrentCol({ ...coordinate });
       //모달 켜기
@@ -76,7 +79,7 @@ export default function ListTable({ headers, items, onTrigger,onCheckboxChange,e
 
       //코드데이터면 key가 ~~Code, 아니면 value 그대로 객체 생성
       //ex) teamCode, team
-      console.log(key.toLowerCase().includes("code"))
+     
       if (!key.toLowerCase().includes("code")) {
         itemKey = modalState.codeValue;
       } else {
@@ -94,7 +97,7 @@ export default function ListTable({ headers, items, onTrigger,onCheckboxChange,e
         copyItems[currentCol.row] = { [itemKey]: codeRow[key] };
       }
     }
-    setTableItems(copyItems);
+    
     emitItem(copyItems)
 
 
@@ -118,7 +121,7 @@ export default function ListTable({ headers, items, onTrigger,onCheckboxChange,e
           onSelectCode={selectCodeHandler}
         />
       )}
-      {tableItems.map((item, idx) => (
+      {tableItems&&tableItems.map((item, idx) => (
         <tr key={idx}>
           {headers.map((header,headerIdx) =>
             //선택 컬럼
