@@ -8,13 +8,13 @@ import { ReactComponent as Arrow } from "img/rightArrow.svg";
 import SearchHelperModal from "component/common/helper/SearchHelperModal";
 
 const Inquiry = () => {
+  // #region table headers
   const search_headers = [
     { text: "창고", value: "storage", helper: true },
     { text: "장소", value: "location", helper: true },
     { text: "카테고리", value: "category", helper: true },
     { text: "단위", value: "unit" },
     { text: "품목", value: "item", helper: true },
-    { text: "거래처", value: "partner", helper: true },
   ];
   const grid01_headers = [
     { text: "선택", value: "select", width: "3%", readonly: true },
@@ -32,9 +32,7 @@ const Inquiry = () => {
   ];
   const grid04_headers = [
     { text: "창고명", value: "storage_name", width: "9%", readonly: true },
-
     { text: "장소", value: "location_name", width: "15%", readonly: true },
-
     {
       text: "품목코드",
       value: "item_code",
@@ -42,19 +40,16 @@ const Inquiry = () => {
       helper: true,
       readonly: true,
     },
-
     { text: "품목명", value: "item_name", width: "9%", readonly: true },
     { text: "카테고리", value: "category", width: "9%", readonly: true },
-
     { text: "규격", value: "standard", width: "20%", readonly: true },
-
     { text: "단위", value: "unit", width: "5%", readonly: true },
-
-    { text: "거래처명", value: "partner_name", width: "9%", readonly: true },
-
     { text: "수량", value: "total", width: "7%", readonly: true },
   ];
+  // #endregion
 
+  // #region states
+  // grid items
   const [grid02_items, setItems2] = useState([]);
   const [grid03_items, setItems3] = useState([]);
   const [grid04_items, setItems4] = useState([]);
@@ -70,6 +65,9 @@ const Inquiry = () => {
 
   // 폼테이블 데이터 저장
   const [formData, setFormData] = useState([]);
+  // #endregion
+
+  // #region useEffect
   // 첫화면, storage all조회;
   useEffect(() => {
     fetchData();
@@ -92,7 +90,10 @@ const Inquiry = () => {
         (location) => location.location_code === category.location_code
       )
     );
-    // 중복제거
+
+    // #endregion
+
+    // 카테고리 데이터 중복제거
     const selectedCategoryRows = Array.from(
       new Set(temp.map((item) => item.category))
     ).map((category) => temp.find((item) => item.category === category));
@@ -117,7 +118,7 @@ const Inquiry = () => {
     }
   };
 
-  // 체크한 스토리지 로케이션 기준 검색 함수
+  // 체크한 스토리지, 로케이션, 카테고리 기준 검색 함수
   const inventoryInquirykFn = async (e) => {
     setItems4([]);
     try {
@@ -139,7 +140,7 @@ const Inquiry = () => {
       };
 
       const response = await axios.get(
-        "http://localhost:8080/inventory/search",
+        "http://localhost:8080/inventory/searchTable",
         {
           params: params,
         }
@@ -152,7 +153,7 @@ const Inquiry = () => {
           item_code: data[i].item_code,
           item_name: data[i].item_name,
           category: data[i].category,
-          standard: `${data[i].weight} *${data[i].length}* ${data[i].height}, ${data[i].volume}, ${data[i].weight}`,
+          standard: data[i].standard,
           unit: data[i].unit,
           partner_name: data[i].partner_name,
           total: data[i].total,
@@ -166,6 +167,7 @@ const Inquiry = () => {
     }
   };
 
+  // 필요 데이터 가져옴
   const fetchData = async () => {
     try {
       // 스토리지 데이터 가져오기
@@ -220,8 +222,38 @@ const Inquiry = () => {
   const formHandler = (tableItems) => {
     setFormData(tableItems);
   };
-  const searchHandler = () => {
-    console.log(formData);
+
+  // resultSection 데이터 핸들러
+  const searchHandler = async () => {
+    setItems4([]);
+
+    try {
+      // formData를 백엔드로 전송
+      const response = await axios.post(
+        "http://localhost:8080/inventory/searchForm",
+        formData
+      );
+
+      const data = response.data.data;
+
+      console.log("tata", data);
+      let tableItems = [];
+      for (let i = 0; i < data.length; i++) {
+        tableItems.push({
+          item_code: data[i].item_code,
+          item_name: data[i].item_name,
+          category: data[i].category,
+          standard: data[i].standard,
+          unit: data[i].unit,
+          total: data[i].total,
+          storage_name: data[i].storage_code,
+          location_name: data[i].location_name,
+        });
+      }
+      setItems4(tableItems);
+    } catch (error) {
+      console.error("데이터 전송 중 오류 발생:", error);
+    }
   };
   return (
     <div className={styles.SectionContainer}>
@@ -229,85 +261,80 @@ const Inquiry = () => {
         <div className={styles.headerSection}>
           <h4 className={styles.header}> 재고 조회</h4>
         </div>
-        <div className={styles.container}>
-          <div>
-            <div className={styles.SearchSection}>
-              <table>
-                <tbody>
-                  <SearchHelperModal
-                    headers={search_headers}
-                    formHandler={formHandler}
-                  />
-                </tbody>
-              </table>
-              <div className={styles.btnBox}>
-                <button className={styles.btn} onClick={searchHandler}>
-                  조회
-                </button>
-              </div>
-            </div>
-            <div className={styles.middlePart}>
-              <div className={styles.grid01}>
-                <Table maxHeight="150px" headers={grid01_headers}>
-                  <ListTable
-                    items={grid01_items}
-                    selectedRows={selectedStorageRows}
-                    onCheckboxChange={(item) =>
-                      handleCheckboxChange(
-                        item,
-                        setSelectedStorageRows,
-                        selectedStorageRows
-                      )
-                    }
-                  />
-                </Table>
-              </div>
-              <Arrow width="3%" height="175" />
-              <div className={styles.grid02}>
-                <Table maxHeight="150px" headers={grid02_headers}>
-                  <ListTable
-                    items={grid02_items}
-                    selectedRows={selectedLocationRows}
-                    onCheckboxChange={(item) =>
-                      handleCheckboxChange(
-                        item,
-                        setSelectedLocationRows,
-                        selectedLocationRows
-                      )
-                    }
-                  />
-                </Table>
-              </div>
-              <Arrow width="3%" height="175" />
-              <div className={styles.grid03}>
-                <Table maxHeight="150px" headers={grid03_headers}>
-                  <ListTable
-                    items={grid03_items}
-                    selectedRows={selectedCategoryRows}
-                    onCheckboxChange={(item) =>
-                      handleCheckboxChange(
-                        item,
-                        setSelectedCategoryRows,
-                        selectedCategoryRows
-                      )
-                    }
-                  />
-                </Table>
-              </div>
-            </div>
+        <div>
+          <div className={styles.SearchSection}>
+            <table>
+              <tbody>
+                <SearchHelperModal
+                  headers={search_headers}
+                  formHandler={formHandler}
+                />
+              </tbody>
+            </table>
             <div className={styles.btnBox}>
-              <button
-                className={styles.btn}
-                onClick={(e) => inventoryInquirykFn(e)}
-              >
+              <button className={styles.searchBtn} onClick={searchHandler}>
                 조회
               </button>
             </div>
-            <div className={styles.grid04}>
-              <Table maxHeight="250px" headers={grid04_headers}>
-                <ListTable items={grid04_items} />
+          </div>
+          <div className={styles.middlePart}>
+            <div className={styles.grid01}>
+              <Table headers={grid01_headers}>
+                <ListTable
+                  items={grid01_items}
+                  onCheckboxChange={(item) =>
+                    handleCheckboxChange(
+                      item,
+                      setSelectedStorageRows,
+                      selectedStorageRows
+                    )
+                  }
+                />
               </Table>
             </div>
+            <Arrow width="3%" height="175" />
+            <div className={styles.grid02}>
+              <Table headers={grid02_headers}>
+                <ListTable
+                  items={grid02_items}
+                  onCheckboxChange={(item) =>
+                    handleCheckboxChange(
+                      item,
+                      setSelectedLocationRows,
+                      selectedLocationRows
+                    )
+                  }
+                />
+              </Table>
+            </div>
+            <Arrow width="3%" height="175" />
+            <div className={styles.grid03}>
+              <Table headers={grid03_headers}>
+                <ListTable
+                  items={grid03_items}
+                  onCheckboxChange={(item) =>
+                    handleCheckboxChange(
+                      item,
+                      setSelectedCategoryRows,
+                      selectedCategoryRows
+                    )
+                  }
+                />
+              </Table>
+            </div>
+          </div>
+          <div className={styles.btnBox}>
+            <button
+              className={styles.searchBtn}
+              onClick={(e) => inventoryInquirykFn(e)}
+            >
+              조회
+            </button>
+          </div>
+          <div className={styles.grid04}>
+            <Table headers={grid04_headers}>
+              <ListTable items={grid04_items} />
+            </Table>
           </div>
         </div>
       </div>

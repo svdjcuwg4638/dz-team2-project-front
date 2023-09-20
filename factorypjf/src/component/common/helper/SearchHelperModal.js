@@ -43,24 +43,30 @@ const SearchHelperModal = ({ headers, formHandler }) => {
   };
   const [modalState, dispatch] = useReducer(modalReducer, modalInit);
 
-  const [currentCol, setCurrentCol] = useState();
-
   // 도움창 단축키 handler
-  const keyUpHandler = (e, colInfo, coordinate) => {
+  const keyUpHandler = (e, colInfo) => {
     if (e.which === HELPER_KEY && colInfo.helper) {
-      setCurrentCol({ ...coordinate });
       onModalHanlder(colInfo.value, colInfo.text);
     }
   };
 
   // 도움창 버튼 handler
-  const buttonPressHandler = (e, colInfo, coordinate) => {
+  const buttonPressHandler = (e, colInfo) => {
     if (colInfo.helper) {
-      setCurrentCol({ ...coordinate });
       onModalHanlder(colInfo.value, colInfo.text);
     }
   };
 
+  // x 버튼 handler
+  const xbuttonPressHandler = (header) => {
+    let copyItems = { ...tableItems };
+    copyItems = {
+      ...copyItems,
+      [header]: "",
+      [`${header}Code`]: "",
+    };
+    setTableItems(copyItems);
+  };
   //코드 선택 handler
   const selectCodeHandler = (codeRow) => {
     let copyItems = { ...tableItems };
@@ -125,6 +131,12 @@ const SearchHelperModal = ({ headers, formHandler }) => {
                   }
                 >
                   ?
+                </button>
+                <button
+                  className={`${styles.helperBtn} ${styles.xBtn}`}
+                  onClick={(e) => xbuttonPressHandler(header.value)}
+                >
+                  X
                 </button>
               </>
             ) : (

@@ -1,8 +1,7 @@
 .SectionContainer {
-  height: 100%;
-  overflow-y: scroll;
   display: flex;
   justify-content: center;
+  margin: 3rem;
 }
 
 .SearchSection table tbody td {
@@ -14,7 +13,7 @@
   align-items: center;
 }
 .searchCom input {
-  width: 100px;
+  width: 110px;
 }
 .searchCom label {
   width: 4rem;
@@ -22,24 +21,11 @@
 
 .headerSection {
   border-left: 3px solid #5390f0;
-  margin: 1rem;
 }
 
 .header {
   font-weight: bold;
-  margin-right: 1rem;
   margin-left: 1rem;
-}
-
-.container {
-  display: flex;
-  justify-content: center;
-  margin-right: 3rem;
-  margin-left: 3rem;
-}
-
-.table {
-  width: 100%;
 }
 
 .middlePart {
@@ -50,10 +36,21 @@
 .arrow {
   width: 50px;
 }
-.btn {
+
+.grid01,
+.grid02,
+.grid03 {
+  width: 33%;
+  height: 150px;
+}
+.grid04 {
+  margin-bottom: 3rem;
+  height: 250px;
+}
+
+.searchBtn {
   width: 60px;
   background: #4373c0;
-  /* box-shadow: 1px 1px 1px #767272; */
   border: none;
   border-radius: 6px;
   font-family: "Noto Sans KR";
@@ -76,17 +73,12 @@
   width: 30px;
   height: 30px;
   text-align: center;
-  margin-right: 10px;
   margin-left: 5px;
 }
-
-.grid01,
-.grid02,
-.grid03 {
-  width: 33%;
-}
-.grid04 {
-  margin-bottom: 3rem;
+.xBtn {
+  background-color: #ffffff;
+  border: 1px solid #5390f0;
+  color: #5390f0;
 }
 
 .btnBox {
