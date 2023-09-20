@@ -5,30 +5,46 @@ import { read, utils } from "xlsx";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { InventoryAction } from "redux/actions/storage/InventoryAction";
+import { TempInventoryAction } from "redux/actions/storage/TempInventoryAction";
 import ListTable from "component/layout/Table/ListTableData";
 import Table from "../../layout/Table/Table";
 import AddTableData from "component/layout/Table/AddTableData";
 import DataTable from "./DataTable";
-
 const Registration = () => {
   const dispatch = useDispatch();
   const [tableitems, setTableitems] = useState([]);
   const [excelData, setExcelData] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("데이터가 없습니다");
-  const { inventoryAll, loading } = useSelector((state) => state.inventory);
-  const [loadData, setLoadData] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("데이터가 없습니다.");
+  const { inventoryAll } = useSelector((state) => state.inventory);
+
   const [filename, setFilename] = useState();
+  const { tempinventoryAll } = useSelector((state) => state.tempinventory);
+  const [state, setState] = useState(false);
+  let storageCodeArray = [];
 
   useEffect(() => {
     dispatch(InventoryAction.getInventoryAll());
+    dispatch(TempInventoryAction.getTempInventoryAll());
   }, []);
 
   useEffect(() => {
-    // setLoadData(true);
+    // if (inventoryAll) {
+    // }
   }, [inventoryAll]);
+  useEffect(() => {}, [tempinventoryAll]);
   useEffect(() => {
-    if (errorMessage === "에러가 0건 있습니다.") setErrorMessage("");
+    if (errorMessage === "오류가 0건 있습니다.") setErrorMessage();
+    else if (
+      tableitems.length === 0 ||
+      tableitems.every((item) => Object.values(item).every((value) => !value))
+    ) {
+      setErrorMessage("데이터가 없습니다.");
+    }
   }, [errorMessage]);
+
+  useEffect(() => {
+    console.log("올라온 형식:", tableitems);
+  }, [tableitems]);
 
   const table_header = [
     { text: "창고", value: "storage", helper: true },
@@ -47,7 +63,7 @@ const Registration = () => {
     setFilename(file.name);
 
     if (!file) {
-      setErrorMessage("Please select a valid XLSX file.");
+      setErrorMessage("XLSX 파일을 업로드 해주세요.");
       return;
     }
 
@@ -68,21 +84,28 @@ const Registration = () => {
     };
   };
 
-  const fetch = async () => {
+  const fetchTemp = async () => {
+    const storageCodeArray = tableitems.map((item) => ({
+      storage_code: item.storage,
+      location_code: item.location,
+      item_code: item.item,
+      total: item.total,
+      company_id: 1,
+    }));
+    console.log("백으로 전송할 데이터", storageCodeArray);
+
     // 백으로 전송
     try {
       await axios.post(
-        "http://localhost:9091/inventory/registration",
-        tableitems
+        "http://localhost:9091/inventory/registration/temp/add",
+        storageCodeArray
       );
       console.log("전송성공");
     } catch (error) {
       console.error("전송실패", error);
     }
   };
-  useEffect(() => {
-    console.log("바뀐거반영: ", tableitems);
-  }, [tableitems]);
+
   const currentDate = new Date(); // 현재 날짜와 시간을 가져옴
 
   const year = currentDate.getFullYear(); // 년도 가져오기 (예: 2023)
@@ -103,6 +126,21 @@ const Registration = () => {
     document.body.removeChild(link);
   };
 
+  const loadtemptable = () => {
+    if (tempinventoryAll && tempinventoryAll.data) {
+      storageCodeArray = tempinventoryAll.data.map((item) => ({
+        storage: item.storage_code,
+        location: item.location_code,
+        item: item.item_code,
+        total: item.total,
+      }));
+      setExcelData(storageCodeArray);
+    }
+    setFilename("불러온 데이터");
+
+    setState(true); // 상태 업데이트
+  };
+
   return (
     <div className={styles.SectionContainer}>
       <div>
@@ -112,11 +150,10 @@ const Registration = () => {
         <div>
           <div className={styles.btnSection}>
             <button
-              className={`${loadData ? styles.btnFalse : styles.btnTrue}`}
-              disabled={loadData}
+              className={`${!state ? styles.btnFalse : styles.btnTrue}`}
+              disabled={!state ? true : false}
               onClick={downloadExcelFile}
             >
-              {console.log("test", loadData)} {/* 추가된 부분 */}
               엑셀 양식 다운로드
             </button>
             <div style={{ position: "relative" }}>
@@ -124,20 +161,20 @@ const Registration = () => {
                 type="file"
                 onChange={fileUploadHandler}
                 className={styles.inputFile}
-                disabled={loadData}
+                disabled={!state ? true : false}
               ></input>
               <button
-                className={`${loadData ? styles.btnFalse : styles.btnTrue}`}
-                disabled={loadData}
+                className={`${!state ? styles.btnFalse : styles.btnTrue}`}
+                disabled={!state ? true : false}
               >
                 기초 재고 파일 업로드
               </button>
             </div>
             <button
-              className={`${loadData ? styles.btnFalse : styles.btnTrue} ${
+              className={`${!state ? styles.btnFalse : styles.btnTrue} ${
                 styles.guideBtn
               }`}
-              disabled={loadData}
+              disabled={!state ? true : false}
             >
               ?
             </button>
@@ -148,9 +185,15 @@ const Registration = () => {
                 ㆍ결과 미리보기 : '{filename}'
               </div>
               <div className={`${styles.result} `}>
-                {loadData ? (
+                {false ? (
                   <div className={styles.script}>
                     이미 등록된 재고가 있습니다
+                  </div>
+                ) : !state ? (
+                  <div className={styles.script}>
+                    임시저장된 자료가 있습니다.
+                    <p onClick={(e) => loadtemptable()}>불러오기</p>
+                    <p onClick={(e) => setState(true)}>새로작성</p>
                   </div>
                 ) : (
                   <>
@@ -168,6 +211,7 @@ const Registration = () => {
                       <div className={styles.error}>{errorMessage}</div>
                       <button
                         className={`${styles.btnTrue} ${styles.submitBtn}`}
+                        onClick={fetchTemp}
                       >
                         임시저장
                       </button>
@@ -176,7 +220,7 @@ const Registration = () => {
                           errorMessage ? styles.btnFalse : styles.btnTrue
                         } ${styles.submitBtn}`}
                         disabled={errorMessage}
-                        onClick={fetch}
+                        // onClick={fetch}
                       >
                         저장
                       </button>

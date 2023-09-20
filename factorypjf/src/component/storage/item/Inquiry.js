@@ -13,7 +13,7 @@ const Inquiry = () => {
     { text: "창고", value: "storage", helper: true },
     { text: "장소", value: "location", helper: true },
     { text: "카테고리", value: "category", helper: true },
-    { text: "단위", value: "unit" },
+    { text: "단위", value: "unit", helper: true },
     { text: "품목", value: "item", helper: true },
   ];
   const grid01_headers = [
@@ -42,7 +42,7 @@ const Inquiry = () => {
     },
     { text: "품목명", value: "item_name", width: "9%", readonly: true },
     { text: "카테고리", value: "category", width: "9%", readonly: true },
-    { text: "규격", value: "standard", width: "20%", readonly: true },
+    { text: "규격", value: "standard", width: "9%", readonly: true },
     { text: "단위", value: "unit", width: "5%", readonly: true },
     { text: "수량", value: "total", width: "7%", readonly: true },
   ];

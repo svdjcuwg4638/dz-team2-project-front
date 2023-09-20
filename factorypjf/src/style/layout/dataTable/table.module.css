@@ -44,7 +44,9 @@ thead {
   color: var(--font-color);
   font-weight: bold;
 }
-
+.tbl_container {
+  height: 100%;
+}
 *::-webkit-scrollbar {
   width: 8px;
   border-radius: 10px;
