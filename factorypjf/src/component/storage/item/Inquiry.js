@@ -15,7 +15,6 @@ const Inquiry = () => {
     { text: "카테고리", value: "category", helper: true },
     { text: "단위", value: "unit" },
     { text: "품목", value: "item", helper: true },
-    { text: "거래처", value: "partner", helper: true },
   ];
   const grid01_headers = [
     { text: "선택", value: "select", width: "3%", readonly: true },
@@ -45,7 +44,6 @@ const Inquiry = () => {
     { text: "카테고리", value: "category", width: "9%", readonly: true },
     { text: "규격", value: "standard", width: "20%", readonly: true },
     { text: "단위", value: "unit", width: "5%", readonly: true },
-    { text: "거래처명", value: "partner_name", width: "9%", readonly: true },
     { text: "수량", value: "total", width: "7%", readonly: true },
   ];
   // #endregion
@@ -155,7 +153,7 @@ const Inquiry = () => {
           item_code: data[i].item_code,
           item_name: data[i].item_name,
           category: data[i].category,
-          standard: `${data[i].weight} *${data[i].length}* ${data[i].height}, ${data[i].volume}, ${data[i].weight}`,
+          standard: data[i].standard,
           unit: data[i].unit,
           partner_name: data[i].partner_name,
           total: data[i].total,
@@ -238,15 +236,15 @@ const Inquiry = () => {
 
       const data = response.data.data;
 
+      console.log("tata", data);
       let tableItems = [];
       for (let i = 0; i < data.length; i++) {
         tableItems.push({
           item_code: data[i].item_code,
           item_name: data[i].item_name,
           category: data[i].category,
-          standard: `${data[i].weight} *${data[i].length}* ${data[i].height}, ${data[i].volume}, ${data[i].weight}`,
+          standard: data[i].standard,
           unit: data[i].unit,
-          partner_name: data[i].partner_name,
           total: data[i].total,
           storage_name: data[i].storage_code,
           location_name: data[i].location_name,
