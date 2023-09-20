@@ -1,0 +1,23 @@
+/* detail */
+.detail_wrap{
+  font-weight: bold;
+  background-color: #4473BF;
+  padding: 20px;
+  border-radius: 5px;
+  color: #fff;
+  height: 100%;
+}
+
+.detail_wrap_sub{
+  background-color: #5390f0;
+  border-radius: 5px;
+  height: 100%;
+}
+
+.detail_wrap input{
+  color: #000;
+}
+
+.detail_wrap_sub > div{
+  display: flex;
+}
