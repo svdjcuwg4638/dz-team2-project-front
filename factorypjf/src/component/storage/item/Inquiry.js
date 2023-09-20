@@ -5,14 +5,13 @@ import Table from "../../layout/Table/Table";
 import axios from "axios";
 import ListTable from "component/layout/Table/ListTableData";
 import { ReactComponent as Arrow } from "img/rightArrow.svg";
-import SearchHelperModal from "../../common/helper/SearchHelperModal";
+import SearchHelperModal from "component/common/helper/SearchHelperModal";
 
 const Inquiry = () => {
   const search_headers = [
     { text: "창고", value: "storage", helper: true },
     { text: "장소", value: "location", helper: true },
     { text: "카테고리", value: "category", helper: true },
-    { text: "은행", value: "bank", helper: true },
     { text: "단위", value: "unit" },
     { text: "품목", value: "item", helper: true },
     { text: "거래처", value: "partner", helper: true },
@@ -216,6 +215,8 @@ const Inquiry = () => {
       console.log(error);
     }
   };
+
+  // 폼으로 받아온 데이터를 상태에 저장함
   const formHandler = (tableItems) => {
     setFormData(tableItems);
   };
@@ -239,9 +240,11 @@ const Inquiry = () => {
                   />
                 </tbody>
               </table>
-              <button className={styles.btn} onClick={searchHandler}>
-                조회
-              </button>
+              <div className={styles.btnBox}>
+                <button className={styles.btn} onClick={searchHandler}>
+                  조회
+                </button>
+              </div>
             </div>
             <div className={styles.middlePart}>
               <div className={styles.grid01}>
@@ -292,7 +295,7 @@ const Inquiry = () => {
                 </Table>
               </div>
             </div>
-            <div className={styles.btnSection}>
+            <div className={styles.btnBox}>
               <button
                 className={styles.btn}
                 onClick={(e) => inventoryInquirykFn(e)}

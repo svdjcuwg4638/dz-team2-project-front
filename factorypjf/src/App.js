@@ -11,7 +11,6 @@ import Product from "./component/management/product/Product";
 import UnitPrice from "./component/management/unitPrice/UnitPrice";
 import Code from "component/management/code/Code";
 import StorageRoutes from "./pages/Storage";
-import StorageItem from "./component/storage/item/List";
 import StorageInquiry from "./component/storage//item/Inquiry";
 import Registration from "./component/storage/registration/Registration";
 import ProductionRoutes from 'router/ProductionRoutes'
@@ -28,7 +27,6 @@ function App() {
         <Route path="/storage/*" element={<StorageRoutes/>}/> */}
        
         <Route path="/storage/" element={<StorageRoutes />}>
-          <Route path="list" element={<StorageItem />} />
           <Route path="" element={<StorageInquiry />} />
           <Route path="registration" element={<Registration />} />
         </Route>
