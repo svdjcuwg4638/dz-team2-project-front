@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { ClipLoader } from "react-spinners";
 import UnitPriceList from "./UnitPriceList";
 import AddUnitPrice from "./AddUnitPrice";
-import { unitPriceAction } from "../../../redux/actions/management/unitPriceAction";
 import "../../../style/management/unitPrice.css";
 import { itemAction } from "redux/actions/management/itemAction";
 
@@ -41,9 +40,8 @@ const UnitPrice = () => {
   }
 
   return (
-    <div className="content_wrap">
+    <div className="unitprice_wrap">
       <UnitPriceList itemAll={itemAll}/>
-
       {itemAll.data && <AddUnitPrice itemAll={itemAll} />}
     </div>
   );

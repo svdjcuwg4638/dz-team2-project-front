@@ -6,10 +6,18 @@
 
 .productItem_search_wrap > div {
   display: flex;
+  justify-content: flex-end;
+  margin: 20px 0;
 }
 
 .productItem_search_wrap > div > div{
   display: flex;
+  margin: 0 10px;
+  
+}
+
+.productItem_search_wrap > div > div > div{
+  margin: 0 10px;
 }
 
 .productItem_search_wrap > div:nth-child(2) {

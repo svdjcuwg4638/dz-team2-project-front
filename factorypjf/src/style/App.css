@@ -100,16 +100,23 @@ input{
 html::-webkit-scrollbar {
   display: none;
 }
-
+body::-webkit-scrollbar {
+  display: none;
+  overflow: none;
+}
+body{
+  overflow: hidden;
+}
 html {
   scrollbar-width: none;
 }
+/* end 스크롤바 제거*/
 
 th{
-  background-color: #dadada;
+  background-color: inherit;
 }
 td{
-  background-color: #fff;
+  background-color:inherit;
 }
 
 th,td{

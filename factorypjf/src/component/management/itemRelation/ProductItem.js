@@ -33,7 +33,7 @@ const ProductItem = ({ itemAll, setSelectId, selectId }) => {
 
   return (
     <div>
-      <div className="productItem_search_wrap">
+      <form className="productItem_search_wrap">
         <div>
           <div>
             <div>품목코드 : </div>
@@ -63,12 +63,12 @@ const ProductItem = ({ itemAll, setSelectId, selectId }) => {
             </button>
           </div>
         </div>
-      </div>
+      </form>
       <table>
         <thead>
           <tr>
-            <th style={{ width: "150px" }}>관리코드</th>
-            <th>관리코드명</th>
+            <th style={{ width: "150px" }}>품목코드</th>
+            <th>품목이름</th>
           </tr>
         </thead>
         <tbody>

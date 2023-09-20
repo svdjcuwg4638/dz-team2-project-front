@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../../../style/management/storage.css";
 import { useDispatch, useSelector } from "react-redux";
 import { storageAction } from "../../../redux/actions/management/storageAction";
@@ -9,19 +9,31 @@ import RightBox from "./RightBox";
 const Storage = () => {
   const dispatch = useDispatch();
 
-  const { storageAll, loading,locationAll } = useSelector((state) => state.storage);
+  const { storageAll, locationAll } = useSelector((state) => state.storage);
+  const [isLoading, setIsloading] = useState(false);
 
   useEffect(() => {
-    dispatch(storageAction.getstorageAll());
+    const patchItems = async () => {
+      setIsloading(true);
+      try {
+        await dispatch(storageAction.getstorageAll());
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsloading(false);
+      }
+    };
+    patchItems();
   }, []);
 
+  const [selectId, setSelectId] = useState(null);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="loader_wrap container">
         <ClipLoader
           color="#000"
-          loading={loading}
+          loading={isLoading}
           size={150}
           aria-label="Loading Spinner"
           data-testid="loader"
@@ -33,11 +45,22 @@ const Storage = () => {
 
   return (
     <div className="storage_wrap">
+      <div>창고등록</div>
       <div>
-        { storageAll && <LeftBox storageAll={storageAll.data} />}
-      </div>
-      <div>
-        { locationAll && <RightBox storageAll={storageAll.data} locationAll={locationAll.data}/>}
+        <div>
+          {storageAll && (
+            <LeftBox
+              storageAll={storageAll.data}
+              selectId={selectId}
+              setSelectId={setSelectId}
+            />
+          )}
+        </div>
+        <div>
+          {locationAll && (
+            <RightBox locationAll={locationAll.data} selectId={selectId} />
+          )}
+        </div>
       </div>
     </div>
   );

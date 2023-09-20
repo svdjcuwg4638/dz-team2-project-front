@@ -32,7 +32,6 @@ const Code = () => {
       }
     };
     patchItems();
-
   }, []);
 
   useEffect(()=>{
@@ -60,6 +59,7 @@ const Code = () => {
 
   return (
     <div className="flex code_wrap">
+      <div>공통코드등록</div>
       {manageCodeAll && (
         <ManageCode
           manageCodeAll={manageCodeAll.data}

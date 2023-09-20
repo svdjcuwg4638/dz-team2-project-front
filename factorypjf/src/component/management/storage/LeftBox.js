@@ -4,7 +4,7 @@ import StorageTable from "./StorageTable";
 import { useDispatch } from "react-redux";
 import { storageAction } from "../../../redux/actions/management/storageAction";
 
-function LeftBox({ storageAll }) {
+function LeftBox({ storageAll,selectId,setSelectId }) {
   const dispatch = useDispatch();
   const [selectCodes, setSelectCodes] = useState([]);
 
@@ -46,6 +46,8 @@ function LeftBox({ storageAll }) {
           data={storageAll}
           selectCodes={selectCodes}
           setSelectCodes={setSelectCodes}
+          selectId={selectId}
+          setSelectId={setSelectId}
         />
       )}
       <form onSubmit={handleSubmit}>

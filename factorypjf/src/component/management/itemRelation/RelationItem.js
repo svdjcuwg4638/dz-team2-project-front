@@ -108,7 +108,7 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
 
   return (
     <div>
-      <table>
+      <div className="table">
         <thead>
           <tr>
             <th></th>
@@ -141,7 +141,7 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
               </tr>
             ))}
         </tbody>
-      </table>
+      </div>
       <form className="mt-3" onSubmit={handleSubmit}>
         <div className="input_wrap">
           <div>

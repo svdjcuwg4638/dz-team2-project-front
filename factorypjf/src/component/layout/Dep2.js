@@ -28,10 +28,13 @@ const Dep2 = () => {
       { link: "/ing", name: "출고중" },
       { link: "/after", name: "출고완료" },
     ],
-    setting: [
-      { link: "", name: "기준정보1" },
-      { link: "/ing", name: "기준정보2" },
-      { link: "/after", name: "기준정보3" },
+    management: [
+      { link: "/item", name: "품목관리" },
+      { link: "/relation", name: "소모자재관리" },
+      { link: "/unitprice", name: "단가관리" },
+      { link: "/storage", name: "창고관리" },
+      { link: "/partner", name: "거래처관리" },
+      { link: "/code", name: "공통코드관리" },
     ],
     storage: [
       { link: "", name: "재고조회" },

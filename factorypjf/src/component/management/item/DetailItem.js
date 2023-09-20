@@ -4,13 +4,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { itemAction } from "redux/actions/management/itemAction";
 import api from "redux/api";
 import StorageHelp from "../storage/StorageHelp";
+import { codeAction } from "redux/actions/management/codeAction";
+import { storageAction } from "redux/actions/management/storageAction";
 
-const DetailItem = ({ selectItem }) => {
+const DetailItem = ({ selectItem, setSelectItem }) => {
   const dispatch = useDispatch();
 
   const { locationAll, storageAll } = useSelector((state) => state.storage);
   const { codeAll } = useSelector((state) => state.code);
+  const [formMod, setFormMod] = useState("");
 
+  useEffect(() => {
+    dispatch(codeAction.getCodeAll());
+    dispatch(storageAction.getstorageAll());
+  }, []);
+
+  // #form 기본정보
   const [formData, setFormData] = useState({
     company_id: "1",
     item_code: "",
@@ -22,9 +31,12 @@ const DetailItem = ({ selectItem }) => {
     height: "",
     volume: "",
     weight: "",
-    quantity: "",
+    unit: "",
     description: "",
     category: "",
+    category_name: "",
+    standard: "",
+    standard_name: "",
   });
 
   // #region 규격에 단위없애주는 코드
@@ -35,54 +47,72 @@ const DetailItem = ({ selectItem }) => {
   const toggleReadOnly = () => {
     setReadOnly(!readOnly);
 
-    if (readOnly) {
-      setFormData((prevState) => ({
-        ...prevState,
-        width: removeNonNumeric(prevState.width),
-        length: removeNonNumeric(prevState.length),
-        height: removeNonNumeric(prevState.height),
-        volume: removeNonNumeric(prevState.volume),
-        weight: removeNonNumeric(prevState.weight),
-        unit: removeNonNumeric(prevState.unit),
-      }));
-    } else {
-      setFormData((prevState) => ({
-        ...prevState,
-        width: selectItem?.width,
-        length: selectItem?.length,
-        height: selectItem?.height,
-        volume: selectItem?.volume,
-        weight: selectItem?.weight,
-        unit: selectItem?.unit,
-      }));
+    if (formMod == "modify") {
+      if (readOnly) {
+        setFormData((prevState) => ({
+          ...prevState,
+          width: removeNonNumeric(prevState.width),
+          length: removeNonNumeric(prevState.length),
+          height: removeNonNumeric(prevState.height),
+          volume: removeNonNumeric(prevState.volume),
+          weight: removeNonNumeric(prevState.weight),
+        }));
+      } else {
+        setFormData((prevState) => ({
+          ...prevState,
+          width: selectItem?.width,
+          length: selectItem?.length,
+          height: selectItem?.height,
+          volume: selectItem?.volume,
+          weight: selectItem?.weight,
+        }));
+      }
     }
   };
   // #endregion
 
+  useEffect(() => {
+    setFormData((prevState) => ({
+      ...prevState,
+      standard_name: codeAll?.data?.find(
+        (data) => data.common_code === formData?.standard
+      )?.common_name,
+      category_name: codeAll?.data?.find(
+        (data) => data.common_code === formData?.category
+      )?.common_name,
+    }));
+  }, [formData["category"], formData["standard"]]);
+
   // #region 선택된 아이탬 변경시 값을 바꿔줌
   useEffect(() => {
-    setReadOnly(true);
-    setFormData({
-      company_id: "1",
-      item_code: selectItem?.item_code,
-      item_name: selectItem?.item_name,
-      location_code: locationAll?.data?.find(
-        (data) => data?.location_code == selectItem?.location_code
-      )?.location_name,
-      storage_code: storageAll?.data?.find(
-        (data) => data?.storage_code == selectItem?.storage_code
-      )?.storage_name,
-      width: selectItem?.width,
-      length: selectItem?.length,
-      height: selectItem?.height,
-      volume: selectItem?.volume,
-      weight: selectItem?.weight,
-      unit: selectItem?.unit,
-      description: selectItem?.description,
-      category: codeAll?.data?.find(
-        (data) => data?.common_code == selectItem?.category
-      )?.common_name,
-    });
+    if (selectItem != null) {
+      setReadOnly(true);
+      setFormMod("");
+      setFormData(null);
+      setFormData({
+        company_id: "1",
+        item_code: selectItem?.item_code,
+        item_name: selectItem?.item_name,
+        location_code: locationAll?.data?.find(
+          (data) => data?.location_code == selectItem?.location_code
+        )?.location_name,
+        storage_code: storageAll?.data?.find(
+          (data) => data?.storage_code == selectItem?.storage_code
+        )?.storage_name,
+        width: selectItem?.width == null ? "" : selectItem?.width,
+        length: selectItem?.length == null ? "" : selectItem?.length,
+        height: selectItem?.height == null ? "" : selectItem?.height,
+        volume: selectItem?.volume == null ? "" : selectItem?.volume,
+        weight: selectItem?.weight == null ? "" : selectItem?.weight,
+        description:
+          selectItem?.description == null ? "" : selectItem?.description,
+        category: selectItem?.category == null ? "" : selectItem?.category,
+        standard: selectItem?.standard == null ? "" : selectItem?.standard,
+        unit: selectItem?.unit == null ? "" : selectItem.unit,
+        category_name: "",
+        standard_name: "",
+      });
+    }
   }, [selectItem]);
   // #endregion
 
@@ -99,7 +129,7 @@ const DetailItem = ({ selectItem }) => {
   const submitHandler = async (event) => {
     event.preventDefault();
 
-    var locationData = locationAll.data.find(
+    var locationData = locationAll?.data?.find(
       (data) =>
         data.storage_code ==
           storageAll.data.filter(
@@ -118,17 +148,19 @@ const DetailItem = ({ selectItem }) => {
       height: formData["height"] + unitData["height"],
       volume: formData["volume"] + unitData["volume"],
       weight: formData["weight"] + unitData["weight"],
-      unit: formData["unit"] + unitData["unit"],
       description: formData["description"],
-      category: codeAll.data.find(
-        (data) =>
-          data.common_name == formData["category"] &&
-          data.management_code == "CATEGORY"
-      ).common_code,
+      category: formData["category"],
+      standard: formData["standard"],
+      unit: formData["unit"],
     };
 
     try {
-      const response = await api.post("/item/modify", submitData);
+      if (formMod == "modify") {
+        const response = await api.post("/item/modify", submitData);
+      }
+      if (formMod == "add") {
+        const response = await api.post("/item/add", submitData);
+      }
     } catch (error) {
       console.error("Error submitting data:", error);
     }
@@ -136,7 +168,50 @@ const DetailItem = ({ selectItem }) => {
   };
 
   const [readOnly, setReadOnly] = useState(true);
+  function buttonHandler(e) {
+    toggleReadOnly();
+    const { name } = e.target;
 
+    if (name === "add") {
+      setFormData({
+        company_id: "1",
+        item_code: "",
+        item_name: "",
+        location_code: "",
+        storage_code: "",
+        width: "",
+        length: "",
+        height: "",
+        volume: "",
+        weight: "",
+        unit: "",
+        description: "",
+        category: "",
+        category_name: "",
+        standard: "",
+        standard_name: "",
+      });
+
+      if (!readOnly) {
+        setFormMod("");
+      } else {
+        setFormMod("add");
+      }
+
+      setSelectItem(null);
+    } else if (name === "modify") {
+      if (formMod === "modify") {
+        setFormData("");
+      }
+      if (!readOnly) {
+        setFormMod("");
+      } else {
+        setFormMod("modify");
+      }
+    }
+  }
+
+  //#region 도움창 props
   const [showFlag, setShowFlag] = useState(false);
 
   const [unitData, setUnitData] = useState({
@@ -148,7 +223,6 @@ const DetailItem = ({ selectItem }) => {
     unit: "EA",
   });
 
-
   const unitCode = {
     name: "공통코드",
     guide: true,
@@ -157,6 +231,16 @@ const DetailItem = ({ selectItem }) => {
     name_column: "common_name",
     dataAll: { codeAll },
     common_code_type: "UNIT",
+    trigger_type: "search",
+  };
+  const numberUnitCode = {
+    name: "공통코드",
+    guide: true,
+    type_all: "codeAll",
+    code_column: "common_code",
+    name_column: "common_name",
+    dataAll: { codeAll },
+    common_code_type: "NUMBERUNIT",
     trigger_type: "search",
   };
 
@@ -170,7 +254,19 @@ const DetailItem = ({ selectItem }) => {
     common_code_type: "CATEGORY",
     trigger_type: "search",
   };
+
+  const standardCode = {
+    name: "공통코드",
+    guide: true,
+    type_all: "codeAll",
+    code_column: "common_code",
+    name_column: "common_name",
+    dataAll: { codeAll },
+    common_code_type: "STANDARD",
+    trigger_type: "search",
+  };
   // #endregion
+
   return (
     <>
       <form onSubmit={submitHandler} className="item_detail_from">
@@ -179,8 +275,8 @@ const DetailItem = ({ selectItem }) => {
             <div>품목코드</div>
             <div>
               <input
-                readOnly
-                style={{ backgroundColor: "#dadada" }}
+                readOnly={formMod == "add" ? false : true}
+                style={{ backgroundColor: formMod == "add" ? "" : "#dadada" }}
                 value={formData["item_code"]}
                 type="text"
                 name="item_code"
@@ -210,15 +306,35 @@ const DetailItem = ({ selectItem }) => {
               <input
                 readOnly
                 style={{ backgroundColor: readOnly ? "#dadada" : "" }}
-                value={formData["category"]}
+                value={formData["category_name"]}
                 type="text"
-                name="category"
+                name="category_name"
                 onChange={handleInputChange}
               />
               {!readOnly && (
                 <Modal
                   code_type={"category"}
                   menu={categoryCode}
+                  handleInputChange={handleInputChange}
+                />
+              )}
+            </div>
+          </div>
+          <div>
+            <div>규격</div>
+            <div className="flex">
+              <input
+                readOnly
+                style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                value={formData["standard_name"]}
+                type="text"
+                name="standard_name"
+                onChange={handleInputChange}
+              />
+              {!readOnly && (
+                <Modal
+                  code_type={"standard"}
+                  menu={standardCode}
                   handleInputChange={handleInputChange}
                 />
               )}
@@ -294,7 +410,7 @@ const DetailItem = ({ selectItem }) => {
               />
               {!readOnly && (
                 <div className="flex">
-                  <div style={{width:"25px"}}>{unitData["width"]}</div>
+                  <div style={{ width: "25px" }}>{unitData["width"]}</div>
                   <Modal
                     menu={unitCode}
                     code_type={"width"}
@@ -317,7 +433,7 @@ const DetailItem = ({ selectItem }) => {
               />
               {!readOnly && (
                 <div className="flex">
-                  <div style={{width:"25px"}}>{unitData["length"]}</div>
+                  <div style={{ width: "25px" }}>{unitData["length"]}</div>
                   <Modal
                     menu={unitCode}
                     code_type={"length"}
@@ -339,11 +455,11 @@ const DetailItem = ({ selectItem }) => {
                 readOnly={readOnly}
                 style={{ backgroundColor: readOnly ? "#dadada" : "" }}
                 value={formData["height"]}
-                nChange={handleInputChange}
+                onChange={handleInputChange}
               />
               {!readOnly && (
                 <div className="flex">
-                  <div style={{width:"25px"}}>{unitData["height"]}</div>
+                  <div style={{ width: "25px" }}>{unitData["height"]}</div>
                   <Modal
                     menu={unitCode}
                     code_type={"height"}
@@ -366,7 +482,7 @@ const DetailItem = ({ selectItem }) => {
               />
               {!readOnly && (
                 <div className="flex">
-                  <div style={{width:"25px"}}>{unitData["volume"]}</div>
+                  <div style={{ width: "25px" }}>{unitData["volume"]}</div>
                   <Modal
                     menu={unitCode}
                     code_type={"volume"}
@@ -392,7 +508,7 @@ const DetailItem = ({ selectItem }) => {
               />
               {!readOnly && (
                 <div className="flex">
-                  <div style={{width:"25px"}}>{unitData["weight"]}</div>
+                  <div style={{ width: "25px" }}>{unitData["weight"]}</div>
                   <Modal
                     menu={unitCode}
                     code_type={"weight"}
@@ -403,23 +519,22 @@ const DetailItem = ({ selectItem }) => {
             </div>
           </div>
           <div>
-            <div>갯수</div>
+            <div>단위</div>
             <div className="flex">
               <input
                 type="text"
                 name="unit"
-                readOnly={readOnly}
+                readOnly
                 style={{ backgroundColor: readOnly ? "#dadada" : "" }}
                 value={formData["unit"]}
                 onChange={handleInputChange}
               />
               {!readOnly && (
                 <div className="flex">
-                  <div style={{width:"25px"}}>{unitData["unit"]}</div>
                   <Modal
-                    menu={unitCode}
+                    menu={numberUnitCode}
                     code_type={"unit"}
-                    handleInputChange={handleInputChangeForUnit}
+                    handleInputChange={handleInputChange}
                   />
                 </div>
               )}
@@ -447,10 +562,34 @@ const DetailItem = ({ selectItem }) => {
         </div>
 
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          <button type="button" className="button" onClick={toggleReadOnly} disabled={!selectItem}  style={{backgroundColor:selectItem?"" : "#dadada"}}>
+          <button
+            type="button"
+            className="button"
+            name="add"
+            onClick={buttonHandler}
+            style={{ display: formMod == "modify" ? "none" : "" }}
+          >
+            {readOnly ? "추가" : "취소"}
+          </button>
+          <button
+            type="button"
+            className="button"
+            name="modify"
+            onClick={buttonHandler}
+            disabled={!selectItem}
+            style={{
+              backgroundColor: selectItem ? "" : "#dadada",
+              display: formMod == "add" ? "none" : "",
+            }}
+          >
             {readOnly ? "수정" : "취소"}
           </button>
-          <button type="submit" className="button">
+
+          <button
+            type="submit"
+            className="button"
+            style={{ display: readOnly ? "none" : "" }}
+          >
             저장
           </button>
         </div>

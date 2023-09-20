@@ -1,6 +1,10 @@
 .item_wrap{
   display: flex;
   height: 100%;
+  position: relative;
+}
+.item_wrap td {
+  background-color: inherit;
 }
 
 .item_wrap > div:nth-child(1){
@@ -9,6 +13,7 @@
   align-items: center;
   justify-content: center;
 }
+
 
 .item_wrap > div:nth-child(2){
   width: 40%;
@@ -146,18 +151,14 @@
   background-color: #dadada;
   cursor: pointer;
 }
-
-.item_search_wrap > form> div{
-  align-items: center;
+.item_search_wrap > form > div{
   display: flex;
-}
-.item_search_wrap input {
-  margin-left: 10px;
-  width: 100px;
+  justify-content: flex-end;
+  margin: 20px 0;
 }
 
-.item_search_wrap > form{
-  justify-content: flex-end;
+.item_search_wrap input{
+  width: 100px;
 }
 
 .item_detail_from  input{
@@ -172,19 +173,13 @@
 
 .itemList_wrap th:nth-child(1),
 .itemList_wrap td:nth-child(1){
-  width: 5%;
+  width: 50px;
 }
 
-.itemList_wrap th:nth-child(2),
-.itemList_wrap td:nth-child(2){
-  width: 14%;
-}
-.itemList_wrap th:nth-child(3),
-.itemList_wrap td:nth-child(3){
-  width: 14%;
-}
-
-.itemList_wrap th:nth-child(4),
-.itemList_wrap td:nth-child(4){
-  width: 51%;
+.itme_title{
+  position: absolute;
+  font-size: 40px;
+  font-weight: bold;
+  top: 20px;
+  left: 20px;
 }

@@ -54,6 +54,8 @@ const SearchPartner = ({ setSearchData }) => {
               />
             </div>
           </div>
+        </div>
+        <div>
           <div className="button_wrap">
             <button className="button">조회</button>
           </div>

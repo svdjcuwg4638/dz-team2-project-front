@@ -2,6 +2,21 @@
   display: flex;
 }
 
+.unitprice_wrap{
+  display: flex;
+  height: 100%;
+}
+.unitprice_wrap > div:nth-child(1){
+  width: 60%;
+}
+
+.detail_unitprice_wrap{
+  border: 1px solid #000;
+  border-radius: 5px;
+  width: 40%;
+  padding: 80px;
+}
+
 .unit_price_tab_wrap > div {
   border: 1px solid #000;
   margin: 0 10px;
@@ -27,19 +42,38 @@ thead{
   background-color: #dadada;
 }
 
-.unit_price_search_form{
+.unit_price_search_form > div{
   display: flex;
   margin-bottom: 25px;
+  justify-content: flex-end;
+  margin-right: 20px;
 }
-.unit_price_search_form > div{
+.unit_price_search_form > div > div{
   margin: 0 15px;
 }
 .unit_price_search_form  input{
   border-radius: 5px;
+  width: 100px;
 }
 
 .unit_price_search_form  select{
   width: 100px;
   height: 26px;
   border-radius: 5px;
+}
+
+.item_detail_from input,
+.item_detail_from select{
+  border-radius: 5px;
+  width: 150px;
+  text-align: center;
+  height: 30px;
+}
+
+.item_detail_from >div > div >div:nth-child(1){
+  font-weight: bold;
+  font-size: 20px;
+}
+.addUnit_help_wrap > div{
+  padding-top: 30px;
 }

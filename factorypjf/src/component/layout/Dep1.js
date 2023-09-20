@@ -23,6 +23,9 @@ const Dep1 = () => {
   const storageHandler = () => {
     dispatch(menuActions.storage());
   };
+  const managementHandler = () => {
+    dispatch(menuActions.management());
+  };
 
   return (
     <div className="dap1">
@@ -47,9 +50,11 @@ const Dep1 = () => {
             <MdOutlineInventory2 size={25} color="#fff" />
           </div>
         </Link>
-        <div>
-          <BsInfoCircle size={25} color="#fff" />
-        </div>
+        <Link to="/management/item" onClick={managementHandler}>
+          <div title="기준정보관리">
+            <BsInfoCircle size={25} color="#fff" />
+          </div>
+        </Link>
       </div>
     </div>
   );

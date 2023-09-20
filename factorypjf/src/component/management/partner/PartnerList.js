@@ -1,8 +1,12 @@
 import React, { useRef, useState } from "react";
-import api from "../../../redux/api";
 import { useDispatch } from "react-redux";
-import { partnerAction } from "../../../redux/actions/management/partnerAction";
-const PartnerList = ({ partnerAll, setSelectParnter, selectPartner,selectCodes,setSelectCodes }) => {
+const PartnerList = ({
+  partnerAll,
+  setSelectParnter,
+  selectPartner,
+  selectCodes,
+  setSelectCodes,
+}) => {
   const dispatch = useDispatch();
 
   //#region 스크롤
@@ -25,7 +29,6 @@ const PartnerList = ({ partnerAll, setSelectParnter, selectPartner,selectCodes,s
     console.log(selectCodes);
   };
 
-
   return (
     <div>
       <table>
@@ -40,62 +43,32 @@ const PartnerList = ({ partnerAll, setSelectParnter, selectPartner,selectCodes,s
           </tr>
         </thead>
         <tbody className="partner-scrollable-table" onWheel={handleScroll}>
-          {selectPartner && partnerAll && partnerAll.length > 0 && partnerAll.map((data) => (
-            <tr onClick={() => setSelectParnter(data)}>
-              <td
+          {partnerAll &&
+            partnerAll.length > 0 &&
+            partnerAll.map((data) => (
+              <tr
+                onClick={() => setSelectParnter(data)}
                 style={{
                   background:
-                    selectPartner.partner_code == data.partner_code ? "#dadada" : "#fff",
+                    selectPartner?.partner_code == data?.partner_code
+                      ? "#dadada"
+                      : "#fff",
                 }}
               >
-                <input
-                  type="checkbox"
-                  checked={selectCodes?.includes(data?.partner_code)}
-                  onChange={() => handleCheckboxChange(data?.partner_code)}
-                />
-              </td>
-              <td
-                style={{
-                  background:
-                    selectPartner.partner_code == data.partner_code ? "#dadada" : "#fff",
-                }}
-              >
-                {data.partner_code}
-              </td>
-              <td
-                style={{
-                  background:
-                    selectPartner.partner_code == data.partner_code ? "#dadada" : "#fff",
-                }}
-              >
-                {data.partner_name}
-              </td>
-              <td
-                style={{
-                  background:
-                    selectPartner.partner_code == data.partner_code ? "#dadada" : "#fff",
-                }}
-              >
-                {data.representative}
-              </td>
-              <td
-                style={{
-                  background:
-                    selectPartner.partner_code == data.partner_code ? "#dadada" : "#fff",
-                }}
-              >
-                {data.ph_num}
-              </td>
-              <td
-                style={{
-                  background:
-                    selectPartner.partner_code == data.partner_code ? "#dadada" : "#fff",
-                }}
-              >
-                {data.email}
-              </td>
-            </tr>
-          ))}
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={selectCodes?.includes(data?.partner_code)}
+                    onChange={() => handleCheckboxChange(data?.partner_code)}
+                  />
+                </td>
+                <td>{data.partner_code}</td>
+                <td>{data.partner_name}</td>
+                <td>{data.representative}</td>
+                <td>{data.ph_num}</td>
+                <td>{data.email}</td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

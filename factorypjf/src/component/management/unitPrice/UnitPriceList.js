@@ -36,7 +36,6 @@ const UnitPriceList = ({ itemAll }) => {
       partner_name: "",
       type: "",
       start_date: "",
-      end_date: "",
     });
   }, [listFalg]);
 
@@ -55,8 +54,8 @@ const UnitPriceList = ({ itemAll }) => {
     partner_name: "",
     type: "",
     start_date: "",
-    end_date: "",
   });
+
 
   const filterData = () => {
     setSearchList(
@@ -79,9 +78,6 @@ const UnitPriceList = ({ itemAll }) => {
     );
   };
 
-  useEffect(() => {
-    filterData();
-  }, [formData]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -131,73 +127,66 @@ const UnitPriceList = ({ itemAll }) => {
 
   return (
     <div>
-      <form className="unit_price_search_form">
+      <form className="unit_price_search_form mt-4">
         <div>
-          <div>품목코드</div>
-          <div className="flex">
-            <input
-              readOnly
-              type="text"
-              onChange={handleInputChange}
-              value={formData["item_name"]}
-            ></input>
-            {formData["item_code"] != "" && (
-              <div>
-                <button
-                  name="item"
-                  onClick={delvalue}
-                  style={{ width: "20px", color: "red", background: "#fff" }}
-                >
-                  x
-                </button>
-              </div>
-            )}
-            <Modal menu={itemCode} handleInputChange={handleInputChange} />
-          </div>
-        </div>
-        <div>
-          <div>거래처</div>
-          <div className="flex">
-            <input
-              tyep="text"
-              name="partner_name"
-              onChange={handleInputChange}
-              value={formData["partner_name"]}
-            ></input>
-            <Modal menu={partnerCode} handleInputChange={handleInputChange} />
-          </div>
-        </div>
-        <div>
-          <div>입고/출고</div>
           <div>
-            <select name="type" onChange={handleInputChange}>
-              <option value=""></option>
-              <option value="inbound">입고</option>
-              <option value="outbound">출고</option>
-            </select>
+            <div>품목코드</div>
+            <div className="flex">
+              <input
+                readOnly
+                type="text"
+                onChange={handleInputChange}
+                value={formData["item_name"]}
+              ></input>
+              {formData["item_code"] != "" && (
+                <div>
+                  <button
+                    name="item"
+                    onClick={delvalue}
+                    style={{ width: "20px", color: "red", background: "#fff" }}
+                  >
+                    x
+                  </button>
+                </div>
+              )}
+              <Modal menu={itemCode} handleInputChange={handleInputChange} />
+            </div>
+          </div>
+          <div>
+            <div>거래처</div>
+            <div className="flex">
+              <input
+                tyep="text"
+                name="partner_name"
+                onChange={handleInputChange}
+                value={formData["partner_name"]}
+              ></input>
+              <Modal menu={partnerCode} handleInputChange={handleInputChange} />
+            </div>
+          </div>
+          <div>
+            <div>입고/출고</div>
+            <div>
+              <select name="type" onChange={handleInputChange}>
+                <option value=""></option>
+                <option value="inbound">입고</option>
+                <option value="outbound">출고</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <div>시작일</div>
+            <div>
+              <input
+                tyep="text"
+                name="itme_code"
+                onChange={handleInputChange}
+              ></input>
+            </div>
           </div>
         </div>
         <div>
-          <div>시작일</div>
-          <div>
-            <input
-              tyep="text"
-              name="itme_code"
-              onChange={handleInputChange}
-            ></input>
-          </div>
-        </div>
-        <div>
-          <div style={{ marginLeft: "30px" }}>마감일</div>
-          <div>
-            ~
-            <input
-              style={{ marginLeft: "20px" }}
-              tyep="text"
-              name="itme_code"
-              onChange={handleInputChange}
-            ></input>
-          </div>
+          <button type="button" className="button" onClick={filterData}>조회</button>
         </div>
       </form>
       <div className="unit_price_tab_wrap">
@@ -251,7 +240,7 @@ const UnitPriceList = ({ itemAll }) => {
                     ).partner_name
                   }
                 </td>
-                <td>{data.unit_price}</td>
+                <td>{parseInt(data.unit_price,10).toLocaleString()}</td>
                 <td>{data.type == "inbound" ? "입고" : "출고"}</td>
                 <td>{data.start_date}</td>
                 <td>{data.end_date}</td>
