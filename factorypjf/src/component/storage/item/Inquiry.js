@@ -282,7 +282,6 @@ const Inquiry = () => {
               <Table headers={grid01_headers}>
                 <ListTable
                   items={grid01_items}
-                  selectedRows={selectedStorageRows}
                   onCheckboxChange={(item) =>
                     handleCheckboxChange(
                       item,
@@ -298,7 +297,6 @@ const Inquiry = () => {
               <Table headers={grid02_headers}>
                 <ListTable
                   items={grid02_items}
-                  selectedRows={selectedLocationRows}
                   onCheckboxChange={(item) =>
                     handleCheckboxChange(
                       item,
@@ -314,7 +312,6 @@ const Inquiry = () => {
               <Table headers={grid03_headers}>
                 <ListTable
                   items={grid03_items}
-                  selectedRows={selectedCategoryRows}
                   onCheckboxChange={(item) =>
                     handleCheckboxChange(
                       item,
