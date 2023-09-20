@@ -9,14 +9,30 @@ import addStyle from "style/layout/dataTable/addTableData.module.css";
 //도움창 단축키 코드
 const HELPER_KEY = 113;
 
-export default function AddTableData({ headers, onGridTrigger }) {
+//headers: 테이블 header, onGridTrigger: 부모 요소로 이벤트 발송할 수 있는 handler, 
+export default function AddTableData({ headers, onGridTrigger,selectRowHandler,emitItem }) {
+  //첫 렌더링시 빈 테이블 3줄
   const DEFAULT_ROW = 3;
+  const DEFAULT_ARR = useMemo(() => {
+    let row = {};
+    headers.forEach((header) => {
+      row[header.value] = '';
+    });
+    let tempArr = [];
+    for (let i = 0; i < DEFAULT_ROW; i++) {
+      let copyItems = JSON.parse(JSON.stringify(row));
+      tempArr.push(copyItems);
+    }
+    return tempArr;
+  }, [headers]);
 
-  const [selectedDate, setDate] = useState(new Date());
+  useEffect(()=>{
+    emitItem(DEFAULT_ARR)
+  },[])
 
   //행 추가 handler
   const [tableItems, setTableItems] = useState(
-    Array.from({ length: DEFAULT_ROW })
+    [...DEFAULT_ARR]
   );
 
   const addRowHandler = () => {
@@ -42,7 +58,7 @@ export default function AddTableData({ headers, onGridTrigger }) {
   //모달 reducer (on/off, 코드 타입)
   const modalReducer = (state, action) => {
     if (action.type === "ON_MODAL") {
-      console.log(action);
+      
       return {
         showModal: true,
         //코드가 내부적으로 가지는 값 (ex: partner)
@@ -61,7 +77,7 @@ export default function AddTableData({ headers, onGridTrigger }) {
   //도움창 단축키 handler
   const keyUpHandler = (e, colInfo, coordinate) => {
     if (e.which === HELPER_KEY && colInfo.helper) {
-      console.log(e, colInfo);
+      
       //도움창을 연 컬럼 좌표 저장
       setCurrentCol({ ...coordinate });
       //모달 켜기
@@ -104,6 +120,7 @@ export default function AddTableData({ headers, onGridTrigger }) {
       }
     }
     setTableItems(copyItems);
+    emitItem(copyItems)
 
     //======================grid2 trigger========================
     headers.forEach((header) => {
@@ -116,9 +133,18 @@ export default function AddTableData({ headers, onGridTrigger }) {
     // console.log(tableItems)
   };
 
-  // //onBlurHandler
-  // const onBlurHandler = (trigger,rowIdx) => {
-  // };
+  const selectRow=(e,idx)=>{
+    //클릭 이벤트가 tr>td>input에서 발생하기 때문에 부모의 부모 노드 선택
+    let row=e.target.parentNode.parentNode;
+    row.className=addStyle['add-table-focus'];
+    if(focusRow){
+      focusRow.className=addStyle['']
+    }
+    setFocusRow(row)
+
+    selectRowHandler(idx);
+    
+  }
 
   return (
     <>
@@ -133,7 +159,9 @@ export default function AddTableData({ headers, onGridTrigger }) {
       {tableItems.map((item, idx) => (
         // 행 추가를 위해 rowCount만큼 tr 생성
         <tr
+          onClick={(e)=>{selectRow(e,idx)}}
           key={idx}
+
           // className={focusRow === idx ? tableStyle["focused-row"] : ""}
         >
           {headers.map((header, headerIdx) =>
@@ -149,7 +177,8 @@ export default function AddTableData({ headers, onGridTrigger }) {
               <td key={headerIdx}>
                 {header.helper || header.readonly ? (
                   <input
-                    id={`grid01_${header.value}`}
+                    //grid번호_행번호_컬럼명
+                    id={`grid01_${idx}_${header.value}`}
                     readOnly
                     onKeyUp={(e) => {
                       keyUpHandler(e, header, { row: idx, col: headerIdx });
@@ -158,14 +187,15 @@ export default function AddTableData({ headers, onGridTrigger }) {
                   ></input>
                 ) : header.value === "date" ? (
                   <input
-                    id={`grid01_${header.value}`}
+                    id={`grid01_${idx}_${header.value}`}
                     type="date"
-                    placeholder="yyyy.mm.dd"
+                    min="1900-01-01"
+                    max="9999-12-31"
                     className={addStyle.input_date}
                   ></input>
                 ) : (
                   <input
-                    id={`grid01_${header.value}`}
+                    id={`grid01_${idx}_${header.value}`}
                     onKeyUp={(e) => {
                       keyUpHandler(e, header);
                     }}

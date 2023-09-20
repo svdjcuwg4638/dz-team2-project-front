@@ -6,18 +6,23 @@ import HelperModal from "component/common/helper/HelperModal";
 
 const HELPER_KEY = 113;
 
-export default function ListTable({ headers, items, onTrigger,selectedRows,onCheckboxChange }) {
+//headers: 테이블 header, items: 테이블 내용, onTrigger:부모 요소로 이벤트 발송할 수 있는 handler, onCheckboxChange: 선택 컬럼 체크시 handler
+export default function ListTable({ headers, items, onTrigger,onCheckboxChange,emitItem }) {
   const modalInit = {
     showModal: false,
     codeValue: "", //
     codeName: "",
   };
 
-  const [tableItems, setTableItems] = useState([]);
+  const [tableItems, setTableItems] = useState();
 
   useEffect(() => {
-    setTableItems(items);
-  }, [items]);
+    if(items){
+      // console.log(items)
+      emitItem(items)
+      setTableItems([...items]);
+    }
+  }, [items,emitItem]);
 
   //모달 끄고 닫는 핸들러
   const onModalHanlder = (codeValue, codeName) => {
@@ -30,7 +35,7 @@ export default function ListTable({ headers, items, onTrigger,selectedRows,onChe
   //모달 reducer (on/off, 코드 타입)
   const modalReducer = (state, action) => {
     if (action.type === "ON_MODAL") {
-      console.log(action);
+      
       return {
         showModal: true,
         codeValue: action.codeValue,
@@ -47,7 +52,7 @@ export default function ListTable({ headers, items, onTrigger,selectedRows,onChe
 
   const keyUpHandler = (e, colInfo, coordinate) => {
       if (e.which === HELPER_KEY && colInfo.helper) {
-      console.log(e, colInfo);
+    
       //도움창을 연 컬럼 좌표 저장
       setCurrentCol({ ...coordinate });
       //모달 켜기
@@ -74,7 +79,7 @@ export default function ListTable({ headers, items, onTrigger,selectedRows,onChe
 
       //코드데이터면 key가 ~~Code, 아니면 value 그대로 객체 생성
       //ex) teamCode, team
-      console.log(key.toLowerCase().includes("code"))
+     
       if (!key.toLowerCase().includes("code")) {
         itemKey = modalState.codeValue;
       } else {
@@ -92,7 +97,8 @@ export default function ListTable({ headers, items, onTrigger,selectedRows,onChe
         copyItems[currentCol.row] = { [itemKey]: codeRow[key] };
       }
     }
-    setTableItems(copyItems);
+    
+    emitItem(copyItems)
 
 
     //======================grid2 trigger========================
@@ -115,7 +121,7 @@ export default function ListTable({ headers, items, onTrigger,selectedRows,onChe
           onSelectCode={selectCodeHandler}
         />
       )}
-      {tableItems.map((item, idx) => (
+      {tableItems&&tableItems.map((item, idx) => (
         <tr key={idx}>
           {headers.map((header,headerIdx) =>
             //선택 컬럼
@@ -123,9 +129,10 @@ export default function ListTable({ headers, items, onTrigger,selectedRows,onChe
               <td key={header.value + idx}>
                 <input
                   type="checkbox"
-                  checked={selectedRows.includes(item)}
+                  
                   onChange={() => onCheckboxChange(item)}
                 ></input>
+                
               </td>
             ) : //순번 컬럼
             header.value === "index" ? (
@@ -134,8 +141,7 @@ export default function ListTable({ headers, items, onTrigger,selectedRows,onChe
               <td key={headerIdx}>
                 {/* headerKey를 key로 가진 item 값을 출력 */}
                 {header.helper||header.readonly ? (
-                  <input id={`grid02_${header.value}`}
-
+                  <input id={`grid02_${idx}_${header.value}`}
                     readOnly
                     defaultValue={item[header.value]}
                     onKeyUp={(e) => {
@@ -143,7 +149,7 @@ export default function ListTable({ headers, items, onTrigger,selectedRows,onChe
                     }}
                   ></input>
                 ) : (
-                  <input id={`grid02_${header.value}`}
+                  <input id={`grid02_${idx}_${header.value}`}
                     defaultValue={item[header.value]}
                     onKeyUp={(e) => {
                       keyUpHandler(e, header);

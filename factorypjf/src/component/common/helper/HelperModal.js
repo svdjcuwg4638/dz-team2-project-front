@@ -17,7 +17,7 @@ function HelperBackdrop({ offModal }) {
   };
   return (
     <div onClick={clickHandler} className={helperStyle["back-drop"]}>
-      HelperBackdrop
+      
     </div>
   );
 }
