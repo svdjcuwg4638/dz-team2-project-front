@@ -25,7 +25,7 @@ const DataTable = ({ headers, Eitems, items, setItems, setErrorCount }) => {
   const dataloadFn = async () => {
     try {
       const storageData = await axios.post(
-        "http://localhost:8080/common/help",
+        "http://localhost:9091/common/help",
         {
           searchOption: "0",
           keyword: "",
@@ -34,9 +34,9 @@ const DataTable = ({ headers, Eitems, items, setItems, setErrorCount }) => {
       );
 
       const locationData = await axios.get(
-        "http://localhost:8080/location/all"
+        "http://localhost:9091/location/all"
       );
-      const itemData = await axios.get("http://localhost:8080/item/all");
+      const itemData = await axios.get("http://localhost:9091/item/all");
       setStorageData(storageData.data.data);
       setLocationData(locationData.data.data);
       setItemData(itemData.data.data);

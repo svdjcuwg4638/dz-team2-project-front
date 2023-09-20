@@ -140,7 +140,7 @@ const Inquiry = () => {
       };
 
       const response = await axios.get(
-        "http://localhost:8080/inventory/searchTable",
+        "http://localhost:9091/inventory/searchTable",
         {
           params: params,
         }
@@ -172,7 +172,7 @@ const Inquiry = () => {
     try {
       // 스토리지 데이터 가져오기
       const storageResponse = await axios.get(
-        `http://localhost:8080/storage/all`
+        `http://localhost:9091/storage/all`
       );
       const storageData = storageResponse.data.data;
       let storageTableItems = [];
@@ -188,7 +188,7 @@ const Inquiry = () => {
       let locationTableItems = [];
 
       const locationResponse = await axios.get(
-        `http://localhost:8080/location/all`
+        `http://localhost:9091/location/all`
       );
       const locationData = locationResponse.data.data;
       for (let i = 0; i < locationData.length; i++) {
@@ -202,7 +202,7 @@ const Inquiry = () => {
 
       //카테고리 데이터 가져오기
       const categoryResponse = await axios.get(
-        `http://localhost:8080/inventory/all`
+        `http://localhost:9091/inventory/all`
       );
       const categoryData = categoryResponse.data.data;
       let categoryTableItems = [];
@@ -230,7 +230,7 @@ const Inquiry = () => {
     try {
       // formData를 백엔드로 전송
       const response = await axios.post(
-        "http://localhost:8080/inventory/searchForm",
+        "http://localhost:9091/inventory/searchForm",
         formData
       );
 

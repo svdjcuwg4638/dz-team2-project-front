@@ -72,7 +72,7 @@ const Registration = () => {
     // 백으로 전송
     try {
       await axios.post(
-        "http://localhost:8080/inventory/registration",
+        "http://localhost:9091/inventory/registration",
         tableitems
       );
       console.log("전송성공");

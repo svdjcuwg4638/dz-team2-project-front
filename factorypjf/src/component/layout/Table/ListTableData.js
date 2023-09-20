@@ -24,8 +24,7 @@ export default function ListTable({
 
   useEffect(() => {
     if (items) {
-      // console.log(items)
-      emitItem(items);
+      if (emitItem) emitItem(items);
       setTableItems([...items]);
     }
   }, [items, emitItem]);
