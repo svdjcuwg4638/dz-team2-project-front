@@ -1,8 +1,12 @@
 import React, { useRef, useState } from "react";
-import api from "../../../redux/api";
 import { useDispatch } from "react-redux";
-import { partnerAction } from "../../../redux/actions/management/partnerAction";
-const PartnerList = ({ partnerAll, setSelectParnter, selectPartner,selectCodes,setSelectCodes }) => {
+const PartnerList = ({
+  partnerAll,
+  setSelectParnter,
+  selectPartner,
+  selectCodes,
+  setSelectCodes,
+}) => {
   const dispatch = useDispatch();
 
   //#region 스크롤
@@ -22,82 +26,53 @@ const PartnerList = ({ partnerAll, setSelectParnter, selectPartner,selectCodes,s
     } else {
       setSelectCodes((prev) => [...prev, cd]);
     }
-    console.log(selectCodes);
   };
-
 
   return (
     <div>
-      <table>
-        <thead className="top_table_header">
-          <tr>
-            <th></th>
-            <th>거래처코드</th>
-            <th>거래처명</th>
-            <th>대표자명</th>
-            <th>연락처</th>
-            <th>이메일</th>
-          </tr>
-        </thead>
-        <tbody className="partner-scrollable-table" onWheel={handleScroll}>
-          {selectPartner && partnerAll && partnerAll.length > 0 && partnerAll.map((data) => (
-            <tr onClick={() => setSelectParnter(data)}>
-              <td
+      <div className="ctable">
+        <div className="chead">
+          <div className="ctr partner_row">
+            <div></div>
+            <div>거래처코드</div>
+            <div>거래처명</div>
+            <div>대표자명</div>
+            <div>연락처</div>
+            <div>이메일</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="ctable">
+        <div className="cbody" onWheel={handleScroll}>
+          {partnerAll &&
+            partnerAll.length > 0 &&
+            partnerAll.map((data) => (
+              <div className="ctr partner_row"
+                onClick={() => setSelectParnter(data)}
                 style={{
                   background:
-                    selectPartner.partner_code == data.partner_code ? "#dadada" : "#fff",
+                    selectPartner?.partner_code == data?.partner_code
+                      ? "#dadada"
+                      : "",
                 }}
               >
-                <input
-                  type="checkbox"
-                  checked={selectCodes?.includes(data?.partner_code)}
-                  onChange={() => handleCheckboxChange(data?.partner_code)}
-                />
-              </td>
-              <td
-                style={{
-                  background:
-                    selectPartner.partner_code == data.partner_code ? "#dadada" : "#fff",
-                }}
-              >
-                {data.partner_code}
-              </td>
-              <td
-                style={{
-                  background:
-                    selectPartner.partner_code == data.partner_code ? "#dadada" : "#fff",
-                }}
-              >
-                {data.partner_name}
-              </td>
-              <td
-                style={{
-                  background:
-                    selectPartner.partner_code == data.partner_code ? "#dadada" : "#fff",
-                }}
-              >
-                {data.representative}
-              </td>
-              <td
-                style={{
-                  background:
-                    selectPartner.partner_code == data.partner_code ? "#dadada" : "#fff",
-                }}
-              >
-                {data.ph_num}
-              </td>
-              <td
-                style={{
-                  background:
-                    selectPartner.partner_code == data.partner_code ? "#dadada" : "#fff",
-                }}
-              >
-                {data.email}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                <div>
+                  <input
+                    type="checkbox"
+                    checked={selectCodes?.includes(data?.partner_code)}
+                    onChange={() => handleCheckboxChange(data?.partner_code)}
+                  />
+                </div>
+                <div>{data.partner_code}</div>
+                <div>{data.partner_name}</div>
+                <div>{data.representative}</div>
+                <div>{data.ph_num}</div>
+                <div>{data.email}</div>
+              </div>
+            ))}
+        </div>
+      </div>
     </div>
   );
 };

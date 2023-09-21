@@ -4,7 +4,7 @@ import StorageTable from "./StorageTable";
 import { useDispatch } from "react-redux";
 import { storageAction } from "../../../redux/actions/management/storageAction";
 
-function LeftBox({ storageAll }) {
+function LeftBox({ storageAll,selectId,setSelectId }) {
   const dispatch = useDispatch();
   const [selectCodes, setSelectCodes] = useState([]);
 
@@ -46,10 +46,12 @@ function LeftBox({ storageAll }) {
           data={storageAll}
           selectCodes={selectCodes}
           setSelectCodes={setSelectCodes}
+          selectId={selectId}
+          setSelectId={setSelectId}
         />
       )}
       <form onSubmit={handleSubmit}>
-        <div className="bottom">
+        <div className="storage_bottom">
           <div className="input_wrap">
             <div style={{marginRight:'10px'}}>
               <div style={{ marginRight: "10px" }}>창고코드</div>
@@ -80,7 +82,7 @@ function LeftBox({ storageAll }) {
             </button>
             <button
               className="button"
-              style={{ backgroundColor: "red" }}
+              style={{ backgroundColor: selectCodes.length > 0 ? "red" : "#dadada" }}
               onClick={handleDelete}
             >
               삭제

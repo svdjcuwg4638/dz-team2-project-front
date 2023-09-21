@@ -88,37 +88,39 @@ const CommonCode = ({ selectId, codeAll, setCodeAllData }) => {
 
   return (
     <div>
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th>{selectId?.management_name}코드</th>
-            <th>{selectId?.management_name}이름</th>
-          </tr>
-        </thead>
+      <div className="ctable">
+        <div className="chead">
+          <div className="ctr code_row_sub">
+            <div></div>
+            <div>{selectId?.management_name}코드</div>
+            <div>{selectId?.management_name}이름</div>
+          </div>
+        </div>
+      </div>
 
-        <tbody className="code-scrollable-table" onWheel={handleScroll}>
+      <div className="ctable">
+        <div className="cbody" onWheel={handleScroll}>
           {searchData &&
             searchData?.map((data) => (
-              <tr>
-                <td>
+              <div className="ctr code_row_sub">
+                <div>
                   <input
                     type="checkbox"
                     checked={selectCodes.includes(data.common_code)}
                     onChange={() => handleCheckboxChange(data.common_code)}
                   />
-                </td>
-                <td>{data.common_code}</td>
-                <td>{data.common_name}</td>
-              </tr>
+                </div>
+                <div>{data.common_code}</div>
+                <div>{data.common_name}</div>
+              </div>
             ))}
-        </tbody>
-      </table>
+        </div>
+      </div>
       <form className="mt-3" onSubmit={handleSubmit}>
         <div className="input_wrap">
           <div>
             <div>코드</div>
-            <div className="inputBox" style={{ marginRight: "10px" }}>
+            <div  style={{ marginRight: "10px" }}>
               <input
                 required
                 type="text"
@@ -130,7 +132,7 @@ const CommonCode = ({ selectId, codeAll, setCodeAllData }) => {
           </div>
           <div>
             <div>이름</div>
-            <div className="inputBox" style={{ marginRight: "10px" }}>
+            <div  style={{ marginRight: "10px" }}>
               <input
                 required
                 type="text"

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "../../../style/management/partner.css";
-import AddPartner from "./AddPartner";
 import PartnerList from "./PartnerList";
 import { useDispatch, useSelector } from "react-redux";
 import { ClipLoader } from "react-spinners";
@@ -8,6 +7,7 @@ import { partnerAction } from "../../../redux/actions/management/partnerAction";
 import PartnerDetail from "./PartnerDetail";
 import api from "redux/api";
 import SearchPartner from "./SearchPartner";
+import "../../../style/management/management.css"
 
 
 
@@ -16,35 +16,29 @@ const Partner = () => {
 
   const [selectPartner, setSelectParnter] = useState(null);
 
-  const { partnerAll, loading } = useSelector((state) => state.partner);
+  const { partnerAll } = useSelector((state) => state.partner);
 
-  const [searchData, setSearchData] = useState(partnerAll.data);
+  const [isLoading,setIsloading] =useState(false)
+
+  const [searchData, setSearchData] = useState(null);
 
   useEffect(() => {
-    dispatch(partnerAction.getPartnerAll());
+    const patchItems = async () => {
+      setIsloading(true);
+      try {
+        await dispatch(partnerAction.getPartnerAll());
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsloading(false);
+      }
+    };
+    patchItems();
   }, []);
 
   useEffect(()=>{
     setSearchData(partnerAll.data)
   },[partnerAll])
-
-  useEffect(() => {
-    if (!loading && partnerAll && partnerAll.data) {
-      setSelectParnter(partnerAll?.data[0]);
-    }
-  }, [loading]);
-
-  //#region 추가모달표시
-  const [view, setView] = useState("-100%");
-
-  const addFormViewHandler = () => {
-    if (view == "-100%") {
-      setView("0");
-    } else {
-      setView("-100%");
-    }
-  };
-  //#endregion
 
   // #region 삭제
   const [selectCodes, setSelectCodes] = useState([]);
@@ -57,12 +51,12 @@ const Partner = () => {
   };
   // #endregion
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="loader_wrap container">
         <ClipLoader
           color="#000"
-          loading={loading}
+          loading={isLoading}
           size={150}
           aria-label="Loading Spinner"
           data-testid="loader"
@@ -90,12 +84,10 @@ const Partner = () => {
               />
             )}
             <div className="button_wrap">
-              <button className="button" onClick={addFormViewHandler}>
-                추가
-              </button>
               <button
+                disabled={selectCodes.length > 0 ? false : true}
                 className="button"
-                style={{ backgroundColor: "red" }}
+                style={{ backgroundColor: selectCodes.length > 0  ? "red" : "#dadada" }}
                 onClick={handleDelete}
               >
                 삭제
@@ -104,11 +96,9 @@ const Partner = () => {
           </div>
         </div>
         <div className="partner_detail_wrap">
-          <PartnerDetail selectPartner={selectPartner} />
+          <PartnerDetail selectPartner={selectPartner} setSelectParnter={setSelectParnter}/>
         </div>
-      </div>
-      <div className="partner_add_wrap" style={{ right: view }}>
-        <AddPartner addFormViewHandler={addFormViewHandler} />
+        <div className="partner_title">거래처관리</div>
       </div>
     </div>
   );

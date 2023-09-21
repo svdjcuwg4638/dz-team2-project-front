@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import "style/App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import "style/Table.css";
@@ -7,17 +7,25 @@ import Storage from "./component/management/storage/Storage";
 import Management from "./pages/Management";
 import Partner from "./component/management/partner/Partner";
 import Item from "./component/management/item/Item";
-import Product from "./component/management/product/Product";
 import UnitPrice from "./component/management/unitPrice/UnitPrice";
 import Code from "component/management/code/Code";
 import StorageRoutes from "./pages/Storage";
 import StorageInquiry from "./component/storage//item/Inquiry";
 import Registration from "./component/storage/registration/Registration";
 import ProductionRoutes from 'router/ProductionRoutes'
-import InBound from "component/management/inbound/InBound";
 import ItemRelation from "component/management/itemRelation/ItemRelation";
+import { useEffect, useState } from "react";
 
 function App() {
+
+  const [currentPage, setCurrentPage] = useState('');
+  const location = useLocation();
+
+  useEffect(() => {
+    setCurrentPage(location.pathname);
+    sessionStorage.setItem('current_page', location.pathname);
+  }, [location]);
+
   return (
     <Layout>
       <Routes>
@@ -35,10 +43,8 @@ function App() {
           <Route index path="item" element={<Item />} />
           <Route path="storage" element={<Storage />} />
           <Route path="partner" element={<Partner />} />
-          <Route path="product" element={<Product />} />
           <Route path="unitprice" element={<UnitPrice />} />
           <Route path="code" element={<Code />} />
-          <Route path="inbound" element={<InBound />} />
           <Route path="relation" element={<ItemRelation />} />
         </Route>
       </Routes>

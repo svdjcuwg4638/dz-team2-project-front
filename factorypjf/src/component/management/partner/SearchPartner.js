@@ -3,7 +3,7 @@ import api from "redux/api";
 
 const SearchPartner = ({ setSearchData }) => {
   const [formData, setFormData] = useState({
-    searchCategory: "partner_code",
+    searchCategory: "partner_name",
     searchValue: "",
   });
 
@@ -35,17 +35,20 @@ const SearchPartner = ({ setSearchData }) => {
       <form onSubmit={handleSearchSubmit}>
         <div className="partner_search_wrap">
           <div>
-            <select name="searchCategory" onChange={handleSearchChange}>
-              <option value="partner_code">거래처코드</option>
-              <option value="partner_name">거래처명</option>
-              <option value="representative">대표자명</option>
-              <option value="ph_num">연락처</option>
-              <option value="email">이메일</option>
-              <option value="collect_date">수금/지급 예정일</option>
-            </select>
+            <div>분류</div>
+            <div>
+              <select name="searchCategory" onChange={handleSearchChange}>
+                <option value="partner_name">거래처명</option>
+                <option value="partner_code">거래처코드</option>
+                <option value="representative">대표자명</option>
+                <option value="ph_num">연락처</option>
+                <option value="email">이메일</option>
+                <option value="collect_date">수금/지급 예정일</option>
+              </select>
+            </div>
           </div>
-          <div style={{ display: "flex" }}>
-            <div>검색어 : </div>
+          <div>
+            <div>검색</div>
             <div>
               <input
                 type="text"
@@ -54,6 +57,8 @@ const SearchPartner = ({ setSearchData }) => {
               />
             </div>
           </div>
+        </div>
+        <div>
           <div className="button_wrap">
             <button className="button">조회</button>
           </div>

@@ -10,6 +10,7 @@ input {
   padding: 0px;
 }
 table th {
+  border: 1px solid #4473BF;
 }
 td > input {
   width: 100%;
@@ -17,7 +18,7 @@ td > input {
   background-color: transparent;
 }
 thead {
-  background-color: lightgrey;
+  background-color: #5390f0;
 }
 
 /* table header */
@@ -60,3 +61,4 @@ thead {
 .focused-row {
   background-color: #f5f5f5;
 }
+

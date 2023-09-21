@@ -8,8 +8,6 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
   const dispatch = useDispatch();
   const [searchData, setSearchData] = useState(null);
 
-  
-
   useEffect(() => {
     const filteredData = codeAllData?.filter(
       (data) => data.item_code === selectId?.item_code
@@ -43,19 +41,19 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.prevendivefault();
 
-    const submitData = {
+    const submidivata = {
       ...formData,
       component_code: formData.item_code,
       item_code: selectId.item_code,
     };
 
     try {
-      const response = await api.post("/relation/add", submitData);
+      const response = await api.post("/relation/add", submidivata);
       const adData = response.data.data;
-      setSearchData((state) => [...state, adData,]);
-      setCodeAllData((state) => [...state, adData,]);
+      setSearchData((state) => [...state, adData]);
+      setCodeAllData((state) => [...state, adData]);
     } catch (error) {
       console.log("error :", error);
     }
@@ -82,7 +80,7 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
   };
 
   const handleDelete = async (e) => {
-    e.preventDefault();
+    e.prevendivefault();
     await api.post("/relation/delete", selectCodes);
     dispatch(relationAction.getRelationAll());
     setSelectCodes([]);
@@ -90,9 +88,9 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
 
   // #endregion
 
-  const [HelperScreenState, setHelperScreenState] = useState(false);
+  const [HelperScreenState, sedivelperScreenState] = useState(false);
   const selectedPartnerFn = () => {
-    setHelperScreenState(false);
+    sedivelperScreenState(false);
   };
 
   const item = {
@@ -108,45 +106,47 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
 
   return (
     <div>
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th>자재코드</th>
-            <th>자재이름</th>
-            <th>소모수량</th>
-          </tr>
-        </thead>
+      <div className="ctable">
+        <div className="chead">
+          <div className="ctr relation_row_sub">
+            <div></div>
+            <div>자재코드</div>
+            <div>자재이름</div>
+            <div>소모수량</div>
+          </div>
+        </div>
+      </div>
 
-        <tbody className="code-scrollable-table" onWheel={handleScroll}>
+      <div className="ctable">
+        <div className="cbody" onWheel={handleScroll}>
           {searchData &&
             searchData?.map((data) => (
-              <tr>
-                <td>
+              <div className="ctr relation_row_sub">
+                <div>
                   <input
                     type="checkbox"
                     checked={selectCodes.includes(data.relation_id)}
                     onChange={() => handleCheckboxChange(data.relation_id)}
                   />
-                </td>
-                <td>{data.component_code}</td>
-                <td>
+                </div>
+                <div>{data.component_code}</div>
+                <div>
                   {
                     itemAll.data.find(
                       (idata) => idata.item_code == data.component_code
                     ).item_name
                   }
-                </td>
-                <td>{data.quantity}</td>
-              </tr>
+                </div>
+                <div>{data.quantity}</div>
+              </div>
             ))}
-        </tbody>
-      </table>
+        </div>
+      </div>
       <form className="mt-3" onSubmit={handleSubmit}>
-        <div className="input_wrap">
+        <div className="relation_input_wrap">
           <div>
             <div>자재코드(f2)</div>
-            <div className="inputBox" style={{ marginRight: "10px" }}>
+            <div  style={{ marginRight: "10px" }}>
               <input
                 required
                 type="text"
@@ -155,7 +155,7 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
                 onChange={handleInputChange}
                 onKeyDown={(e) => {
                   if (e.key === "F2") {
-                    setHelperScreenState(!HelperScreenState);
+                    sedivelperScreenState(!HelperScreenState);
                   }
                 }}
               />
@@ -163,7 +163,7 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
           </div>
           <div>
             <div>자재이름(f2)</div>
-            <div className="inputBox" style={{ marginRight: "10px" }}>
+            <div  style={{ marginRight: "10px" }}>
               <input
                 required
                 type="text"
@@ -172,7 +172,7 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
                 onChange={handleInputChange}
                 onKeyDown={(e) => {
                   if (e.key === "F2") {
-                    setHelperScreenState(!HelperScreenState);
+                    sedivelperScreenState(!HelperScreenState);
                   }
                 }}
               />
@@ -198,8 +198,8 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
             )}
           </div>
           <div>
-            <div>수량</div>
-            <div className="inputBox" style={{ marginRight: "10px" }}>
+            <div>소모수량</div>
+            <div  style={{ marginRight: "10px" }}>
               <input
                 required
                 type="text"
