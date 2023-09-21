@@ -17,12 +17,18 @@ export default function ListTable({ headers, items, onTrigger,onCheckboxChange,e
   const [tableItems, setTableItems] = useState();
 
   useEffect(() => {
+    const copyArray=[]
     if(items){
-      // console.log(items)
-      emitItem(items)
-      setTableItems([...items]);
+      for(let item of items){
+        let tempObj={}
+        for(let key in item){
+          tempObj={...tempObj,[key]:item[key]}
+        }
+        copyArray.push(JSON.parse(JSON.stringify(tempObj)))
+      }
+      setTableItems(copyArray)
     }
-  }, [items,emitItem]);
+  }, [items]);
 
   //모달 끄고 닫는 핸들러
   const onModalHanlder = (codeValue, codeName) => {
@@ -136,9 +142,9 @@ export default function ListTable({ headers, items, onTrigger,onCheckboxChange,e
               </td>
             ) : //순번 컬럼
             header.value === "index" ? (
-              <td key={headerIdx}>{idx + 1}</td>
+              <td key={`${headerIdx}${item[header.value]}`}>{idx + 1}</td>
             ) : (
-              <td key={headerIdx}>
+              <td key={`${headerIdx}${item[header.value]}`}>
                 {/* headerKey를 key로 가진 item 값을 출력 */}
                 {header.helper||header.readonly ? (
                   <input id={`grid02_${idx}_${header.value}`}

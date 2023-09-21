@@ -18,7 +18,7 @@ export default function List() {
     { text: "선택", value: "select", width: "3%" },
     { text: "순번", value: "index", width: "3%" },
     // { text: "생산번호", value: "prouductNum", width: "9%", readonly: true },
-    { text: "날짜", value: "date", width: "9%" },
+    { text: "생산일", value: "date", width: "9%" },
     {
       text: "생산품",
       value: "item",
@@ -66,11 +66,12 @@ export default function List() {
     { text: "비고", value: "description", width: "20%", readonly: true },
   ];
   
+  const [deleteIdx,setDeleteIdx] = useState();
+
   //grid01 row 선택시 그에 맞는 자재를 grid2에 출력하기 위해 입력 값을 저장하는 state
   const cacheInit={
     idx:null,
-    items:[],
-    actionType:''
+    items:[]
   }
   const cacheReducer = (state, action) => {
     //처음으로 행을 선택할때
@@ -78,22 +79,38 @@ export default function List() {
       state={...state,idx:action.idx}
       return state;
       //이전에 선택한 적이 있었을 때
-    }else{
+    }else{ 
+      //cacheITems 복사
       let copyItems = state.items?JSON.parse(JSON.stringify(state.items)):[];
-      //이전에 선택되었던 행에 대한 grid2 넣어줌
-      copyItems[state.idx]=action.items
-      //지금 선택된 행에 대한 grid2 출력 바꿈
-      if(action.type==='SELECT_ROW'){
-        set02Item(copyItems[action.idx]?[...copyItems[action.idx]]:[])
-        return{idx:action.idx, items:[...copyItems]}
-      } else if(action.type==='ON_SAVE'){
-        return{idx:action.idx, items:[...copyItems],actionType:'save'}
-      } else if(action.type==='TRIGGER')
-        set02Item(copyItems[state.idx]?[...copyItems[state.idx]]:[])
-        return {...state,items:[...copyItems]}
+      if(action.type==='DELETE_ROW'){
+        if(action.idxArr){
+
+          let unDelete=[]
+          for(let i=0; i<copyItems.length; i++){
+            //삭제하는 idx가 아니면 undelete에 push
+            if(!action.idxArr.includes(`${i}`)){
+              unDelete.push(copyItems[i])
+            }
+          }
+          set02Item(unDelete[0])
+          return{idx:0, items:[...unDelete]}
+        }
+      }else{
+        //이전에 선택되었던 행에 파라미터 grid02 row 넣어줌
+        copyItems[state.idx]=action.items&&[...action.items]
+        if(action.type==='SELECT_ROW'){
+          set02Item(copyItems[action.idx]?[...copyItems[action.idx]]:[])
+          return{idx:action.idx, items:[...copyItems]}
+        } else if(action.type==='ON_SAVE'){
+          return{idx:action.idx, items:[...copyItems]}
+        } else if(action.type==='TRIGGER'){
+          set02Item(action.items?[...action.items]:[])
+            return {...state,items:[...copyItems]}
+        }
       }
       //state 지금 선택된 행으로 변경, item에 push
     };
+  }
   const [grid02Cache, cacheDispatch] = useReducer(cacheReducer, cacheInit);
   
   // useEffect(()=>{
@@ -137,9 +154,6 @@ export default function List() {
             description: data[i].description,
           });
         }
-        // //grid02 item 변경
-        // set02Item([...newTableItems]);
-        // console.log(142)
         cacheDispatch({type:'TRIGGER', idx:currentCol.row, items:newTableItems})
         
         console.log(grid02Cache.items)
@@ -169,7 +183,7 @@ export default function List() {
         })
         .then((data) => {
           //================선택한 코드 테이블에 출력===============
-          let copyItems = JSON.parse(JSON.stringify(tableItems));
+          let copyItems = tableItems
           let currentRow = currentCol.row;
 
           copyItems[currentRow].inventory = data.total;
@@ -181,90 +195,93 @@ export default function List() {
   };
 
   const saveHandler = () => {
-    //====================테이블의 모든 input 가져오기====================
-    const inputArr=[...document.querySelectorAll('[id*="grid"]')]
-    let grid01Data=[]
-    const grid02Data=[]
+    // if(!grid01_items.find((data)=>data.item))return
+    // //====================테이블의 모든 input 가져오기====================
+    // const inputArr=[...document.querySelectorAll('[id*="grid"]')]
+    // let grid01Data=[]
+    // const grid02Data=[]
     
-    inputArr.forEach((el)=>{
-      //id(grid번호_행번호_header) 에서 행번호 찾기
-      let row=Number(el.id.match(/(?<=grid\d+_)\d+(?=_)/g)[0]);
-      //id(grid번호_행번호_header) 에서 header 찾기
-      let header = el.id.match(/(?<=\w_)[a-zA-Z_]+/g)[0];
+    // inputArr.forEach((el)=>{
+    //   //id(grid번호_행번호_header) 에서 행번호 찾기
+    //   let row=Number(el.id.match(/(?<=grid\d+_)\d+(?=_)/g)[0]);
+    //   //id(grid번호_행번호_header) 에서 header 찾기
+    //   let header = el.id.match(/(?<=\w_)[a-zA-Z_]+/g)[0];
       
-      if(el.id.includes('grid01')){
-        //grid01 state + input value
-        grid01Data[row]={...grid01Data[row],[header]:el.value}
-        //grid02 state + input value
-      }else if(el.id.includes('grid02')){
-        //겉으로 보이는 value + state에 저장된 itemList
-        grid02Data[row]={...grid02_items[row],...grid02Data[row],[header]:el.value}
-      }
-    })
+    //   if(el.id.includes('grid01')){
+    //     //grid01 state + input value
+    //     grid01Data[row]={...grid01Data[row],[header]:el.value}
+    //     //grid02 state + input value
+    //   }else if(el.id.includes('grid02')){
+    //     //겉으로 보이는 value + state에 저장된 itemList
+    //     grid02Data[row]={...grid02_items[row],...grid02Data[row],[header]:el.value}
+    //   }
+    // })
    
-    cacheDispatch({type:'ON_SAVE',idx:null, items:grid02Data})
+    // cacheDispatch({type:'ON_SAVE',idx:null, items:grid02Data})
 
-    //=================grid01 필수 입력 컬럼에 값 다 있는지 확인===============
-    let alertHeader=''
-    let itemCount=0
-    //grid01 입력확인
-    for (let i = 0; i < grid01Data.length; i++) {
-      //겉으로 보이는 value + state에 저장된 itemList
-      grid01Data[i]={...grid01_items[i],...grid01Data[i]}
-      for(let key in grid01Data[i]){
-        if(grid01Data[i].item){
-          itemCount++;
-          // //item 값이 입력된 행인데 NULL 컬럼 아닌 컬럼에 값이 입력돼있지 않으면
-          if(grid01Data[i].item&&!(key==='description'||key==='leadTime||'||key==='workForce'||key==='team'||key==='select'||key==='index')&&!grid01Data[i][key]){
-            alertHeader = grid01_headers.find((header)=>{
-              return header.value===key
-            })
-            alert('상위테이블 '+alertHeader.text+'를 입력해주세요')
-            return;
-          }else{
-            //!!!!!!!!!!!!!!!!! 로그인한 companyId 가져오는 로직으로 수정 !!!!!!!!!!!!!!!!!
-            grid01Data[i].companyId=1;
-          }
-        }else{
-          grid01Data.splice(i,1);
-          grid02Cache.items[i]&&grid02Cache.items.splice(i,1)
-          i--;
-        }
-      }
-    }
-    //생산품이 하나도 입력되지 않았을때
-    if(!itemCount){
-      alertHeader='생산품'
-      alert('저장할 '+alertHeader+'이 없습니다.')
-    }
+    // //=================grid01 필수 입력 컬럼에 값 다 있는지 확인===============
+    // let alertHeader=''
+    // let itemCount=0
+    // //grid01 입력확인
+    // for (let i = 0; i < grid01Data.length; i++) {
+    //   //겉으로 보이는 value + state에 저장된 itemList
+    //   grid01Data[i]={...grid01_items[i],...grid01Data[i]}
+    //   for(let key in grid01Data[i]){
+    //     if(grid01Data[i].item){
+    //       itemCount++;
+    //       // //item 값이 입력된 행인데 NULL 컬럼 아닌 컬럼에 값이 입력돼있지 않으면
+    //       if(grid01Data[i].item&&!(key==='description'||key==='leadTime||'||key==='workForce'||key==='team'||key==='select'||key==='index')&&!grid01Data[i][key]){
+    //         alertHeader = grid01_headers.find((header)=>{
+    //           return header.value===key
+    //         })
+    //         alert('상위테이블 '+alertHeader.text+'를 입력해주세요')
+    //         return;
+    //       }else{
+    //         //!!!!!!!!!!!!!!!!! 로그인한 companyId 가져오는 로직으로 수정 !!!!!!!!!!!!!!!!!
+    //         grid01Data[i].companyId=1;
+    //       }
+    //     }else{
+    //       grid01Data.splice(i,1);
+    //       grid02Cache.items[i]&&grid02Cache.items.splice(i,1)
+    //       i--;
+    //     }
+    //   }
+    // }
+    // //생산품이 하나도 입력되지 않았을때
+    // if(!itemCount){
+    //   alertHeader='생산품'
+    //   alert('저장할 '+alertHeader+'이 없습니다.')
+    // }
 
-    //grid02 입력확인
-    if(!alertHeader){
-      for (let i = 0; i < grid02Cache.items.length; i++) {
-        for (let j = 0; j < grid02Cache.items[i].length; j++) {
-          if(grid02Cache.items[i]!==null){
-            for(let key in grid02Cache.items[i][j]){
-              // //item 값이 입력된 행인데 NULL 컬럼 아닌 컬럼에 값이 입력돼있지 않으면
-              if(grid02Cache.items[i][j].item&&!(key==='description'||key==='select'||key==='index')&&!grid02Cache.items[i][j][key]){
-                alertHeader = grid02_headers.find((header)=>{
-                  return header.value===key
-                })
-                if(alertHeader.value==='inventory'){alert('해당 장소에 자재가 없습니다.')}
-                else{alert('하위테이블 '+alertHeader.text+'를 입력해주세요')}
-                return;
-              }
-            }
-          }   
-        }
-      }
-    }
+    // //grid02 입력확인
+    // if(!alertHeader){
+    //   for (let i = 0; i < grid02Cache.items.length; i++) {
+    //     for (let j = 0; j < grid02Cache.items[i].length; j++) {
+    //       if(grid02Cache.items[i]!==null){
+    //         for(let key in grid02Cache.items[i][j]){
+    //           // //item 값이 입력된 행인데 NULL 컬럼 아닌 컬럼에 값이 입력돼있지 않으면
+    //           if(grid02Cache.items[i][j].item&&!(key==='description'||key==='select'||key==='index')&&!grid02Cache.items[i][j][key]){
+    //             alertHeader = grid02_headers.find((header)=>{
+    //               return header.value===key
+    //             })
+    //             if(alertHeader.value==='inventory'){alert('해당 장소에 자재가 없습니다.')}
+    //             else{alert('하위테이블 '+alertHeader.text+'를 입력해주세요')}
+    //             return;
+    //           }
+    //         }
+    //       }   
+    //     }
+    //   }
+    // }
 
-    if(!alertHeader){
-      console.log(grid01Data)
-      console.log(grid02Cache.items)
+    // if(!alertHeader){
+    //   console.log(grid01Data)
+    //   console.log(grid02Cache.items)
       
-      postAxios('production/add',{production:grid01Data,component:grid02Cache.items},null,null)
-    }
+    //   postAxios('production/add',{production:grid01Data,component:grid02Cache.items},null,null)
+    // }
+    console.log(grid02Cache)
+    console.log(grid02_items)
   };
 
   const selectRowHandler=(idx)=>{
@@ -280,20 +297,35 @@ export default function List() {
       let header = el.id.match(/(?<=\w_)[a-z_]+/g)[0];
       
       //겉으로 보이는 value + state에 저장된 itemList
-      elementItem[row]={...grid02_items[row],...elementItem[row],[header]:el.value}
+      let copyRow = JSON.parse(JSON.stringify(grid02_items[row]))
+      elementItem[row]={...copyRow,...elementItem[row],[header]:el.value}
     })
+    console.log(elementItem)
   
-    cacheDispatch({type:'SELECT_ROW', idx, items:elementItem})
+    cacheDispatch({type:'SELECT_ROW', idx, items:[...elementItem]})
     // console.log(grid02Cache.items)
+  }
+
+  const deleteHandler=()=>{
+    const checked=Array.from(...[document.querySelectorAll('input[type="checkbox"]:checked')])
+    let idxArr=[]
+    for(let input of checked){
+      let row=input.id.match(/(?<=grid\d+_)\d+(?=_)/g)[0];
+      idxArr.push(row)
+    }
+    setDeleteIdx(idxArr)
+    cacheDispatch({type:'DELETE_ROW', idxArr})
+
+    console.log(grid02Cache)
   }
 
   return (
     <>
-      <div className={productionClasses.wrap}>
+      <div >
         <p className={productionClasses["sub-menu-name"]}>생산등록</p>
         <div className={productionClasses.grid01}>
           <Table headers={grid01_headers}>
-            <AddTd onGridTrigger={gridTriggerHandler}  selectRowHandler={selectRowHandler} emitItem={set01Item}></AddTd>
+            <AddTd onGridTrigger={gridTriggerHandler}  selectRowHandler={selectRowHandler} emitItem={set01Item} deleteItem={deleteIdx}></AddTd>
           </Table>
         </div>
         <div className={productionClasses.grid02}>
@@ -302,7 +334,7 @@ export default function List() {
           </Table>
         </div>
         <div className={productionClasses["product_btn-wrap"]}>
-          <button className={productionClasses["product_btn_delete"]}>
+          <button className={productionClasses["product_btn_delete"]} onClick={deleteHandler}>
             삭제
           </button>
           <button

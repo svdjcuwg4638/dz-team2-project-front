@@ -9,7 +9,7 @@ import addStyle from "style/layout/dataTable/addTableData.module.css";
 const HELPER_KEY = 113;
 
 //headers: 테이블 header, onGridTrigger: 부모 요소로 이벤트 발송할 수 있는 handler, 
-export default function AddTableData({ headers, onGridTrigger,selectRowHandler,emitItem }) {
+export default function AddTableData({ headers, onGridTrigger,selectRowHandler,emitItem, deleteItem }) {
   //첫 렌더링시 빈 테이블 3줄
   const DEFAULT_ROW = 3;
   const DEFAULT_ARR = useMemo(() => {
@@ -28,6 +28,16 @@ export default function AddTableData({ headers, onGridTrigger,selectRowHandler,e
   useEffect(()=>{
     emitItem(DEFAULT_ARR)
   },[])
+  useEffect(()=>{
+    if(deleteItem){
+      let copyItem = JSON.parse(JSON.stringify(tableItems));
+      for(let deleteIdx of deleteItem){
+        copyItem.splice(deleteIdx,1)
+      }
+      setTableItems(copyItem)
+      emitItem(tableItems)
+    }
+  },[deleteItem])
 
   //행 추가 handler
   const [tableItems, setTableItems] = useState(
@@ -88,11 +98,6 @@ export default function AddTableData({ headers, onGridTrigger,selectRowHandler,e
 
   //코드 선택 handler
   const selectCodeHandler = (codeRow) => {
-    // console.log(codeRow);
-    // console.log(tableItems);
-    // console.log(currentCol);
-    // console.log(modalState.codeValue);
-
     //================선택한 코드 테이블에 출력===============
     let copyItems = JSON.parse(JSON.stringify(tableItems));
 
@@ -167,7 +172,7 @@ export default function AddTableData({ headers, onGridTrigger,selectRowHandler,e
             // selectBox 컬럼
             header.value === "select" ? (
               <td key={headerIdx}>
-                <input type="checkbox"></input>
+                <input id={`grid01_${idx}_${header.value}`} type="checkbox"></input>
               </td>
             ) : // 순번 컬럼
             header.value === "index" ? (
