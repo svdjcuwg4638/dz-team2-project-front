@@ -11,6 +11,7 @@ import { menuActions } from "../../redux/reducers/menu";
 
 const Dep1 = () => {
   const dispatch = useDispatch();
+  
   const productionHandler = () => {
     dispatch(menuActions.production());
   };

@@ -4,10 +4,14 @@ import { useSelector, useDispatch } from "react-redux";
 import "../../style/layout/dep2.css";
 import { BiSolidFactory } from "react-icons/bi";
 import { BsFillBookmarkFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { menuActions } from "redux/reducers/menu";
 
-const Dep2 = ({bookMarkList}) => {
+const Dep2 = ({ bookMarkList }) => {
   const currentMenu = useSelector((state) => state.currentMenu.currentMenu);
+
+  const dispatch = useDispatch();
+
   const currentMenuName = useSelector(
     (state) => state.currentMenu.currentMenuName
   );
@@ -45,12 +49,38 @@ const Dep2 = ({bookMarkList}) => {
   function findMenuNameByUrl(url) {
     for (let menuKey in subMenu) {
       for (let menuItem of subMenu[menuKey]) {
-        if (menuItem.link.split('/')[1] === url.split('/')[2]) {
+        if (menuItem.link.split("/")[1] === url.split("/")[2]) {
           return menuItem.name;
         }
       }
     }
-    return null; 
+    return null;
+  }
+
+  function setMenu(url) {
+    const menu = findMenuByUrl(url);
+    if (menu) {
+      dispatch(menuActions.setBookmarkMenu(menu));
+    }
+  }
+
+  function findMenuByUrl(url) {
+    if (url.split('/')[1] === "production") {
+      return { menu: "production", menuName: "기준정보관리" };
+    }
+    if (url.split('/')[1] === "storage") {
+      return { menu: "storage", menuName: "기준정보관리" };
+    }
+    if (url.split('/')[1] === "inbound") {
+      return { menu: "inbound", menuName: "기준정보관리" };
+    }
+    if (url.split('/')[1] === "outbound") {
+      return { menu: "outbound", menuName: "기준정보관리" };
+    }
+    if (url.split('/')[1] === "management") {
+      return { menu: "management", menuName: "기준정보관리" };
+    }
+    return null;
   }
 
   return (
@@ -85,7 +115,7 @@ const Dep2 = ({bookMarkList}) => {
           {bookMarkList &&
             bookMarkList.map((data, index) => (
               <div key={index}>
-                <Link to={data.url}>
+                <Link to={data.url} onClick={() => setMenu(data.url)}>
                   <span>{findMenuNameByUrl(data.url)}</span>
                 </Link>
               </div>

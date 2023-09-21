@@ -24,7 +24,6 @@ const ItemList = ({
     } else {
       setSelectIds((prev) => [...prev, id]);
     }
-    console.log(selectIds);
   };
 
   useEffect(() => {

@@ -30,13 +30,11 @@
 
 .detail_wrap input{
   color: #000;
+  width: 80%;
 }
 
 .detail_wrap_sub > div{
-  display: flex;
-  height: 29px;
   width: 80%;
-
 }
 
 .detail_content_wrap{

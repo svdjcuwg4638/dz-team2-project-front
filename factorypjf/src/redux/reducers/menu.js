@@ -34,7 +34,13 @@ const menuSlice = createSlice({
             state.currentMenu='management'
             state.currentMenuName='기준정보관리'
             sessionStorage.setItem('menuState', JSON.stringify(state));
-        }
+        },
+        setBookmarkMenu(state, action) {
+            const { menu, menuName } = action.payload;
+            state.currentMenu = menu;
+            state.currentMenuName = menuName;
+            sessionStorage.setItem('menuState', JSON.stringify(state));
+        },
     }
 })
 

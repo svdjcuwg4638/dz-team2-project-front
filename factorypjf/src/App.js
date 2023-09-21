@@ -33,7 +33,7 @@ function App() {
         <Route path="/production/*" element={<ProductionRoutes/>}/>
         {/* <Route path="/inbound/*" element={<InboundRoutes/>}/>
         <Route path="/storage/*" element={<StorageRoutes/>}/> */}
-       
+        
         <Route path="/storage/" element={<StorageRoutes />}>
           <Route path="" element={<StorageInquiry />} />
           <Route path="registration" element={<Registration />} />

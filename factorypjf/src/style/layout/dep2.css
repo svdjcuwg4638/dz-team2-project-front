@@ -62,3 +62,8 @@
   width: 100px;
   margin-top: 10px;
 }
+
+.menu_sub_wrap {
+  overflow-y: auto; 
+  max-height: 50%; 
+}
