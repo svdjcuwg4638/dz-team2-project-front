@@ -9,7 +9,7 @@ import addStyle from "style/layout/dataTable/addTableData.module.css";
 const HELPER_KEY = 113;
 
 //headers: 테이블 header, onGridTrigger: 부모 요소로 이벤트 발송할 수 있는 handler, 
-export default function AddTableData({ headers, onGridTrigger,selectRowHandler,emitItem, deleteItem }) {
+export default function AddTableData({ isBtn, headers,items, onGridTrigger,selectRowHandler,emitItem, deleteItem }) {
   //첫 렌더링시 빈 테이블 3줄
   const DEFAULT_ROW = 3;
   const DEFAULT_ARR = useMemo(() => {
@@ -26,8 +26,13 @@ export default function AddTableData({ headers, onGridTrigger,selectRowHandler,e
   }, [headers]);
 
   useEffect(()=>{
-    emitItem(DEFAULT_ARR)
-  },[])
+    if(items){
+      setTableItems([...items])
+    }else{
+      emitItem(DEFAULT_ARR)
+    }
+  },[items])
+
   useEffect(()=>{
     if(deleteItem){
       let copyItem = JSON.parse(JSON.stringify(tableItems));
@@ -138,10 +143,11 @@ export default function AddTableData({ headers, onGridTrigger,selectRowHandler,e
   };
 
   const selectRow=(e,idx)=>{
+    
     //클릭 이벤트가 tr>td>input에서 발생하기 때문에 부모의 부모 노드 선택
     let row=e.target.parentNode.parentNode;
     row.className=addStyle['add-table-focus'];
-    if(focusRow){
+    if(focusRow&&focusRow!==row){
       focusRow.className=addStyle['']
     }
     setFocusRow(row)
@@ -176,7 +182,7 @@ export default function AddTableData({ headers, onGridTrigger,selectRowHandler,e
               </td>
             ) : // 순번 컬럼
             header.value === "index" ? (
-              <td key={headerIdx}>{idx + 1}</td>
+              <td key={headerIdx}><div>{idx + 1}</div></td>
             ) : (
               <td key={headerIdx}>
                 {header.helper || header.readonly ? (
@@ -210,13 +216,13 @@ export default function AddTableData({ headers, onGridTrigger,selectRowHandler,e
           )}
         </tr>
       ))}
-      <tr>
+      {isBtn&&<tr>
         <td colSpan={headers.length}>
           <button className={tableStyle.btn_add} onClick={addRowHandler}>
             +
           </button>
         </td>
-      </tr>
+      </tr>}
     </>
   );
 }

@@ -142,7 +142,7 @@ export default function ListTable({ headers, items, onTrigger,onCheckboxChange,e
               </td>
             ) : //순번 컬럼
             header.value === "index" ? (
-              <td key={`${headerIdx}${item[header.value]}`}>{idx + 1}</td>
+              <td key={`${headerIdx}${item[header.value]}`}><div>{idx + 1}</div></td>
             ) : (
               <td key={`${headerIdx}${item[header.value]}`}>
                 {/* headerKey를 key로 가진 item 값을 출력 */}
