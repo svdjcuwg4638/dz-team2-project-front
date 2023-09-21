@@ -51,7 +51,7 @@ function LeftBox({ storageAll,selectId,setSelectId }) {
         />
       )}
       <form onSubmit={handleSubmit}>
-        <div className="bottom">
+        <div className="storage_bottom">
           <div className="input_wrap">
             <div style={{marginRight:'10px'}}>
               <div style={{ marginRight: "10px" }}>창고코드</div>
@@ -82,7 +82,7 @@ function LeftBox({ storageAll,selectId,setSelectId }) {
             </button>
             <button
               className="button"
-              style={{ backgroundColor: "red" }}
+              style={{ backgroundColor: selectCodes.length > 0 ? "red" : "#dadada" }}
               onClick={handleDelete}
             >
               삭제

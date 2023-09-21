@@ -26,51 +26,53 @@ const PartnerList = ({
     } else {
       setSelectCodes((prev) => [...prev, cd]);
     }
-    console.log(selectCodes);
   };
 
   return (
     <div>
-      <table>
-        <thead className="top_table_header">
-          <tr>
-            <th></th>
-            <th>거래처코드</th>
-            <th>거래처명</th>
-            <th>대표자명</th>
-            <th>연락처</th>
-            <th>이메일</th>
-          </tr>
-        </thead>
-        <tbody className="partner-scrollable-table" onWheel={handleScroll}>
+      <div className="ctable">
+        <div className="chead">
+          <div className="ctr partner_row">
+            <div></div>
+            <div>거래처코드</div>
+            <div>거래처명</div>
+            <div>대표자명</div>
+            <div>연락처</div>
+            <div>이메일</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="ctable">
+        <div className="cbody" onWheel={handleScroll}>
           {partnerAll &&
             partnerAll.length > 0 &&
             partnerAll.map((data) => (
-              <tr
+              <div className="ctr partner_row"
                 onClick={() => setSelectParnter(data)}
                 style={{
                   background:
                     selectPartner?.partner_code == data?.partner_code
                       ? "#dadada"
-                      : "#fff",
+                      : "",
                 }}
               >
-                <td>
+                <div>
                   <input
                     type="checkbox"
                     checked={selectCodes?.includes(data?.partner_code)}
                     onChange={() => handleCheckboxChange(data?.partner_code)}
                   />
-                </td>
-                <td>{data.partner_code}</td>
-                <td>{data.partner_name}</td>
-                <td>{data.representative}</td>
-                <td>{data.ph_num}</td>
-                <td>{data.email}</td>
-              </tr>
+                </div>
+                <div>{data.partner_code}</div>
+                <div>{data.partner_name}</div>
+                <div>{data.representative}</div>
+                <div>{data.ph_num}</div>
+                <div>{data.email}</div>
+              </div>
             ))}
-        </tbody>
-      </table>
+        </div>
+      </div>
     </div>
   );
 };

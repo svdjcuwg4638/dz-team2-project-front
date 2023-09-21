@@ -135,7 +135,7 @@ const SearchHelper = ({
           className="body m-3"
           style={{ height: "400px", overflowY: "scroll" }}
         >
-          <table>
+          <table style={{color:"#000"}}>
             <thead>
               <tr>
                 <th>{menu.name}코드</th>

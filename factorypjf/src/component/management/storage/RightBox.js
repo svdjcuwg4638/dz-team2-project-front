@@ -72,7 +72,7 @@ const RightBox = ({  locationAll,selectId }) => {
         />
       )}
       <form onSubmit={handleSubmit}>
-        <div className="bottom">
+        <div className="storage_bottom">
           <div className="input_wrap">
             <div style={{ marginRight: "10px" }}>
               <div style={{ marginRight: "10px" }}>세부장소코드</div>
@@ -85,7 +85,7 @@ const RightBox = ({  locationAll,selectId }) => {
               />
             </div>
             <div>
-              <div style={{ marginRight: "10px" }}>세부장소이름</div>
+              <div style={{ marginRight: "10px" }}>세부장소명</div>
               <input
                 className="inputBox"
                 type="text"
@@ -101,7 +101,7 @@ const RightBox = ({  locationAll,selectId }) => {
             </button>
             <button
               className="button"
-              style={{ backgroundColor: "red" }}
+              style={{ backgroundColor: selectIds.length > 0 ? "red" : "#dadada" }}
               onClick={handleDelete}
             >
               삭제

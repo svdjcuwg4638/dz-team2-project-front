@@ -1,9 +1,36 @@
-*{
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  text-decoration: none;
   list-style: none;
-  box-sizing: border-box;
+  text-decoration: none;
+  outline: none;
+  font-family: sans-serif; /* 예: 'Roboto', sans-serif */
+  line-height: 1.5; /* 좀 더 읽기 편한 기본 줄 간격을 설정합니다. */
+  -webkit-font-smoothing: antialiased; /* 폰트 스무딩을 통해 글자가 더 부드럽게 보이게 합니다. */
+  -moz-osx-font-smoothing: grayscale; /* Firefox에서 폰트 스무딩을 통해 글자가 더 부드럽게 보이게 합니다. */
+}
+
+img {
+  max-width: 100%; /* 이미지가 부모 요소를 넘어서 확장되지 않게 합니다. */
+  height: auto; /* 이미지의 가로 세로 비율을 유지합니다. */
+}
+
+a {
+  color: inherit; /* 링크의 기본 색상을 상속합니다. */
+  text-decoration: inherit; /* 링크의 텍스트 데코레이션을 상속합니다. */
+}
+
+button {
+  background: none; /* 버튼의 기본 배경을 제거합니다. */
+  border: none; /* 버튼의 기본 테두리를 제거합니다. */
+  cursor: pointer; /* 버튼에 마우스 포인터 스타일을 추가합니다. */
+}
+
+input,
+textarea {
+  border: none; /* 입력란과 텍스트 영역의 기본 테두리를 제거합니다. */
+  outline: none; /* 입력란과 텍스트 영역의 외곽선을 제거합니다. */
 }
 
 .wrap{
@@ -21,7 +48,7 @@
 }
 .section_wrap{
   width: 100%;
-  height: 87.4vh;
+  height: 97%;
   background-color: #dadada;
   display: flex;
   flex-flow: column;
@@ -32,13 +59,19 @@
 .section_style{
   border-radius: 10px;
   width: 95%;
+  height: 93%;
+  padding: 20px;
+}
+
+.section_style > div{
+  border-radius: 5px;
   height: 86%;
-  margin-top: 10px;
   background-color: #fff;
 }
 
 .section_top > div:nth-child(2){
-  margin-right: 20px;
+  margin-right: 52px;
+  margin-top: 20px;
   cursor: pointer;
 }
 
@@ -114,6 +147,7 @@ html {
 
 th{
   background-color: inherit;
+  border: 1px solid #4473BF;
 }
 td{
   background-color:inherit;
@@ -127,21 +161,19 @@ td{
   padding-left: 20px;
 }
 
-.tbody{
-  height: 300px;
-  overflow: scroll;
-  border: 1px solid #000;
-  margin: 0;
-  padding: 0;
-  border: none;
+.wrap > div:nth-child(2) > div:nth-child(2){
+  height: 100%;
 }
 
-.table {
-  display: flex;
-  flex-direction: column;
-  width: fit-content;
+.dep2_wrap{
+  height: 100%;
 }
 
-.row {
+.section_top {
+  width: 100%;
   display: flex;
+  justify-content: space-between;
+  height: 7%;
+  align-items: center;
 }
+

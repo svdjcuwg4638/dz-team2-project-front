@@ -1,7 +1,12 @@
 import { useRef } from "react";
 
-function StorageTable({ data, selectCodes, setSelectCodes,selectId,setSelectId }) {
-
+function StorageTable({
+  data,
+  selectCodes,
+  setSelectCodes,
+  selectId,
+  setSelectId,
+}) {
   // #region 스크롤 이벤트 함수
   const tableRef = useRef(null);
 
@@ -22,35 +27,57 @@ function StorageTable({ data, selectCodes, setSelectCodes,selectId,setSelectId }
       setSelectCodes((prev) => [...prev, cd]);
     }
   };
-  // #endregion 
+  // #endregion
 
   return (
     <>
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th>창고코드</th>
-            <th>창고이름</th>
-          </tr>
-        </thead>
-        <tbody className="storage_scrollable_table" onWheel={handleScroll}>
+      <div className="ctable">
+        <div className="chead">
+          <div className="ctr storage_row">
+            <div></div>
+            <div>창고코드</div>
+            <div>창고이름</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="ctable">
+        <div className="cbody" onWheel={handleScroll}>
           {data.length > 0 &&
             data?.map((data) => (
-              <tr onClick={()=>setSelectId(data)} style={{backgroundColor : data.storage_code == selectId?.storage_code ? "#dadada" : ""}}>
-                <td>
+              <div
+                className="ctr storage_row"
+                onClick={() => setSelectId(data)}
+                style={{
+                  backgroundColor:
+                    data.storage_code == selectId?.storage_code
+                      ? "#dadada"
+                      : "",
+                }}
+              >
+                <div
+                  onClick={(event) => {
+                    event.stopPropagation(); 
+                  }}
+                >
                   <input
                     type="checkbox"
                     checked={selectCodes.includes(data.storage_code)}
-                    onChange={() => handleCheckboxChange(data.storage_code)}
+                    onChange={(e) => {
+                      e.stopPropagation();
+                      handleCheckboxChange(data.storage_code);
+                    }}
+                    onClick={(event) => {
+                      event.stopPropagation(); 
+                    }}
                   />
-                </td>
-                <td>{data.storage_code}</td>
-                <td>{data.storage_name}</td>
-              </tr>
+                </div>
+                <div>{data.storage_code}</div>
+                <div>{data.storage_name}</div>
+              </div>
             ))}
-        </tbody>
-      </table>
+        </div>
+      </div>
     </>
   );
 }

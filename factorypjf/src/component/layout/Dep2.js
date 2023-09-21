@@ -6,7 +6,7 @@ import { BiSolidFactory } from "react-icons/bi";
 import { BsFillBookmarkFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
-const Dep2 = () => {
+const Dep2 = ({bookMarkList}) => {
   const currentMenu = useSelector((state) => state.currentMenu.currentMenu);
   const currentMenuName = useSelector(
     (state) => state.currentMenu.currentMenuName
@@ -42,6 +42,17 @@ const Dep2 = () => {
     ],
   };
 
+  function findMenuNameByUrl(url) {
+    for (let menuKey in subMenu) {
+      for (let menuItem of subMenu[menuKey]) {
+        if (menuItem.link.split('/')[1] === url.split('/')[2]) {
+          return menuItem.name;
+        }
+      }
+    }
+    return null; 
+  }
+
   return (
     <div className="dep2_wrap">
       <div className="menu1">
@@ -71,15 +82,14 @@ const Dep2 = () => {
           <div>즐겨찾기</div>
         </div>
         <div className="menu_sub_wrap">
-          <div>
-            <span>즐겨찾기-1</span>
-          </div>
-          <div>
-            <span>즐겨찾기-2</span>
-          </div>
-          <div>
-            <span>즐겨찾기-3</span>
-          </div>
+          {bookMarkList &&
+            bookMarkList.map((data, index) => (
+              <div key={index}>
+                <Link to={data.url}>
+                  <span>{findMenuNameByUrl(data.url)}</span>
+                </Link>
+              </div>
+            ))}
         </div>
       </div>
     </div>

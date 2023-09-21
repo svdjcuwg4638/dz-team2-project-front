@@ -6,6 +6,7 @@ import { ClipLoader } from "react-spinners";
 import "../../../style/management/item.css";
 import DetailItem from "./DetailItem";
 import api from "redux/api";
+import "../../../style/management/management.css";
 const Item = () => {
   const dispatch = useDispatch();
 
@@ -79,7 +80,7 @@ const Item = () => {
           </button>
         </div>
       </div>
-      <div className="detail_items_wrap">
+      <div>
         <DetailItem selectItem={selectItem} setSelectItem={setSelectItem}/>
       </div>
       <div className="itme_title">품목관리</div>

@@ -5,6 +5,7 @@ import { storageAction } from "../../../redux/actions/management/storageAction";
 import LeftBox from "./LeftBox";
 import ClipLoader from "react-spinners/ClipLoader";
 import RightBox from "./RightBox";
+import "../../../style/management/management.css"
 
 const Storage = () => {
   const dispatch = useDispatch();
@@ -45,7 +46,7 @@ const Storage = () => {
 
   return (
     <div className="storage_wrap">
-      <div>창고등록</div>
+      <div>창고관리</div>
       <div>
         <div>
           {storageAll && (

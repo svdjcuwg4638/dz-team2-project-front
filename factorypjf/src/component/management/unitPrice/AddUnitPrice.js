@@ -29,7 +29,7 @@ const AddUnitPrice = ({ itemAll }) => {
     event.preventDefault();
     const submitData = {
       ...formData,
-      unit_price:formData["unit_price"].replace(/,/g, "")
+      unit_price: formData["unit_price"].replace(/,/g, ""),
     };
     try {
       const response = await api.post("/unitPrice/add", submitData);
@@ -49,8 +49,6 @@ const AddUnitPrice = ({ itemAll }) => {
     dispatch(unitPriceAction.getUnitPriceAll());
   };
 
-
-
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
@@ -68,7 +66,9 @@ const AddUnitPrice = ({ itemAll }) => {
   const handlePriceInputChange = (e) => {
     const { name, value } = e.target;
     const numericValue = value.replace(/[^0-9]/g, "");
-    const formattedValue = numericValue ? parseInt(numericValue, 10).toLocaleString() : "";
+    const formattedValue = numericValue
+      ? parseInt(numericValue, 10).toLocaleString()
+      : "";
     setFormData({
       ...formData,
       [name]: formattedValue,
@@ -97,11 +97,11 @@ const AddUnitPrice = ({ itemAll }) => {
   };
 
   return (
-    <>
-      <div className="detail_unitprice_wrap">
-        <form onSubmit={submitHandler} className="item_detail_from">
+    <div className="detail_wrap">
+      <form onSubmit={submitHandler} className="detail_wrap_sub">
+        <div className="detail_content_wrap">
           <div>
-            <div>
+            <div style={{width:"100%"}}>
               <div>품목코드</div>
               <div>
                 <input
@@ -113,7 +113,7 @@ const AddUnitPrice = ({ itemAll }) => {
                 />
               </div>
             </div>
-            <div>
+            <div style={{width:"100%"}}>
               <div>품목이름</div>
               <div>
                 <input
@@ -125,8 +125,8 @@ const AddUnitPrice = ({ itemAll }) => {
                 />
               </div>
             </div>
-            <div className="addUnit_help_wrap">
-            <Modal menu={itemCode} handleInputChange={handleInputChange} />
+            <div className="addUnit_help_wrap" style={{width:"10%"}}>
+              <Modal menu={itemCode} handleInputChange={handleInputChange} />
             </div>
           </div>
 
@@ -143,10 +143,11 @@ const AddUnitPrice = ({ itemAll }) => {
                 />
               </div>
             </div>
-            <div  className="addUnit_help_wrap">
-            <Modal menu={partnerCode} handleInputChange={handleInputChange} />
+            <div className="addUnit_help_wrap">
+              <Modal menu={partnerCode} handleInputChange={handleInputChange} />
             </div>
           </div>
+
           <div>
             <div>
               <div>단가</div>
@@ -160,6 +161,7 @@ const AddUnitPrice = ({ itemAll }) => {
               </div>
             </div>
           </div>
+
           <div>
             <div>
               <div>입고출고</div>
@@ -171,6 +173,7 @@ const AddUnitPrice = ({ itemAll }) => {
               </div>
             </div>
           </div>
+
           <div>
             <div>
               <div>시작일</div>
@@ -184,15 +187,14 @@ const AddUnitPrice = ({ itemAll }) => {
               </div>
             </div>
           </div>
-
-          <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <button type="button" className="button" onClick={submitHandler}>
-              추가
-            </button>
-          </div>
-        </form>
-      </div>
-    </>
+        </div>
+        <div className="detail_button_wrap">
+          <button type="button" className="button" onClick={submitHandler} style={{marginRight:"60px"}}>
+            추가
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 

@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import api from "redux/api";
 
-function LocationTable({ data, setSelectIds, selectIds,selectId }) {
+function LocationTable({ data, setSelectIds, selectIds, selectId }) {
   const [SearchList, setSearchList] = useState(data);
 
-
-  useEffect(()=>{
-    setSearchList(data.filter((data)=>data.storage_code == selectId?.storage_code))
-  },[selectId,data])
+  useEffect(() => {
+    setSearchList(
+      data.filter((data) => data.storage_code == selectId?.storage_code)
+    );
+  }, [selectId, data]);
 
   // #region 스크롤 이벤트 함수
   const tableRef = useRef(null);
@@ -31,31 +32,34 @@ function LocationTable({ data, setSelectIds, selectIds,selectId }) {
 
   return (
     <>
-      <table className="table_scroll">
-        <thead>
-          <tr>
-            <th></th>
-            <th>세부장소코드</th>
-            <th>세부장소명</th>
-          </tr>
-        </thead>
-        <tbody className="storage_scrollable_table" onWheel={handleScroll}>
+      <div className="ctable">
+        <div className="chead">
+          <div className="ctr storage_row_sub">
+            <div></div>
+            <div>세부장소코드</div>
+            <div>세부장소명</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="ctable">
+        <div className="cbody" onWheel={handleScroll}>
           {SearchList &&
             SearchList.map((data) => (
-              <tr>
-                <td>
+              <div className="ctr storage_row_sub">
+                <div>
                   <input
                     type="checkbox"
-                    checked={selectIds.includes(data.location_id)}
-                    onChange={() => handleCheckboxChange(data.location_id)}
+                    checked={selectIds.includes(data.location_code)}
+                    onChange={() => handleCheckboxChange(data.location_code)}
                   />
-                </td>
-                <td>{data.location_code}</td>
-                <td>{data.location_name}</td>
-              </tr>
+                </div>
+                <div>{data.location_code}</div>
+                <div>{data.location_name}</div>
+              </div>
             ))}
-        </tbody>
-      </table>
+        </div>
+      </div>
     </>
   );
 }

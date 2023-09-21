@@ -152,244 +152,248 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
   //#endregion
 
   return (
-    <div className="detail_wrap">
+    <div className="detail_wrap" style={{width :"100%"}}>
       <form className="detail_wrap_sub" onSubmit={submitHandler}>
-        <div>
+        <div className="detail_content_wrap">
           <div>
-            <div>회사코드 </div>
-            <input
-              readOnly={readOnly}
-              style={{
-                width: "130px",
-                backgroundColor: readOnly ? "#dadada" : "",
-              }}
-              type="text"
-              name="partner_code"
-              value={formData.partner_code}
-              required
-              onChange={handleInputChange}
-            />
-          </div>
-          <div>
-            <div>사업자번호 </div>
-            <input
-              readOnly={readOnly}
-              style={{
-                width: "130px",
-                backgroundColor: readOnly ? "#dadada" : "",
-              }}
-              type="text"
-              name="bizNum"
-              value={formData.bizNum}
-              required
-              onChange={handleInputChange}
-            />
-          </div>
-          <div>
-            <div>거래처이름 </div>
-            <input
-              readOnly={readOnly}
-              style={{
-                width: "135px",
-                backgroundColor: readOnly ? "#dadada" : "",
-              }}
-              type="text"
-              name="partner_name"
-              required
-              value={formData.partner_name}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-
-        <div>
-          <div>
-            <div>대표자 </div>
-            <input
-              readOnly={readOnly}
-              style={{
-                width: "60px",
-                backgroundColor: readOnly ? "#dadada" : "",
-              }}
-              type="text"
-              name="representative"
-              required
-              value={formData.representative}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div>
-            <div>전화번호 </div>
-            <input
-              readOnly={readOnly}
-              style={{
-                width: "130px",
-                backgroundColor: readOnly ? "#dadada" : "",
-              }}
-              type="text"
-              name="ph_num"
-              required
-              value={formData.ph_num}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div>
-            <div>이메일 </div>
-            <input
-              style={{ backgroundColor: readOnly ? "#dadada" : "" }}
-              readOnly={readOnly}
-              type="text"
-              name="email"
-              required
-              onChange={handleInputChange}
-              value={formData.email}
-            />
-          </div>
-        </div>
-
-        <div>
-          <div>
-            <div>우편번호 </div>
-            <input
-              readOnly={readOnly}
-              onChange={handleInputChange}
-              style={{
-                width: "120px",
-                backgroundColor: readOnly ? "#dadada" : "",
-              }}
-              type="text"
-              name="post_num"
-              required
-              value={formData.post_num}
-            />
-          </div>
-          {!readOnly && (
-            <button
-              style={{ width: "130px" }}
-              onClick={handleComplete}
-              className="button"
-            >
-              우편번호 찾기
-            </button>
-          )}
-        </div>
-        {popup && (
-          <div className="postmodal">
             <div>
-              <div>
-                <button
-                  style={{ width: "30px", borderRadius: "5px" }}
-                  onClick={() => handleComplete()}
-                >
-                  X
-                </button>
-              </div>
-              <div>
-                <AddressApi company={formData} setcompany={setFormData} />
-              </div>
+              <div>회사코드 </div>
+              <input
+                readOnly={readOnly}
+                style={{
+                  backgroundColor: readOnly ? "#dadada" : "",
+                }}
+                type="text"
+                name="partner_code"
+                value={formData.partner_code}
+                required
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <div>사업자번호 </div>
+              <input
+                readOnly={readOnly}
+                style={{
+                  backgroundColor: readOnly ? "#dadada" : "",
+                }}
+                type="text"
+                name="bizNum"
+                value={formData.bizNum}
+                required
+                onChange={handleInputChange}
+              />
             </div>
           </div>
-        )}
 
-        <div>
           <div>
-            <div>주소</div>
-            <input
-              onChange={handleInputChange}
-              style={{ backgroundColor: readOnly ? "#dadada" : "" }}
-              readOnly={readOnly}
-              type="text"
-              required
-              name="address"
-              value={formData.address}
-            />
-          </div>
-        </div>
-
-        <div>
-          <div>
-            <div>상세주소</div>
-            <input
-              onChange={handleInputChange}
-              style={{ backgroundColor: readOnly ? "#dadada" : "" }}
-              readOnly={readOnly}
-              type="text"
-              required
-              name="address_detail"
-              value={formData.address_detail}
-            />
-          </div>
-        </div>
-
-        <div>
-          <div>
-            <div>은행이름 </div>
-            <input
-              onChange={handleInputChange}
-              readOnly={readOnly}
-              style={{
-                width: "100px",
-                backgroundColor: readOnly ? "#dadada" : "",
-              }}
-              type="text"
-              name="account_code"
-              required
-              value={formData.account_code}
-            />
-          </div>
-          <div>
-            <div>예금주 </div>
-            <input
-              onChange={handleInputChange}
-              readOnly={readOnly}
-              style={{
-                width: "59px",
-                backgroundColor: readOnly ? "#dadada" : "",
-              }}
-              type="text"
-              name="account_holder"
-              required
-              value={formData.account_holder}
-            />
-          </div>
-        </div>
-
-        <div>
-          <div>
-            <div>계좌번호 </div>
-            <input
-              onChange={handleInputChange}
-              style={{ backgroundColor: readOnly ? "#dadada" : "" }}
-              readOnly={readOnly}
-              type="text"
-              name="account_num"
-              required
-              value={formData.account_num}
-            />
-          </div>
-          <div>
-            <div>수금/지급 예정일 </div>
             <div>
-              매월
+              <div>거래처이름 </div>
+              <input
+                readOnly={readOnly}
+                style={{
+                  backgroundColor: readOnly ? "#dadada" : "",
+                }}
+                type="text"
+                name="partner_name"
+                required
+                value={formData.partner_name}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <div>대표자 </div>
+              <input
+                readOnly={readOnly}
+                style={{
+                  backgroundColor: readOnly ? "#dadada" : "",
+                }}
+                type="text"
+                name="representative"
+                required
+                value={formData.representative}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+
+          <div>
+            <div>
+              <div>전화번호 </div>
+              <input
+                readOnly={readOnly}
+                style={{
+                  backgroundColor: readOnly ? "#dadada" : "",
+                }}
+                type="text"
+                name="ph_num"
+                required
+                value={formData.ph_num}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <div>이메일 </div>
+              <input
+                style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                readOnly={readOnly}
+                type="text"
+                name="email"
+                required
+                onChange={handleInputChange}
+                value={formData.email}
+              />
+            </div>
+          </div>
+
+          <div>
+            <div>
+              <div>우편번호 </div>
+              <input
+                readOnly={readOnly}
+                onChange={handleInputChange}
+                style={{
+                  backgroundColor: readOnly ? "#dadada" : "",
+                }}
+                type="text"
+                name="post_num"
+                required
+                value={formData.post_num}
+              />
+            </div>
+            {!readOnly && (
+              <button
+                style={{ width: "150px" ,marginTop: "11px", backgroundColor:"#4473BF"}}
+                onClick={handleComplete}
+                className="button"
+              >
+                우편번호 찾기
+              </button>
+            )}
+          </div>
+          {popup && (
+            <div className="postmodal">
+              <div style={{width:"100%"}}>
+                <div>
+                  <button
+                    style={{ width: "30px", borderRadius: "5px" }}
+                    onClick={() => handleComplete()}
+                  >
+                    X
+                  </button>
+                </div>
+                <div>
+                  <AddressApi company={formData} setcompany={setFormData} />
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div>
+            <div>
+              <div>주소</div>
+              <input
+                onChange={handleInputChange}
+                style={{
+                  backgroundColor: readOnly ? "#dadada" : "",
+                  width: "200%",
+                }}
+                readOnly={readOnly}
+                type="text"
+                required
+                name="address"
+                value={formData.address}
+              />
+            </div>
+          </div>
+
+          <div>
+            <div>
+              <div>상세주소</div>
+              <input
+                onChange={handleInputChange}
+                style={{
+                  backgroundColor: readOnly ? "#dadada" : "",
+                  width: "200%",
+                }}
+                readOnly={readOnly}
+                type="text"
+                required
+                name="address_detail"
+                value={formData.address_detail}
+              />
+            </div>
+          </div>
+
+          <div>
+            <div>
+              <div>은행이름 </div>
               <input
                 onChange={handleInputChange}
                 readOnly={readOnly}
                 style={{
-                  width: "30px",
-                  textAlign: "center",
                   backgroundColor: readOnly ? "#dadada" : "",
                 }}
                 type="text"
-                name="collect_date"
+                name="account_code"
                 required
-                value={formData.collect_date}
+                value={formData.account_code}
               />
-              일
+            </div>
+            <div>
+              <div>예금주 </div>
+              <input
+                onChange={handleInputChange}
+                readOnly={readOnly}
+                style={{
+                  backgroundColor: readOnly ? "#dadada" : "",
+                }}
+                type="text"
+                name="account_holder"
+                required
+                value={formData.account_holder}
+              />
+            </div>
+          </div>
+
+          <div>
+            <div>
+              <div>계좌번호 </div>
+              <input
+                onChange={handleInputChange}
+                style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                readOnly={readOnly}
+                type="text"
+                name="account_num"
+                required
+                value={formData.account_num}
+              />
+            </div>
+            <div>
+              <div style={{ width: "160px" }}>수금/지급 예정일 </div>
+              <div>
+                매월
+                <input
+                  onChange={handleInputChange}
+                  readOnly={readOnly}
+                  style={{
+                    margin: "0 5px",
+                    width: "50px",
+                    textAlign: "center",
+                    backgroundColor: readOnly ? "#dadada" : "",
+                  }}
+                  type="text"
+                  name="collect_date"
+                  required
+                  value={formData.collect_date}
+                />
+                일
+              </div>
             </div>
           </div>
         </div>
-
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <div 
+        className="detail_button_wrap">
           <button
             type="button"
             className="button"
@@ -406,7 +410,7 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
             onClick={buttonHandler}
             disabled={!selectPartner}
             style={{
-              backgroundColor: selectPartner ? "" : "#dadada",
+              backgroundColor: selectPartner ? "#4473BF" : "#dadada",
               display: formMod == "add" ? "none" : "",
             }}
           >

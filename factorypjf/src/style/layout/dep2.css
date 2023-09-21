@@ -1,7 +1,6 @@
 .dep2_wrap {
   background-color: #5390f0;
-  width: 170px;
-  height: 87.4vh;
+  width: 192px;
   display: flex;
   flex-flow: column;
   justify-content: center;
@@ -52,12 +51,6 @@
 .menu_sub_wrap > div:hover > span {
   border-bottom: 3px solid #fff;
 }
-.section_top {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-}
-
 .tap_wrap {
   display: flex;
   margin-left: 20px;

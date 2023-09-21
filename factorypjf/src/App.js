@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import "style/App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import "style/Table.css";
@@ -14,8 +14,18 @@ import StorageItem from "./component/storage/item/List";
 import StorageInquiry from "./component/storage//item/Inquiry";
 import Registration from "./component/storage/registration/Registration";
 import ItemRelation from "component/management/itemRelation/ItemRelation";
+import { useEffect, useState } from "react";
 
 function App() {
+
+  const [currentPage, setCurrentPage] = useState('');
+  const location = useLocation();
+
+  useEffect(() => {
+    setCurrentPage(location.pathname);
+    sessionStorage.setItem('current_page', location.pathname);
+  }, [location]);
+
   return (
     <Layout>
       <Routes>

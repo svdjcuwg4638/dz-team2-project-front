@@ -5,6 +5,7 @@ import UnitPriceList from "./UnitPriceList";
 import AddUnitPrice from "./AddUnitPrice";
 import "../../../style/management/unitPrice.css";
 import { itemAction } from "redux/actions/management/itemAction";
+import "../../../style/management/management.css";
 
 const UnitPrice = () => {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ const UnitPrice = () => {
     <div className="unitprice_wrap">
       <UnitPriceList itemAll={itemAll}/>
       {itemAll.data && <AddUnitPrice itemAll={itemAll} />}
+      <div className="unitprice_title">단가관리</div>
     </div>
   );
 };

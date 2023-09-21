@@ -64,19 +64,27 @@ const ItemList = ({
         <form>
           <div>
             <div style={{ marginRight: "20px" }}>
-              품목코드 :
-              <input
-                type="text"
-                name="item_code"
-                onChange={handleSearchChange}
-                style={{ marginRight: "20px" }}
-              />
-              품목이름 :
-              <input
-                type="text"
-                name="item_name"
-                onChange={handleSearchChange}
-              />
+              <div>
+                <div>품목코드</div>
+                <div>
+                  <input
+                    type="text"
+                    name="item_code"
+                    onChange={handleSearchChange}
+                    style={{ marginRight: "20px" }}
+                  />
+                </div>
+              </div>
+              <div>
+                <div>품목이름</div>
+                <div>
+                  <input
+                    type="text"
+                    name="item_name"
+                    onChange={handleSearchChange}
+                  />
+                </div>
+              </div>
             </div>
           </div>
           <div>
@@ -90,28 +98,33 @@ const ItemList = ({
           </div>
         </form>
       </div>
-      <div className="itemList_wrap">
-        <div className="table">
-          <thead className="top_table_header">
-            <tr>
-              <th></th>
-              <th>품목코드</th>
-              <th>품목이름</th>
-              <th>규격</th>
-              <th>단위</th>
-            </tr>
-          </thead>
-          <div className="tbody" style={{ height: "430px" }}>
+
+      <div>
+        <div className="ctable">
+          <div className="chead">
+            <div className="ctr item_row">
+              <div></div>
+              <div>품목코드</div>
+              <div>품목이름</div>
+              <div>규격</div>
+              <div>단위</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="ctable">
+          <div className="cbody">
             {itemList.length > 0 &&
               itemList.map((data) => (
-                <tr
+                <div
+                  className="ctr item_row"
                   onClick={() => setSelectItem(data)}
                   style={{
                     backgroundColor:
                       selectItem?.item_code == data?.item_code ? "#dadada" : "",
                   }}
                 >
-                  <td onClick={(e) => e.stopPropagation()}>
+                  <div onClick={(e) => e.stopPropagation()}>
                     <input
                       type="checkbox"
                       checked={selectIds.includes(data.item_code)}
@@ -120,19 +133,19 @@ const ItemList = ({
                         handleCheckboxChange(data.item_code);
                       }}
                     />
-                  </td>
-                  <td>{data.item_code}</td>
-                  <td>{data.item_name}</td>
-                  <td>
+                  </div>
+                  <div>{data.item_code}</div>
+                  <div>{data.item_name}</div>
+                  <div>
                     {codeAll &&
                       codeAll?.data?.find(
                         (cdata) =>
                           cdata.management_code == "STANDARD" &&
                           cdata.common_code == data.standard
                       )?.common_name}
-                  </td>
-                  <td>{data.unit}</td>
-                </tr>
+                  </div>
+                  <div>{data.unit}</div>
+                </div>
               ))}
           </div>
         </div>

@@ -157,6 +157,8 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
     try {
       if (formMod == "modify") {
         const response = await api.post("/item/modify", submitData);
+        alert('수정완료')
+        window.location.reload()
       }
       if (formMod == "add") {
         const response = await api.post("/item/add", submitData);
@@ -268,300 +270,303 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
   // #endregion
 
   return (
-    <>
-      <form onSubmit={submitHandler} className="item_detail_from">
-        <div>
+    <div className="detail_wrap" style={{ width: "100%" }}>
+      <form onSubmit={submitHandler} className="detail_wrap_sub">
+        <div className="detail_content_wrap">
           <div>
-            <div>품목코드</div>
             <div>
-              <input
-                readOnly={formMod == "add" ? false : true}
-                style={{ backgroundColor: formMod == "add" ? "" : "#dadada" }}
-                value={formData["item_code"]}
-                type="text"
-                name="item_code"
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
-          <div>
-            <div>품목이름</div>
-            <div>
-              <input
-                style={{ backgroundColor: readOnly ? "#dadada" : "" }}
-                readOnly={readOnly}
-                value={formData["item_name"]}
-                type="text"
-                name="item_name"
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div>
-            <div>카태고리</div>
-            <div className="flex">
-              <input
-                readOnly
-                style={{ backgroundColor: readOnly ? "#dadada" : "" }}
-                value={formData["category_name"]}
-                type="text"
-                name="category_name"
-                onChange={handleInputChange}
-              />
-              {!readOnly && (
-                <Modal
-                  code_type={"category"}
-                  menu={categoryCode}
-                  handleInputChange={handleInputChange}
+              <div>품목코드</div>
+              <div>
+                <input
+                  readOnly={formMod == "add" ? false : true}
+                  style={{ backgroundColor: formMod == "add" ? "" : "#dadada" }}
+                  value={formData["item_code"]}
+                  type="text"
+                  name="item_code"
+                  onChange={handleInputChange}
                 />
-              )}
+              </div>
             </div>
-          </div>
-          <div>
-            <div>규격</div>
-            <div className="flex">
-              <input
-                readOnly
-                style={{ backgroundColor: readOnly ? "#dadada" : "" }}
-                value={formData["standard_name"]}
-                type="text"
-                name="standard_name"
-                onChange={handleInputChange}
-              />
-              {!readOnly && (
-                <Modal
-                  code_type={"standard"}
-                  menu={standardCode}
-                  handleInputChange={handleInputChange}
-                />
-              )}
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div>
-            <div>창고</div>
             <div>
-              <input
-                readOnly
-                style={{ backgroundColor: readOnly ? "#dadada" : "" }}
-                value={formData["storage_code"]}
-                type="text"
-                name="storage_code"
-                onChange={handleInputChange}
-              />
+              <div>품목이름</div>
+              <div>
+                <input
+                  style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                  readOnly={readOnly}
+                  value={formData["item_name"]}
+                  type="text"
+                  name="item_name"
+                  onChange={handleInputChange}
+                />
+              </div>
             </div>
           </div>
+
           <div>
-            <div>세부장소</div>
-            <div className="flex">
+            <div>
+              <div>카태고리</div>
+              <div className="flex">
+                <input
+                  readOnly
+                  style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                  value={formData["category_name"]}
+                  type="text"
+                  name="category_name"
+                  onChange={handleInputChange}
+                />
+                {!readOnly && (
+                  <Modal
+                    code_type={"category"}
+                    menu={categoryCode}
+                    handleInputChange={handleInputChange}
+                  />
+                )}
+              </div>
+            </div>
+            <div>
+              <div>규격</div>
+              <div className="flex">
+                <input
+                  readOnly
+                  style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                  value={formData["standard_name"]}
+                  type="text"
+                  name="standard_name"
+                  onChange={handleInputChange}
+                />
+                {!readOnly && (
+                  <Modal
+                    code_type={"standard"}
+                    menu={standardCode}
+                    handleInputChange={handleInputChange}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div>
+              <div>창고</div>
               <div>
                 <input
                   readOnly
                   style={{ backgroundColor: readOnly ? "#dadada" : "" }}
-                  value={formData["location_code"]}
+                  value={formData["storage_code"]}
                   type="text"
-                  name="location_code"
+                  name="storage_code"
                   onChange={handleInputChange}
                 />
               </div>
-              {!readOnly && (
-                <button
-                  className="btn"
-                  type="button"
-                  style={{
-                    padding: "0px",
-                    width: "30px",
-                    height: "30px",
-                    textAlign: "center",
-                    marginRight: "10px",
-                    marginLeft: "5px",
-                  }}
-                  onClick={() => setShowFlag(true)}
-                >
-                  ?
-                </button>
-              )}
             </div>
-          </div>
-          {showFlag && (
-            <StorageHelp
-              handleInputChange={handleInputChange}
-              setShowFlag={setShowFlag}
-            />
-          )}
-        </div>
-
-        <div>
-          <div>
-            <div>폭</div>
-            <div className="flex">
-              <input
-                type="text"
-                name="width"
-                readOnly={readOnly}
-                style={{ backgroundColor: readOnly ? "#dadada" : "" }}
-                value={formData["width"]}
-                onChange={handleInputChange}
-              />
-              {!readOnly && (
-                <div className="flex">
-                  <div style={{ width: "25px" }}>{unitData["width"]}</div>
-                  <Modal
-                    menu={unitCode}
-                    code_type={"width"}
-                    handleInputChange={handleInputChangeForUnit}
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-          <div>
-            <div>길이</div>
-            <div className="flex">
-              <input
-                type="text"
-                name="length"
-                readOnly={readOnly}
-                style={{ backgroundColor: readOnly ? "#dadada" : "" }}
-                value={formData["length"]}
-                onChange={handleInputChange}
-              />
-              {!readOnly && (
-                <div className="flex">
-                  <div style={{ width: "25px" }}>{unitData["length"]}</div>
-                  <Modal
-                    menu={unitCode}
-                    code_type={"length"}
-                    handleInputChange={handleInputChangeForUnit}
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div>
-            <div>높이</div>
-            <div className="flex">
-              <input
-                type="text"
-                name="height"
-                readOnly={readOnly}
-                style={{ backgroundColor: readOnly ? "#dadada" : "" }}
-                value={formData["height"]}
-                onChange={handleInputChange}
-              />
-              {!readOnly && (
-                <div className="flex">
-                  <div style={{ width: "25px" }}>{unitData["height"]}</div>
-                  <Modal
-                    menu={unitCode}
-                    code_type={"height"}
-                    handleInputChange={handleInputChangeForUnit}
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-          <div>
-            <div>부피</div>
-            <div className="flex">
-              <input
-                type="text"
-                name="volume"
-                readOnly={readOnly}
-                style={{ backgroundColor: readOnly ? "#dadada" : "" }}
-                value={formData["volume"]}
-                onChange={handleInputChange}
-              />
-              {!readOnly && (
-                <div className="flex">
-                  <div style={{ width: "25px" }}>{unitData["volume"]}</div>
-                  <Modal
-                    menu={unitCode}
-                    code_type={"volume"}
-                    handleInputChange={handleInputChangeForUnit}
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div>
-            <div>중량</div>
-            <div className="flex">
-              <input
-                type="text"
-                name="weight"
-                readOnly={readOnly}
-                style={{ backgroundColor: readOnly ? "#dadada" : "" }}
-                value={formData["weight"]}
-                onChange={handleInputChange}
-              />
-              {!readOnly && (
-                <div className="flex">
-                  <div style={{ width: "25px" }}>{unitData["weight"]}</div>
-                  <Modal
-                    menu={unitCode}
-                    code_type={"weight"}
-                    handleInputChange={handleInputChangeForUnit}
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-          <div>
-            <div>단위</div>
-            <div className="flex">
-              <input
-                type="text"
-                name="unit"
-                readOnly
-                style={{ backgroundColor: readOnly ? "#dadada" : "" }}
-                value={formData["unit"]}
-                onChange={handleInputChange}
-              />
-              {!readOnly && (
-                <div className="flex">
-                  <Modal
-                    menu={numberUnitCode}
-                    code_type={"unit"}
-                    handleInputChange={handleInputChange}
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div style={{ width: "100%" }}>
-            <div>비고</div>
             <div>
-              <textarea
-                readOnly={readOnly}
-                name="description"
-                value={formData["description"]}
-                style={{
-                  width: "100%",
-                  height: "150px",
-                  backgroundColor: readOnly ? "#dadada" : "",
-                }}
-                onChange={handleInputChange}
-              ></textarea>
+              <div>세부장소</div>
+              <div className="flex">
+                <div>
+                  <input
+                    readOnly
+                    style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                    value={formData["location_code"]}
+                    type="text"
+                    name="location_code"
+                    onChange={handleInputChange}
+                  />
+                </div>
+                {!readOnly && (
+                  <button
+                    className="btn"
+                    type="button"
+                    style={{
+                      padding: "0px",
+                      width: "30px",
+                      height: "30px",
+                      textAlign: "center",
+                      marginRight: "10px",
+                      marginLeft: "5px",
+                    }}
+                    onClick={() => setShowFlag(true)}
+                  >
+                    ?
+                  </button>
+                )}
+              </div>
+            </div>
+            {showFlag && (
+              <StorageHelp
+                handleInputChange={handleInputChange}
+                setShowFlag={setShowFlag}
+              />
+            )}
+          </div>
+
+          <div>
+            <div>
+              <div>폭</div>
+              <div className="flex">
+                <input
+                  type="text"
+                  name="width"
+                  readOnly={readOnly}
+                  style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                  value={formData["width"]}
+                  onChange={handleInputChange}
+                />
+                {!readOnly && (
+                  <div className="flex">
+                    <div style={{ width: "25px" }}>{unitData["width"]}</div>
+                    <Modal
+                      menu={unitCode}
+                      code_type={"width"}
+                      handleInputChange={handleInputChangeForUnit}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+            <div>
+              <div>길이</div>
+              <div className="flex">
+                <input
+                  type="text"
+                  name="length"
+                  readOnly={readOnly}
+                  style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                  value={formData["length"]}
+                  onChange={handleInputChange}
+                />
+                {!readOnly && (
+                  <div className="flex">
+                    <div style={{ width: "25px" }}>{unitData["length"]}</div>
+                    <Modal
+                      menu={unitCode}
+                      code_type={"length"}
+                      handleInputChange={handleInputChangeForUnit}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div>
+              <div>높이</div>
+              <div className="flex">
+                <input
+                  type="text"
+                  name="height"
+                  readOnly={readOnly}
+                  style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                  value={formData["height"]}
+                  onChange={handleInputChange}
+                />
+                {!readOnly && (
+                  <div className="flex">
+                    <div style={{ width: "25px" }}>{unitData["height"]}</div>
+                    <Modal
+                      menu={unitCode}
+                      code_type={"height"}
+                      handleInputChange={handleInputChangeForUnit}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+            <div>
+              <div>부피</div>
+              <div className="flex">
+                <input
+                  type="text"
+                  name="volume"
+                  readOnly={readOnly}
+                  style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                  value={formData["volume"]}
+                  onChange={handleInputChange}
+                />
+                {!readOnly && (
+                  <div className="flex">
+                    <div style={{ width: "25px" }}>{unitData["volume"]}</div>
+                    <Modal
+                      menu={unitCode}
+                      code_type={"volume"}
+                      handleInputChange={handleInputChangeForUnit}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div>
+              <div>중량</div>
+              <div className="flex">
+                <input
+                  type="text"
+                  name="weight"
+                  readOnly={readOnly}
+                  style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                  value={formData["weight"]}
+                  onChange={handleInputChange}
+                />
+                {!readOnly && (
+                  <div className="flex">
+                    <div style={{ width: "25px" }}>{unitData["weight"]}</div>
+                    <Modal
+                      menu={unitCode}
+                      code_type={"weight"}
+                      handleInputChange={handleInputChangeForUnit}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+            <div>
+              <div>단위</div>
+              <div className="flex">
+                <input
+                  type="text"
+                  name="unit"
+                  readOnly
+                  style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                  value={formData["unit"]}
+                  onChange={handleInputChange}
+                />
+                {!readOnly && (
+                  <div className="flex">
+                    <Modal
+                      menu={numberUnitCode}
+                      code_type={"unit"}
+                      handleInputChange={handleInputChange}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div style={{ width: "100%" }}>
+              <div>비고</div>
+              <div>
+                <textarea
+                  readOnly={readOnly}
+                  name="description"
+                  value={formData["description"]}
+                  style={{
+                    width: "100%",
+                    height: "9vh",
+                    backgroundColor: readOnly ? "#dadada" : "",
+                    border: "1px solid #000",
+                    borderRadius: "5px",
+                  }}
+                  onChange={handleInputChange}
+                ></textarea>
+              </div>
             </div>
           </div>
         </div>
-
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <div className="item_detail_button_wrap" style={{ display: "flex", justifyContent: "flex-end" , width:"100%", marginRight:"80px"}}>
           <button
             type="button"
             className="button"
@@ -594,7 +599,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
           </button>
         </div>
       </form>
-    </>
+    </div>
   );
 };
 

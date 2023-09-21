@@ -112,6 +112,10 @@
   opacity:0.5
 }
 
+.storage_wrap input{
+  border-radius: 5px;
+}
+
 .storage_help_modal {
   background-color: #fff;
   width: 700px;
@@ -119,6 +123,7 @@
   position: fixed;
   left: 50%;
   top: 50%;
+  color: #000;
   transform: translate(-50%, -50%);
   z-index: 3;
 }
@@ -130,4 +135,31 @@
 
 .storage_scrollable_table tr{
   cursor: pointer;
+}
+
+.storage_row >div:nth-child(1){ width: 10%;}
+.storage_row >div:nth-child(2){ width: 45%;}
+.storage_row >div:nth-child(3){ width: 45%;}
+
+
+.storage_row_sub >div:nth-child(1){ width: 10%;}
+.storage_row_sub >div:nth-child(2){ width: 45%;}
+.storage_row_sub >div:nth-child(3){ width: 45%;}
+
+.storage_bottom > div > div > div:nth-child(1){
+  font-weight: bold;
+}
+
+.storage_wrap .storage_row_sub > div {
+  cursor: auto !important;
+}
+
+.storage_wrap .storage_row_sub input,
+.storage_wrap .storage_row input{
+  cursor: pointer;
+  
+}
+
+.storage_row > div:nth-child(1){
+  cursor: auto !important;
 }
