@@ -7,6 +7,7 @@ import addStyle from "style/layout/dataTable/addTableData.module.css";
 
 //도움창 단축키 코드
 const HELPER_KEY = 113;
+const CLEAN_KEY=115;
 
 //headers: 테이블 header, onGridTrigger: 부모 요소로 이벤트 발송할 수 있는 handler, 
 export default function AddTableData({ isBtn, headers,items, onGridTrigger,selectRowHandler,emitItem, deleteItem }) {
@@ -39,7 +40,7 @@ export default function AddTableData({ isBtn, headers,items, onGridTrigger,selec
       for(let deleteIdx of deleteItem){
         copyItem.splice(deleteIdx,1)
       }
-      setTableItems(copyItem)
+      setTableItems([...copyItem])
       emitItem(tableItems)
     }
   },[deleteItem])
@@ -88,17 +89,17 @@ export default function AddTableData({ isBtn, headers,items, onGridTrigger,selec
   const [modalState, dispatch] = useReducer(modalReducer, modalInit);
 
   const [currentCol, setCurrentCol] = useState();
-  //도움창 단축키 handler
+
   const keyUpHandler = (e, colInfo, coordinate) => {
-    if (e.which === HELPER_KEY && colInfo.helper) {
-      
+    //도움창 단축키 handler
+    if (e.which === HELPER_KEY && colInfo.helper) {    
       //도움창을 연 컬럼 좌표 저장
       setCurrentCol({ ...coordinate });
       //모달 켜기
       onModalHanlder(colInfo.value, colInfo.text);
     } else if (e.which === HELPER_KEY && !colInfo.helper) {
       console.log("도움창이 제공되지 않는 코드입니다.");
-    }
+    } 
   };
 
   //코드 선택 handler
@@ -152,7 +153,7 @@ export default function AddTableData({ isBtn, headers,items, onGridTrigger,selec
     }
     setFocusRow(row)
 
-    selectRowHandler(idx);
+    selectRowHandler(idx,e);
     
   }
 
@@ -169,22 +170,21 @@ export default function AddTableData({ isBtn, headers,items, onGridTrigger,selec
       {tableItems.map((item, idx) => (
         // 행 추가를 위해 rowCount만큼 tr 생성
         <tr
+        key={idx}
           onClick={(e)=>{selectRow(e,idx)}}
-          key={idx}
-
           // className={focusRow === idx ? tableStyle["focused-row"] : ""}
         >
           {headers.map((header, headerIdx) =>
             // selectBox 컬럼
             header.value === "select" ? (
-              <td key={headerIdx}>
+              <td key={`${headerIdx}+${item[header.value]}`}>
                 <input id={`grid01_${idx}_${header.value}`} type="checkbox"></input>
               </td>
             ) : // 순번 컬럼
             header.value === "index" ? (
-              <td key={headerIdx}><div>{idx + 1}</div></td>
+              <td key={`${headerIdx}+${item[header.value]}`}><div>{idx + 1}</div></td>
             ) : (
-              <td key={headerIdx}>
+              <td key={`${headerIdx}+${item[header.value]}`}>
                 {header.helper || header.readonly ? (
                   <input
                     //grid번호_행번호_컬럼명
