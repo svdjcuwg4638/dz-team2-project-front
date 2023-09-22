@@ -177,3 +177,40 @@ td{
   align-items: center;
 }
 
+/* 메인 css */
+.main_wrap{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+
+.main_box_wrap{
+  border: 5px solid #5390F0;
+  border-radius: 10px;
+  width: 50%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: scroll;
+}
+
+.main_box_wrap > div{
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  width: 200px;
+  height: 200px;
+  justify-content: space-evenly;
+  flex-flow: column;
+}
+
+.main_box_wrap > div:hover{
+  border: 3px solid #4473BF;
+  border-radius: 5px;
+  cursor: pointer;
+}
+

@@ -1,5 +1,5 @@
 import Modal from "component/storage/item/Modal";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { itemAction } from "redux/actions/management/itemAction";
 import api from "redux/api";
@@ -44,33 +44,13 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
     return str?.replace(/\D/g, "");
   };
 
+  // #readOnly 값변경 modify라면 단위제거
   const toggleReadOnly = () => {
     setReadOnly(!readOnly);
-
-    if (formMod == "modify") {
-      if (readOnly) {
-        setFormData((prevState) => ({
-          ...prevState,
-          width: removeNonNumeric(prevState.width),
-          length: removeNonNumeric(prevState.length),
-          height: removeNonNumeric(prevState.height),
-          volume: removeNonNumeric(prevState.volume),
-          weight: removeNonNumeric(prevState.weight),
-        }));
-      } else {
-        setFormData((prevState) => ({
-          ...prevState,
-          width: selectItem?.width,
-          length: selectItem?.length,
-          height: selectItem?.height,
-          volume: selectItem?.volume,
-          weight: selectItem?.weight,
-        }));
-      }
-    }
   };
   // #endregion
 
+  // 카테고리,규격 이름 넣어주기
   useEffect(() => {
     setFormData((prevState) => ({
       ...prevState,
@@ -85,37 +65,41 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
 
   // #region 선택된 아이탬 변경시 값을 바꿔줌
   useEffect(() => {
-    if (selectItem != null) {
-      setReadOnly(true);
-      setFormMod("");
-      setFormData(null);
-      setFormData({
-        company_id: "1",
-        item_code: selectItem?.item_code,
-        item_name: selectItem?.item_name,
-        location_code: locationAll?.data?.find(
-          (data) => data?.location_code == selectItem?.location_code
-        )?.location_name,
-        storage_code: storageAll?.data?.find(
-          (data) => data?.storage_code == selectItem?.storage_code
-        )?.storage_name,
-        width: selectItem?.width == null ? "" : selectItem?.width,
-        length: selectItem?.length == null ? "" : selectItem?.length,
-        height: selectItem?.height == null ? "" : selectItem?.height,
-        volume: selectItem?.volume == null ? "" : selectItem?.volume,
-        weight: selectItem?.weight == null ? "" : selectItem?.weight,
-        description:
-          selectItem?.description == null ? "" : selectItem?.description,
-        category: selectItem?.category == null ? "" : selectItem?.category,
-        standard: selectItem?.standard == null ? "" : selectItem?.standard,
-        unit: selectItem?.unit == null ? "" : selectItem.unit,
-        category_name: "",
-        standard_name: "",
-      });
-    }
+    setFormData(null);
+    setFormData({
+      company_id: "1",
+      item_code: selectItem?.item_code,
+      item_name: selectItem?.item_name,
+      location_code: locationAll?.data?.find(
+        (data) => data?.location_code == selectItem?.location_code
+      )?.location_name,
+      storage_code: storageAll?.data?.find(
+        (data) => data?.storage_code == selectItem?.storage_code
+      )?.storage_name,
+      width: selectItem?.width == null ? "" : selectItem?.width,
+      length: selectItem?.length == null ? "" : selectItem?.length,
+      height: selectItem?.height == null ? "" : selectItem?.height,
+      volume: selectItem?.volume == null ? "" : selectItem?.volume,
+      weight: selectItem?.weight == null ? "" : selectItem?.weight,
+      description:
+        selectItem?.description == null ? "" : selectItem?.description,
+      category: selectItem?.category == null ? "" : selectItem?.category,
+      standard: selectItem?.standard == null ? "" : selectItem?.standard,
+      unit: selectItem?.unit == null ? "" : selectItem.unit,
+      category_name: "",
+      standard_name: "",
+    });
+    setReadOnly(true);
+    setFormMod("");
   }, [selectItem]);
   // #endregion
 
+
+  useEffect(()=>{
+    setErrorField(null)
+  },[formData.location_code])
+
+  //#region 입력헨들러
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
@@ -124,10 +108,39 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
     const { name, value } = event.target;
     setUnitData((prevState) => ({ ...prevState, [name]: value }));
   };
+  //#endregion
 
-  //
+  // submit
+
+  const [errorField, setErrorField] = useState(null);
+  
+  const inputRefs = {
+    item_code: useRef(),
+    item_name: useRef(),
+    storage_code: useRef(),
+    location_code: useRef(),
+  };
+
   const submitHandler = async (event) => {
     event.preventDefault();
+
+    const fieldsToCheck = ['item_code', 'item_name', 'storage_code', 'location_code'];
+
+    const fieldNames = {
+      item_code: '품목 코드',
+      item_name: '품목 이름',
+      storage_code: '창고',
+      location_code: '세부장소',
+    };
+
+    for (const field of fieldsToCheck) {
+      if (!formData[field] || formData[field].trim() === '') {
+        setErrorField(field); 
+        alert(fieldNames[field] +'값을 입력해주세요')
+        inputRefs[field].current.focus(); 
+        return; 
+      }
+    }
 
     var locationData = locationAll?.data?.find(
       (data) =>
@@ -154,14 +167,22 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
       unit: formData["unit"],
     };
 
+
     try {
       if (formMod == "modify") {
         const response = await api.post("/item/modify", submitData);
-        alert('수정완료')
-        window.location.reload()
+        alert(submitData.item_name+" 수정 되었습니다.");
+        window.location.reload();
       }
       if (formMod == "add") {
         const response = await api.post("/item/add", submitData);
+        if (response.data.code == 0) {
+          alert(response.data.message);
+          setErrorField('item_code')
+        } else {
+          alert(response.data.data.item_name + " 추가되었습니다.");
+          window.location.reload();
+        }
       }
     } catch (error) {
       console.error("Error submitting data:", error);
@@ -169,11 +190,12 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
     dispatch(itemAction.getItemAll());
   };
 
+  // #region 추가 수정 취소 버튼핸들러
   const [readOnly, setReadOnly] = useState(true);
-  function buttonHandler(e) {
-    toggleReadOnly();
-    const { name } = e.target;
 
+  function buttonHandler(e) {
+    setErrorField(null)
+    const { name } = e.target;
     if (name === "add") {
       setFormData({
         company_id: "1",
@@ -199,19 +221,38 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
       } else {
         setFormMod("add");
       }
-
-      setSelectItem(null);
-    } else if (name === "modify") {
+    }
+    if (name === "modify") {
       if (formMod === "modify") {
         setFormData("");
       }
       if (!readOnly) {
         setFormMod("");
+        setFormData((prevState) => ({
+          ...prevState,
+          width: selectItem.width,
+          length: selectItem.length,
+          height: selectItem.height,
+          volume: selectItem.volume,
+          weight: selectItem.weight,
+        }));
       } else {
         setFormMod("modify");
+        setFormData((prevState) => ({
+          ...prevState,
+          width: removeNonNumeric(prevState.width),
+          length: removeNonNumeric(prevState.length),
+          height: removeNonNumeric(prevState.height),
+          volume: removeNonNumeric(prevState.volume),
+          weight: removeNonNumeric(prevState.weight),
+        }));
       }
     }
+
+    toggleReadOnly();
   }
+  //#endregion
+
 
   //#region 도움창 props
   const [showFlag, setShowFlag] = useState(false);
@@ -275,28 +316,43 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
         <div className="detail_content_wrap">
           <div>
             <div>
-              <div>품목코드</div>
+              <div>품목코드{!readOnly && "*"}</div>
               <div>
                 <input
+                  ref={inputRefs.item_code}
                   readOnly={formMod == "add" ? false : true}
-                  style={{ backgroundColor: formMod == "add" ? "" : "#dadada" }}
+                  style={{
+                    backgroundColor: formMod == "add" ? "" : "#dadada",
+                    border: !readOnly && errorField === "item_code" ? "3px solid red" : "",
+                  }}
+
                   value={formData["item_code"]}
                   type="text"
                   name="item_code"
-                  onChange={handleInputChange}
+                  onChange={(e) =>{
+                    handleInputChange(e)
+                    setErrorField(null)
+                  }}
                 />
               </div>
             </div>
             <div>
-              <div>품목이름</div>
+              <div>품목이름{!readOnly && "*"}</div>
               <div>
                 <input
-                  style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                  ref={inputRefs.item_name}
+                  style={{
+                    backgroundColor: readOnly ? "#dadada" : "",
+                    border: !readOnly && errorField === "item_name" ? "3px solid red" : "",
+                  }}
                   readOnly={readOnly}
                   value={formData["item_name"]}
                   type="text"
                   name="item_name"
-                  onChange={handleInputChange}
+                  onChange={(e) =>{
+                    handleInputChange(e)
+                    setErrorField(null)
+                  }}
                 />
               </div>
             </div>
@@ -347,11 +403,15 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
 
           <div>
             <div>
-              <div>창고</div>
+              <div>창고{!readOnly && "*"}</div>
               <div>
                 <input
+                  ref={inputRefs.storage_code}
                   readOnly
-                  style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                  style={{
+                    backgroundColor: readOnly ? "#dadada" : "",
+                    border: !readOnly && errorField === "storage_code" ? "3px solid red" : "",
+                  }}
                   value={formData["storage_code"]}
                   type="text"
                   name="storage_code"
@@ -360,12 +420,16 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
               </div>
             </div>
             <div>
-              <div>세부장소</div>
+              <div>세부장소{!readOnly && "*"}</div>
               <div className="flex">
                 <div>
                   <input
+                    ref={inputRefs.location_code}
                     readOnly
-                    style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                    style={{
+                      backgroundColor: readOnly ? "#dadada" : "",
+                      border: !readOnly && errorField === "storage_code" ? "3px solid red" : "",
+                    }}
                     value={formData["location_code"]}
                     type="text"
                     name="location_code"
@@ -557,7 +621,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
                     width: "100%",
                     height: "9vh",
                     backgroundColor: readOnly ? "#dadada" : "",
-                    border: "1px solid #000",
+                    border: "initial",
                     borderRadius: "5px",
                   }}
                   onChange={handleInputChange}
@@ -566,7 +630,15 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
             </div>
           </div>
         </div>
-        <div className="item_detail_button_wrap" style={{ display: "flex", justifyContent: "flex-end" , width:"100%", marginRight:"80px"}}>
+        <div
+          className="item_detail_button_wrap"
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            width: "100%",
+            marginRight: "80px",
+          }}
+        >
           <button
             type="button"
             className="button"

@@ -1,6 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit"
 
-
 const initialSubState= JSON.parse(sessionStorage.getItem('menuState')) ||{
     currentMenu:'production',
     currentMenuName:'생산관리',

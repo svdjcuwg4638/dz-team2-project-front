@@ -3,9 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 
 import "../../style/layout/dep2.css";
 import { BiSolidFactory } from "react-icons/bi";
-import { BsFillBookmarkFill } from "react-icons/bs";
+import { BsFillBookmarkFill, BsInfoCircle } from "react-icons/bs";
 import { Link, useLocation } from "react-router-dom";
 import { menuActions } from "redux/reducers/menu";
+import { LuFactory } from "react-icons/lu";
+import { FiMinusSquare, FiPlusSquare } from "react-icons/fi";
+import { MdOutlineInventory2 } from "react-icons/md";
 
 const Dep2 = ({ bookMarkList }) => {
   const currentMenu = useSelector((state) => state.currentMenu.currentMenu);
@@ -65,22 +68,7 @@ const Dep2 = ({ bookMarkList }) => {
   }
 
   function findMenuByUrl(url) {
-    if (url.split('/')[1] === "production") {
-      return { menu: "production", menuName: "기준정보관리" };
-    }
-    if (url.split('/')[1] === "storage") {
-      return { menu: "storage", menuName: "기준정보관리" };
-    }
-    if (url.split('/')[1] === "inbound") {
-      return { menu: "inbound", menuName: "기준정보관리" };
-    }
-    if (url.split('/')[1] === "outbound") {
-      return { menu: "outbound", menuName: "기준정보관리" };
-    }
-    if (url.split('/')[1] === "management") {
-      return { menu: "management", menuName: "기준정보관리" };
-    }
-    return null;
+      return { menu: url.split('/')[1], menuName: "기준정보관리" };
   }
 
   return (
@@ -89,7 +77,11 @@ const Dep2 = ({ bookMarkList }) => {
         <div>
           <div className="menu_title">
             <div>
-              <BiSolidFactory size={40} color="#fff" />
+              <LuFactory size={40} color="#fff" style={{display:currentMenu == 'production'? "":"none"}} />
+              <FiPlusSquare size={40} color="#fff" style={{display:currentMenu == 'inbound'? "":"none"}} />
+              <FiMinusSquare size={40} color="#fff" style={{display:currentMenu == 'outbound'? "":"none"}} />
+              <MdOutlineInventory2 size={40} color="#fff" style={{display:currentMenu == 'storage'? "":"none"}} />
+              <BsInfoCircle size={40} color="#fff" style={{display:currentMenu == 'management'? "":"none"}} />
             </div>
             <div>{currentMenuName}</div>
           </div>

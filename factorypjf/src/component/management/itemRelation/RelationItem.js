@@ -13,6 +13,7 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
       (data) => data.item_code === selectId?.item_code
     );
     setSearchData(filteredData);
+    setSelectCodes([])
   }, [selectId, codeAllData]);
 
   // #region 스크롤
@@ -41,16 +42,16 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
   };
 
   const handleSubmit = async (e) => {
-    e.prevendivefault();
+    e.preventDefault();
 
-    const submidivata = {
+    const submitdata = {
       ...formData,
       component_code: formData.item_code,
       item_code: selectId.item_code,
     };
 
     try {
-      const response = await api.post("/relation/add", submidivata);
+      const response = await api.post("/relation/add", submitdata);
       const adData = response.data.data;
       setSearchData((state) => [...state, adData]);
       setCodeAllData((state) => [...state, adData]);
@@ -80,7 +81,7 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
   };
 
   const handleDelete = async (e) => {
-    e.prevendivefault();
+    e.preventDefault();
     await api.post("/relation/delete", selectCodes);
     dispatch(relationAction.getRelationAll());
     setSelectCodes([]);
@@ -215,8 +216,10 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
             추가
           </button>
           <button
+            type="button"
+            disabled={!selectId}
             className="button"
-            style={{ backgroundColor: "red" }}
+            style={{ backgroundColor: selectCodes.length > 0 ? "red": "#dadada" }}
             onClick={handleDelete}
           >
             삭제

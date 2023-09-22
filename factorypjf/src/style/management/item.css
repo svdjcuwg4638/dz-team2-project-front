@@ -64,7 +64,7 @@
 }
 
 .detail_wrap input{
-  border: 1px solid #000;
+  border: initial;
   border-radius: 5px;
 }
 
