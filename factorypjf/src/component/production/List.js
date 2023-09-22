@@ -13,39 +13,41 @@ import searchStyle from "style/common/searchStyle.module.css";
 import { useReducer } from "react";
 
 export default function Add() {
+  const [grid01_items, set01Item] = useState();
+  const [grid02_items, set02Item] = useState();
   const grid01_headers = [
     { text: "선택", value: "select", width: "3%" },
     { text: "순번", value: "index", width: "3%" },
     // { text: "생산번호", value: "prouductNum", width: "9%", readonly: true },
-    { text: "날짜", value: "date", width: "9%" },
+    { text: "날짜*", value: "date", width: "9%" },
     {
-      text: "생산품",
+      text: "생산품*",
       value: "item",
       width: "9%",
       helper: true,
       gridTrigger: true,
     },
 
-    { text: "생산팀", value: "team", width: "4%", helper: true },
-    { text: "라인", value: "line", width: "5%", helper: true },
-    { text: "수량", value: "quantity", width: "3%" },
-    { text: "창고", value: "storage", width: "5%", helper: true },
-    { text: "장소", value: "location", width: "5%", helper: true },
-    { text: "고객", value: "partner", width: "9%", helper: true },
-    { text: "담당자", value: "emp", width: "5%", helper: true },
-    { text: "소요시간", value: "leadTime", width: "5%" },
+    { text: "생산팀*", value: "team", width: "4%", helper: true },
+    { text: "라인*", value: "line", width: "5%", helper: true },
+    { text: "수량*", value: "quantity", width: "3%" },
+    { text: "창고*", value: "storage", width: "5%", helper: true },
+    { text: "장소*", value: "location", width: "5%", helper: true },
+    { text: "고객*", value: "partner", width: "9%", helper: true },
+    { text: "담당자*", value: "emp", width: "5%", helper: true },
+    { text: "소요시간*", value: "leadTime", width: "5%" },
     { text: "작업인원", value: "workForce", width: "5%" },
 
     { text: "비고", value: "description", width: "9%" },
   ];
   const grid02_headers = [
     { text: "순번", value: "index", width: "5%" },
-    { text: "자재", value: "item", width: "15%", readonly: true },
+    { text: "자재*", value: "item", width: "15%", readonly: true },
     { text: "필요수량", value: "quantity", width: "8%", readonly: true },
-    { text: "창고", value: "storage", width: "10%", helper: true },
+    { text: "창고*", value: "storage", width: "10%", helper: true },
 
     {
-      text: "세부장소",
+      text: "세부장소*",
       value: "location",
       width: "8%",
       helper: true,
@@ -227,7 +229,6 @@ export default function Add() {
       },
     ],
   ];
-
   useEffect(() => {
     //getAxios
     set01Item(grid01Dummy01);
@@ -236,8 +237,8 @@ export default function Add() {
   }, []);
 
   const gridTriggerHandler = () => {};
-  const selectRowHandler = (idx, e) => {
-    const inputArr = [...document.querySelectorAll('input[id*="grid02"]')];
+  const grid01SelectHandler = (idx, e) => {
+      const inputArr = [...document.querySelectorAll('input[id*="grid02"]')];
     // console.log(inputArr)
 
     //겉으로 보이는 input value
@@ -262,7 +263,15 @@ export default function Add() {
     // console.log(grid02Cache.items)
   };
 
+  const grid02SelectHandler=(e, idx)=>{
+    
+}
+
   const triggerHandler = () => {};
+
+  const editHandler=()=>{
+    console.log('edit')
+  }
   const saveHandler = () => {
     const state = {
       headLine: "안내",
@@ -278,21 +287,24 @@ export default function Add() {
     let idxArr = [];
     for (let input of checked) {
       let row = input.id.match(/(?<=grid\d+_)\d+(?=_)/g)[0];
-      idxArr.push(row);
+      idxArr.push(parseInt(row));
     }
     let copyItem = JSON.parse(JSON.stringify(grid01_items));
-    for(let deleteIdx of idxArr){
-      copyItem.splice(deleteIdx,1)
-    }
-    set01Item([...copyItem])
+      let unDelete = [];
+      for (let i = 0; i < copyItem.length; i++) {
+        if (!idxArr.includes(i)) {
+          unDelete.push(copyItem[i]);
+        }
+      }
+    set01Item([...unDelete]);
+  
     cacheDispatch({ type: "DELETE_ROW", idxArr });
 
     console.log(grid02Cache);
   };
   const formHandler = () => {};
 
-  const [grid01_items, set01Item] = useState();
-  const [grid02_items, set02Item] = useState();
+ 
 
   //grid01 row 선택시 그에 맞는 자재를 grid2에 출력하기 위해 입력 값을 저장하는 state
   const cacheInit = {
@@ -320,7 +332,7 @@ export default function Add() {
           let unDelete = [];
           for (let i = 0; i < copyItems.length; i++) {
             //삭제하는 idx가 아니면 undelete에 push
-            if (!action.idxArr.includes(`${i}`)) {
+            if (!action.idxArr.includes(i)) {
               unDelete.push(copyItems[i]);
             }
           }
@@ -389,10 +401,11 @@ export default function Add() {
           <Table headers={grid01_headers}>
             <AddTd
               items={grid01_items}
-              selectRowHandler={selectRowHandler}
+              selectRowHandler={grid01SelectHandler}
               onGridTrigger={triggerHandler}
               emitItem={set01Item}
-              deleteItem={deleteIdx}
+              // deleteItem={deleteIdx}
+              editHandler={editHandler}
             ></AddTd>
           </Table>
         </div>
@@ -405,7 +418,9 @@ export default function Add() {
               items={grid02_items}
               onTrigger={triggerHandler}
               emitItem={set02Item}
-            ></ListTd>
+              selectRowHandler={grid02SelectHandler}
+              editHandler={editHandler}
+              ></ListTd>
           </Table>
         </div>
         <div className={productionClasses["product_btn-wrap"]}>
