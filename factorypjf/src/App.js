@@ -13,19 +13,21 @@ import StorageRoutes from "./pages/Storage";
 import StorageItem from "./component/storage/item/List";
 import Registration from "./component/storage/registration/Registration";
 import ProductionRoutes from "router/ProductionRoutes";
+import InboundRoutes from "router/InboundRoutes";
+import OutboundRoutes from "router/OutboundRoutes";
 
 function App() {
   return (
     <Layout>
       <Routes>
         <Route path="/production/*" element={<ProductionRoutes />} />
-        {/* <Route path="/inbound/*" element={<InboundRoutes/>}/>
-        <Route path="/storage/*" element={<StorageRoutes/>}/> */}
+        <Route path="/inbound/*" element={<InboundRoutes/>}/>
+        <Route path="/outbound/*" element={<OutboundRoutes/>}/>
 
         {/* <Route path="/production/*" element={<ProductionRoutes/>}/>
         <Route path="/inbound/*" element={<InboundRoutes/>}/>
         <Route path="/storage/*" element={<StorageRoutes/>}/> */}
-
+        
         <Route path="/storage/" element={<StorageRoutes />}>
           <Route path="" element={<StorageItem />} />
           <Route path="registration" element={<Registration />} />

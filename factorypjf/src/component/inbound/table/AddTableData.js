@@ -7,9 +7,12 @@ import HelperModal from "component/common/helper/HelperModal";
 //도움창 단축키 코드
 const HELPER_KEY = 113;
 
-export default function AddTableData({ headers,onGridTrigger }) {
+export default function AddTableData({ onUpdateData,headers,onGridTrigger }) {
+  //입력된Data저장
+  const [inputdata,setInputdata] = useState([]);
+
   //행 추가 state
-  const [rowCount, setrowCount] = useState(3);
+  const [rowCount, setrowCount] = useState(10);
   const rowCountArr = Array.from({ length: rowCount });
   //행 추가 handler
   const addRowHandler = () => {
@@ -99,6 +102,10 @@ export default function AddTableData({ headers,onGridTrigger }) {
           onSelectCode={selectCodeHandler}
         />
       )}
+
+      {/* ----------------------------------------- */}
+
+      
       {rowCountArr.map((key, idx) => (
         // 행 추가를 위해 rowCount만큼 tr 생성
         <tr
