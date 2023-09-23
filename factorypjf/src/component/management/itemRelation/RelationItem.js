@@ -14,6 +14,13 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
     );
     setSearchData(filteredData);
     setSelectCodes([])
+    setFormData({
+      company_id: "1",
+      item_code: "",
+      item_name: "",
+      quantity: "",
+      component_code: "",
+    })
   }, [selectId, codeAllData]);
 
   // #region 스크롤
@@ -40,21 +47,47 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
     const { name, value } = event.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
+  const [errorField, setErrorField] = useState(null);
+  const inputRefs = {
+    item_code: useRef(),
+    item_name: useRef(),
+    quantity: useRef(),
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const fieldsToCheck = ['item_code', 'item_name', 'quantity'];
+
+    const fieldNames = {
+      item_code: '품목 코드',
+      item_name: '품목 이름',
+      quantity: '소모수량',
+    };
+
+    for (const field of fieldsToCheck) {
+      if (!formData[field] || formData[field].trim() === '') {
+        setErrorField(field); 
+        alert(fieldNames[field] +'값을 입력해주세요')
+        inputRefs[field].current.focus(); 
+        return; 
+      }
+    }
 
     const submitdata = {
       ...formData,
       component_code: formData.item_code,
       item_code: selectId.item_code,
     };
-
     try {
       const response = await api.post("/relation/add", submitdata);
-      const adData = response.data.data;
-      setSearchData((state) => [...state, adData]);
-      setCodeAllData((state) => [...state, adData]);
+      if(response.data.code == 1){
+        const adData = response.data.data;
+        setSearchData((state) => [...state, adData]);
+        setCodeAllData((state) => [...state, adData]);
+      }else{
+        alert(response.data.message)
+      }
     } catch (error) {
       console.log("error :", error);
     }
@@ -64,7 +97,7 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
       item_code: "",
       item_name: "",
       quantity: "",
-      common_code: "",
+      component_code: "",
     });
   };
   // #endregion
@@ -126,8 +159,8 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
                 <div>
                   <input
                     type="checkbox"
-                    checked={selectCodes.includes(data.relation_id)}
-                    onChange={() => handleCheckboxChange(data.relation_id)}
+                    checked={selectCodes.includes(data)}
+                    onChange={() => handleCheckboxChange(data)}
                   />
                 </div>
                 <div>{data.component_code}</div>
@@ -149,11 +182,17 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
             <div>자재코드(f2)</div>
             <div  style={{ marginRight: "10px" }}>
               <input
-                required
+                ref={inputRefs.item_code}
                 type="text"
                 name="item_code"
                 value={formData.item_code}
-                onChange={handleInputChange}
+                onChange={(e) =>{
+                  handleInputChange(e)
+                  setErrorField(null)
+                }}
+                style={{
+                  border:errorField === "item_code" ? "3px solid red" : "",
+                }}
                 onKeyDown={(e) => {
                   if (e.key === "F2") {
                     sedivelperScreenState(!HelperScreenState);
@@ -166,11 +205,17 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
             <div>자재이름(f2)</div>
             <div  style={{ marginRight: "10px" }}>
               <input
-                required
+                ref={inputRefs.item_name}
                 type="text"
                 name="item_name"
                 value={formData.item_name}
-                onChange={handleInputChange}
+                onChange={(e) =>{
+                  handleInputChange(e)
+                  setErrorField(null)
+                }}
+                style={{
+                  border:errorField === "item_code" ? "3px solid red" : "",
+                }}
                 onKeyDown={(e) => {
                   if (e.key === "F2") {
                     sedivelperScreenState(!HelperScreenState);
@@ -202,11 +247,17 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
             <div>소모수량</div>
             <div  style={{ marginRight: "10px" }}>
               <input
-                required
+                ref={inputRefs.quantity}
                 type="text"
                 name="quantity"
+                style={{
+                  border:errorField === "quantity" ? "3px solid red" : "",
+                }}
                 value={formData.quantity}
-                onChange={handleInputChange}
+                onChange={(e) =>{
+                  handleInputChange(e)
+                  setErrorField(null)
+                }}
               />
             </div>
           </div>
