@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import LocationTable from "./LocationTable";
 import api from "../../../redux/api";
 import { useState } from "react";
@@ -14,6 +14,7 @@ const RightBox = ({  locationAll,selectId }) => {
 
   const handleDelete = async () => {
     await api.post("/location/delete", selectIds);
+    alert('선택한 세부장소가 삭제되었습니다.')
     dispatch(storageAction.getstorageAll());
     setSelectIds([]);
   };
@@ -33,8 +34,31 @@ const RightBox = ({  locationAll,selectId }) => {
       [name]: value,
     });
   };
+
+  const [errorField, setErrorField] = useState(null);
+  const inputRefs = {
+    location_code: useRef(),
+    location_name: useRef(),
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const fieldsToCheck = ["location_code", "location_name"];
+
+    const fieldNames = {
+      location_code: "세부장소 코드",
+      location_name: "세부장소 이름",
+    };
+
+    for (const field of fieldsToCheck) {
+      if (!formData[field] || formData[field].trim() === "") {
+        setErrorField(field);
+        alert(fieldNames[field] + " 입력해주세요");
+        inputRefs[field].current.focus();
+        return;
+      }
+    }
 
     const submitData ={
       ...formData,
@@ -43,7 +67,12 @@ const RightBox = ({  locationAll,selectId }) => {
 
     try {
       const response = await api.post("/storage/locationAdd", submitData);
-      dispatch(storageAction.getstorageAll());
+      if(response.data.code == 1){
+        alert(submitData.location_name+ ' 추가되었습니다.')
+        dispatch(storageAction.getstorageAll());
+      }else{
+        alert('이미 존재하는 세부장소 코드입니다.')
+      }
       setShouldScrollToBottom(true);
     } catch (error) {
       console.log("error :", error);
@@ -58,6 +87,18 @@ const RightBox = ({  locationAll,selectId }) => {
   };
   // #endregion
 
+
+  //#region 미입력 인풋 입력시 테두리제거
+  useEffect(()=>{
+    if(errorField == "location_code"){
+      setErrorField(null)
+    }
+  },[formData.location_code])
+  useEffect(()=>{
+    if(errorField == "location_name"){
+      setErrorField(null)
+    }
+  },[formData.location_name])
 
   return (
     <div>
@@ -77,16 +118,26 @@ const RightBox = ({  locationAll,selectId }) => {
             <div style={{ marginRight: "10px" }}>
               <div style={{ marginRight: "10px" }}>세부장소코드</div>
               <input
+                ref={inputRefs.location_code}
                 className="inputBox"
                 type="text"
                 name="location_code"
                 value={formData.location_code}
                 onChange={handleChange}
+                style={{
+                  border:
+                    errorField === "location_code" ? "3px solid red" : "",
+                }}
               />
             </div>
             <div>
               <div style={{ marginRight: "10px" }}>세부장소명</div>
               <input
+                ref={inputRefs.location_name}
+                style={{
+                  border:
+                    errorField === "location_name" ? "3px solid red" : "",
+                }}
                 className="inputBox"
                 type="text"
                 name="location_name"
@@ -100,6 +151,8 @@ const RightBox = ({  locationAll,selectId }) => {
               추가
             </button>
             <button
+              type="button"
+              disabled={!selectIds.length > 0}
               className="button"
               style={{ backgroundColor: selectIds.length > 0 ? "red" : "#dadada" }}
               onClick={handleDelete}

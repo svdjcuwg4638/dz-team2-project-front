@@ -68,7 +68,7 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
     for (const field of fieldsToCheck) {
       if (!formData[field] || formData[field].trim() === '') {
         setErrorField(field); 
-        alert(fieldNames[field] +'값을 입력해주세요')
+        alert(fieldNames[field] +' 입력해주세요')
         inputRefs[field].current.focus(); 
         return; 
       }

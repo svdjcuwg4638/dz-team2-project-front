@@ -34,7 +34,7 @@ const Layout = ({ children }) => {
   const addBookMark = async () => {
     const submitData = {
       company_id: "1",
-      url: sessionStorage.getItem("current_page"),
+      pageUrl: sessionStorage.getItem("current_page"),
     };
     try {
       const rsponse = await api.post("/bookMark/add", submitData);
@@ -72,13 +72,13 @@ const Layout = ({ children }) => {
                   size={45}
                   color="#5390f0"
                   onClick={() => addBookMark()}
-                  style={{ display:bookMarkList?.find((data)=> data.url == location.pathname) ? "none" : ""  }}
+                  style={{ display:bookMarkList?.find((data)=> data.pageUrl == location.pathname) ? "none" : ""  }}
                 />
                 <BsBookmarkCheckFill
                   size={45}
                   color="#5390f0"
                   onClick={() => addBookMark()}
-                  style={{ display:bookMarkList?.find((data)=> data.url == location.pathname) ? "" : "none"  }}
+                  style={{ display:bookMarkList?.find((data)=> data.pageUrl == location.pathname) ? "" : "none"  }}
                 />
               </div>
             </div>

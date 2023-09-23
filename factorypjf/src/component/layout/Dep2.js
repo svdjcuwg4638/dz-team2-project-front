@@ -107,8 +107,8 @@ const Dep2 = ({ bookMarkList }) => {
           {bookMarkList &&
             bookMarkList.map((data, index) => (
               <div key={index}>
-                <Link to={data.url} onClick={() => setMenu(data.url)}>
-                  <span>{findMenuNameByUrl(data.url)}</span>
+                <Link to={data.pageUrl} onClick={() => setMenu(data.pageUrl)}>
+                  <span>{findMenuNameByUrl(data.pageUrl)}</span>
                 </Link>
               </div>
             ))}

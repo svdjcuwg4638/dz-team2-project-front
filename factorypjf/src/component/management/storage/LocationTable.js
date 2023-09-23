@@ -50,8 +50,8 @@ function LocationTable({ data, setSelectIds, selectIds, selectId }) {
                 <div>
                   <input
                     type="checkbox"
-                    checked={selectIds.includes(data.location_code)}
-                    onChange={() => handleCheckboxChange(data.location_code)}
+                    checked={selectIds.includes(data)}
+                    onChange={() => handleCheckboxChange(data)}
                   />
                 </div>
                 <div>{data.location_code}</div>

@@ -261,7 +261,7 @@ const UnitPriceList = ({ itemAll }) => {
                   {
                     itemAll?.data?.find(
                       (idata) => idata.item_code == data.item_code
-                    ).item_name
+                    )?.item_name
                   }
                 </div>
                 <div>

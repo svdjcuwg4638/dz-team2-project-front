@@ -95,9 +95,24 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
   // #endregion
 
 
-  useEffect(()=>{
-    setErrorField(null)
-  },[formData.location_code])
+  //#region 미입력 input창 입력시 빨간색 테두리제거
+  useEffect(() => {
+    if (errorField == "item_name") {
+      setErrorField(null);
+    }
+  }, [formData.item_name]);
+  useEffect(() => {
+    if (errorField == "item_code") {
+      setErrorField(null);
+    }
+  }, [formData.item_code]);
+  useEffect(() => {
+    if (errorField == "storage_code") {
+      setErrorField(null);
+    }
+  }, [formData.storage_code]);
+  //#endregion
+
 
   //#region 입력헨들러
   const handleInputChange = (event) => {
@@ -113,7 +128,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
   // submit
 
   const [errorField, setErrorField] = useState(null);
-  
+
   const inputRefs = {
     item_code: useRef(),
     item_name: useRef(),
@@ -124,21 +139,26 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
   const submitHandler = async (event) => {
     event.preventDefault();
 
-    const fieldsToCheck = ['item_code', 'item_name', 'storage_code', 'location_code'];
+    const fieldsToCheck = [
+      "item_code",
+      "item_name",
+      "storage_code",
+      "location_code",
+    ];
 
     const fieldNames = {
-      item_code: '품목 코드',
-      item_name: '품목 이름',
-      storage_code: '창고',
-      location_code: '세부장소',
+      item_code: "품목 코드",
+      item_name: "품목 이름",
+      storage_code: "창고",
+      location_code: "세부장소",
     };
 
     for (const field of fieldsToCheck) {
-      if (!formData[field] || formData[field].trim() === '') {
-        setErrorField(field); 
-        alert(fieldNames[field] +'값을 입력해주세요')
-        inputRefs[field].current.focus(); 
-        return; 
+      if (!formData[field] || formData[field].trim() === "") {
+        setErrorField(field);
+        alert(fieldNames[field] + " 입력해주세요");
+        inputRefs[field].current.focus();
+        return;
       }
     }
 
@@ -167,18 +187,17 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
       unit: formData["unit"],
     };
 
-
     try {
       if (formMod == "modify") {
         const response = await api.post("/item/modify", submitData);
-        alert(submitData.item_name+" 수정 되었습니다.");
+        alert(submitData.item_name + " 수정 되었습니다.");
         window.location.reload();
       }
       if (formMod == "add") {
         const response = await api.post("/item/add", submitData);
         if (response.data.code == 0) {
           alert(response.data.message);
-          setErrorField('item_code')
+          setErrorField("item_code");
         } else {
           alert(response.data.data.item_name + " 추가되었습니다.");
           window.location.reload();
@@ -194,7 +213,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
   const [readOnly, setReadOnly] = useState(true);
 
   function buttonHandler(e) {
-    setErrorField(null)
+    setErrorField(null);
     const { name } = e.target;
     if (name === "add") {
       setFormData({
@@ -252,7 +271,6 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
     toggleReadOnly();
   }
   //#endregion
-
 
   //#region 도움창 props
   const [showFlag, setShowFlag] = useState(false);
@@ -323,16 +341,15 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
                   readOnly={formMod == "add" ? false : true}
                   style={{
                     backgroundColor: formMod == "add" ? "" : "#dadada",
-                    border: !readOnly && errorField === "item_code" ? "3px solid red" : "",
+                    border:
+                      !readOnly && errorField === "item_code"
+                        ? "3px solid red"
+                        : "",
                   }}
-
                   value={formData["item_code"]}
                   type="text"
                   name="item_code"
-                  onChange={(e) =>{
-                    handleInputChange(e)
-                    setErrorField(null)
-                  }}
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
@@ -343,16 +360,16 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
                   ref={inputRefs.item_name}
                   style={{
                     backgroundColor: readOnly ? "#dadada" : "",
-                    border: !readOnly && errorField === "item_name" ? "3px solid red" : "",
+                    border:
+                      !readOnly && errorField === "item_name"
+                        ? "3px solid red"
+                        : "",
                   }}
                   readOnly={readOnly}
                   value={formData["item_name"]}
                   type="text"
                   name="item_name"
-                  onChange={(e) =>{
-                    handleInputChange(e)
-                    setErrorField(null)
-                  }}
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
@@ -410,7 +427,10 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
                   readOnly
                   style={{
                     backgroundColor: readOnly ? "#dadada" : "",
-                    border: !readOnly && errorField === "storage_code" ? "3px solid red" : "",
+                    border:
+                      !readOnly && errorField === "storage_code"
+                        ? "3px solid red"
+                        : "",
                   }}
                   value={formData["storage_code"]}
                   type="text"
@@ -428,7 +448,10 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
                     readOnly
                     style={{
                       backgroundColor: readOnly ? "#dadada" : "",
-                      border: !readOnly && errorField === "storage_code" ? "3px solid red" : "",
+                      border:
+                        !readOnly && errorField === "storage_code"
+                          ? "3px solid red"
+                          : "",
                     }}
                     value={formData["location_code"]}
                     type="text"
