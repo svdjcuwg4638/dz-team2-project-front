@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import api from "redux/api";
 
-const MasterRow = ({ boundId, key, setMaseterFocus, masterFlag,setSubFlag, setCheckedBoundIds  }) => {
+const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFlag, setCheckedBoundIds }) => {
   const [formData, setFormData] = useState({
     bound_id: boundId != 0 && boundId != null ? boundId : 0,
     company_id: "1",
@@ -50,6 +50,9 @@ const MasterRow = ({ boundId, key, setMaseterFocus, masterFlag,setSubFlag, setCh
   }
   },[masterFlag]);
 
+  useEffect(() => {
+    setFormData(prev => ({ ...prev, bound_no: boundNo }));
+  }, [boundNo]);
   useEffect(()=> {
     console.log(formData)
   },[formData])
@@ -75,6 +78,7 @@ const MasterRow = ({ boundId, key, setMaseterFocus, masterFlag,setSubFlag, setCh
       <td>
         <input
           type="text"
+          value={boundNo}
           name="bound_no"
           onChange={handleInputChange}
         ></input>
