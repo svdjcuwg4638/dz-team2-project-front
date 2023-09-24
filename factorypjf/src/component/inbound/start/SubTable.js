@@ -49,7 +49,7 @@ const SubTable = ({ boundId, masterLength, masterFocus, subFlag, deletedBoundIds
             subRowArray.map((boundId, index) => {
               if (deletedBoundIds && !deletedBoundIds.includes(boundId) && !deletedIndex.includes(index)) {
                 return (
-                  <SubRow key={index}
+                  <SubRow index={index}
                     boundId={boundId}
                     masterFocus={masterFocus}
                     subFlag={subFlag}

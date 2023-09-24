@@ -3,20 +3,20 @@ import api from "redux/api";
 
 const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestSuccess,checkedSubBoundIds,setCheckedSubBoundIds, index}) => {
   const [formData, setFormData] = useState({
-    company_id: "1",
     bound_id: boundId != 0 && boundId != null ? boundId : 0,
     item_code: "",
     item_name: "",
+    unit_price: "",
+    stock: "",
     amount: "",
-    unit_price_id: "",
     tot_amount: "",
-    inventory_id: "",
-    detail_state: "ongoing",
     detail_date: "",
-    detail_isDelete: 0,
-    description: "",
     storage_code: "",
     location_code: "",
+    description: "",
+    detail_state: "ongoing",
+    detail_isDelete: 0,
+    frontDelete: "",
   });
 
   const handleCheckboxChange = (event) => {
@@ -33,6 +33,12 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
     if(subFlag){
       console.log('디테일요청시작')
       async function insertDetail(){
+        // subFlag가 true이며, frontDelete 값이 1이 아닐 경우에만 요청을 진행
+        if(formData.frontDelete === 1) {
+            console.log('frontDelete is 1, skipping request');
+            return;
+        }
+
         try{
           const response = await api.post("/inbound/detailAdd",formData);
           if (response.status !== 200) {
@@ -91,6 +97,22 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
         <td>
           <input
             type="text"
+            name="unit_price"
+            value={formData["unit_price"]}
+            onChange={handleInputChange}
+          ></input>
+        </td>
+        <td>
+          <input
+            type="text"
+            name="stock"
+            value={formData["stock"]}
+            onChange={handleInputChange}
+          ></input>
+        </td>
+        <td>
+          <input
+            type="text"
             name="amount"
             value={formData["amount"]}
             onChange={handleInputChange}
@@ -99,24 +121,8 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
         <td>
           <input
             type="text"
-            name="unit_price_id"
-            value={formData["unit_price_id"]}
-            onChange={handleInputChange}
-          ></input>
-        </td>
-        <td>
-          <input
-            type="text"
             name="tot_amount"
             value={formData["tot_amount"]}
-            onChange={handleInputChange}
-          ></input>
-        </td>
-        <td>
-          <input
-            type="text"
-            name="inventory_id"
-            value={formData["inventory_id"]}
             onChange={handleInputChange}
           ></input>
         </td>

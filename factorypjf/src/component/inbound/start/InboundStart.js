@@ -30,13 +30,10 @@ const InBoundStart = () => {
     // 필요하다면, 체크된 상태 초기화
     setCheckedSubBoundIds([]);
   };
-
-
-
   
   useEffect(()=> {
-    console.log('체크 바운드',checkedBoundIds)
-  },[checkedBoundIds])
+    console.log('체크서브 바운드',checkedSubBoundIds)
+  },[checkedSubBoundIds])
 
   useEffect(()=>{
     console.log('삭제 바운드',deletedBoundIds)
@@ -64,10 +61,10 @@ const InBoundStart = () => {
     { text: "선택", value: "select", width: "3%" },
     { text: "품목코드", value: "item_code", width: "6%" },
     { text: "품목명", value: "item_name", width: "6%" },
-    { text: "수량", value: "amount", width: "4%" },
-    { text: "단가", value: "unit_price_id", width: "4%" },
-    { text: "총액", value: "tot_amount", width: "6%" },
-    { text: "재고", value: "inventory_id", width: "4%", helper: true },
+    { text: "단가", value: "unit_price", width: "4%" },
+    { text: "재고", value: "stock", width: "4%" },
+    { text: "수량", value: "amount", width: "6%" },
+    { text: "총액", value: "tot_amount", width: "4%", helper: true },
     { text: "입고예정일", value: "detail_date", width: "10%" },
     { text: "비고", value: "description", width: "10%" },
   ];
