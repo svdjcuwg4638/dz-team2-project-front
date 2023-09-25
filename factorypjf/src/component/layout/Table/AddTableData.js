@@ -7,16 +7,25 @@ import addStyle from "style/layout/dataTable/addTableData.module.css";
 
 //도움창 단축키 코드
 const HELPER_KEY = 113;
-const CLEAN_KEY=115;
+const CLEAN_KEY = 115;
 
-//headers: 테이블 header, onGridTrigger: 부모 요소로 이벤트 발송할 수 있는 handler, 
-export default function AddTableData({ isBtn, headers,items, onGridTrigger,selectRowHandler,emitItem, deleteItem }) {
+//headers: 테이블 header, onGridTrigger: 부모 요소로 이벤트 발송할 수 있는 handler,
+export default function AddTableData({
+  isBtn,
+  headers,
+  items,
+  onGridTrigger,
+  selectRowHandler,
+  emitItem,
+  deleteItem,
+  editHandler,
+}) {
   //첫 렌더링시 빈 테이블 3줄
   const DEFAULT_ROW = 3;
   const DEFAULT_ARR = useMemo(() => {
     let row = {};
     headers.forEach((header) => {
-      row[header.value] = '';
+      row[header.value] = "";
     });
     let tempArr = [];
     for (let i = 0; i < DEFAULT_ROW; i++) {
@@ -26,29 +35,31 @@ export default function AddTableData({ isBtn, headers,items, onGridTrigger,selec
     return tempArr;
   }, [headers]);
 
-  useEffect(()=>{
-    if(items){
-      setTableItems([...items])
-    }else{
-      emitItem(DEFAULT_ARR)
+  useEffect(() => {
+    if (items) {
+      setTableItems([...items]);
+    } else {
+      emitItem(DEFAULT_ARR);
     }
-  },[items])
+  }, [items]);
 
-  useEffect(()=>{
-    if(deleteItem){
+  useEffect(() => {
+    if (deleteItem) {
       let copyItem = JSON.parse(JSON.stringify(tableItems));
-      for(let deleteIdx of deleteItem){
-        copyItem.splice(deleteIdx,1)
+      let unDelete = [];
+      for (let i = 0; i < copyItem.length; i++) {
+        if (!deleteItem.includes(i)) {
+          unDelete.push(copyItem[i]);
+        }
+        setTableItems([...unDelete]);
+        emitItem(tableItems);
+        setFocusRow(0);
       }
-      setTableItems([...copyItem])
-      emitItem(tableItems)
     }
-  },[deleteItem])
+  }, [deleteItem]);
 
   //행 추가 handler
-  const [tableItems, setTableItems] = useState(
-    [...DEFAULT_ARR]
-  );
+  const [tableItems, setTableItems] = useState([...DEFAULT_ARR]);
 
   const addRowHandler = () => {
     setTableItems([...tableItems, {}]);
@@ -73,7 +84,6 @@ export default function AddTableData({ isBtn, headers,items, onGridTrigger,selec
   //모달 reducer (on/off, 코드 타입)
   const modalReducer = (state, action) => {
     if (action.type === "ON_MODAL") {
-      
       return {
         showModal: true,
         //코드가 내부적으로 가지는 값 (ex: partner)
@@ -90,16 +100,18 @@ export default function AddTableData({ isBtn, headers,items, onGridTrigger,selec
 
   const [currentCol, setCurrentCol] = useState();
 
+  //colInfo: 컬럼 header, coordinate{row,col} 클릭한 위치
   const keyUpHandler = (e, colInfo, coordinate) => {
     //도움창 단축키 handler
-    if (e.which === HELPER_KEY && colInfo.helper) {    
+    if (e.which === HELPER_KEY && colInfo.helper) {
       //도움창을 연 컬럼 좌표 저장
       setCurrentCol({ ...coordinate });
       //모달 켜기
       onModalHanlder(colInfo.value, colInfo.text);
+      if (editHandler) editHandler(e,'add',coordinate);
     } else if (e.which === HELPER_KEY && !colInfo.helper) {
       console.log("도움창이 제공되지 않는 코드입니다.");
-    } 
+    }
   };
 
   //코드 선택 handler
@@ -130,7 +142,7 @@ export default function AddTableData({ isBtn, headers,items, onGridTrigger,selec
       }
     }
     setTableItems(copyItems);
-    emitItem(copyItems)
+    emitItem(copyItems);
 
     //======================grid2 trigger========================
     headers.forEach((header) => {
@@ -143,19 +155,17 @@ export default function AddTableData({ isBtn, headers,items, onGridTrigger,selec
     // console.log(tableItems)
   };
 
-  const selectRow=(e,idx)=>{
-    
+  const selectRow = (e, idx) => {
     //클릭 이벤트가 tr>td>input에서 발생하기 때문에 부모의 부모 노드 선택
-    let row=e.target.parentNode.parentNode;
-    row.className=addStyle['add-table-focus'];
-    if(focusRow&&focusRow!==row){
-      focusRow.className=addStyle['']
+    let row = e.target.parentNode.parentNode;
+    row.className = addStyle["add-table-focus"];
+    if (focusRow && focusRow !== row) {
+      focusRow.className = addStyle[""];
     }
-    setFocusRow(row)
+    setFocusRow(row);
 
-    selectRowHandler(idx,e);
-    
-  }
+    selectRowHandler(idx, e);
+  };
 
   return (
     <>
@@ -170,19 +180,26 @@ export default function AddTableData({ isBtn, headers,items, onGridTrigger,selec
       {tableItems.map((item, idx) => (
         // 행 추가를 위해 rowCount만큼 tr 생성
         <tr
-        key={idx}
-          onClick={(e)=>{selectRow(e,idx)}}
+          key={idx}
+          onClick={(e) => {
+            selectRow(e, idx);
+          }}
           // className={focusRow === idx ? tableStyle["focused-row"] : ""}
         >
           {headers.map((header, headerIdx) =>
             // selectBox 컬럼
             header.value === "select" ? (
               <td key={`${headerIdx}+${item[header.value]}`}>
-                <input id={`grid01_${idx}_${header.value}`} type="checkbox"></input>
+                <input
+                  id={`grid01_${idx}_${header.value}`}
+                  type="checkbox"
+                ></input>
               </td>
             ) : // 순번 컬럼
             header.value === "index" ? (
-              <td key={`${headerIdx}+${item[header.value]}`}><div>{idx + 1}</div></td>
+              <td key={`${headerIdx}+${item[header.value]}`}>
+                <div>{idx + 1}</div>
+              </td>
             ) : (
               <td key={`${headerIdx}+${item[header.value]}`}>
                 {header.helper || header.readonly ? (
@@ -193,7 +210,7 @@ export default function AddTableData({ isBtn, headers,items, onGridTrigger,selec
                     onKeyUp={(e) => {
                       keyUpHandler(e, header, { row: idx, col: headerIdx });
                     }}
-                    value={item ? item[header.value] : ""}
+                    defaultValue={item ? item[header.value] : ""}
                   ></input>
                 ) : header.value === "date" ? (
                   <input
@@ -202,6 +219,10 @@ export default function AddTableData({ isBtn, headers,items, onGridTrigger,selec
                     min="1900-01-01"
                     max="9999-12-31"
                     className={addStyle.input_date}
+                    defaultValue={item ? item[header.value] : ""}
+                    onKeyUp={(e) => {
+                      keyUpHandler(e, header);
+                    }}
                   ></input>
                 ) : (
                   <input
@@ -209,6 +230,7 @@ export default function AddTableData({ isBtn, headers,items, onGridTrigger,selec
                     onKeyUp={(e) => {
                       keyUpHandler(e, header);
                     }}
+                    defaultValue={item ? item[header.value] : ""}
                   ></input>
                 )}
               </td>
@@ -216,13 +238,15 @@ export default function AddTableData({ isBtn, headers,items, onGridTrigger,selec
           )}
         </tr>
       ))}
-      {isBtn&&<tr>
-        <td colSpan={headers.length}>
-          <button className={tableStyle.btn_add} onClick={addRowHandler}>
-            +
-          </button>
-        </td>
-      </tr>}
+      {isBtn && (
+        <tr>
+          <td colSpan={headers.length}>
+            <button className={tableStyle.btn_add} onClick={addRowHandler}>
+              +
+            </button>
+          </td>
+        </tr>
+      )}
     </>
   );
 }

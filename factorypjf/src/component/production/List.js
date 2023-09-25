@@ -10,6 +10,7 @@ import AlertModal from "component/common/AlertModal";
 import productionListClasses from "style/production/list.module.css";
 import productionClasses from "style/production/production.module.css";
 import searchStyle from "style/common/searchStyle.module.css";
+import listStyle from "style/production/list.module.css";
 import { useReducer } from "react";
 
 export default function Add() {
@@ -24,7 +25,7 @@ export default function Add() {
       text: "생산품*",
       value: "item",
       width: "9%",
-      helper: true,
+
       gridTrigger: true,
     },
 
@@ -64,7 +65,7 @@ export default function Add() {
   ];
   const searchFilter = [
     { text: "생산일", value: "date", width: "3%" },
-    { text: "생산품", value: "item", width: "3%", helper: true },
+    { text: "생산품", value: "item", width: "3%" },
     { text: "생산팀", value: "team", width: "3%", helper: true },
     { text: "품목", value: "item", width: "3%", helper: true },
     { text: "창고", value: "storage", width: "3%", helper: true },
@@ -76,10 +77,12 @@ export default function Add() {
   //=======================dummy=======================
   const grid01Dummy01 = [
     {
-      production_code:"202309220001",
+      productionCode: "202309220001",
       date: "2023-09-21",
       item: "Laptop1",
+      itemCode: "I001",
       team: "IT",
+      teamCode: "S1",
       storage: "Warehouse A",
       location: "Shelf 3",
       partner: "ABC Electronics",
@@ -91,10 +94,12 @@ export default function Add() {
       workForce: 1,
     },
     {
-      production_code:"202309220002",
+      productionCode: "202309220002",
       date: "2023-09-21",
       item: "Laptop2",
+      itemCode: "I002",
       team: "IT",
+      teamCode: "S1",
       storage: "Warehouse A",
       location: "Shelf 3",
       partner: "ABC Electronics",
@@ -106,10 +111,12 @@ export default function Add() {
       workForce: 1,
     },
     {
-      production_code:"202309220003",
+      productionCode: "202309220003",
       date: "2023-09-21",
       item: "Laptop3",
+      itemCode: "I003",
       team: "IT",
+      teamCode: "S1",
       storage: "Warehouse A",
       location: "Shelf 3",
       partner: "ABC Electronics",
@@ -154,8 +161,9 @@ export default function Add() {
   const grid02Dummy01 = [
     [
       {
-        production_code:"202309220001",
+        productionCode: "202309220001",
         item: "Widget",
+        productCode: "I001",
         quantity: 100,
         total: 200,
         storage: "Warehouse A",
@@ -164,7 +172,8 @@ export default function Add() {
         description: "A small widget used in various applications.",
       },
       {
-        production_code:"202309220001",
+        productionCode: "202309220001",
+        productCode: "I001",
         item: "Widget",
         quantity: 100,
         total: 200,
@@ -176,8 +185,9 @@ export default function Add() {
     ],
     [
       {
-        production_code:"202309220002",
+        productionCode: "202309220002",
         item: "Widget2",
+        productCode: "I002",
         quantity: 100,
         total: 200,
         storage: "Warehouse A2",
@@ -186,8 +196,9 @@ export default function Add() {
         description: "A small widget used in various applications2.",
       },
       {
-        production_code:"202309220002",
+        productionCode: "202309220002",
         item: "Widget2",
+        productCode: "I002",
         quantity: 100,
         total: 200,
         storage: "Warehouse A2",
@@ -196,8 +207,9 @@ export default function Add() {
         description: "A small widget used in various applications2.",
       },
       {
-        production_code:"202309220002",
+        productionCode: "202309220002",
         item: "Widget2",
+        productCode: "I002",
         quantity: 100,
         total: 200,
         storage: "Warehouse A2",
@@ -206,8 +218,9 @@ export default function Add() {
         description: "A small widget used in various applications2.",
       },
       {
-        production_code:"202309220002",
+        productionCode: "202309220002",
         item: "Widget2",
+        productCode: "I002",
         quantity: 100,
         total: 200,
         storage: "Warehouse A2",
@@ -218,8 +231,9 @@ export default function Add() {
     ],
     [
       {
-        production_code:"202309220003",
+        productionCode: "202309220003",
         item: "Widget2",
+        productCode: "I003",
         quantity: 100,
         total: 200,
         storage: "Warehouse A2",
@@ -229,16 +243,31 @@ export default function Add() {
       },
     ],
   ];
+
+  const [disabledBtn, setDisabledBtn] = useState({
+    state: true,
+    class: `${listStyle['btn_disabled']}`,
+  });
+
   useEffect(() => {
     //getAxios
+    let grid02Item;
+    for (let i = 0; i < grid01Dummy01.length; i++) {
+      grid01Dummy01[i].state = null;
+      grid02Dummy01[i].forEach((el) => {
+        el.state = null;
+      });
+    }
+
     set01Item(grid01Dummy01);
     set02Item(grid02Dummy01[0]);
     cacheDispatch({ type: "INIT_CACHE", data: grid02Dummy01 });
+    console.log(grid01_items, grid02Cache);
   }, []);
 
   const gridTriggerHandler = () => {};
   const grid01SelectHandler = (idx, e) => {
-      const inputArr = [...document.querySelectorAll('input[id*="grid02"]')];
+    const inputArr = [...document.querySelectorAll('input[id*="grid02"]')];
     // console.log(inputArr)
 
     //겉으로 보이는 input value
@@ -263,23 +292,181 @@ export default function Add() {
     // console.log(grid02Cache.items)
   };
 
-  const grid02SelectHandler=(e, idx)=>{
-    
-}
+  const grid02SelectHandler = (e, idx) => {};
 
   const triggerHandler = () => {};
 
-  const editHandler=()=>{
-    console.log('edit')
-  }
+  const editHandler = (e, tableType, coordinate) => {
+    setDisabledBtn({state:false,class:`${listStyle['btn_abled']}`});
+    if (tableType === "add") {
+      //grid01에 수정 표시
+      let copyItem = JSON.parse(JSON.stringify(grid01_items));
+      copyItem[coordinate.row].state = "edit";
+      set01Item([...copyItem])
+      // console.log(grid01Dummy01)
+    } else if (tableType === "list") {
+      //grid02에 수정 표시
+      cacheDispatch({ type: "EDIT", idx: coordinate.row });
+      // console.log(grid02Cache)
+    }
+  };
+
   const saveHandler = () => {
+    //수정된 item (state가 'edit'인것)
+
+    if (!grid01_items.find((data) => data.item)) return;
+    //====================테이블의 모든 input 가져오기====================
+    const inputArr = [...document.querySelectorAll('[id*="grid"]')];
+    let grid01Data = [];
+    const grid02Data = [];
+
+    inputArr.forEach((el) => {
+      //id(grid번호_행번호_header) 에서 행번호 찾기
+      let row = Number(el.id.match(/(?<=grid\d+_)\d+(?=_)/g)[0]);
+      //id(grid번호_행번호_header) 에서 header 찾기
+      let header = el.id.match(/(?<=\w_)[a-zA-Z_]+/g)[0];
+
+      if (el.id.includes("grid01")) {
+        //grid01 state + input value
+        grid01Data[row] = { ...grid01Data[row], [header]: el.value };
+        //grid02 state + input value
+      } else if (el.id.includes("grid02")) {
+        //겉으로 보이는 value + state에 저장된 itemList
+        grid02Data[row] = {
+          ...grid02_items[row],
+          ...grid02Data[row],
+          [header]: el.value,
+        };
+      }
+    });
+
+    cacheDispatch({ type: "ON_SAVE", idx: null, items: grid02Data });
+
+    //=================grid01 필수 입력 컬럼에 값 다 있는지 확인===============
+    let alertHeader = "";
+    let itemCount = 0;
+    //grid01 입력확인
+    for (let i = 0; i < grid01Data.length; i++) {
+      //겉으로 보이는 value + state에 저장된 itemList
+      grid01Data[i] = { ...grid01_items[i], ...grid01Data[i] };
+      for (let key in grid01Data[i]) {
+        if (grid01Data[i].item) {
+          itemCount++;
+          // //item 값이 입력된 행인데 NULL 컬럼 아닌 컬럼에 값이 입력돼있지 않은 값
+          if (
+            grid01Data[i].item &&
+            !(
+              key === "description" ||
+              key === "state" ||
+              key === "team" ||
+              key === "select" ||
+              key === "index"
+            ) &&
+            !grid01Data[i][key]
+          ) {
+            alertHeader = grid01_headers.find((header) => {
+              return header.value === key;
+            });
+            alert("상위테이블 " + alertHeader.text + "를 입력해주세요");
+            return;
+          } else {
+            //!!!!!!!!!!!!!!!!! 로그인한 companyId 가져오는 로직으로 수정 !!!!!!!!!!!!!!!!!
+            grid01Data[i].companyId = 1;
+          }
+        } else {
+          grid01Data.splice(i, 1);
+          grid02Cache.items[i] && grid02Cache.items.splice(i, 1);
+          i--;
+        }
+      }
+    }
+    //생산품이 하나도 입력되지 않았을때
+    if (!itemCount) {
+      alertHeader = "생산품";
+      alert("저장할 " + alertHeader + "이 없습니다.");
+    }
+
+    //grid02 입력확인
+    if (!alertHeader) {
+      for (let i = 0; i < grid02Cache.items.length; i++) {
+        for (let j = 0; j < grid02Cache.items[i].length; j++) {
+          if (grid02Cache.items[i] !== null) {
+            for (let key in grid02Cache.items[i][j]) {
+              // //item 값이 입력된 행인데 NULL 컬럼 아닌 컬럼에 값이 입력돼있지 않으면
+              if (
+                grid02Cache.items[i][j].item &&
+                (key === "item" ||
+                  key === "storage" ||
+                  key === "quantity" ||
+                  key === "location") &&
+                !grid02Cache.items[i][j][key]
+              ) {
+                alertHeader = grid02_headers.find((header) => {
+                  return header.value === key;
+                });
+                if (alertHeader.value === "inventory") {
+                  alert("해당 장소에 자재가 없습니다.");
+                } else {
+                  alert("하위테이블 " + alertHeader.text + "를 입력해주세요");
+                }
+                return;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    //확인 모달 띄우기
+    const edited = [];
+    if (!alertHeader) {
+      //수정
+      for (let i = 0; i < grid01Data.length; i++) {
+        let tempObj = {};
+        for (let j = 0; j < grid02Cache.items[i].length; j++) {
+          if (
+            grid01Data[i].state === "edit" ||
+            grid02Cache.items[i][j].state === "edit"
+          ) {
+            tempObj.productionCode = grid01Data[i].productionCode;
+            tempObj.itemCode = grid01Data[i].itemCode;
+            tempObj.item = grid01Data[i].item;
+            edited.push(tempObj);
+            break;
+          } 
+        }
+      }
+    }
+    
+
     const state = {
-      headLine: "안내",
-      content: `아래 생산품 정보를 수정/삭제하시겠습니까?`,
-      tableItem:[]
+      headLine: "알림",
+      title: "아래 생산 내역을 수정/삭제하시겠습니까?",
+      table: [
+        {
+          name: "수정내역",
+          header: [
+            { text: "생산번호", value: "productionCode" },
+            { text: "생산품명", value: "item" },
+            { text: "생산품코드", value: "itemCode" },
+          ],
+          tableItem: edited,
+        },
+        {
+          name: "삭제내역",
+          header: [
+            { text: "생산번호", value: "productionCode" },
+            { text: "생산품명", value: "item" },
+            { text: "생산품코드", value: "itemCode" },
+          ],
+          tableItem: deleteData,
+        },
+      ],
+      data: { grid01Data, grid02Data: grid02Cache.items },
     };
     modalDispatch({ type: "ON_MODAL", state });
   };
+
   const deleteHandler = () => {
     const checked = Array.from(
       ...[document.querySelectorAll('input[type="checkbox"]:checked')]
@@ -290,21 +477,25 @@ export default function Add() {
       idxArr.push(parseInt(row));
     }
     let copyItem = JSON.parse(JSON.stringify(grid01_items));
-      let unDelete = [];
-      for (let i = 0; i < copyItem.length; i++) {
-        if (!idxArr.includes(i)) {
-          unDelete.push(copyItem[i]);
-        }
+    let unDelete = [];
+    let deleteArr=[];
+    for (let i = 0; i < copyItem.length; i++) {
+      if (!idxArr.includes(i)) {
+        unDelete.push(copyItem[i]);
+      }else{
+        deleteArr.push(copyItem[i])
       }
+    }
+    //삭제한 행 제외하고 테이블 출력
     set01Item([...unDelete]);
-  
-    cacheDispatch({ type: "DELETE_ROW", idxArr });
+    //삭제한 행 모아놓기
+    setDeleteData([...deleteArr])
 
+    cacheDispatch({ type: "DELETE_ROW", idxArr });
+    setDisabledBtn({state:false,class:`${listStyle['btn_abled']}`});
     console.log(grid02Cache);
   };
   const formHandler = () => {};
-
- 
 
   //grid01 row 선택시 그에 맞는 자재를 grid2에 출력하기 위해 입력 값을 저장하는 state
   const cacheInit = {
@@ -322,7 +513,7 @@ export default function Add() {
       return state;
       //이전에 선택한 적이 있었을 때
     } else {
-      //cacheITems 복사
+      //cacheItems 복사
       let copyItems = state.items
         ? JSON.parse(JSON.stringify(state.items))
         : [];
@@ -340,15 +531,22 @@ export default function Add() {
           return { idx: 0, items: [...unDelete] };
         }
       } else {
-        //이전에 선택되었던 행에 파라미터 grid02 row 넣어줌
-        copyItems[state.idx] = action.items && [...action.items];
         if (action.type === "SELECT_ROW") {
+          //이전에 선택되었던 행에 파라미터 grid02 row 넣어줌
+          copyItems[state.idx] = action.items && [...action.items];
           set02Item(copyItems[action.idx] ? [...copyItems[action.idx]] : []);
           return { idx: action.idx, items: [...copyItems] };
         } else if (action.type === "ON_SAVE") {
+          //이전에 선택되었던 행에 파라미터 grid02 row 넣어줌
+          copyItems[state.idx] = action.items && [...action.items];
           return { idx: action.idx, items: [...copyItems] };
         } else if (action.type === "TRIGGER") {
+          //이전에 선택되었던 행에 파라미터 grid02 row 넣어줌
+          copyItems[state.idx] = action.items && [...action.items];
           set02Item(action.items ? [...action.items] : []);
+          return { ...state, items: [...copyItems] };
+        } else if (action.type === "EDIT") {
+          copyItems[state.idx][action.idx].state = "edit";
           return { ...state, items: [...copyItems] };
         }
       }
@@ -358,6 +556,7 @@ export default function Add() {
   const [grid02Cache, cacheDispatch] = useReducer(cacheReducer, cacheInit);
 
   const [deleteIdx, setDeleteIdx] = useState();
+  const [deleteData,setDeleteData]=useState([]);
 
   const [initFilter, setInitFilter] = useState();
 
@@ -366,14 +565,12 @@ export default function Add() {
     showModal: false,
     headLine: "",
     title: "",
-    content:{
-      header:[],
-      item:[]
-    }
+    table: [],
+    data: {},
   };
 
   const offModal = () => {
-    modalDispatch("OFF_MODAL");
+    modalDispatch({ type: "OFF_MODAL" });
   };
 
   //모달 reducer (on/off, 코드 타입)
@@ -382,7 +579,7 @@ export default function Add() {
       return { showModal: true, ...action.state };
     }
     if (action.type === "OFF_MODAL") {
-      return modalInit;
+      return { ...modalInit };
     }
   };
   const [modalState, modalDispatch] = useReducer(modalReducer, modalInit);
@@ -420,7 +617,7 @@ export default function Add() {
               emitItem={set02Item}
               selectRowHandler={grid02SelectHandler}
               editHandler={editHandler}
-              ></ListTd>
+            ></ListTd>
           </Table>
         </div>
         <div className={productionClasses["product_btn-wrap"]}>
@@ -431,8 +628,9 @@ export default function Add() {
             삭제
           </button>
           <button
-            className={productionClasses["product_btn_save"]}
+            className={disabledBtn.class}
             onClick={saveHandler}
+            disabled={disabledBtn.state}
           >
             저장
           </button>
