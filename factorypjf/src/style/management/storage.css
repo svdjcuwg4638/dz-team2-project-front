@@ -1,23 +1,28 @@
 .storage_wrap {
-  display: flex;
-  justify-content: space-around;
   width: 100%;
   height: 100%;
-  padding-top: 30px;
+  padding-top: 111px;
+  position: relative;
 }
 
-.storage_wrap th {
-  border: 1px solid;
-  width: 200px;
-  padding-left: 20px;
+.storage_wrap> div:nth-child(1){
+  font-size: 40px;
+  position: absolute;
+  font-weight: bold;
+  top: 20px;
+  left: 20px;
 }
 
+.storage_wrap >div:nth-child(2){
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.storage_wrap th,
 .storage_wrap td {
   border: 1px solid;
   width: 200px;
-  padding-left: 20px;
 }
-
 
 .text-box {
   margin-top: 20px;
@@ -63,7 +68,7 @@
 }
 
 .storage_scrollable_table {
-  height: 300px; 
+  height: 400px; 
   overflow: auto; 
   scrollbar-width: none;
   display: table-caption;
@@ -107,6 +112,10 @@
   opacity:0.5
 }
 
+.storage_wrap input{
+  border-radius: 5px;
+}
+
 .storage_help_modal {
   background-color: #fff;
   width: 700px;
@@ -114,6 +123,7 @@
   position: fixed;
   left: 50%;
   top: 50%;
+  color: #000;
   transform: translate(-50%, -50%);
   z-index: 3;
 }
@@ -123,3 +133,33 @@
   cursor: pointer;
 }
 
+.storage_scrollable_table tr{
+  cursor: pointer;
+}
+
+.storage_row >div:nth-child(1){ width: 10%;}
+.storage_row >div:nth-child(2){ width: 45%;}
+.storage_row >div:nth-child(3){ width: 45%;}
+
+
+.storage_row_sub >div:nth-child(1){ width: 10%;}
+.storage_row_sub >div:nth-child(2){ width: 45%;}
+.storage_row_sub >div:nth-child(3){ width: 45%;}
+
+.storage_bottom > div > div > div:nth-child(1){
+  font-weight: bold;
+}
+
+.storage_wrap .storage_row_sub > div {
+  cursor: auto !important;
+}
+
+.storage_wrap .storage_row_sub input,
+.storage_wrap .storage_row input{
+  cursor: pointer;
+  
+}
+
+.storage_row > div:nth-child(1){
+  cursor: auto !important;
+}

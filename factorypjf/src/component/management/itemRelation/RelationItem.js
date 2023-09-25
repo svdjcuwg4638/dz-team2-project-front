@@ -8,13 +8,19 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
   const dispatch = useDispatch();
   const [searchData, setSearchData] = useState(null);
 
-  
-
   useEffect(() => {
     const filteredData = codeAllData?.filter(
       (data) => data.item_code === selectId?.item_code
     );
     setSearchData(filteredData);
+    setSelectCodes([])
+    setFormData({
+      company_id: "1",
+      item_code: "",
+      item_name: "",
+      quantity: "",
+      component_code: "",
+    })
   }, [selectId, codeAllData]);
 
   // #region 스크롤
@@ -41,21 +47,47 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
     const { name, value } = event.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
+  const [errorField, setErrorField] = useState(null);
+  const inputRefs = {
+    item_code: useRef(),
+    item_name: useRef(),
+    quantity: useRef(),
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const submitData = {
+    const fieldsToCheck = ['item_code', 'item_name', 'quantity'];
+
+    const fieldNames = {
+      item_code: '품목 코드',
+      item_name: '품목 이름',
+      quantity: '소모수량',
+    };
+
+    for (const field of fieldsToCheck) {
+      if (!formData[field] || formData[field].trim() === '') {
+        setErrorField(field); 
+        alert(fieldNames[field] +' 입력해주세요')
+        inputRefs[field].current.focus(); 
+        return; 
+      }
+    }
+
+    const submitdata = {
       ...formData,
       component_code: formData.item_code,
       item_code: selectId.item_code,
     };
-
     try {
-      const response = await api.post("/relation/add", submitData);
-      const adData = response.data.data;
-      setSearchData((state) => [...state, adData,]);
-      setCodeAllData((state) => [...state, adData,]);
+      const response = await api.post("/relation/add", submitdata);
+      if(response.data.code == 1){
+        const adData = response.data.data;
+        setSearchData((state) => [...state, adData]);
+        setCodeAllData((state) => [...state, adData]);
+      }else{
+        alert(response.data.message)
+      }
     } catch (error) {
       console.log("error :", error);
     }
@@ -65,7 +97,7 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
       item_code: "",
       item_name: "",
       quantity: "",
-      common_code: "",
+      component_code: "",
     });
   };
   // #endregion
@@ -90,9 +122,9 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
 
   // #endregion
 
-  const [HelperScreenState, setHelperScreenState] = useState(false);
+  const [HelperScreenState, sedivelperScreenState] = useState(false);
   const selectedPartnerFn = () => {
-    setHelperScreenState(false);
+    sedivelperScreenState(false);
   };
 
   const item = {
@@ -108,54 +140,62 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
 
   return (
     <div>
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th>자재코드</th>
-            <th>자재이름</th>
-            <th>소모수량</th>
-          </tr>
-        </thead>
+      <div className="ctable">
+        <div className="chead">
+          <div className="ctr relation_row_sub">
+            <div></div>
+            <div>자재코드</div>
+            <div>자재이름</div>
+            <div>소모수량</div>
+          </div>
+        </div>
+      </div>
 
-        <tbody className="code-scrollable-table" onWheel={handleScroll}>
+      <div className="ctable">
+        <div className="cbody" onWheel={handleScroll}>
           {searchData &&
             searchData?.map((data) => (
-              <tr>
-                <td>
+              <div className="ctr relation_row_sub">
+                <div>
                   <input
                     type="checkbox"
-                    checked={selectCodes.includes(data.relation_id)}
-                    onChange={() => handleCheckboxChange(data.relation_id)}
+                    checked={selectCodes.includes(data)}
+                    onChange={() => handleCheckboxChange(data)}
                   />
-                </td>
-                <td>{data.component_code}</td>
-                <td>
+                </div>
+                <div>{data.component_code}</div>
+                <div>
                   {
                     itemAll.data.find(
                       (idata) => idata.item_code == data.component_code
                     ).item_name
                   }
-                </td>
-                <td>{data.quantity}</td>
-              </tr>
+                </div>
+                <div>{data.quantity}</div>
+              </div>
             ))}
-        </tbody>
-      </table>
+        </div>
+      </div>
       <form className="mt-3" onSubmit={handleSubmit}>
-        <div className="input_wrap">
+        <div className="relation_input_wrap">
           <div>
             <div>자재코드(f2)</div>
-            <div className="inputBox" style={{ marginRight: "10px" }}>
+            <div  style={{ marginRight: "10px" }}>
               <input
-                required
+                ref={inputRefs.item_code}
                 type="text"
                 name="item_code"
                 value={formData.item_code}
-                onChange={handleInputChange}
+                onChange={(e) =>{
+                  handleInputChange(e)
+                  setErrorField(null)
+                }}
+                style={{
+                  border:errorField === "item_code" ? "3px solid red" : "",
+                }}
                 onKeyDown={(e) => {
                   if (e.key === "F2") {
-                    setHelperScreenState(!HelperScreenState);
+                    sedivelperScreenState(!HelperScreenState);
                   }
                 }}
               />
@@ -163,16 +203,22 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
           </div>
           <div>
             <div>자재이름(f2)</div>
-            <div className="inputBox" style={{ marginRight: "10px" }}>
+            <div  style={{ marginRight: "10px" }}>
               <input
-                required
+                ref={inputRefs.item_name}
                 type="text"
                 name="item_name"
                 value={formData.item_name}
-                onChange={handleInputChange}
+                onChange={(e) =>{
+                  handleInputChange(e)
+                  setErrorField(null)
+                }}
+                style={{
+                  border:errorField === "item_code" ? "3px solid red" : "",
+                }}
                 onKeyDown={(e) => {
                   if (e.key === "F2") {
-                    setHelperScreenState(!HelperScreenState);
+                    sedivelperScreenState(!HelperScreenState);
                   }
                 }}
               />
@@ -198,14 +244,20 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
             )}
           </div>
           <div>
-            <div>수량</div>
-            <div className="inputBox" style={{ marginRight: "10px" }}>
+            <div>소모수량</div>
+            <div  style={{ marginRight: "10px" }}>
               <input
-                required
+                ref={inputRefs.quantity}
                 type="text"
                 name="quantity"
+                style={{
+                  border:errorField === "quantity" ? "3px solid red" : "",
+                }}
                 value={formData.quantity}
-                onChange={handleInputChange}
+                onChange={(e) =>{
+                  handleInputChange(e)
+                  setErrorField(null)
+                }}
               />
             </div>
           </div>
@@ -215,8 +267,10 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
             추가
           </button>
           <button
+            type="button"
+            disabled={!selectId}
             className="button"
-            style={{ backgroundColor: "red" }}
+            style={{ backgroundColor: selectCodes.length > 0 ? "red": "#dadada" }}
             onClick={handleDelete}
           >
             삭제

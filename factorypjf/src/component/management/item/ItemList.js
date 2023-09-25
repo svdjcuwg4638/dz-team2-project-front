@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import api from "../../../redux/api";
-import { useDispatch } from "react-redux";
-import { itemAction } from "../../../redux/actions/management/itemAction";
+import { useDispatch, useSelector } from "react-redux";
+import { codeAction } from "redux/actions/management/codeAction";
 
 const ItemList = ({
   itemAll,
@@ -11,7 +11,13 @@ const ItemList = ({
   selectItem,
 }) => {
   const dispatch = useDispatch();
-  const [itemList , setItemList] = useState(itemAll.data)
+  const [itemList, setItemList] = useState(itemAll.data);
+  const { codeAll } = useSelector((state) => state.code);
+
+  useEffect(() => {
+    dispatch(codeAction.getCodeAll());
+  }, []);
+
   const handleCheckboxChange = (id) => {
     if (selectIds.includes(id)) {
       setSelectIds((prev) => prev.filter((itemId) => itemId !== id));
@@ -20,9 +26,9 @@ const ItemList = ({
     }
   };
 
-  useEffect(()=>{
-    setItemList(itemAll.data)
-  },[itemAll])
+  useEffect(() => {
+    setItemList(itemAll.data);
+  }, [itemAll]);
 
   const [formData, setFormData] = useState({
     item_name: "",
@@ -33,17 +39,13 @@ const ItemList = ({
     e.preventDefault();
     const submitData = {
       ...formData,
-    }
+    };
 
     try {
-      setItemList(
-        (await api.post("/item/search", submitData)).data.data
-      );
+      setItemList((await api.post("/item/search", submitData)).data.data);
     } catch (error) {
       console.log("error :", error);
     }
-
-    console.log(itemList);
   };
 
   const handleSearchChange = (e) => {
@@ -52,56 +54,76 @@ const ItemList = ({
       ...formData,
       [name]: value,
     });
+    console.log(codeAll);
   };
 
   return (
     <div>
-      <div className="item_search_wrap" style={{ marginBottom: "20px" }}>
-        <form className="flex">
-          <div style={{ marginRight: "20px" }}>
-            품목코드 :
-            <input
-              type="text"
-              name="item_code"
-              onChange={handleSearchChange}
-              style={{ marginRight: "20px" }}
-            />
-            품목이름 :
-            <input type="text" name="item_name" onChange={handleSearchChange} />
+      <div className="item_search_wrap">
+        <form>
+          <div>
+            <div style={{ marginRight: "20px" }}>
+              <div>
+                <div>품목코드</div>
+                <div>
+                  <input
+                    type="text"
+                    name="item_code"
+                    onChange={handleSearchChange}
+                    style={{ marginRight: "20px" }}
+                  />
+                </div>
+              </div>
+              <div>
+                <div>품목이름</div>
+                <div>
+                  <input
+                    type="text"
+                    name="item_name"
+                    onChange={handleSearchChange}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
-          <div style={{ lineHeight: "5px" }}>
-            <button type="submit" className="button" onClick={handleSearchSubmit}>
+          <div>
+            <button
+              type="submit"
+              className="button"
+              onClick={handleSearchSubmit}
+            >
               조회
             </button>
           </div>
         </form>
       </div>
-      <div className="itemList_wrap">
-        <div className="table" style={{height:"500px"}}>
-          <thead className="top_table_header">
-            <tr>
-              <th ></th>
-              <th >품목코드</th>
-              <th >품목이름</th>
-              <th >
-                규격 w:폭 l:길이 h:높이 v:부피 we:중량
-              </th>
-              <th>수량</th>
-            </tr>
-          </thead>
-          <div className="tbody" style={{height:"430px"}}>
+
+      <div>
+        <div className="ctable">
+          <div className="chead">
+            <div className="ctr item_row">
+              <div></div>
+              <div>품목코드</div>
+              <div>품목이름</div>
+              <div>규격</div>
+              <div>단위</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="ctable">
+          <div className="cbody">
             {itemList.length > 0 &&
               itemList.map((data) => (
-                <tr onClick={() => setSelectItem(data)}>
-                  <td
-                    style={{
-                      backgroundColor:
-                        selectItem?.item_code == data?.item_code
-                          ? "#dadada"
-                          : "",
-                    }}
-                    onClick={(e) => e.stopPropagation()}
-                  >
+                <div
+                  className="ctr item_row"
+                  onClick={() => setSelectItem(data)}
+                  style={{
+                    backgroundColor:
+                      selectItem?.item_code == data?.item_code ? "#dadada" : "",
+                  }}
+                >
+                  <div onClick={(e) => e.stopPropagation()}>
                     <input
                       type="checkbox"
                       checked={selectIds.includes(data.item_code)}
@@ -110,52 +132,19 @@ const ItemList = ({
                         handleCheckboxChange(data.item_code);
                       }}
                     />
-                  </td>
-                  <td
-                    style={{
-                      backgroundColor:
-                        selectItem?.item_code == data?.item_code
-                          ? "#dadada"
-                          : "",
-                    }}
-                  >
-                    {data.item_code}
-                  </td>
-                  <td
-                    style={{
-                      backgroundColor:
-                        selectItem?.item_code == data?.item_code
-                          ? "#dadada"
-                          : "",
-                    }}
-                  >
-                    {data.item_name}
-                  </td>
-                  <td
-                    style={{
-                      backgroundColor:
-                        selectItem?.item_code == data?.item_code
-                          ? "#dadada"
-                          : "",
-                    }}
-                  >
-                    {data.width != "" ? "w: " + data.width + " " : ""}
-                    {data.width != "" ? "l: " + data.length + " " : ""}
-                    {data.width != "" ? "h: " + data.height + " " : ""}
-                    {data.width != "" ? "v: " + data.volume + " " : ""}
-                    {data.width != "" ? "we: " + data.weight + " " : ""}
-                  </td>
-                  <td
-                    style={{
-                      backgroundColor:
-                        selectItem?.item_code == data?.item_code
-                          ? "#dadada"
-                          : "",
-                    }}
-                  >
-                    {data.unit}
-                  </td>
-                </tr>
+                  </div>
+                  <div>{data.item_code}</div>
+                  <div>{data.item_name}</div>
+                  <div>
+                    {codeAll &&
+                      codeAll?.data?.find(
+                        (cdata) =>
+                          cdata.management_code == "STANDARD" &&
+                          cdata.common_code == data.standard
+                      )?.common_name}
+                  </div>
+                  <div>{data.unit}</div>
+                </div>
               ))}
           </div>
         </div>

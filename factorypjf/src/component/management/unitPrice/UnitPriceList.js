@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { partnerAction } from "redux/actions/management/partnerAction";
 import { unitPriceAction } from "redux/actions/management/unitPriceAction";
+import api from "redux/api";
 
 const UnitPriceList = ({ itemAll }) => {
   const dispatch = useDispatch();
@@ -36,7 +37,6 @@ const UnitPriceList = ({ itemAll }) => {
       partner_name: "",
       type: "",
       start_date: "",
-      end_date: "",
     });
   }, [listFalg]);
 
@@ -55,7 +55,6 @@ const UnitPriceList = ({ itemAll }) => {
     partner_name: "",
     type: "",
     start_date: "",
-    end_date: "",
   });
 
   const filterData = () => {
@@ -78,10 +77,6 @@ const UnitPriceList = ({ itemAll }) => {
       })
     );
   };
-
-  useEffect(() => {
-    filterData();
-  }, [formData]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -129,135 +124,172 @@ const UnitPriceList = ({ itemAll }) => {
     console.log(formData);
   }
 
+  const handleCheckboxChange = (cd) => {
+    if (selectCodes.includes(cd)) {
+      setSelectCodes((prev) => prev.filter((itemCd) => itemCd !== cd));
+    } else {
+      setSelectCodes((prev) => [...prev, cd]);
+    }
+  };
+
+  // #region 삭제
+  const [selectCodes, setSelectCodes] = useState([]);
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    await api.post("/unitprice/delete", selectCodes);
+    dispatch(partnerAction.getPartnerAll());
+    setSelectCodes([]);
+  };
+  // #endregion
+
   return (
     <div>
-      <form className="unit_price_search_form">
+      <form className="unit_price_search_form mt-4">
         <div>
-          <div>품목코드</div>
-          <div className="flex">
-            <input
-              readOnly
-              type="text"
-              onChange={handleInputChange}
-              value={formData["item_name"]}
-            ></input>
-            {formData["item_code"] != "" && (
-              <div>
-                <button
-                  name="item"
-                  onClick={delvalue}
-                  style={{ width: "20px", color: "red", background: "#fff" }}
-                >
-                  x
-                </button>
-              </div>
-            )}
-            <Modal menu={itemCode} handleInputChange={handleInputChange} />
-          </div>
-        </div>
-        <div>
-          <div>거래처</div>
-          <div className="flex">
-            <input
-              tyep="text"
-              name="partner_name"
-              onChange={handleInputChange}
-              value={formData["partner_name"]}
-            ></input>
-            <Modal menu={partnerCode} handleInputChange={handleInputChange} />
-          </div>
-        </div>
-        <div>
-          <div>입고/출고</div>
           <div>
-            <select name="type" onChange={handleInputChange}>
-              <option value=""></option>
-              <option value="inbound">입고</option>
-              <option value="outbound">출고</option>
-            </select>
+            <div>품목이름</div>
+            <div className="flex">
+              <input
+                readOnly
+                type="text"
+                onChange={handleInputChange}
+                value={formData["item_name"]}
+              ></input>
+              {formData["item_code"] != "" && (
+                <div>
+                  <button
+                    name="item"
+                    onClick={delvalue}
+                    style={{ width: "20px", color: "red", background: "#fff" }}
+                  >
+                    x
+                  </button>
+                </div>
+              )}
+              <Modal menu={itemCode} handleInputChange={handleInputChange} />
+            </div>
+          </div>
+          <div>
+            <div>거래처</div>
+            <div className="flex">
+              <input
+                tyep="text"
+                name="partner_name"
+                onChange={handleInputChange}
+                value={formData["partner_name"]}
+              ></input>
+              <Modal menu={partnerCode} handleInputChange={handleInputChange} />
+            </div>
+          </div>
+          <div>
+            <div>입고/출고</div>
+            <div>
+              <select name="type" onChange={handleInputChange}>
+                <option value=""></option>
+                <option value="inbound">입고</option>
+                <option value="outbound">출고</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <div>시작일</div>
+            <div>
+              <input
+                tyep="text"
+                name="itme_code"
+                onChange={handleInputChange}
+              ></input>
+            </div>
           </div>
         </div>
         <div>
-          <div>시작일</div>
-          <div>
-            <input
-              tyep="text"
-              name="itme_code"
-              onChange={handleInputChange}
-            ></input>
-          </div>
-        </div>
-        <div>
-          <div style={{ marginLeft: "30px" }}>마감일</div>
-          <div>
-            ~
-            <input
-              style={{ marginLeft: "20px" }}
-              tyep="text"
-              name="itme_code"
-              onChange={handleInputChange}
-            ></input>
-          </div>
+          <button type="button" className="button" onClick={filterData}>
+            조회
+          </button>
         </div>
       </form>
       <div className="unit_price_tab_wrap">
         <div
           onClick={() => setListFlag("current")}
-          style={{ backgroundColor: listFalg == "current" ? "#dadada" : "" }}
+          style={{ backgroundColor: listFalg == "current" ? "#4473BF" : "" }}
         >
           현재단가
         </div>
         <div
           onClick={() => setListFlag("expected")}
-          style={{ backgroundColor: listFalg == "expected" ? "#dadada" : "" }}
+          style={{ backgroundColor: listFalg == "expected" ? "#4473BF" : "" }}
         >
           변경예정단가
         </div>
         <div
           onClick={() => setListFlag("all")}
-          style={{ backgroundColor: listFalg == "all" ? "#dadada" : "" }}
+          style={{ backgroundColor: listFalg == "all" ? "#4473BF" : "" }}
         >
           전체
         </div>
       </div>
-      <div className="table">
-        <thead style={{ width: "99.2%" }}>
-          <tr>
-            <th>품목코드</th>
-            <th>품목이름</th>
-            <th>거래처</th>
-            <th>단가</th>
-            <th>입고/출고</th>
-            <th>시작일</th>
-            <th>종료일</th>
-          </tr>
-        </thead>
-        <tbody className="tbody">
+
+      <div className="ctable">
+        <div className="chead" style={{ width: "99.2%" }}>
+          <div className="ctr unitprice_row">
+            <div></div>
+            <div>품목코드</div>
+            <div>품목이름</div>
+            <div>거래처</div>
+            <div>단가</div>
+            <div>입고/출고</div>
+            <div>시작일</div>
+            <div>종료일</div>
+          </div>
+        </div>
+      </div>
+      <div className="ctable">
+        <div className="cbody">
           {unitPriceAll &&
             searchList?.map((data) => (
-              <tr>
-                <td>{data.item_code}</td>
-                <td>
+              <div className="ctr unitprice_row">
+                <div>
+                  <input
+                    type="checkbox"
+                    checked={selectCodes?.includes(data?.partner_code)}
+                    onChange={() => handleCheckboxChange(data?.partner_code)}
+                  />
+                </div>
+                <div>{data.item_code}</div>
+                <div>
                   {
                     itemAll?.data?.find(
                       (idata) => idata.item_code == data.item_code
-                    ).item_name
+                    )?.item_name
                   }
-                </td>
-                <td>
+                </div>
+                <div>
                   {
                     partnerAll?.data?.find(
                       (pdata) => pdata.partner_code == data.partner_code
                     ).partner_name
                   }
-                </td>
-                <td>{data.unit_price}</td>
-                <td>{data.type == "inbound" ? "입고" : "출고"}</td>
-                <td>{data.start_date}</td>
-                <td>{data.end_date}</td>
-              </tr>
+                </div>
+                <div>{parseInt(data.unit_price, 10).toLocaleString()}</div>
+                <div>{data.type == "inbound" ? "입고" : "출고"}</div>
+                <div>{data.start_date}</div>
+                <div>{data.end_date}</div>
+              </div>
             ))}
-        </tbody>
+        </div>
+      </div>
+      <div className="button_wrap">
+        <button
+          disabled={selectCodes.length > 0 ? false : true}
+          className="button"
+          style={{
+            backgroundColor: selectCodes.length > 0 ? "red" : "#dadada",
+          }}
+          onClick={handleDelete}
+        >
+          삭제
+        </button>
       </div>
     </div>
   );
