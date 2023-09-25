@@ -17,16 +17,6 @@ const CommonCode = ({ selectId, codeAll, setCodeAllData }) => {
     setSearchData(filteredData);
   }, [selectId]);
 
-  // #region 스크롤
-  const tableRef = useRef(null);
-
-  const handleScroll = (e) => {
-    const { deltaY } = e;
-    if (tableRef.current) {
-      tableRef.current.scrollTop += deltaY;
-    }
-  };
-  // #endregion
 
   const dispatch = useDispatch();
 
@@ -47,22 +37,67 @@ const CommonCode = ({ selectId, codeAll, setCodeAllData }) => {
     });
   };
 
+    //#region 미입력 input창 입력시 빨간색 테두리제거
+    useEffect(() => {
+      if (errorField == "common_code") {
+        setErrorField(null);
+      }
+    }, [formData.common_code]);
+    useEffect(() => {
+      if (errorField == "common_name") {
+        setErrorField(null);
+      }
+    }, [formData.common_name]);
+    //#endregion
+
+    const [errorField, setErrorField] = useState(null);
+
+    const inputRefs = {
+      common_code: useRef(),
+      common_name: useRef(),
+    };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const fieldsToCheck = [
+      "common_code",
+      "common_name",
+    ];
+
+    const fieldNames = {
+      common_code: "품목 코드",
+      common_name: "품목 이름",
+    };
+
+    for (const field of fieldsToCheck) {
+      if (!formData[field] || formData[field].trim() === "") {
+        setErrorField(field);
+        alert(fieldNames[field] + " 입력해주세요");
+        inputRefs[field].current.focus();
+        return;
+      }
+    }
+
     try {
       const response = await api.post("/code/add", formData);
-      const adData = response.data.data;
-      setSearchData((state) => [...state, adData]);
-      setCodeAllData((state) => [...state, adData]);
+      if(response.data.code == 1){
+        alert(selectId.management_name +' 관리코드 '+ formData.common_name + ' 추가되었습니다.')
+        const adData = response.data.data;
+        setSearchData((state) => [...state, adData]);
+        setCodeAllData((state) => [...state, adData]);
+        setFormData({
+          ...formData,
+          common_code: "",
+          common_name: "",
+        });
+      }else{
+        alert('이미 '+selectId.management_name +'에 등록된 코드입니다.')
+      }
     } catch (error) {
       console.log("error :", error);
     }
 
-    setFormData({
-      ...formData,
-      common_code: "",
-      common_name: "",
-    });
   };
   // #endregion
 
@@ -99,7 +134,7 @@ const CommonCode = ({ selectId, codeAll, setCodeAllData }) => {
       </div>
 
       <div className="ctable">
-        <div className="cbody" onWheel={handleScroll}>
+        <div className="cbody">
           {searchData &&
             searchData?.map((data) => (
               <div className="ctr code_row_sub">
@@ -122,11 +157,17 @@ const CommonCode = ({ selectId, codeAll, setCodeAllData }) => {
             <div>코드</div>
             <div  style={{ marginRight: "10px" }}>
               <input
-                required
+              ref={inputRefs.common_code}
                 type="text"
                 name="common_code"
                 value={formData.common_code}
                 onChange={handleChange}
+                style={{
+                  border:
+                    errorField === "common_code"
+                      ? "3px solid red"
+                      : "",
+                }}
               />
             </div>
           </div>
@@ -134,17 +175,23 @@ const CommonCode = ({ selectId, codeAll, setCodeAllData }) => {
             <div>이름</div>
             <div  style={{ marginRight: "10px" }}>
               <input
-                required
+                ref={inputRefs.common_name}
                 type="text"
                 name="common_name"
                 value={formData.common_name}
                 onChange={handleChange}
+                style={{
+                  border:
+                    errorField === "common_name"
+                      ? "3px solid red"
+                      : "",
+                }}
               />
             </div>
           </div>
         </div>
         <div className="button_wrap">
-          <button type="submit" className="button">
+          <button type="submit" className="button" disabled={!selectId}>
             추가
           </button>
           <button

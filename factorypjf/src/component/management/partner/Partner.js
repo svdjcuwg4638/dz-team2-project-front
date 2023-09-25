@@ -46,6 +46,7 @@ const Partner = () => {
   const handleDelete = async (e) => {
     e.preventDefault();
     await api.post("/partner/delete", selectCodes);
+    alert('삭제되었습니다.')
     dispatch(partnerAction.getPartnerAll());
     setSelectCodes([]);
   };

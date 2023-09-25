@@ -36,9 +36,6 @@ const Code = () => {
   }, []);
 
   useEffect(()=>{
-    if(!isLoading && manageCodeAll && manageCodeAll.data){
-      setSelectId(manageCodeAll?.data[0])
-    }
     setCodeAllData(codeAll.data)
   },[isLoading])
 
