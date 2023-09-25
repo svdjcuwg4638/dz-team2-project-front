@@ -37,7 +37,7 @@ const Code = () => {
 
   useEffect(()=>{
     setCodeAllData(codeAll.data)
-  },[isLoading])
+  },[codeAll])
 
 
   if (isLoading) {

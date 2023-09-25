@@ -68,7 +68,22 @@ const Dep2 = ({ bookMarkList }) => {
   }
 
   function findMenuByUrl(url) {
-      return { menu: url.split('/')[1], menuName: "기준정보관리" };
+    let menuValue = url.split("/")[1];
+    let menuNameValue = "";
+
+    if (menuValue === "management") {
+      menuNameValue = "기준정보관리";
+    } else if (menuValue === "production") {
+      menuNameValue = "생산관리"; 
+    } else if (menuValue === "inbound") {
+      menuNameValue = "입고관리"; 
+    } else if (menuValue === "outbound") {
+      menuNameValue = "출고관리"; 
+    } else if (menuValue === "storage") {
+      menuNameValue = "재고관리"; 
+    } 
+
+    return { menu: menuValue, menuName: menuNameValue };
   }
 
   return (
@@ -77,11 +92,31 @@ const Dep2 = ({ bookMarkList }) => {
         <div>
           <div className="menu_title">
             <div>
-              <LuFactory size={40} color="#fff" style={{display:currentMenu == 'production'? "":"none"}} />
-              <FiPlusSquare size={40} color="#fff" style={{display:currentMenu == 'inbound'? "":"none"}} />
-              <FiMinusSquare size={40} color="#fff" style={{display:currentMenu == 'outbound'? "":"none"}} />
-              <MdOutlineInventory2 size={40} color="#fff" style={{display:currentMenu == 'storage'? "":"none"}} />
-              <BsInfoCircle size={40} color="#fff" style={{display:currentMenu == 'management'? "":"none"}} />
+              <LuFactory
+                size={40}
+                color="#fff"
+                style={{ display: currentMenu == "production" ? "" : "none" }}
+              />
+              <FiPlusSquare
+                size={40}
+                color="#fff"
+                style={{ display: currentMenu == "inbound" ? "" : "none" }}
+              />
+              <FiMinusSquare
+                size={40}
+                color="#fff"
+                style={{ display: currentMenu == "outbound" ? "" : "none" }}
+              />
+              <MdOutlineInventory2
+                size={40}
+                color="#fff"
+                style={{ display: currentMenu == "storage" ? "" : "none" }}
+              />
+              <BsInfoCircle
+                size={40}
+                color="#fff"
+                style={{ display: currentMenu == "management" ? "" : "none" }}
+              />
             </div>
             <div>{currentMenuName}</div>
           </div>

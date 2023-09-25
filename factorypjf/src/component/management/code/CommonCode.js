@@ -15,7 +15,7 @@ const CommonCode = ({ selectId, codeAll, setCodeAllData }) => {
       (data) => data.management_code === selectId?.management_code
     );
     setSearchData(filteredData);
-  }, [selectId]);
+  }, [selectId, codeAll]);
 
 
   const dispatch = useDispatch();
@@ -33,7 +33,6 @@ const CommonCode = ({ selectId, codeAll, setCodeAllData }) => {
     setFormData({
       ...formData,
       [name]: value,
-      management_code: selectId.management_code,
     });
   };
 
@@ -60,6 +59,11 @@ const CommonCode = ({ selectId, codeAll, setCodeAllData }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if(selectId == null){
+      alert('관리코드를 선택해주세요')
+      return
+    }
+
     const fieldsToCheck = [
       "common_code",
       "common_name",
@@ -80,7 +84,12 @@ const CommonCode = ({ selectId, codeAll, setCodeAllData }) => {
     }
 
     try {
-      const response = await api.post("/code/add", formData);
+      const submitdata ={
+        ...formData,
+        management_code: selectId.management_code,
+      }
+
+      const response = await api.post("/code/add", submitdata);
       if(response.data.code == 1){
         alert(selectId.management_name +' 관리코드 '+ formData.common_name + ' 추가되었습니다.')
         const adData = response.data.data;
@@ -115,6 +124,7 @@ const CommonCode = ({ selectId, codeAll, setCodeAllData }) => {
   const handleDelete = async (e) => {
     e.preventDefault();
     await api.post("/code/delete", selectCodes);
+    alert('삭제되었습니다.')
     dispatch(codeAction.getCodeAll());
     setSelectCodes([]);
   };
@@ -141,8 +151,8 @@ const CommonCode = ({ selectId, codeAll, setCodeAllData }) => {
                 <div>
                   <input
                     type="checkbox"
-                    checked={selectCodes.includes(data.common_code)}
-                    onChange={() => handleCheckboxChange(data.common_code)}
+                    checked={selectCodes.includes(data)}
+                    onChange={() => handleCheckboxChange(data)}
                   />
                 </div>
                 <div>{data.common_code}</div>
@@ -191,13 +201,14 @@ const CommonCode = ({ selectId, codeAll, setCodeAllData }) => {
           </div>
         </div>
         <div className="button_wrap">
-          <button type="submit" className="button" disabled={!selectId}>
+          <button type="submit" className="button">
             추가
           </button>
           <button
             className="button"
-            style={{ backgroundColor: "red" }}
+            style={{ backgroundColor:selectCodes.length > 0 ?  "red": "#dadada" }}
             onClick={handleDelete}
+            disabled={!selectCodes.length > 0}
           >
             삭제
           </button>
