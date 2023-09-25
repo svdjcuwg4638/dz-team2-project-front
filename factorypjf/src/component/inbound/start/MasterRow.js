@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "redux/api";
+import TextHelperModal from "./TextHelperModal";
 
 const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFlag, setCheckedBoundIds }) => {
   const [formData, setFormData] = useState({
@@ -15,6 +16,28 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
     isDelete: 0,
     frontDelete: 0,
   });
+
+  //#region Modal관련데이터
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달의 상태
+  const [activeInput, setActiveInput] = useState(""); // F2 키를 누른 input의 name
+
+  const handleKeyDown = (event) => {
+    if (event.key === "F2") {
+      setActiveInput(event.target.name); // 현재 포커스된 input의 name 설정
+      setIsModalOpen(true); // 모달 열기
+    }
+  };
+
+  const handleModalSelect = (selectedValue) => {
+    setFormData((prevState) => ({ ...prevState, [activeInput]: selectedValue })); // formData 업데이트
+    setIsModalOpen(false); // 모달 닫기
+  };
+
+  const handleModalclose = () =>{
+    setIsModalOpen(false);
+  }
+  //#endregion
+  
 
   const handleCheckboxChange = (e) => {
     if (e.target.checked) {
@@ -67,6 +90,7 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
   };
 
   return (
+    <>
     <tr onClick={() => setMaseterFocus(formData["bound_id"])}>
       <td>
         <input
@@ -84,17 +108,24 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
         ></input>
       </td>
       <td>
-        <input
-          type="text"
+        <select
           name="bound_category"
+          value={formData.bound_category}
           onChange={handleInputChange}
-        ></input>
+      >
+          <option value="">-- 선택 --</option>
+          <option value="구매">구매</option>
+          <option value="반품">반품</option>
+          <option value="판매">판매</option>
+       </select>
       </td>
       <td>
         <input
-          type="text"
-          name="partner_code"
-          onChange={handleInputChange}
+           type="text"
+           value={formData.partner_code}
+           name="partner_code"
+           onChange={handleInputChange}
+           onKeyDown={handleKeyDown}
         ></input>
       </td>
       <td>
@@ -105,7 +136,16 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
         ></input>
       </td>
     </tr>
+          {isModalOpen && (
+            <TextHelperModal 
+              handleModalSelect={handleModalSelect} 
+              handleModalclose={handleModalclose}
+              activeInput={activeInput}
+            />
+          )}
+    </>
   );
+  
 };
 
 export default MasterRow;

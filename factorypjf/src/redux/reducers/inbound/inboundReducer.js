@@ -6,7 +6,7 @@ let initalState={
 
 function inboundReducer(state=initalState, action){
     let {type, payload} = action;
-    console.log('reducer의',state);
+    // console.log('reducer의',state);
     switch(type){
         case "GET_REQUEST":
             return{
