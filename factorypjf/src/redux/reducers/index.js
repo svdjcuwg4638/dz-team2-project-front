@@ -10,6 +10,8 @@ import codehelperReducer from "./storage/codehelperReducer";
 import inventoryReducer from "./storage/InventoryReducer";
 import inboundReducer from "./inbound/inboundReducer";
 import outboundReducer from "./outbound/ouboundReducer";
+import relationReducer from "./management/relationReducer";
+import commonReducer from "./common/commonReducer";
 
 export default combineReducers({
   currentMenu: menuReducer,
@@ -20,7 +22,11 @@ export default combineReducers({
   unitPrice: unitPriceReducer,
   code: codeReducer,
   codehelper: codehelperReducer,
+  relation: relationReducer,
+  
   inventory: inventoryReducer,
   inbound: inboundReducer,
   outbound : outboundReducer,
+
+  common: commonReducer,
 });

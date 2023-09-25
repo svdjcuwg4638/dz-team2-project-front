@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { partnerAction } from "../../../redux/actions/management/partnerAction";
 import { itemAction } from "../../../redux/actions/management/itemAction";
 import { storageAction } from "../../../redux/actions/management/storageAction";
+import { codeAction } from "redux/actions/management/codeAction";
 
-const SearchHelper = ({ searchPartner, handleRowClick, menu }) => {
-  console.log("menupopup");
+const SearchHelper = ({
+  searchPartner,
+  code_type,
+  handleRowClick,
+  menu,
+  handleInputChange,
+  setDataLoad,
+}) => {
   const dispatch = useDispatch();
 
   const [InputboxText, setInputboxText] = useState("");
@@ -16,6 +23,8 @@ const SearchHelper = ({ searchPartner, handleRowClick, menu }) => {
     if (menu.name === "거래처") dispatch(partnerAction.getPartnerAll());
     if (menu.name === "품목") dispatch(itemAction.getItemAll());
     if (menu.name === "창고") dispatch(storageAction.getstorageAll());
+    if (menu.name === "세부장소") dispatch(storageAction.getstorageAll());
+    if (menu.name === "공통코드") dispatch(codeAction.getCodeAll());
   }, [InputboxText]);
 
   let filteredData = [];
@@ -23,11 +32,20 @@ const SearchHelper = ({ searchPartner, handleRowClick, menu }) => {
     filteredData = menu.dataAll[menu.type_all].data;
 
     if (Category === "default") {
-      filteredData = menu.dataAll[menu.type_all].data.filter(
-        (item) =>
-          item[menu.code_column].includes(InputboxText) ||
-          item[menu.name_column].includes(InputboxText)
-      );
+      if (menu.name == "공통코드") {
+        filteredData = menu.dataAll[menu.type_all].data.filter(
+          (item) =>
+            (item[menu.code_column].includes(InputboxText) ||
+              item[menu.name_column].includes(InputboxText)) &&
+            item["management_code"] == menu.common_code_type
+        );
+      } else {
+        filteredData = menu.dataAll[menu.type_all].data.filter(
+          (item) =>
+            item[menu.code_column].includes(InputboxText) ||
+            item[menu.name_column].includes(InputboxText)
+        );
+      }
     } else if (Category === "code") {
       filteredData = menu.dataAll[menu.type_all].data.filter((item) =>
         item[menu.code_column].includes(InputboxText)
@@ -40,8 +58,36 @@ const SearchHelper = ({ searchPartner, handleRowClick, menu }) => {
   }
 
   const rowClickHandler = (datarow) => {
+    if (menu.name == "공통코드") {
+      handleInputChange({
+        target: {
+          name: code_type,
+          value: datarow[menu.code_column],
+        },
+      });
+    } else if (menu.input_type == "item") {
+      handleInputChange({
+        target: {
+          name: menu.code_column,
+          value: datarow[menu.code_column],
+        },
+      });
+      handleInputChange({
+        target: {
+          name: menu.name_column,
+          value: datarow[menu.name_column],
+        },
+      });
+    } else {
+      handleInputChange({
+        target: {
+          name: menu.code_column,
+          value: datarow[menu.code_column],
+        },
+      });
+    }
     setSelectedColumn(datarow);
-    searchPartner(datarow[menu.code_column]);
+    searchPartner(datarow[menu.name_column]);
   };
 
   const clickFn = (e) => {
@@ -89,7 +135,7 @@ const SearchHelper = ({ searchPartner, handleRowClick, menu }) => {
           className="body m-3"
           style={{ height: "400px", overflowY: "scroll" }}
         >
-          <table>
+          <table style={{color:"#000"}}>
             <thead>
               <tr>
                 <th>{menu.name}코드</th>
@@ -98,8 +144,12 @@ const SearchHelper = ({ searchPartner, handleRowClick, menu }) => {
             </thead>
             <tbody>
               {filteredData.map((datarow) => (
-                <tr onClick={() => rowClickHandler(datarow)}>
-                  <td>{datarow[menu.code_column]}</td>{" "}
+                <tr
+                  onClick={(e) => {
+                    rowClickHandler(datarow);
+                  }}
+                >
+                  <td>{datarow[menu.code_column]}</td>
                   <td> {datarow[menu.name_column]}</td>
                 </tr>
               ))}

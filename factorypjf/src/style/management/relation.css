@@ -1,0 +1,56 @@
+.productItem_search_wrap input{
+  width: 100px;
+}
+
+.productItem_search_wrap > div {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.productItem_search_wrap > div > div{
+  margin: 0 10px;
+}
+
+.productItem_search_wrap > div > div > div{
+  margin: 0 10px;
+}
+
+.productItem_search_wrap > div > div > div:nth-child(1){
+  font-weight: bold;
+}
+
+.productItem_search_wrap > div:nth-child(2) {
+  justify-content: flex-end;
+}
+
+.relation_row div:nth-child(1){
+  width: 50%;
+}
+.relation_row div:nth-child(2){
+  width: 50%;
+}
+
+.relation_row_sub div:nth-child(1){
+  width: 10%;
+}
+.relation_row_sub div:nth-child(2){
+  width: 35%;
+}
+.relation_row_sub div:nth-child(3){
+  width: 35%;
+}
+.relation_row_sub div:nth-child(4){
+  width: 20%;
+}
+
+.relation_input_wrap {
+  display: flex;
+  font-weight: bold;
+}
+.code_wrap > div:nth-child(3) .relation_row_sub >div{
+  cursor: auto;
+}
+.code_wrap > div:nth-child(3) .relation_row_sub input{
+  cursor: pointer;
+}

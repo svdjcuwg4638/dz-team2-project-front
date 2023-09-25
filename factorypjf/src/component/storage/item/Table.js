@@ -39,7 +39,7 @@ const Table = () => {
                   {inventory.width}*{inventory.length}*{inventory.height},{" "}
                   {inventory.volume}, {inventory.weight}
                 </td>
-                <td>1EA</td>
+                <td>{inventory.unit}</td>
                 <td>{inventory.partner_code}</td>
                 <td>{inventory.partner_name}</td>
                 <td>{inventory.total}</td>

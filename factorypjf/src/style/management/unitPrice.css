@@ -1,0 +1,120 @@
+.unit_price_tab_wrap {
+  display: flex;
+  position: absolute;
+  top: 143px;
+}
+
+.unitprice_wrap{
+  display: flex;
+  height: 100%;
+  position: relative;
+}
+.unitprice_wrap > div:nth-child(1){
+  width: 60%;
+  padding: 30px;
+}
+
+.unitprice_wrap > div:nth-child(2) select{
+  width: 80%;
+  height: 30px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.unit_price_tab_wrap > div {
+  border: 1px solid #000;
+  margin: 0 10px;
+  width: 120px;
+  text-align: center;
+  border-radius: 5px;
+  color: #fff;
+  height: 40px;
+  background-color: #5390EF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+.unit_price_search_form > div{
+  display: flex;
+  margin-bottom: 25px;
+  justify-content: flex-end;
+  margin-right: 20px;
+}
+.unit_price_search_form > div > div{
+  margin: 0 15px;
+}
+.unit_price_search_form  input{
+  border-radius: 5px;
+  width: 100px;
+}
+
+.unit_price_search_form  select{
+  width: 100px;
+  height: 26px;
+  border-radius: 5px;
+}
+
+.item_detail_from input,
+.item_detail_from select{
+  border-radius: 5px;
+  width: 150px;
+  text-align: center;
+  height: 30px;
+}
+
+.item_detail_from >div > div >div:nth-child(1){
+  font-weight: bold;
+  font-size: 20px;
+}
+.addUnit_help_wrap > div{
+  padding-top: 20px;
+}
+
+.unitprice_row > div:nth-child(1){
+  width: 5%;
+}
+.unitprice_row > div:nth-child(2){
+  width: 15%;
+}
+.unitprice_row > div:nth-child(3){
+  width: 15%;
+}
+.unitprice_row > div:nth-child(4){
+  width: 12%;
+}
+.unitprice_row > div:nth-child(5){
+  width: 10%;
+}
+.unitprice_row > div:nth-child(6){
+  width: 15%;
+}
+.unitprice_row > div:nth-child(7){
+  width: 17.5%;
+}
+.unitprice_row > div:nth-child(8){
+  width: 17.5%;
+}
+
+.unitprice_title{
+  position: absolute;
+  font-size: 40px;
+  font-weight: bold;
+  left: 20px;
+  top: 20px;
+}
+
+.unit_price_search_form  > div:nth-child(1) > div > div:nth-child(1){
+  font-weight: bold;
+}
+
+.unitprice_wrap > div:nth-child(1) .unitprice_row > div{
+  cursor: auto;
+}
+
+.unitprice_wrap > div:nth-child(1) .unitprice_row input{
+  cursor: pointer;
+}

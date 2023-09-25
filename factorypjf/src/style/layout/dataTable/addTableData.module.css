@@ -1,0 +1,30 @@
+/* .btn_add{
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 20px;
+    color: var(--font-color);
+    font-weight: bold;
+} */
+td{
+    padding:0;
+    background-color: transparent;
+}
+
+.input_date{
+    max-width: 90px;
+    font-size: 14px;
+}
+
+Hide Calendar Icon In Chrome
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
+.add-table-focus{
+    background-color: rgba(224, 224, 224, 0.363)
+}

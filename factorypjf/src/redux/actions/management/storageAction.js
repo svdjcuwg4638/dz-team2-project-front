@@ -2,7 +2,6 @@ import api from "../../api";
 function getstorageAll() {
   return async (dispatch) => {
     try {
-      dispatch({ type: "GET_REQUEST" });
       const storageAllList = api.get("/storage/all");
       const locationAllList = api.get("/location/all");
       let [storageAllListResponse, locationAllListResponse] = await Promise.all(

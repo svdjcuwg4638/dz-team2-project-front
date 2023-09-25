@@ -1,0 +1,128 @@
+.partner_wrap {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 100%;
+}
+
+.partner_wrap > div:nth-child(1){
+  width: 60%;
+  padding: 40px;
+}
+
+.partner-scrollable-table {
+  height: 400px;
+  overflow: auto;
+  display: block;
+}
+
+.partner_list_wrap {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+}
+.partner_detail_wrap {
+  width: 40%;
+  background-color: #dadada;
+  border-radius: 10px;
+}
+
+.partner_add_wrap {
+  position: absolute;
+  z-index: 3;
+  width: 40%;
+  right: 0px;
+  background-color: #dadada;
+  height: 80%;
+  border-radius: 15px;
+  transition: right 0.5s ease-in-out;
+  padding: 8px;
+  border-radius: 17px;
+}
+.button_wrap {
+  justify-content: flex-end;
+}
+
+.postmodal {
+  display: flex;
+  flex-flow: column;
+  position: fixed;
+  width: 527px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.postmodal > div{
+  background: #000;
+}
+
+.postmodal > div > div:nth-child(1){
+  display: flex;
+  justify-content: flex-end;
+}
+
+.detail_wrap_sub{
+  position: relative;
+}
+
+.partner_search_wrap{
+  display: flex;
+  justify-content: flex-end;
+}
+.partner_search_wrap > div{
+  margin: 0 10px;
+  align-items: center;
+}
+.partner_search_wrap > div > div:nth-child(1){
+  font-weight: bold;
+}
+
+.partner_search_wrap input,
+.partner_search_wrap select{
+  margin-left: 5px;
+  width: 70%;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.partner_search_wrap select{
+  width: 100%;
+}
+
+.partner_row > div:nth-child(1){
+  width: 5%;
+}
+.partner_row > div:nth-child(2){
+  width: 20%;
+}
+.partner_row > div:nth-child(3){
+  width: 20%;
+}
+.partner_row > div:nth-child(4){
+  width: 20%;
+}
+.partner_row > div:nth-child(5){
+  width: 17%;
+}
+
+.chead .partner_row > div:nth-child(6){
+  width: 19%;
+}
+.cbody .partner_row > div:nth-child(6){
+  width: 19%;
+}
+
+.partner_title{
+  position: absolute;
+  font-size: 40px;
+  font-weight: bold;
+  top: 20px;
+  left: 20px;
+}
+
+.content_wrap{
+  position: relative;
+}

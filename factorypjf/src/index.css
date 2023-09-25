@@ -4,7 +4,8 @@
   /* color */
   --main-color:#4473BF;
   --border-color-light:#B9B9B9;
-  --font-color:#4D4D4D
+  --font-color:#4D4D4D;
+  --red-color:#DE5C5C;
 }
 body {
   margin: 0;

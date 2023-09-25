@@ -4,12 +4,10 @@ import api from "../../api";
 function getPartnerAll(){
   return async(dispatch)=>{
     try{
-      dispatch({type:"GET_REQUEST"});
-      const partnerAllList = api.get("/partner/all");
+      const unitPriceAll = api.get("/partner/all");
       let [partnerAllListResponse] = await Promise.all(
-        [partnerAllList]
-      );
-
+        [ unitPriceAll]
+      )
       dispatch({
         type:"GET_PARTNER_ALL_SUCCESS",
         payload:{

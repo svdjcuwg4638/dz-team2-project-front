@@ -1,40 +1,49 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import AddItem from "./AddItem";
 import ItemList from "./ItemList";
 import { itemAction } from "../../../redux/actions/management/itemAction";
 import { ClipLoader } from "react-spinners";
 import "../../../style/management/item.css";
 import DetailItem from "./DetailItem";
+import api from "redux/api";
+import "../../../style/management/management.css";
 const Item = () => {
   const dispatch = useDispatch();
 
-  const { itemAll, storageAll, loading, locationAll } = useSelector(
-    (state) => state.item
-  );
+  const [selectItem, setSelectItem] = useState(null);
+
+  const { itemAll } = useSelector((state) => state.item);
+
+  const [isLoading, setIsloading] = useState(false);
+
+  const [selectIds, setSelectIds] = useState([]);
+
+  const handleDelete = async () => {
+    await api.post("/item/delete", selectIds);
+    dispatch(itemAction.getItemAll());
+    setSelectIds([]);
+  };
 
   useEffect(() => {
-    dispatch(itemAction.getItemAll());
+    const patchItems = async () => {
+      setIsloading(true);
+      try {
+        await dispatch(itemAction.getItemAll());
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsloading(false);
+      }
+    };
+    patchItems();
   }, []);
 
-  //#region 추가모달표시
-  const [view, setView] = useState("-100%");
-
-  const addFormViewHandler = () => {
-    if (view == "-100%") {
-      setView("0");
-    } else {
-      setView("-100%");
-    }
-  };
-  //#endregion
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="loader_wrap container">
         <ClipLoader
           color="#000"
-          loading={loading}
+          loading={isLoading}
           size={150}
           aria-label="Loading Spinner"
           data-testid="loader"
@@ -45,20 +54,36 @@ const Item = () => {
   }
   return (
     <div className="item_wrap">
-      <div style={{height:"90%", margin:'50px'}}>
-        {itemAll.data && <ItemList itemAll={itemAll} />}
-        <div style={{display:'flex', justifyContent:'flex-end', marginTop:'20px'}}>
-          <button className="button" onClick={addFormViewHandler}>
-            추가
+      <div style={{ height: "90%", margin: "50px" }}>
+        {itemAll.data && (
+          <ItemList
+            itemAll={itemAll}
+            setSelectItem={setSelectItem}
+            selectItem={selectItem}
+            setSelectIds={setSelectIds}
+            selectIds={selectIds}
+          />
+        )}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
+          <button
+            className="button"
+            style={{ backgroundColor: selectIds.length > 0 ? "red" :"#dadada" }}
+            disabled={selectIds.length > 0 ? false : true}
+            onClick={handleDelete}
+          >
+            삭제
           </button>
         </div>
       </div>
-      <div className="detail_items_wrap">
-        <DetailItem />
+      <div>
+        <DetailItem selectItem={selectItem} setSelectItem={setSelectItem}/>
       </div>
-      <div className="item_add_wrap" style={{ right: view }}>
-        <AddItem addFormViewHandler={addFormViewHandler} />
-      </div>
+      <div className="itme_title">품목관리</div>
     </div>
   );
 };
