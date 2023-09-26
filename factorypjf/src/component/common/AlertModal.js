@@ -1,4 +1,5 @@
 import ListTd from "component/layout/Table/ListTableData";
+import { putAxios } from "function/axiosFuction";
 import { useEffect } from "react";
 
 import helperStyle from "style/common/helperModal.module.css";
@@ -20,8 +21,26 @@ function HelperOverlay({ modalState }) {
   });
 
   const submitHandler=()=>{
-    const {grid01Data,grid02Data}={...modalState.data}
+    const {grid01Data,grid02Data,deleteData}={...modalState.data}
     
+    //product, product_detail 테이블 수정
+    const param={}
+    param.production=grid01Data.find((el)=>{
+      return el.state==='edit'
+    })
+    //product_relation 테이블 수정
+    let componentArr=[]
+    grid02Data.forEach((data)=>{
+      data.forEach((el)=>{if(el.state==='edit')componentArr.push(el)})
+    })
+    param.component=componentArr
+
+    //product 테이블 delete
+    param.productDelete=deleteData
+
+   /
+
+    console.log(param)
   }
 
   return (

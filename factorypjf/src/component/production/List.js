@@ -462,7 +462,7 @@ export default function Add() {
           tableItem: deleteData,
         },
       ],
-      data: { grid01Data, grid02Data: grid02Cache.items },
+      data: { grid01Data, grid02Data: grid02Cache.items, deleteData },
     };
     modalDispatch({ type: "ON_MODAL", state });
   };
