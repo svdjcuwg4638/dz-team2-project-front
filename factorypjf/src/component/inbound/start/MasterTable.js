@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import MasterRow from "./MasterRow";
 import inboundClasses from '../../../style/inbound/inbound.module.css';
+import {useDispatch, useSelector } from "react-redux";
+import { partnerAction } from "redux/actions/management/partnerAction";
 
 const MasterTable = ({
   setMasterLength,
@@ -14,6 +16,26 @@ const MasterTable = ({
   incrementedBoundNo,
   incrementBoundNo
 }) => {
+
+  //#region 데이터 로딩
+  const dispatch = useDispatch();
+  const [isLoading, setIsloading] = useState(false);
+  const { partnerAll } = useSelector((state) => state.partner);
+
+  useEffect(() => {
+    const patchItems = async () => {
+      setIsloading(true);
+      try {
+        await dispatch(partnerAction.getPartnerAll());
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsloading(false);
+      }
+    };
+    patchItems();
+  }, []);
+  //#endregion
 
   const functionincrementBoundNo = (currentNo) => {
     if (!currentNo) return null;
@@ -50,6 +72,7 @@ const MasterTable = ({
                              masterFlag={masterFlag}
                              setSubFlag={setSubFlag}
                              setCheckedBoundIds={setCheckedBoundIds}
+                             partnerAll={partnerAll}
                   />
                 );
               }

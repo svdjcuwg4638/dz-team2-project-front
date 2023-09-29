@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import api from "redux/api";
-import TextHelperModal from "./TextHelperModal";
+import SearchHelper from "component/storage/item/SearchHelper";
 
-const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFlag, setCheckedBoundIds }) => {
+
+const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFlag, setCheckedBoundIds,partnerAll }) => {
   const [formData, setFormData] = useState({
     bound_id: boundId != 0 && boundId != null ? boundId : 0,
     company_id: "1",
@@ -17,25 +18,45 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
     frontDelete: 0,
   });
 
-  //#region Modal관련데이터
-  const [isModalOpen, setIsModalOpen] = useState(false); // 모달의 상태
-  const [activeInput, setActiveInput] = useState(""); // F2 키를 누른 input의 name
+  const handleDateChange = (e) => {
+    let { value } = e.target;
+    
+    // 숫자만 입력받도록 처리
+    value = value.replace(/[^0-9]/g, "");
 
-  const handleKeyDown = (event) => {
-    if (event.key === "F2") {
-      setActiveInput(event.target.name); // 현재 포커스된 input의 name 설정
-      setIsModalOpen(true); // 모달 열기
+    // 년-월-일 형식에 맞춰서 하이픈 추가
+    if (value.length <= 4) {
+        value = value;
+    } else if (value.length <= 6) {
+        value = value.slice(0, 4) + '-' + value.slice(4);
+    } else {
+        value = value.slice(0, 4) + '-' + value.slice(4, 6) + '-' + value.slice(6, 8);
     }
-  };
 
-  const handleModalSelect = (selectedValue) => {
-    setFormData((prevState) => ({ ...prevState, [activeInput]: selectedValue })); // formData 업데이트
-    setIsModalOpen(false); // 모달 닫기
-  };
-
-  const handleModalclose = () =>{
-    setIsModalOpen(false);
+    // 최대 10자 (YYYY-MM-DD) 까지만 입력 가능하도록
+    if (value.length > 10) {
+        value = value.slice(0, 10);
+    }
+    
+    setFormData(prev => ({...prev, bound_date: value}));
   }
+  //#region Modal관련데이터
+    const [HelperScreenState, sedivelperScreenState] = useState(false);
+    const selectedPartnerFn = () => {
+      sedivelperScreenState(false);
+    };
+
+    const item = {
+      name: "거래처",
+      guide: true,
+      type_all: "partnerAll",
+      code_column: "partner_code",
+      name_column: "partner_name",
+      dataAll: {partnerAll},
+      trigger_type: "input",
+      input_type: "partner",
+    };
+    
   //#endregion
   
 
@@ -105,6 +126,7 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
           value={boundNo}
           name="bound_no"
           onChange={handleInputChange}
+          readOnly
         ></input>
       </td>
       <td>
@@ -116,7 +138,6 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
           <option value="">-- 선택 --</option>
           <option value="구매">구매</option>
           <option value="반품">반품</option>
-          <option value="판매">판매</option>
        </select>
       </td>
       <td>
@@ -125,24 +146,43 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
            value={formData.partner_code}
            name="partner_code"
            onChange={handleInputChange}
-           onKeyDown={handleKeyDown}
+           onKeyDown={(e) => {
+            if (e.key === "F2") {
+              sedivelperScreenState(!HelperScreenState);
+            }
+          }}
         ></input>
       </td>
       <td>
         <input
-          type="date"
+          type="text"
+          pattern="\d{4}-\d{2}-\d{2}" // YYYY-MM-DD 형식 강제
+          placeholder="YYYY-MM-DD"
           name="bound_date"
-          onChange={handleInputChange}
+          value={formData["bound_date"]}
+          onChange={handleDateChange}
         ></input>
       </td>
     </tr>
-          {isModalOpen && (
-            <TextHelperModal 
-              handleModalSelect={handleModalSelect} 
-              handleModalclose={handleModalclose}
-              activeInput={activeInput}
-            />
-          )}
+    {HelperScreenState && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  boxShadow: "0 0 10px rgba(0,0,0,0.8)",
+                  zIndex: 10,
+                }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <SearchHelper
+                  handleInputChange={handleInputChange}
+                  menu={item}
+                  searchPartner={selectedPartnerFn}
+                />
+              </div>
+            )}
     </>
   );
   

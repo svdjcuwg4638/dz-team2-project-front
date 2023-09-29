@@ -5,14 +5,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ClipLoader } from "react-spinners";
 import { inboundAction } from 'redux/actions/inbound/inboundAction';
 import DetailModal from './Modal' // 수정된 부분
+import { storageAction } from 'redux/actions/management/storageAction';
 
 function InboundOngoing() {
   const dispatch = useDispatch();
   
   const {inboundAll, inboundDetailAll, loading} = useSelector((state) => state.inbound);
+  const {storageAll, locationAll} = useSelector((state) => state.storage);
   
   const [searchData, setSearchData] = useState(inboundAll.data);
   const [searchDetailData, setSearchDetailData] = useState(inboundDetailAll.data);
+  const [updatedDetails, setUpdatedDetails] = useState([]);
+  useEffect(()=>{
+    console.log(updatedDetails);
+  },[updatedDetails])
+
   const [selectedBoundId, setSelectedBoundId] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -27,13 +34,16 @@ function InboundOngoing() {
 
   useEffect(() => {
     dispatch(inboundAction.getInboundAll());
+    dispatch(storageAction.getstorageAll());
   }, []);
 
   useEffect(() => {
     setSearchData(inboundAll.data);
     setSearchDetailData(inboundDetailAll.data);
-    console.log(inboundAll.data);
-    console.log(inboundDetailAll.data);
+    // console.log('마스터',inboundAll.data);
+    console.log('디테일',inboundDetailAll.data);
+    // console.log('스토리지',storageAll.data);
+    // console.log('로케이션',locationAll.data);
   }, [inboundAll])
 
   const grid01_headers = [
@@ -70,7 +80,15 @@ function InboundOngoing() {
           </tr>
         )}
       </tbody>
-      <DetailModal isOpen={isModalOpen} onClose={handleCloseModal} boundId={selectedBoundId} details={searchDetailData} /> {/* 수정된 부분 */}
+      <DetailModal 
+      isOpen={isModalOpen}
+      onClose={handleCloseModal} 
+      boundId={selectedBoundId} 
+      details={searchDetailData}  
+      storageAll={storageAll} 
+      locationAll={locationAll}
+      setUpdatedDetails={setUpdatedDetails}
+      /> {/* 수정된 부분 */}
     </div>
   )
 }

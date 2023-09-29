@@ -1,11 +1,32 @@
 import React, { useEffect, useState } from "react";
 import SubRow from "./SubRow";
 import inboundClasses from '../../../style/inbound/inbound.module.css'
+import { useDispatch, useSelector } from "react-redux";
+import { itemAction } from "redux/actions/management/itemAction";
 
 const SubTable = ({ boundId, masterLength, masterFocus, subFlag, deletedBoundIds,checkedSubBoundIds,setCheckedSubBoundIds,deletedIndex }) => {
   
+  const dispatch = useDispatch();
   const [subRowArray, setSubRowArray] = useState([]);
 
+    //#region 데이터 로딩
+    const [isLoading, setIsloading] = useState(false);
+    const { itemAll } = useSelector((state) => state.item);
+  
+    useEffect(() => {
+      const patchItems = async () => {
+        setIsloading(true);
+        try {
+          await dispatch(itemAction.getItemAll());
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setIsloading(false);
+        }
+      };
+      patchItems();
+    }, []);
+    //#endregion
   useEffect(() => {
     if (boundId !== null && masterLength !== null) {
       setSubRowArray(Array.from({ length: masterLength }).map((_, index) => boundId + index));
@@ -27,7 +48,7 @@ const SubTable = ({ boundId, masterLength, masterFocus, subFlag, deletedBoundIds
     if (subFlag) { // subFlag를 모든 요청이 완료되었음을 알리는 트리거로 사용합니다.
       if (allRequestsSuccessful) {
         alert('저장완료');
-        window.location.reload();
+        // window.location.reload();
       } else {
         alert('저장실패');
       }
@@ -56,7 +77,8 @@ const SubTable = ({ boundId, masterLength, masterFocus, subFlag, deletedBoundIds
                     handleRequestSuccess={handleRequestSuccess}
                     handleRequestFail={handleRequestFail}
                     checkedSubBoundIds={checkedSubBoundIds}
-                    setCheckedSubBoundIds={setCheckedSubBoundIds}/>
+                    setCheckedSubBoundIds={setCheckedSubBoundIds}
+                    itemAll={itemAll}/>
                 )
               }
               return null;

@@ -4,8 +4,19 @@ import SubTable from "./SubTable";
 import api from "redux/api";
 import inboundClasses from '../../../style/inbound/inbound.module.css'
 import Table from '../table/Table';
+import { useDispatch, useSelector } from "react-redux";
+import { unitPriceAction } from "redux/actions/management/unitPriceAction";
 
 const InBoundStart = () => {
+  const dispatch = useDispatch();
+  const { unitPriceAll } = useSelector((state) => state.unitPrice);
+  useEffect(() => {
+  dispatch(unitPriceAction.getCurrentUnitPriceAll());
+  }, []);
+
+  useEffect(()=>{
+    console.log('전체',unitPriceAll);
+  },[unitPriceAll]);
   //#region state관리
   const [masterLength, setMasterLength] = useState(1);
   const [boundId, setBoundId] = useState(null);
@@ -51,7 +62,7 @@ const InBoundStart = () => {
     { text: "문서번호", value: "boundno", width: "9%" },
     { text: "유형", value: "type", width: "9%" },
     {
-    text: "거래처",
+    text: "거래처(F2)",
     value: "partner",
     width: "9%",
     helper: true,
@@ -61,10 +72,10 @@ const InBoundStart = () => {
 ];
   const grid02_headers = [
     { text: "선택", value: "select", width: "3%" },
-    { text: "품목코드", value: "item_code", width: "6%" },
+    { text: "품목코드(F2)", value: "item_code", width: "6%" },
     { text: "품목명", value: "item_name", width: "6%" },
     { text: "단가", value: "unit_price", width: "4%" },
-    { text: "재고", value: "stock", width: "4%" },
+    // { text: "재고", value: "stock", width: "4%" },
     { text: "수량", value: "amount", width: "6%" },
     { text: "총액", value: "tot_amount", width: "4%", helper: true },
     { text: "입고예정일", value: "detail_date", width: "10%" },
@@ -99,7 +110,7 @@ const InBoundStart = () => {
         setBoundNo((response.data.data));
         setIncrementedBoundNo(incrementBoundNo(response.data.data));
       }catch (error){
-        console.error("Error fetching BoundNo:", error);
+        console.error("Error:", error);
         const defaultBoundNo = `${getTodayPrefix()}0001`;
         setBoundNo(defaultBoundNo);
         setIncrementedBoundNo(incrementBoundNo(defaultBoundNo));
