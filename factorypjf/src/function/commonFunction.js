@@ -24,5 +24,16 @@ function kebabToCamel(variable){
       } 
       return result;
 }
+function camelToSnake(variable){
+  let result=''
+  for (let i = 0; i < variable.length; i++) {
+    let char = variable.charAt(i);
+    if (isUpperCase(char)) {
+      char = "_" + char.toLowerCase();
+    }
+    result+=char;
+  }
+  return result;
+}
 
-export {isUpperCase,camelToKebab,kebabToCamel}
+export {isUpperCase,camelToKebab,kebabToCamel,camelToSnake}

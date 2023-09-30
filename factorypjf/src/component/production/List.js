@@ -6,12 +6,14 @@ import ListTd from "component/layout/Table/ListTableData";
 import HelperModal from "component/common/helper/HelperModal";
 import SearchHelperModal from "component/common/helper/SearchHelperModal";
 import AlertModal from "component/common/AlertModal";
+import { camelToSnake } from "function/commonFunction";
 
 import productionListClasses from "style/production/list.module.css";
 import productionClasses from "style/production/production.module.css";
 import searchStyle from "style/common/searchStyle.module.css";
 import listStyle from "style/production/list.module.css";
 import { useReducer } from "react";
+import { getAxios } from "function/axiosFuction";
 
 export default function Add() {
   const [grid01_items, set01Item] = useState();
@@ -65,9 +67,8 @@ export default function Add() {
   ];
   const searchFilter = [
     { text: "생산일", value: "date", width: "3%" },
-    { text: "생산품", value: "item", width: "3%" },
+    { text: "생산품", value: "item", width: "3%",helper:true },
     { text: "생산팀", value: "team", width: "3%", helper: true },
-    { text: "품목", value: "item", width: "3%", helper: true },
     { text: "창고", value: "storage", width: "3%", helper: true },
     { text: "장소", value: "location", width: "3%", helper: true },
     { text: "고객", value: "partner", width: "3%", helper: true },
@@ -262,7 +263,7 @@ export default function Add() {
     set01Item(grid01Dummy01);
     set02Item(grid02Dummy01[0]);
     cacheDispatch({ type: "INIT_CACHE", data: grid02Dummy01 });
-    console.log(grid01_items, grid02Cache);
+    // console.log(grid01_items, grid02Cache);
   }, []);
 
   const gridTriggerHandler = () => {};
@@ -495,7 +496,22 @@ export default function Add() {
     setDisabledBtn({state:false,class:`${listStyle['btn_abled']}`});
     console.log(grid02Cache);
   };
-  const formHandler = () => {};
+  
+  //검색필터 state 변경시 handler
+  const formHandler = (filter) => {
+    const filterToSnake={};
+    if(Object.keys(filter).length>0){
+      // console.log(filter)
+      for(let key in filter){
+        filterToSnake[camelToSnake(key)]=filter[key];
+      }
+      console.log(filterToSnake)
+      getAxios('production/list',filterToSnake,()=>{console.log()},()=>{console.log()})
+    }
+
+    
+
+  };
 
   //grid01 row 선택시 그에 맞는 자재를 grid2에 출력하기 위해 입력 값을 저장하는 state
   const cacheInit = {

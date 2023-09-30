@@ -216,6 +216,7 @@ export default function AddTableData({
                   <input
                     id={`grid01_${idx}_${header.value}`}
                     type="date"
+                    placeholder="YYYY-MM-DD"
                     min="1900-01-01"
                     max="9999-12-31"
                     className={addStyle.input_date}
