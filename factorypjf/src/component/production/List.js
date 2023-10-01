@@ -6,7 +6,7 @@ import ListTd from "component/layout/Table/ListTableData";
 import HelperModal from "component/common/helper/HelperModal";
 import SearchHelperModal from "component/common/helper/SearchHelperModal";
 import AlertModal from "component/common/AlertModal";
-import { camelToSnake } from "function/commonFunction";
+import { camelToSnake, getToday, snakeToCamel } from "function/commonFunction";
 
 import productionListClasses from "style/production/list.module.css";
 import productionClasses from "style/production/production.module.css";
@@ -251,19 +251,20 @@ export default function Add() {
   });
 
   useEffect(() => {
-    //getAxios
-    let grid02Item;
-    for (let i = 0; i < grid01Dummy01.length; i++) {
-      grid01Dummy01[i].state = null;
-      grid02Dummy01[i].forEach((el) => {
-        el.state = null;
-      });
-    }
 
-    set01Item(grid01Dummy01);
-    set02Item(grid02Dummy01[0]);
-    cacheDispatch({ type: "INIT_CACHE", data: grid02Dummy01 });
-    // console.log(grid01_items, grid02Cache);
+    const filter={date:getToday()}
+    getAxios('production/list',filter,searchResult,consoleError)
+    // for (let i = 0; i < grid01Dummy01.length; i++) {
+    //   grid01Dummy01[i].state = null;
+    //   grid02Dummy01[i].forEach((el) => {
+    //     el.state = null;
+    //   });
+    // }
+
+    // set01Item(grid01Dummy01);
+    // set02Item(grid02Dummy01[0]);
+    // cacheDispatch({ type: "INIT_CACHE", data: grid02Dummy01 });
+    
   }, []);
 
   const gridTriggerHandler = () => {};
@@ -496,7 +497,35 @@ export default function Add() {
     setDisabledBtn({state:false,class:`${listStyle['btn_abled']}`});
     console.log(grid02Cache);
   };
-  
+  function searchResult(data){
+    console.log(data)
+    const item=data.data.map((el)=>{
+      //grid01Item 모양에 맞게 변경 
+      let obj={};
+      for(let key in el){
+        let header=''
+        if(key.includes('_name')){
+          //'name' 떼기 (item_name => item 으로 변경)
+          header=key.replace('_name','')
+        }else if(key==="production_date"){
+          header='date'
+          obj[header]=el[key].match(/\d{4}-\d{2}-\d{2}/g);
+          continue
+        }else{
+          header=snakeToCamel(key)
+        }
+        obj[header]=el[key];
+      }
+      return obj;
+    })
+    console.log(item)
+    set01Item(item)
+  }
+
+  function consoleError(error){
+    console.log(error)
+  }
+
   //검색필터 state 변경시 handler
   const formHandler = (filter) => {
     const filterToSnake={};
@@ -505,10 +534,11 @@ export default function Add() {
       for(let key in filter){
         filterToSnake[camelToSnake(key)]=filter[key];
       }
-      console.log(filterToSnake)
-      getAxios('production/list',filterToSnake,()=>{console.log()},()=>{console.log()})
+      // console.log(filterToSnake)
+      getAxios('production/list',filterToSnake,searchResult,consoleError)
     }
 
+    
     
 
   };

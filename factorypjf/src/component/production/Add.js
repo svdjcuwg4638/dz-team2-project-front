@@ -17,7 +17,7 @@ export default function List() {
   const grid01_headers = [
     { text: "선택", value: "select", width: "3%" },
     { text: "순번", value: "index", width: "3%" },
-    // { text: "생산번호", value: "prouductNum", width: "9%", readonly: true },
+    { text: "생산번호", value: "productionCode", width: "9%" },
     { text: "생산일", value: "date", width: "9%" },
     {
       text: "생산품",
@@ -199,91 +199,94 @@ export default function List() {
   };
 
   const saveHandler = () => {
-    // if(!grid01_items.find((data)=>data.item))return
-    // //====================테이블의 모든 input 가져오기====================
-    // const inputArr=[...document.querySelectorAll('[id*="grid"]')]
-    // let grid01Data=[]
-    // const grid02Data=[]
+    if(!grid01_items.find((data)=>data.item))return
+    //====================테이블의 모든 input 가져오기====================
+    const inputArr=[...document.querySelectorAll('[id*="grid"]')]
+    let grid01Data=[]
+    const grid02Data=[]
 
-    // inputArr.forEach((el)=>{
-    //   //id(grid번호_행번호_header) 에서 행번호 찾기
-    //   let row=Number(el.id.match(/(?<=grid\d+_)\d+(?=_)/g)[0]);
-    //   //id(grid번호_행번호_header) 에서 header 찾기
-    //   let header = el.id.match(/(?<=\w_)[a-zA-Z_]+/g)[0];
+    inputArr.forEach((el)=>{
+      //id(grid번호_행번호_header) 에서 행번호 찾기
+      let row=Number(el.id.match(/(?<=grid\d+_)\d+(?=_)/g)[0]);
+      //id(grid번호_행번호_header) 에서 header 찾기
+      let header = el.id.match(/(?<=\w_)[a-zA-Z_]+/g)[0];
 
-    //   if(el.id.includes('grid01')){
-    //     //grid01 state + input value
-    //     grid01Data[row]={...grid01Data[row],[header]:el.value}
-    //     //grid02 state + input value
-    //   }else if(el.id.includes('grid02')){
-    //     //겉으로 보이는 value + state에 저장된 itemList
-    //     grid02Data[row]={...grid02_items[row],...grid02Data[row],[header]:el.value}
-    //   }
-    // })
+      if(el.id.includes('grid01')){
+        //grid01 state + input value
+        grid01Data[row]={...grid01Data[row],[header]:el.value}
+        //grid02 state + input value
+      }else if(el.id.includes('grid02')){
+        //겉으로 보이는 value + state에 저장된 itemList
+        grid02Data[row]={...grid02_items[row],...grid02Data[row],[header]:el.value}
+      }
+    })
 
-    // cacheDispatch({type:'ON_SAVE',idx:null, items:grid02Data})
+    cacheDispatch({type:'ON_SAVE',idx:null, items:grid02Data})
 
-    // //=================grid01 필수 입력 컬럼에 값 다 있는지 확인===============
-    // let alertHeader=''
-    // let itemCount=0
-    // //grid01 입력확인
-    // for (let i = 0; i < grid01Data.length; i++) {
-    //   //겉으로 보이는 value + state에 저장된 itemList
-    //   grid01Data[i]={...grid01_items[i],...grid01Data[i]}
-    //   for(let key in grid01Data[i]){
-    //     if(grid01Data[i].item){
-    //       itemCount++;
-    //       // //item 값이 입력된 행인데 NULL 컬럼 아닌 컬럼에 값이 입력돼있지 않으면
-    //       if(grid01Data[i].item&&!(key==='description'||key==='leadTime||'||key==='workForce'||key==='team'||key==='select'||key==='index')&&!grid01Data[i][key]){
-    //         alertHeader = grid01_headers.find((header)=>{
-    //           return header.value===key
-    //         })
-    //         alert('상위테이블 '+alertHeader.text+'를 입력해주세요')
-    //         return;
-    //       }else{
-    //         //!!!!!!!!!!!!!!!!! 로그인한 companyId 가져오는 로직으로 수정 !!!!!!!!!!!!!!!!!
-    //         grid01Data[i].companyId=1;
-    //       }
-    //     }else{
-    //       grid01Data.splice(i,1);
-    //       grid02Cache.items[i]&&grid02Cache.items.splice(i,1)
-    //       i--;
-    //     }
-    //   }
-    // }
-    // //생산품이 하나도 입력되지 않았을때
-    // if(!itemCount){
-    //   alertHeader='생산품'
-    //   alert('저장할 '+alertHeader+'이 없습니다.')
-    // }
+    //=================grid01 필수 입력 컬럼에 값 다 있는지 확인===============
+    let alertHeader=''
+    let itemCount=0
+    //grid01 입력확인
+    for (let i = 0; i < grid01Data.length; i++) {
+      //겉으로 보이는 value + state에 저장된 itemList
+      grid01Data[i]={...grid01_items[i],...grid01Data[i]}
+      for(let key in grid01Data[i]){
+        if(grid01Data[i].item){
+          itemCount++;
+          // //item 값이 입력된 행인데 NULL 컬럼 아닌 컬럼에 값이 입력돼있지 않으면
+          if(grid01Data[i].item&&!(key==='description'||key==='leadTime||'||key==='workForce'||key==='team'||key==='select'||key==='index')&&!grid01Data[i][key]){
+            alertHeader = grid01_headers.find((header)=>{
+              return header.value===key
+            })
+            alert('상위테이블 '+alertHeader.text+'를 입력해주세요')
+            return;
+          }else{
+            //!!!!!!!!!!!!!!!!! 로그인한 companyId 가져오는 로직으로 수정 !!!!!!!!!!!!!!!!!
+            grid01Data[i].companyId=1;
+          }
+        }else{
+          grid01Data.splice(i,1);
+          grid02Cache.items[i]&&grid02Cache.items.splice(i,1)
+          i--;
+        }
+      }
+    }
+    //생산품이 하나도 입력되지 않았을때
+    if(!itemCount){
+      alertHeader='생산품'
+      alert('저장할 '+alertHeader+'이 없습니다.')
+    }
 
-    // //grid02 입력확인
-    // if(!alertHeader){
-    //   for (let i = 0; i < grid02Cache.items.length; i++) {
-    //     for (let j = 0; j < grid02Cache.items[i].length; j++) {
-    //       if(grid02Cache.items[i]!==null){
-    //         for(let key in grid02Cache.items[i][j]){
-    //           // //item 값이 입력된 행인데 NULL 컬럼 아닌 컬럼에 값이 입력돼있지 않으면
-    //           if(grid02Cache.items[i][j].item&&!(key==='description'||key==='select'||key==='index')&&!grid02Cache.items[i][j][key]){
-    //             alertHeader = grid02_headers.find((header)=>{
-    //               return header.value===key
-    //             })
-    //             if(alertHeader.value==='inventory'){alert('해당 장소에 자재가 없습니다.')}
-    //             else{alert('하위테이블 '+alertHeader.text+'를 입력해주세요')}
-    //             return;
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
+    //grid02 입력확인
+    if(!alertHeader){
+      for (let i = 0; i < grid02Cache.items.length; i++) {
+        for (let j = 0; j < grid02Cache.items[i].length; j++) {
+          if(grid02Cache.items[i]!==null){
+            for(let key in grid02Cache.items[i][j]){
+              // //item 값이 입력된 행인데 NULL 컬럼 아닌 컬럼에 값이 입력돼있지 않으면
+              if(grid02Cache.items[i][j].item&&!(key==='description'||key==='select'||key==='index')&&!grid02Cache.items[i][j][key]){
+                alertHeader = grid02_headers.find((header)=>{
+                  return header.value===key
+                })
+                if(alertHeader.value==='inventory'){alert('해당 장소에 자재가 없습니다.')}
+                else{alert('하위테이블 '+alertHeader.text+'를 입력해주세요')}
+                return;
+              }
+            }
+          }
+        }
+      }
+    }
 
-    // if(!alertHeader){
-    //   console.log(grid01Data)
-    //   console.log(grid02Cache.items)
+    if(!alertHeader){
+      console.log(grid01Data)
+      console.log(grid02Cache.items)
 
-    //   postAxios('production/add',{production:grid01Data,component:grid02Cache.items},null,null)
-    // }
+      postAxios('production/add',{production:grid01Data,component:grid02Cache.items},print,print)
+    }
+    function print(data){
+      console.log(data)
+    }
     console.log(grid02Cache);
     console.log(grid02_items);
   };

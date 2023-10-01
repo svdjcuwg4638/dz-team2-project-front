@@ -18,7 +18,7 @@ function kebabToCamel(variable){
     for (let i = 0; i < variable.length; i++) {
         let char = variable.charAt(i);
         if (char==='-') {
-          char = variable.charAt(++i).toLowerCase();
+          char = variable.charAt(++i).toUpperCase();
         }
         result+=char;
       } 
@@ -35,5 +35,27 @@ function camelToSnake(variable){
   }
   return result;
 }
+function snakeToCamel(variable){
+  let result=''
+  for (let i = 0; i < variable.length; i++) {
+      let char = variable.charAt(i);
+      if (char==='_') {
+        char = variable.charAt(++i).toUpperCase();
+      }
+      result+=char;
+    } 
+    return result;
+}
 
-export {isUpperCase,camelToKebab,kebabToCamel,camelToSnake}
+//YYYY-MM-DD 구하기
+function getToday(){
+  let today = new Date();   
+
+  let year = today.getFullYear(); // 년도
+  let month = today.getMonth() + 1;  // 월
+  let date = today.getDate();  // 날짜
+
+  return `${year}-${month}-${date}`
+}
+
+export {isUpperCase,camelToKebab,kebabToCamel,camelToSnake,snakeToCamel,getToday}
