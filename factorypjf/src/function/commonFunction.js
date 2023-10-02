@@ -58,4 +58,12 @@ function getToday(){
   return `${year}-${month}-${date}`
 }
 
-export {isUpperCase,camelToKebab,kebabToCamel,camelToSnake,snakeToCamel,getToday}
+//timeZone US -> KR
+function timeToKR(date){
+  const TIME_ZONE = 9 * 60 * 60 * 1000; // 9시간
+          const utcDate = new Date(date);
+          const dateKR= new Date(utcDate.getTime() + TIME_ZONE).toISOString().replace('T', ' ').slice(0, -5);
+          return dateKR
+}
+
+export {isUpperCase,camelToKebab,kebabToCamel,camelToSnake,snakeToCamel,getToday,timeToKR}

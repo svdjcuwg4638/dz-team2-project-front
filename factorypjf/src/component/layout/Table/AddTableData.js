@@ -111,6 +111,8 @@ export default function AddTableData({
       if (editHandler) editHandler(e,'add',coordinate);
     } else if (e.which === HELPER_KEY && !colInfo.helper) {
       console.log("도움창이 제공되지 않는 코드입니다.");
+    }else{
+      if (editHandler) editHandler(e,'add',coordinate);
     }
   };
 
@@ -222,14 +224,14 @@ export default function AddTableData({
                     className={addStyle.input_date}
                     defaultValue={item ? item[header.value] : ""}
                     onKeyUp={(e) => {
-                      keyUpHandler(e, header);
+                      keyUpHandler(e, header, { row: idx, col: headerIdx });
                     }}
                   ></input>
                 ) : (
                   <input
                     id={`grid01_${idx}_${header.value}`}
                     onKeyUp={(e) => {
-                      keyUpHandler(e, header);
+                      keyUpHandler(e, header, { row: idx, col: headerIdx });
                     }}
                     defaultValue={item ? item[header.value] : ""}
                   ></input>

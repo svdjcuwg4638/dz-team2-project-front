@@ -24,23 +24,37 @@ function HelperOverlay({ modalState }) {
     const {grid01Data,grid02Data,deleteData}={...modalState.data}
     
     //product, product_detail 테이블 수정
+    // const param={production:[],component:[],productionDelete:[]}
     const param={}
-    param.production=grid01Data.find((el)=>{
-      return el.state==='edit'
+    
+    grid01Data.forEach((el)=>{
+      if(el.state==='edit'){
+        param.production=param.production?[...param.production,el]:el
+      }
     })
+    // param.production.push(grid01Data.find((el)=>{
+    //   return el.state==='edit'
+    // }))
     //product_relation 테이블 수정
-    let componentArr=[]
+    
     grid02Data.forEach((data)=>{
-      data.forEach((el)=>{if(el.state==='edit')componentArr.push(el)})
+      data.forEach((el)=>{
+        if(el.state==='edit'){
+          param.component=param.component?[...param.component,el]:el
+        }
+      })
     })
-    param.component=componentArr
+    // param.component.push(...componentArr)
+    
 
     //product 테이블 delete
-    param.productDelete=deleteData
-
-   /
-
+    // param.productionDelete.push(deleteData)
+    param.productionDelete=param.production?[...param.productionDelete,deleteData]:deleteData
     console.log(param)
+    putAxios('production/list/edit',param,print,print)
+    function print(data){
+      console.log(data)
+    }
   }
 
   return (

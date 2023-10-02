@@ -34,8 +34,8 @@ export default function ListTable({
         }
         copyArray.push(JSON.parse(JSON.stringify(tempObj)));
       }
-      setTableItems(copyArray);
     }
+    setTableItems(copyArray);
   }, [items]);
 
   //모달 끄고 닫는 핸들러
@@ -70,10 +70,12 @@ export default function ListTable({
       setCurrentCol({ ...coordinate });
       //모달 켜기
       onModalHanlder(colInfo.value, colInfo.text);
+      if(editHandler)editHandler(e,'list',coordinate)
     } else if (e.which === HELPER_KEY && !colInfo.helper) {
       console.log("도움창이 제공되지 않는 코드입니다.");
+    }else{
+      if(editHandler)editHandler(e,'list',coordinate)
     }
-    if(editHandler)editHandler(e,'list',coordinate)
   };
 
   //코드 선택 handler
