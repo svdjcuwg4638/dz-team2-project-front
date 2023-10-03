@@ -10,6 +10,7 @@ import AddTd from "component/layout/Table/AddTableData";
 import ListTd from "component/layout/Table/ListTableData";
 import HelperModal from "component/common/helper/HelperModal";
 import { getAxios, postAxios } from "function/axiosFuction";
+import { getToday } from "function/commonFunction";
 
 export default function List() {
   //text: 컬럼명, value: 내부적으로 가지는 값(DB 필드명과 같음), width: 컬럼 style(width), helper: 도움창 사용여부, gridTrigger: 입력이 완료되면 grid02 데이터 가져오는 trigger 컬럼
@@ -17,7 +18,7 @@ export default function List() {
   const grid01_headers = [
     { text: "선택", value: "select", width: "3%" },
     { text: "순번", value: "index", width: "3%" },
-    { text: "생산번호", value: "productionCode", width: "9%" },
+    { text: "생산번호", value: "productionCode", width: "9%",readonly:true },
     { text: "생산일", value: "date", width: "9%" },
     {
       text: "생산품",
@@ -39,9 +40,10 @@ export default function List() {
 
     { text: "비고", value: "description", width: "9%" },
   ];
+  
+  const [code,setCode]=useState();
 
   const [grid02_items, set02Item] = useState();
-
   const grid02_headers = [
     { text: "순번", value: "index", width: "5%" },
     { text: "자재", value: "item", width: "15%", readonly: true },
@@ -113,11 +115,40 @@ export default function List() {
   };
   const [grid02Cache, cacheDispatch] = useReducer(cacheReducer, cacheInit);
 
-  // useEffect(()=>{
-  //   if(grid02Cache){
-  //     console.log(grid02Cache)
-  //   }
-  // },[grid02Cache])
+  useEffect(()=>{
+    const prefix=getToday().replaceAll('-','')
+    getAxios('production/add/code',{prefix:prefix},setProductionCode,defaultCode)
+  },[])
+
+  function setProductionCode(data){
+    //첫 렌더링시 기본 3행
+    const DEFAULT_ROW=3;
+    const tempArr=[]
+    
+    const num=data.data.match(/(\d{4})$/g)[0]
+    for (let i = 1; i < DEFAULT_ROW+1; i++) {
+      let code=data.data.replace(num,`${parseInt(num)+i}`)
+      tempArr.push({productionCode:code})
+      //마지막으로 부여한 code를 상태에 추가
+      if(i===DEFAULT_ROW){
+        setCode(code);
+      }
+    }
+    set01Item([...tempArr]);
+  }
+  function defaultCode(error){
+    const prefix=getToday().replace('-','')
+    console.error("Production Code Error: ", error);
+    const code = `P${prefix}5555`;
+    setCode(code);
+  }
+  function addProductionCode(){
+    const num=code.match(/(\d{4})$/g)[0]
+    let newCode=code.replace(num,`${parseInt(num)+1}`)
+    
+    setCode(newCode)
+    set01Item([...grid01_items,{productionCode:newCode}])
+  }
 
   //grid 1 trigger handler
   const gridTriggerHandler = (header, tableItems, currentCol) => {
@@ -347,11 +378,13 @@ export default function List() {
         <div className={productionClasses.grid01}>
           <Table headers={grid01_headers}>
             <AddTd
+              items={grid01_items}
               isBtn={true}
               onGridTrigger={gridTriggerHandler}
               selectRowHandler={selectRowHandler}
               emitItem={set01Item}
               deleteItem={deleteIdx}
+              addProductionCode={addProductionCode}
             ></AddTd>
           </Table>
         </div>

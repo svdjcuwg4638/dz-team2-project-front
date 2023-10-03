@@ -55,6 +55,13 @@ function getToday(){
   let month = today.getMonth() + 1;  // 월
   let date = today.getDate();  // 날짜
 
+  if(`${month}`.length===1){
+    month='0'+month
+  }
+  if(`${date}`.length===1){
+    date='0'+date
+  }
+
   return `${year}-${month}-${date}`
 }
 

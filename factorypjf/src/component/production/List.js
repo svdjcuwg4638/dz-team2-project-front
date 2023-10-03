@@ -66,6 +66,7 @@ export default function Add() {
   ];
   const searchFilter = [
     { text: "생산일", value: "date", width: "3%" },
+    { text: "생산번호", value: "productionCode", width: "3%" },
     { text: "생산품", value: "item", width: "3%",helper:true },
     { text: "생산팀", value: "team", width: "3%", helper: true },
     { text: "창고", value: "storage", width: "3%", helper: true },

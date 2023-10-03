@@ -62,6 +62,21 @@ export default function ListTable({
   const [modalState, dispatch] = useReducer(modalReducer, modalInit);
 
   const [currentCol, setCurrentCol] = useState();
+  //mouseOver된 행 state
+  const [overRow, setOverRow]=useState();
+  const mouseHandler=(e)=>{
+    e.preventDefault();
+    //이벤트가 tr>td>input에서 발생하기 때문에 부모의 부모 노드 선택
+    let row = e.target.parentNode.parentNode;
+    if(e.type==='mouseover'){
+      row.className = listStyle["add-table-focus"];
+      setOverRow(row);
+    }
+    if(e.type==='mouseout'){
+     
+      overRow.className = listStyle[""];
+    }
+  }
 
   //colInfo: 컬럼 header, coordinate{row,col} 클릭한 위치
   const keyUpHandler = (e, colInfo, coordinate) => {
@@ -154,6 +169,8 @@ export default function ListTable({
             onClick={(e) => {
               selectRow(e, idx);
             }}
+            onMouseOver={mouseHandler}
+            onMouseOut={mouseHandler}
           >
             {headers.map((header, headerIdx) =>
               //선택 컬럼

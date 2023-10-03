@@ -19,6 +19,7 @@ export default function AddTableData({
   emitItem,
   deleteItem,
   editHandler,
+  addProductionCode
 }) {
   //첫 렌더링시 빈 테이블 3줄
   const DEFAULT_ROW = 3;
@@ -63,10 +64,15 @@ export default function AddTableData({
 
   const addRowHandler = () => {
     setTableItems([...tableItems, {}]);
+    if(addProductionCode){
+      addProductionCode()
+    }
   };
 
   //focus된 행 state
   const [focusRow, setFocusRow] = useState();
+  //mouseOver된 행 state
+  const [overRow, setOverRow]=useState();
 
   const modalInit = {
     showModal: false,
@@ -115,6 +121,20 @@ export default function AddTableData({
       if (editHandler) editHandler(e,'add',coordinate);
     }
   };
+
+  const mouseHandler=(e)=>{
+    e.preventDefault();
+    //이벤트가 tr>td>input에서 발생하기 때문에 부모의 부모 노드 선택
+    let row = e.target.parentNode.parentNode;
+    if(e.type==='mouseover'){
+      row.className = addStyle["add-table-focus"];
+      setOverRow(row);
+    }
+    if(e.type==='mouseout'&&focusRow!==overRow){
+      console.log('mouseout')
+      overRow.className = addStyle[""];
+    }
+  }
 
   //코드 선택 handler
   const selectCodeHandler = (codeRow) => {
@@ -186,6 +206,8 @@ export default function AddTableData({
           onClick={(e) => {
             selectRow(e, idx);
           }}
+          onMouseOver={mouseHandler}
+          onMouseOut={mouseHandler}
           // className={focusRow === idx ? tableStyle["focused-row"] : ""}
         >
           {headers.map((header, headerIdx) =>
