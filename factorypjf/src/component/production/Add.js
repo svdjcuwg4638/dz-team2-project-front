@@ -142,7 +142,7 @@ export default function List() {
     const code = `P${prefix}5555`;
     setCode(code);
   }
-  function addProductionCode(){
+  function addRowEmitHandler(){
     const num=code.match(/(\d{4})$/g)[0]
     let newCode=code.replace(num,`${parseInt(num)+1}`)
     
@@ -354,7 +354,7 @@ export default function List() {
       ...[document.querySelectorAll('input[type="checkbox"]:checked')]
     );
     let idxArr = [];
-    //input row 담은 배열 만들기
+    //input row idx 담은 배열 만들기
     for (let input of checked) {
       let row = input.id.match(/(?<=grid\d+_)\d+(?=_)/g)[0];
       idxArr.push(parseInt(row));
@@ -384,7 +384,7 @@ export default function List() {
               selectRowHandler={selectRowHandler}
               emitItem={set01Item}
               deleteItem={deleteIdx}
-              addProductionCode={addProductionCode}
+              addRowEmit={addRowEmitHandler}
             ></AddTd>
           </Table>
         </div>

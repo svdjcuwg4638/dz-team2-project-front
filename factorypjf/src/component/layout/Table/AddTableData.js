@@ -19,7 +19,7 @@ export default function AddTableData({
   emitItem,
   deleteItem,
   editHandler,
-  addProductionCode
+  addRowEmit
 }) {
   //첫 렌더링시 빈 테이블 3줄
   const DEFAULT_ROW = 3;
@@ -52,8 +52,8 @@ export default function AddTableData({
         if (!deleteItem.includes(i)) {
           unDelete.push(copyItem[i]);
         }
-        setTableItems([...unDelete]);
-        emitItem(tableItems);
+        // setTableItems([...unDelete]);
+        emitItem([...unDelete]);
         setFocusRow(0);
       }
     }
@@ -63,9 +63,10 @@ export default function AddTableData({
   const [tableItems, setTableItems] = useState([...DEFAULT_ARR]);
 
   const addRowHandler = () => {
-    setTableItems([...tableItems, {}]);
-    if(addProductionCode){
-      addProductionCode()
+    // setTableItems([...tableItems, {}]);
+    emitItem([...tableItems,{}])
+    if(addRowEmit){
+      addRowEmit()
     }
   };
 
@@ -131,7 +132,7 @@ export default function AddTableData({
       setOverRow(row);
     }
     if(e.type==='mouseout'&&focusRow!==overRow){
-      console.log('mouseout')
+     
       overRow.className = addStyle[""];
     }
   }
@@ -152,19 +153,19 @@ export default function AddTableData({
         itemKey = key;
       }
 
-      //같은 행에 이미 데이터가 들어있으면
-      if (copyItems[currentCol.row]) {
+      //같은 행에 이미 데이터가 들어있으면 코드데이터만 바뀜
+      // if (copyItems[currentCol.row]) {
         copyItems[currentCol.row] = {
           ...copyItems[currentCol.row],
           [itemKey]: codeRow[key],
         };
-        //비어있는 행이면
-      } else {
-        copyItems[currentCol.row] = { [itemKey]: codeRow[key] };
-      }
+      // //비어있는 행이면 
+      // } else {
+      //   copyItems[currentCol.row] = { [itemKey]: codeRow[key] };
+      // }
     }
-    setTableItems(copyItems);
-    emitItem(copyItems);
+    // setTableItems(copyItems);
+    emitItem([...copyItems]);
 
     //======================grid2 trigger========================
     headers.forEach((header) => {
