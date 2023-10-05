@@ -1,26 +1,23 @@
 .SectionContainer {
   display: flex;
   justify-content: center;
-  margin: 3rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  padding-bottom: 3rem;
+  width: 100%;
 }
 
 .SearchSection table tbody td {
   border: 0px;
 }
-.searchCom {
-  margin: 0.5rem;
-  display: flex;
-  align-items: center;
-}
-.searchCom input {
-  width: 110px;
-}
-.searchCom label {
-  width: 4rem;
-}
 
 .headerSection {
   border-left: 3px solid #5390f0;
+  margin-top: 3rem;
+  margin-left: 3rem;
+}
+.SearchSection table {
+  border: none;
 }
 
 .header {
@@ -49,40 +46,32 @@
 }
 
 .searchBtn {
-  width: 60px;
+  width: 70px;
   background: #4373c0;
   border: none;
-  border-radius: 6px;
-  font-family: "Noto Sans KR";
-  font-style: normal;
-  font-weight: 20;
-  font-size: 13px;
+  border-radius: 15px;
+
   line-height: 29px;
-  align-items: center;
   text-align: center;
   color: #ffffff;
   margin-bottom: 1rem;
-}
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  font: bold;
+  padding: 0.3rem 1rem;
 
-.helperBtn {
-  border: 0px;
-  color: #ffffff;
-  background: #5390f0;
-  border-radius: 10px;
-  padding: 0px;
-  width: 30px;
-  height: 30px;
-  text-align: center;
-  margin-left: 5px;
-}
-.xBtn {
-  background-color: #ffffff;
-  border: 1px solid #5390f0;
-  color: #5390f0;
+  margin-bottom: 1rem;
 }
 
 .btnBox {
   width: 100%;
   display: flex;
   justify-content: right;
+}
+
+/* 토글 버튼 스타일링 */
+.toggleButton {
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
 }

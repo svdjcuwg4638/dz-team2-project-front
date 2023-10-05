@@ -4,19 +4,24 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useReducer } from "react";
 
-import searchStyle from "style/common/searchStyle.module.css"
+import searchStyle from "style/common/searchStyle.module.css";
 import styles from "style/storage/inquiry.module.css";
 
 const HELPER_KEY = 113;
-const CLEAN_KEY=115;
+const CLEAN_KEY = 115;
 
-const SearchHelperModal = ({ headers, formHandler }) => {
+const SearchHelperModal = ({ headers, formHandler, items }) => {
   const modalInit = {
     showModal: false,
     codeValue: "", //
     codeName: "",
   };
 
+  useEffect(() => {
+    if (items !== undefined) {
+      setTableItems(items);
+    }
+  }, [items]);
   //행 추가 handler
   const [tableItems, setTableItems] = useState({});
   useEffect(() => {
@@ -53,8 +58,6 @@ const SearchHelperModal = ({ headers, formHandler }) => {
     } else if (e.which === 8 || (e.which === CLEAN_KEY && colInfo.helper)) {
       e.preventDefault();
       let copyItems = { ...tableItems };
-      console.log(copyItems);
-      console.log(colInfo.value);
       copyItems = {
         ...copyItems,
         [colInfo.value]: "",
@@ -64,7 +67,6 @@ const SearchHelperModal = ({ headers, formHandler }) => {
       setTableItems(copyItems);
       console.log(tableItems);
     }
-
   };
 
   // 도움창 버튼 handler
@@ -74,16 +76,6 @@ const SearchHelperModal = ({ headers, formHandler }) => {
     }
   };
 
-  // x 버튼 handler
-  const xbuttonPressHandler = (header) => {
-    let copyItems = { ...tableItems };
-    copyItems = {
-      ...copyItems,
-      [header]: "",
-      [`${header}Code`]: "",
-    };
-    setTableItems(copyItems);
-  };
   //코드 선택 handler
   const selectCodeHandler = (codeRow) => {
     let copyItems = { ...tableItems };
@@ -127,12 +119,13 @@ const SearchHelperModal = ({ headers, formHandler }) => {
       {/* 도움창이 필요한 항목은 readonly, 도움창으로만 입력 가능 */}
       {headers.map((header, headerIdx) => (
         <td key={header.headerIdx}>
-          <div className={`${styles.searchCom} ${searchStyle['search_filter-wrap']}`}>
+          <div
+            className={`${styles.searchCom} ${searchStyle["search_filter-wrap"]}`}
+          >
             <label> {header.text}</label>
             {header.helper ? (
               <>
                 <input
-                  readOnly
                   value={tableItems[header.value] || ""}
                   onKeyUp={(e) => {
                     keyUpHandler(e, header);
@@ -148,12 +141,6 @@ const SearchHelperModal = ({ headers, formHandler }) => {
                   }
                 >
                   ?
-                </button>
-                <button
-                  className={`${styles.helperBtn} ${styles.xBtn}`}
-                  onClick={(e) => xbuttonPressHandler(header.value)}
-                >
-                  X
                 </button>
               </>
             ) : (

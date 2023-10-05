@@ -3,7 +3,6 @@ import React, { cloneElement, isValidElement, useState } from "react";
 import tableStyle from "style/layout/dataTable/table.module.css";
 import addStyle from "style/layout/dataTable/addTableData.module.css";
 
-
 export default function DataTable({ headers, onModal, children }) {
   // header가 있어야만 table 출력
   if (!headers || !headers.length) {
@@ -13,7 +12,7 @@ export default function DataTable({ headers, onModal, children }) {
   const childrenWithProps = cloneElement(children, { headers });
 
   return (
-    <div className="table-container">
+    <div className={tableStyle.tbl_container}>
       <table className={tableStyle.tbl_header}>
         <colgroup>
           {headers.map((header, idx) => {
@@ -23,18 +22,13 @@ export default function DataTable({ headers, onModal, children }) {
         <thead>
           <tr>
             {headers.map((header, idx) => (
-              <th key={idx}>
-                {header.text}
-              </th>
+              <th key={idx}>{header.text}</th>
             ))}
           </tr>
         </thead>
       </table>
 
-      <div
-        className={tableStyle.tbl_body_wrap}
-        
-      >
+      <div className={tableStyle.tbl_body_wrap}>
         <table className={tableStyle.tbl_body}>
           <colgroup>
             {headers.map((header, idx) => {

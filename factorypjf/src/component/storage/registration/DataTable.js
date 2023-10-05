@@ -19,6 +19,8 @@ const DataTable = ({ headers, Eitems, items, setItems, setErrorCount }) => {
   // 최초 데이터 로드
   useEffect(() => {
     dataloadFn();
+    // setTableItems(items);
+    console.log("data table component! : ", items);
   }, []);
 
   // 데이터 로드
@@ -77,7 +79,7 @@ const DataTable = ({ headers, Eitems, items, setItems, setErrorCount }) => {
     confirmErrorState(tableItems, "total");
 
     setErrorCount(
-      "에러가 " +
+      "오류가 " +
         errorCell.flat().filter((cell) => cell === true).length +
         "건 있습니다."
     );
@@ -239,7 +241,7 @@ const DataTable = ({ headers, Eitems, items, setItems, setErrorCount }) => {
                 : "code_name"
             ];
           if (codeList === itemData) {
-            copyItem["standard"] = matchingItem["volume"];
+            copyItem["standard"] = matchingItem["standard"];
             copyItem["unit"] = matchingItem["unit"];
           }
         }
@@ -335,7 +337,6 @@ const DataTable = ({ headers, Eitems, items, setItems, setErrorCount }) => {
       }
 
       if (fieldName === "total") {
-        console.log("total");
         if (item[fieldName]) {
           setErrorCell((prevErrorCell) => {
             const copyErrorCell = [...prevErrorCell];
@@ -374,7 +375,7 @@ const DataTable = ({ headers, Eitems, items, setItems, setErrorCount }) => {
                     ? styles.inputError
                     : styles.inputTrue
                 }`}
-                value={item[header.value]}
+                value={item[header.value] || ""}
                 id={`${header.value}`}
                 readOnly={header.readonly}
                 onKeyUp={(e) => {

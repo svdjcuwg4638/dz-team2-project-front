@@ -11,6 +11,7 @@ import inventoryReducer from "./storage/InventoryReducer";
 import relationReducer from "./management/relationReducer";
 import commonReducer from "./common/commonReducer";
 import tabReducer from "./common/tabReducer";
+import tempinventoryReducer from "./storage/TempInventoryReducer";
 
 export default combineReducers({
   currentMenu: menuReducer,
@@ -22,9 +23,8 @@ export default combineReducers({
   code: codeReducer,
   codehelper: codehelperReducer,
   relation: relationReducer,
-  
   inventory: inventoryReducer,
-
   common: commonReducer,
-  tab : tabReducer,
+  tab: tabReducer,
+  tempinventory: tempinventoryReducer,
 });

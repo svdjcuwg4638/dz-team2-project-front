@@ -1,7 +1,7 @@
 .helper-modal {
   position: absolute;
   z-index: 99;
-  width: 100%;
+  width: 100vw;
   height: 100%;
   top: 0;
 }
@@ -16,18 +16,17 @@
   height: 100%;
 }
 .overlay {
-  position: absolute;
-  left: 25%;
+  position: fixed;
+  left: 40%;
   top: 25%;
   box-shadow: 1px 1px 1px grey;
   width: 20%;
   height: 50%;
   border-radius: 20px;
   background-color: white;
+  z-index: 100;
 }
-/* .helper-table__data td {
-  cursor: default;
-} */
+
 .clickable-col:hover {
   cursor: pointer;
 }

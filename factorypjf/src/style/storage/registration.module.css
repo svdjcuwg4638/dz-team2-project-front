@@ -1,11 +1,16 @@
 .SectionContainer {
   display: flex;
   justify-content: center;
-  margin: 3rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  padding-bottom: 3rem;
+  width: 100%;
 }
 
 .headerSection {
   border-left: 3px solid #5390f0;
+  margin-top: 3rem;
+  margin-left: 3rem;
 }
 
 .header {
@@ -71,7 +76,7 @@
 
 .resultContainer {
   margin-top: 1rem;
-  width: 81vw;
+  width: 78vw;
   height: 45vh;
 }
 .resultHeader {
@@ -89,6 +94,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   border: 1px solid #4373c0;
   background-color: white;
   color: #4373c0;
@@ -96,7 +102,11 @@
   box-shadow: 0 0 4px rgba(67, 115, 192, 0.26);
   font-size: 1.3rem;
 }
-
+.script p {
+  font-size: 1rem;
+  margin-top: 1rem;
+  text-decoration: underline;
+}
 .modalcon {
   width: 100%;
   height: 80%;
@@ -115,10 +125,6 @@
   text-decoration: underline;
 }
 
-/* .inputTrue {
-  background-color: white;
-  box-shadow: 0px 0 0;
-} */
 .inputEmpty {
   box-shadow: 0px 0 5px rgba(67, 115, 192, 0.5) inset;
   background-color: rgba(67, 115, 192, 0.5);

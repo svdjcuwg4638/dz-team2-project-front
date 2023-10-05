@@ -1,45 +1,77 @@
 import React, { useEffect, useState } from "react";
-import styles from ".././../../style/storage/registration.module.css";
+import styles from "style/storage/registration.module.css";
 import { read, utils } from "xlsx";
-// import * as FileSaver from "file-saver";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { InventoryAction } from "redux/actions/storage/InventoryAction";
-import ListTable from "component/layout/Table/ListTableData";
+import { TempInventoryAction } from "redux/actions/storage/TempInventoryAction";
 import Table from "../../layout/Table/Table";
-import AddTableData from "component/layout/Table/AddTableData";
 import DataTable from "./DataTable";
-
+import ResultModalContainer from "../resultModal/ResultModalContainer";
 const Registration = () => {
   const dispatch = useDispatch();
   const [tableitems, setTableitems] = useState([]);
   const [excelData, setExcelData] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("데이터가 없습니다");
-  const { inventoryAll, loading } = useSelector((state) => state.inventory);
-  const [loadData, setLoadData] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("데이터가 없습니다.");
+  const { inventoryAll } = useSelector((state) => state.inventory);
+  const [state, setState] = useState(true);
+
   const [filename, setFilename] = useState();
-
+  const { tempinventoryAll } = useSelector((state) => state.tempinventory);
+  const [tempstate, setTempState] = useState(true);
+  const [modalstate, setModalstate] = useState(false);
+  let storageCodeArray = [];
   useEffect(() => {
-    dispatch(InventoryAction.getInventoryAll());
+    loadfn();
   }, []);
+  const loadfn = () => {
+    dispatch(InventoryAction.getInventoryAll());
+    dispatch(TempInventoryAction.getTempInventoryAll());
+  };
 
   useEffect(() => {
-    // setLoadData(true);
+    if (inventoryAll && inventoryAll.data && inventoryAll.data.length > 0) {
+      setState(false);
+    } else {
+      setState(true);
+    }
   }, [inventoryAll]);
+
   useEffect(() => {
-    if (errorMessage === "에러가 0건 있습니다.") setErrorMessage("");
+    if (
+      tempinventoryAll &&
+      tempinventoryAll.data &&
+      tempinventoryAll.data.length > 0
+    ) {
+      setTempState(false);
+    } else {
+      setTempState(true);
+    }
+  }, [tempinventoryAll]);
+  useEffect(() => {
+    if (errorMessage === "오류가 0건 있습니다.") setErrorMessage();
+    else if (
+      tableitems.length === 0 ||
+      tableitems.every((item) => Object.values(item).every((value) => !value))
+    ) {
+      setErrorMessage("데이터가 없습니다.");
+    }
   }, [errorMessage]);
 
+  useEffect(() => {
+    console.log("올라온 형식:", tableitems);
+  }, [tableitems]);
+
   const table_header = [
-    { text: "창고", value: "storage", helper: true },
-    { text: "창고명", value: "storagename", readonly: true },
-    { text: "장소코드", value: "location", helper: true },
-    { text: "장소명", value: "locationname", readonly: true },
+    { text: "창고코드", value: "storage", helper: true, width: "10%" },
+    { text: "창고명", value: "storagename", readonly: true, width: "15%" },
+    { text: "장소코드", value: "location", helper: true, width: "10%" },
+    { text: "장소명", value: "locationname", readonly: true, width: "15%" },
     { text: "품목코드", value: "item", helper: true },
     { text: "품목명", value: "itemname", readonly: true },
-    { text: "규격", value: "standard", readonly: true },
-    { text: "단위", value: "unit", readonly: true },
-    { text: "재고량", value: "total" },
+    { text: "규격", value: "standard", readonly: true, width: "8%" },
+    { text: "단위", value: "unit", readonly: true, width: "8%" },
+    { text: "재고량", value: "total", width: "8%" },
   ];
 
   const fileUploadHandler = (event) => {
@@ -47,7 +79,7 @@ const Registration = () => {
     setFilename(file.name);
 
     if (!file) {
-      setErrorMessage("Please select a valid XLSX file.");
+      setErrorMessage("XLSX 파일을 업로드 해주세요.");
       return;
     }
 
@@ -68,21 +100,50 @@ const Registration = () => {
     };
   };
 
-  const fetch = async () => {
+  const fetchTemp = async () => {
+    const storageCodeArray = tableitems.map((item) => ({
+      storage_code: item.storage,
+      location_code: item.location,
+      item_code: item.item,
+      total: item.total,
+      company_id: 1,
+    }));
+    console.log("백으로 전송할 데이터", storageCodeArray);
+
     // 백으로 전송
     try {
       await axios.post(
-        "http://localhost:9091/inventory/registration",
-        tableitems
+        "http://localhost:9091/inventory/registration/temp/add",
+        storageCodeArray
       );
       console.log("전송성공");
     } catch (error) {
       console.error("전송실패", error);
     }
   };
-  useEffect(() => {
-    console.log("바뀐거반영: ", tableitems);
-  }, [tableitems]);
+  const fetch = async () => {
+    const storageCodeArray = tableitems.map((item) => ({
+      storage_code: item.storage,
+      location_code: item.location,
+      item_code: item.item,
+      total: item.total,
+      company_id: 1,
+    }));
+    console.log("백으로 전송할 데이터", storageCodeArray);
+
+    // 백으로 전송
+    try {
+      const response = await axios.post(
+        "http://localhost:9091/inventory/registration/add",
+        storageCodeArray
+      );
+      console.log(response);
+      if (response.status === 201) setModalstate(true);
+      console.log("전송성공");
+    } catch (error) {
+      console.error("전송실패", error);
+    }
+  };
   const currentDate = new Date(); // 현재 날짜와 시간을 가져옴
 
   const year = currentDate.getFullYear(); // 년도 가져오기 (예: 2023)
@@ -103,92 +164,120 @@ const Registration = () => {
     document.body.removeChild(link);
   };
 
+  const loadtemptable = () => {
+    if (tempinventoryAll && tempinventoryAll.data) {
+      storageCodeArray = tempinventoryAll.data.map((item) => ({
+        storage: item.storage_code,
+        location: item.location_code,
+        item: item.item_code,
+        total: item.total,
+      }));
+      setExcelData(storageCodeArray);
+    }
+    setFilename("불러온 데이터");
+
+    setTempState(true); // 상태 업데이트
+  };
+
   return (
-    <div className={styles.SectionContainer}>
-      <div>
-        <div className={styles.headerSection}>
-          <h4 className={styles.header}> 기초재고등록</h4>
-        </div>
+    <>
+      {modalstate && (
+        <ResultModalContainer setModalstate={setModalstate} linkTo="../" />
+      )}
+
+      <div className={styles.headerSection}>
+        <h4 className={styles.header}> 기초재고등록</h4>
+      </div>
+
+      <div className={styles.SectionContainer}>
         <div>
-          <div className={styles.btnSection}>
-            <button
-              className={`${loadData ? styles.btnFalse : styles.btnTrue}`}
-              disabled={loadData}
-              onClick={downloadExcelFile}
-            >
-              {console.log("test", loadData)} {/* 추가된 부분 */}
-              엑셀 양식 다운로드
-            </button>
-            <div style={{ position: "relative" }}>
-              <input
-                type="file"
-                onChange={fileUploadHandler}
-                className={styles.inputFile}
-                disabled={loadData}
-              ></input>
+          <div>
+            <div className={styles.btnSection}>
               <button
-                className={`${loadData ? styles.btnFalse : styles.btnTrue}`}
-                disabled={loadData}
+                className={`${!tempstate ? styles.btnFalse : styles.btnTrue}`}
+                disabled={!tempstate ? true : false}
+                onClick={downloadExcelFile}
               >
-                기초 재고 파일 업로드
+                엑셀 양식 다운로드
+              </button>
+              <div style={{ position: "relative" }}>
+                <input
+                  type="file"
+                  onChange={fileUploadHandler}
+                  className={styles.inputFile}
+                  disabled={!tempstate ? true : false}
+                ></input>
+                <button
+                  className={`${!tempstate ? styles.btnFalse : styles.btnTrue}`}
+                  disabled={!tempstate ? true : false}
+                >
+                  기초 재고 파일 업로드
+                </button>
+              </div>
+              <button
+                className={`${!tempstate ? styles.btnFalse : styles.btnTrue} ${
+                  styles.guideBtn
+                }`}
+                disabled={!tempstate ? true : false}
+              >
+                ?
               </button>
             </div>
-            <button
-              className={`${loadData ? styles.btnFalse : styles.btnTrue} ${
-                styles.guideBtn
-              }`}
-              disabled={loadData}
-            >
-              ?
-            </button>
-          </div>
-          <div>
-            <div className={styles.resultContainer}>
-              <div className={styles.resultHeader}>
-                ㆍ결과 미리보기 : '{filename}'
-              </div>
-              <div className={`${styles.result} `}>
-                {loadData ? (
-                  <div className={styles.script}>
-                    이미 등록된 재고가 있습니다
-                  </div>
-                ) : (
-                  <>
-                    <div className={styles.modalcon}>
-                      <Table headers={table_header}>
-                        <DataTable
-                          Eitems={excelData}
-                          setItems={setTableitems}
-                          items={tableitems}
-                          setErrorCount={setErrorMessage}
-                        />
-                      </Table>
+            <div>
+              <div className={styles.resultContainer}>
+                <div className={styles.resultHeader}>
+                  ㆍ결과 미리보기 : '{filename}'
+                </div>
+                <div className={`${styles.result} `}>
+                  {!state ? (
+                    <div className={styles.script}>
+                      이미 등록된 재고가 있습니다
                     </div>
-                    <div className={styles.btnSection}>
-                      <div className={styles.error}>{errorMessage}</div>
-                      <button
-                        className={`${styles.btnTrue} ${styles.submitBtn}`}
-                      >
-                        임시저장
-                      </button>
-                      <button
-                        className={`${
-                          errorMessage ? styles.btnFalse : styles.btnTrue
-                        } ${styles.submitBtn}`}
-                        disabled={errorMessage}
-                        onClick={fetch}
-                      >
-                        저장
-                      </button>
+                  ) : !tempstate ? (
+                    <div className={styles.script}>
+                      임시저장된 자료가 있습니다.
+                      <p onClick={(e) => loadtemptable()}>불러오기</p>
+                      <p onClick={(e) => setTempState(true)}>새로작성</p>
                     </div>
-                  </>
-                )}
+                  ) : (
+                    <>
+                      <div className={styles.modalcon}>
+                        <Table headers={table_header}>
+                          <DataTable
+                            Eitems={excelData}
+                            setItems={setTableitems}
+                            items={tableitems}
+                            setErrorCount={setErrorMessage}
+                          />
+                        </Table>
+                      </div>
+                      <div className={styles.btnSection}>
+                        <div className={styles.error}>{errorMessage}</div>
+                        <button
+                          className={`${styles.btnTrue} ${styles.submitBtn}`}
+                          onClick={fetchTemp}
+                        >
+                          임시저장
+                        </button>
+                        <button
+                          className={`${
+                            errorMessage ? styles.btnFalse : styles.btnTrue
+                          } ${styles.submitBtn}`}
+                          disabled={errorMessage}
+                          onClick={fetch}
+                        >
+                          저장
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 export default Registration;
