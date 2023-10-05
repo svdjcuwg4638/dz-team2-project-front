@@ -10,6 +10,7 @@ import codehelperReducer from "./storage/codehelperReducer";
 import inventoryReducer from "./storage/InventoryReducer";
 import relationReducer from "./management/relationReducer";
 import commonReducer from "./common/commonReducer";
+import tabReducer from "./common/tabReducer";
 
 export default combineReducers({
   currentMenu: menuReducer,
@@ -25,4 +26,5 @@ export default combineReducers({
   inventory: inventoryReducer,
 
   common: commonReducer,
+  tab : tabReducer,
 });
