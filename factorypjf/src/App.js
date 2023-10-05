@@ -30,17 +30,17 @@ function App() {
   return (
     <Layout>
       <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/production/*" element={<ProductionRoutes />} />
+        <Route path="/:tabId/" element={<Main />} />
+        <Route path="/:tabId/production/*" element={<ProductionRoutes />} />
         {/* <Route path="/inbound/*" element={<InboundRoutes/>}/>
         <Route path="/storage/*" element={<StorageRoutes/>}/> */}
 
-        <Route path="/storage/" element={<StorageRoutes />}>
+        <Route path="/:tabId/storage/" element={<StorageRoutes />}>
           <Route path="" element={<StorageInquiry />} />
           <Route path="registration" element={<Registration />} />
         </Route>
 
-        <Route path="/management" element={<Management />}>
+        <Route path="/:tabId/management" element={<Management />}>
           <Route index path="item" element={<Item />} />
           <Route path="storage" element={<Storage />} />
           <Route path="partner" element={<Partner />} />
