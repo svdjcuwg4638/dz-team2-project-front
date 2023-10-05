@@ -26,12 +26,12 @@ const Dep2 = ({ bookMarkList }) => {
       { link: "/line", name: "생산라인관리" },
     ],
     inbound: [
-      { link: "/start", name: "입고예정" },
+      { link: "", name: "입고예정" },
       { link: "/ongoing", name: "입고등록" },
       { link: "/end", name: "입고현황" },
     ],
     outbound: [
-      { link: "/start", name: "출고예정" },
+      { link: "", name: "출고예정" },
       { link: "/end", name: "출고현황" },
     ],
     management: [
@@ -75,14 +75,14 @@ const Dep2 = ({ bookMarkList }) => {
     if (menuValue === "management") {
       menuNameValue = "기준정보관리";
     } else if (menuValue === "production") {
-      menuNameValue = "생산관리"; 
+      menuNameValue = "생산관리";
     } else if (menuValue === "inbound") {
-      menuNameValue = "입고관리"; 
+      menuNameValue = "입고관리";
     } else if (menuValue === "outbound") {
-      menuNameValue = "출고관리"; 
+      menuNameValue = "출고관리";
     } else if (menuValue === "storage") {
-      menuNameValue = "재고관리"; 
-    } 
+      menuNameValue = "재고관리";
+    }
 
     return { menu: menuValue, menuName: menuNameValue };
   }
