@@ -6,7 +6,7 @@ import { storageAction } from "../../../redux/actions/management/storageAction";
 import { codeAction } from "redux/actions/management/codeAction";
 import { current } from "@reduxjs/toolkit";
 
-const SearchHelper = ({
+const LocationSearchHelper = ({
   currentDetailId,
   searchPartner,
   code_type,
@@ -61,19 +61,25 @@ const SearchHelper = ({
 
   const rowClickHandler = (datarow) => {
     const valueName = (menu.name === '창고' ? 'storage_code' : (menu.name === '세부장소' ? 'location_code' : menu.code_column));
-    const valueName1 = (menu.name === '창고' ? 'storage_name' : (menu.name === '세부장소' ? 'location_name' : menu.name_column));
-
-    handleInputChange({
+    const valueName1 = (menu.name === '창고' ? 'storage_name' : (menu.name === '세부장소' ? 'location_name' : menu.code_column));
+    console.log('실행은되냐?',datarow)
+    const event = {
         target: {
-            [valueName]: datarow[menu.code_column],
-            [valueName1]: datarow[menu.name_column]
+            name: valueName,
+            value: datarow[menu.code_column]
         }
-    }, currentDetailId);
+    };
+    const event1 = {
+      target: {
+          name: valueName1,
+          value: datarow[menu.name_column]
+      }
+  };
 
-    setSelectedColumn(datarow);
+    handleInputChange(event);
+    handleInputChange(event1);
     searchPartner(datarow[menu.name_column]);
-};
-
+  };
   
   const clickFn = (e) => {
     e.preventDefault();
@@ -146,4 +152,4 @@ const SearchHelper = ({
   );
 };
 
-export default SearchHelper;
+export default LocationSearchHelper;

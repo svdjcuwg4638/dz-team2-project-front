@@ -106,6 +106,7 @@ const InBoundStart = () => {
     const fetchBoundNo = async () => {
       try{
         const date = getTodayPrefix();
+        console.log(date);
         const response = await api.get(`/inbound/getboundno?prefix=${date}`)
         setBoundNo((response.data.data));
         setIncrementedBoundNo(incrementBoundNo(response.data.data));

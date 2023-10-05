@@ -1,11 +1,26 @@
 import React, { useEffect, useState } from "react";
 import SubRow from "./SubRow";
 import inboundClasses from '../../../style/inbound/inbound.module.css'
+import { useDispatch, useSelector } from "react-redux";
+import { itemAction } from "redux/actions/management/itemAction";
+import { storageAction } from "redux/actions/management/storageAction";
 
 const SubTable = ({ boundId, masterLength, masterFocus, subFlag, deletedBoundIds,checkedSubBoundIds,setCheckedSubBoundIds,deletedIndex }) => {
   
+  const dispatch = useDispatch();
   const [subRowArray, setSubRowArray] = useState([]);
 
+    //#region 데이터 로딩
+    const [isLoading, setIsloading] = useState(false);
+    const { itemAll } = useSelector((state) => state.item);
+    const {storageAll, locationAll} = useSelector((state) => state.storage);
+
+  
+    useEffect(() => {
+      dispatch(itemAction.getItemAll());
+      dispatch(storageAction.getstorageAll());
+    }, []);
+    //#endregion
   useEffect(() => {
     if (boundId !== null && masterLength !== null) {
       setSubRowArray(Array.from({ length: masterLength }).map((_, index) => boundId + index));
@@ -49,14 +64,17 @@ const SubTable = ({ boundId, masterLength, masterFocus, subFlag, deletedBoundIds
             subRowArray.map((boundId, index) => {
               if (deletedBoundIds && !deletedBoundIds.includes(boundId) && !deletedIndex.includes(index)) {
                 return (
-                  <SubRow key={index}
+                  <SubRow index={index}
                     boundId={boundId}
                     masterFocus={masterFocus}
                     subFlag={subFlag}
                     handleRequestSuccess={handleRequestSuccess}
                     handleRequestFail={handleRequestFail}
                     checkedSubBoundIds={checkedSubBoundIds}
-                    setCheckedSubBoundIds={setCheckedSubBoundIds}/>
+                    setCheckedSubBoundIds={setCheckedSubBoundIds}
+                    itemAll={itemAll}
+                    storageAll={storageAll}
+                    locationAll={locationAll}/>
                 )
               }
               return null;

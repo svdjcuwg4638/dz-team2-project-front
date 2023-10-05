@@ -4,10 +4,8 @@ import { partnerAction } from "../../../redux/actions/management/partnerAction";
 import { itemAction } from "../../../redux/actions/management/itemAction";
 import { storageAction } from "../../../redux/actions/management/storageAction";
 import { codeAction } from "redux/actions/management/codeAction";
-import { current } from "@reduxjs/toolkit";
 
 const SearchHelper = ({
-  currentDetailId,
   searchPartner,
   code_type,
   handleRowClick,
@@ -60,21 +58,23 @@ const SearchHelper = ({
   }
 
   const rowClickHandler = (datarow) => {
-    const valueName = (menu.name === '창고' ? 'storage_code' : (menu.name === '세부장소' ? 'location_code' : menu.code_column));
-    const valueName1 = (menu.name === '창고' ? 'storage_name' : (menu.name === '세부장소' ? 'location_name' : menu.name_column));
-
-    handleInputChange({
+    if (menu.name == "공통코드") {
+      handleInputChange({
         target: {
-            [valueName]: datarow[menu.code_column],
-            [valueName1]: datarow[menu.name_column]
-        }
-    }, currentDetailId);
-
+          name: code_type,
+          value: datarow[menu.code_column],
+        },
+      });
+      } else if (menu.input_type == "partner") {
+        handleInputChange('master', menu.code_column, datarow[menu.code_column]);
+    } else if(menu.input_type == "item"){
+      handleInputChange('detail', menu.code_column, datarow[menu.code_column]);
+      handleInputChange('detail', menu.name_column, datarow[menu.name_column]);
+    }
     setSelectedColumn(datarow);
     searchPartner(datarow[menu.name_column]);
-};
+  };
 
-  
   const clickFn = (e) => {
     e.preventDefault();
     setInputboxText(e.target[0].value);

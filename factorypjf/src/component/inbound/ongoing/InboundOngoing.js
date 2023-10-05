@@ -6,6 +6,7 @@ import { ClipLoader } from "react-spinners";
 import { inboundAction } from 'redux/actions/inbound/inboundAction';
 import DetailModal from './Modal' // 수정된 부분
 import { storageAction } from 'redux/actions/management/storageAction';
+import api from 'redux/api';
 
 function InboundOngoing() {
   const dispatch = useDispatch();
@@ -13,9 +14,10 @@ function InboundOngoing() {
   const {inboundAll, inboundDetailAll, loading} = useSelector((state) => state.inbound);
   const {storageAll, locationAll} = useSelector((state) => state.storage);
   
-  const [searchData, setSearchData] = useState(inboundAll.data);
+  const [searchData, setSearchData] = useState([]);
+  const matchingMasters = searchData && searchData.length ? searchData.filter(master => master.bound_state === 'ongoing') : [];
   const [searchDetailData, setSearchDetailData] = useState(inboundDetailAll.data);
-  const [updatedDetails, setUpdatedDetails] = useState([]);
+  const [updatedDetails, setUpdatedDetails] = useState({});
   useEffect(()=>{
     console.log(updatedDetails);
   },[updatedDetails])
@@ -46,6 +48,44 @@ function InboundOngoing() {
     // console.log('로케이션',locationAll.data);
   }, [inboundAll])
 
+  const createRequestPayload = () => {
+    let payload = [];
+  
+    // 모든 boundId에 대한 변경 내용을 반복합니다.
+    for (let boundId in updatedDetails) {
+      const details = updatedDetails[boundId];
+  
+      // 각 detail 항목에 대한 변경 내용을 반복합니다.
+      for (let detail of details) {
+        // 필요한 정보만 payload에 추가합니다.
+        payload.push({
+          bound_id: detail.bound_id,
+          detail_id: detail.detail_id,
+          storage_code: detail.storage_code,
+          location_code: detail.location_code,
+          amount: detail.amount
+        });
+      }
+    }
+    return payload;
+  }
+  
+  const handleSendToServer= async () => {
+    const payload = createRequestPayload();
+    console.log('서버보내지는것들',payload);
+    try{
+      const response = await api.post("inbound/updateOngoing",payload);
+
+      if (response.status === 200 || response.status === 201){
+        console.log("Success");
+        window.location.reload();
+      }
+
+      
+    }catch (error){
+      console.log ("Error : ",error)
+    }
+  }
   const grid01_headers = [
     { text: "문서번호", value: "bound_no", width: "3%" },
     { text: "유형", value: "bound_category", width: "9%" },
@@ -59,8 +99,8 @@ function InboundOngoing() {
       <p className={inboundClasses["sub-menu-name"]}>입고등록</p>
       <Table headers={grid01_headers}></Table>
       <tbody>
-        {searchData && searchData.length > 0 ? (
-          searchData.map((data, index) => (
+        {matchingMasters && matchingMasters.length > 0 ? (
+          matchingMasters.map((data, index) => (
             <tr key={index}>
               {grid01_headers.map((header) => {
                 if (!header.value) {
@@ -80,6 +120,8 @@ function InboundOngoing() {
           </tr>
         )}
       </tbody>
+      <button onClick={handleSendToServer}>입고처리</button>
+
       <DetailModal 
       isOpen={isModalOpen}
       onClose={handleCloseModal} 
@@ -88,7 +130,7 @@ function InboundOngoing() {
       storageAll={storageAll} 
       locationAll={locationAll}
       setUpdatedDetails={setUpdatedDetails}
-      /> {/* 수정된 부분 */}
+      />
     </div>
   )
 }

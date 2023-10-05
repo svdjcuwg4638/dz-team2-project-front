@@ -29,6 +29,7 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
     description: "",
     detail_state: "ongoing",
     detail_isDelete: 0,
+    detail_type: "inbound",
     frontDelete: "",
   });
 
@@ -82,7 +83,6 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
       console.log('디테일요청시작')
       async function insertDetail(){
         // subFlag가 true이며, frontDelete 값이 1이 아닐 경우에만 요청을 진행
-        alert('뭐지?');
         if(formData.frontDelete === 1) {
             console.log('frontDelete is 1, skipping request');
             return;

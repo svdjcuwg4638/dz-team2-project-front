@@ -1,21 +1,20 @@
 import React from 'react'
 
-function SubTable({ searchDetailData }) {
+function SubTable({ filteredDetailData }) {
+    console.log('디테일필터데이터는',filteredDetailData)
     return (
         <table>
             <tbody>
-                {searchDetailData.map((searchDetailData, index) => (
+                {filteredDetailData.map((filteredDetailData, index) => (
                     <tr key={index}>
-                        {/* 예시로 몇 가지 속성만 추가하였습니다. 필요한 속성들을 추가로 입력해주세요. */}
-                        <td>{searchDetailData.item_code}</td>
-                        <td>{searchDetailData.item_name}</td>
-                        <td>{searchDetailData.amount}</td>
-                        <td>{searchDetailData.unit_price_id}</td>
-                        <td>{searchDetailData.tot_amount}</td>
-                        <td>{searchDetailData.tot_amount}</td>
-                        <td>{searchDetailData.tot_amount}</td>
-                        <td>{searchDetailData.tot_amount}</td>
-                        
+                        <td>{filteredDetailData.item_code}</td>
+                        <td>{filteredDetailData.item_name}</td>
+                        <td>{filteredDetailData.amount}</td>
+                        <td>{filteredDetailData.unit_price}</td>
+                        <td>{filteredDetailData.storage_code}</td>
+                        <td>{filteredDetailData.location_code}</td>
+                        <td>{filteredDetailData.detail_date}</td>
+                        <td>{filteredDetailData.description}</td>
                     </tr>
                 ))}
             </tbody>

@@ -5,7 +5,7 @@ import SearchHelper from "./SearchHelper";
 function Modal({ isOpen, onClose, boundId, details = [], locationAll, storageAll, setUpdatedDetails}) { // 기본값 설정
 // 연결된 bound_id를 기반으로 상세 정보를 필터링합니다.
 
-const matchingDetails = details.filter(detail => detail.bound_id === boundId);
+const matchingDetails = details.filter(detail => detail.bound_id === boundId && detail.detail_state === 'ongoing');
 const [formData, setFormData] = useState([]);
 
 useEffect(() => {
@@ -33,19 +33,18 @@ const selectedPartnerFn = () => {
 };
 
 const handleInputChange = (event, detailId) => {
-    console.log(detailId);
-    const { name, value } = event.target;
+    const changes = event.target;
 
-    // 현재 formData에서 해당 detailId를 가진 항목을 찾아서 업데이트합니다.
     const newFormData = formData.map(detail => {
         if (detail.detail_id == detailId) {
             return {
-                ...detail, // 기존 detail의 속성들을 유지
-                [name]: value // storage_code 또는 location_code를 업데이트합니다.
+                ...detail,
+                ...changes
             };
         }
         return detail;
     });
+
     setFormData(newFormData);
 };
 const filterUnchangedDetails = () => {
@@ -58,10 +57,15 @@ const filterUnchangedDetails = () => {
 };
 const handleSaveChanges = () => {
     const changedDetails = filterUnchangedDetails();
-
-    setUpdatedDetails(changedDetails);
+    
+    // 상위 컴포넌트의 setUpdatedDetails에 현재 boundId를 key로 하고, 변경된 상세 내용을 value로 전달
+    setUpdatedDetails(prevDetails => ({
+      ...prevDetails,
+      [boundId]: changedDetails
+    }));
+    
     onClose(); // 모달을 닫습니다.
-};
+  };
 
 const item = {
     name: "창고",
@@ -100,11 +104,11 @@ return (
         justifyContent: 'center'
     }}>
         <div style={{
-            backgroundColor: 'white',
-            padding: '20px',
-            maxWidth: '500px',
-            width: '80%',
-            borderRadius: '10px',
+           backgroundColor: 'white',
+           padding: '20px',
+           maxWidth: '800px',
+           width: '90%',
+           borderRadius: '10px',
         }}>
             <table>
                 <thead>
@@ -132,16 +136,17 @@ return (
                             <td>{detail.decription}</td>
                             <td>
                                 <input
-                                    data-detail-id={detail.detail_id} // 이 부분 추가
+                                    data-detail-id={detail.detail_id}
                                     name="storage_code"
+                                    value={formData.find(fd => fd.detail_id === detail.detail_id)?.storage_name || ''}
                                 />
                                  <button onClick={() => handleButtonClick('storage',detail.detail_id)}>창고선택</button>
                             </td>
                             <td>
                                 <input
-                                    data-detail-id={detail.detail_id} // 이 부분 추가
+                                    data-detail-id={detail.detail_id} 
                                     name="location_code"
-                                    
+                                    value={formData.find(fd => fd.detail_id === detail.detail_id)?.location_name || ''}
                                 />
                                 <button onClick={() => handleButtonClick('location',detail.detail_id)}>장소선택</button>
                             </td>
