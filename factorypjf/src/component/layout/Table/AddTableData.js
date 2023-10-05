@@ -19,6 +19,7 @@ export default function AddTableData({
   emitItem,
   deleteItem,
   editHandler,
+  addRowEmit
 }) {
   //첫 렌더링시 빈 테이블 3줄
   const DEFAULT_ROW = 3;
@@ -51,8 +52,8 @@ export default function AddTableData({
         if (!deleteItem.includes(i)) {
           unDelete.push(copyItem[i]);
         }
-        setTableItems([...unDelete]);
-        emitItem(tableItems);
+        // setTableItems([...unDelete]);
+        emitItem([...unDelete]);
         setFocusRow(0);
       }
     }
@@ -62,11 +63,17 @@ export default function AddTableData({
   const [tableItems, setTableItems] = useState([...DEFAULT_ARR]);
 
   const addRowHandler = () => {
-    setTableItems([...tableItems, {}]);
+    // setTableItems([...tableItems, {}]);
+    emitItem([...tableItems,{}])
+    if(addRowEmit){
+      addRowEmit()
+    }
   };
 
   //focus된 행 state
   const [focusRow, setFocusRow] = useState();
+  //mouseOver된 행 state
+  const [overRow, setOverRow]=useState();
 
   const modalInit = {
     showModal: false,
@@ -122,8 +129,32 @@ export default function AddTableData({
       emitItem(copyItems);
     } else if (e.which === HELPER_KEY && !colInfo.helper) {
       console.log("도움창이 제공되지 않는 코드입니다.");
+      //도움창 컬럼 지우기
+    }else if(e.which === CLEAN_KEY && colInfo.helper){
+      e.preventDefault();
+      const copyItem=[...tableItems]
+      copyItem[coordinate.row][colInfo.value]=''
+      copyItem[coordinate.row][`${colInfo.value}Code`]=''
+      setTableItems([...copyItem])
+      console.log(tableItems)
+    }else{
+      if (editHandler) editHandler(e,'add',coordinate);
     }
   };
+
+  const mouseHandler=(e)=>{
+    e.preventDefault();
+    //이벤트가 tr>td>input에서 발생하기 때문에 부모의 부모 노드 선택
+    let row = e.target.parentNode.parentNode;
+    if(e.type==='mouseover'){
+      row.className = addStyle["add-table-focus"];
+      setOverRow(row);
+    }
+    if(e.type==='mouseout'&&focusRow!==overRow){
+     
+      overRow.className = addStyle[""];
+    }
+  }
 
   //코드 선택 handler
   const selectCodeHandler = (codeRow) => {
@@ -141,19 +172,19 @@ export default function AddTableData({
         itemKey = key;
       }
 
-      //같은 행에 이미 데이터가 들어있으면
-      if (copyItems[currentCol.row]) {
+      //같은 행에 이미 데이터가 들어있으면 코드데이터만 바뀜
+      // if (copyItems[currentCol.row]) {
         copyItems[currentCol.row] = {
           ...copyItems[currentCol.row],
           [itemKey]: codeRow[key],
         };
-        //비어있는 행이면
-      } else {
-        copyItems[currentCol.row] = { [itemKey]: codeRow[key] };
-      }
+      // //비어있는 행이면 
+      // } else {
+      //   copyItems[currentCol.row] = { [itemKey]: codeRow[key] };
+      // }
     }
-    setTableItems(copyItems);
-    emitItem(copyItems);
+    // setTableItems(copyItems);
+    emitItem([...copyItems]);
 
     //======================grid2 trigger========================
     headers.forEach((header) => {
@@ -195,6 +226,8 @@ export default function AddTableData({
           onClick={(e) => {
             selectRow(e, idx);
           }}
+          onMouseOver={mouseHandler}
+          onMouseOut={mouseHandler}
           // className={focusRow === idx ? tableStyle["focused-row"] : ""}
         >
           {headers.map((header, headerIdx) =>
@@ -227,19 +260,20 @@ export default function AddTableData({
                   <input
                     id={`grid01_${idx}_${header.value}`}
                     type="date"
+                    placeholder="YYYY-MM-DD"
                     min="1900-01-01"
                     max="9999-12-31"
                     className={addStyle.input_date}
                     defaultValue={item ? item[header.value] : ""}
                     onKeyUp={(e) => {
-                      keyUpHandler(e, header);
+                      keyUpHandler(e, header, { row: idx, col: headerIdx });
                     }}
                   ></input>
                 ) : (
                   <input
                     id={`grid01_${idx}_${header.value}`}
                     onKeyUp={(e) => {
-                      keyUpHandler(e, header);
+                      keyUpHandler(e, header, { row: idx, col: headerIdx });
                     }}
                     defaultValue={item ? item[header.value] : ""}
                   ></input>

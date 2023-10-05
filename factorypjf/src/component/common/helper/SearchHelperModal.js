@@ -8,9 +8,10 @@ import searchStyle from "style/common/searchStyle.module.css";
 import styles from "style/common/SearchHelperModal.module.css";
 
 const HELPER_KEY = 113;
-const CLEAN_KEY = 115;
+const CLEAN_KEY=115;
+const ENTER_KEY = 13;
 
-const SearchHelperModal = ({ headers, formHandler, items }) => {
+const SearchHelperModal = ({ headers, formHandler, enterHandler }) => {
   const modalInit = {
     showModal: false,
     codeValue: "", //
@@ -24,6 +25,7 @@ const SearchHelperModal = ({ headers, formHandler, items }) => {
   // }, [items]);
   //행 추가 handler
   const [tableItems, setTableItems] = useState({});
+  //검색 필터 내용 바뀔때마다 formHandler 호출
   useEffect(() => {
     formHandler(tableItems);
   }, [tableItems]);
@@ -38,7 +40,7 @@ const SearchHelperModal = ({ headers, formHandler, items }) => {
   //모달 reducer (on/off, 코드 타입)
   const modalReducer = (state, action) => {
     if (action.type === "ON_MODAL") {
-      console.log(action);
+      // console.log(action);
       return {
         showModal: true,
         codeValue: action.codeValue,
@@ -66,6 +68,8 @@ const SearchHelperModal = ({ headers, formHandler, items }) => {
 
       setTableItems(copyItems);
       console.log(tableItems);
+    }else if(e.which===13){
+      if(enterHandler)enterHandler();
     }
   };
 
@@ -142,16 +146,26 @@ const SearchHelperModal = ({ headers, formHandler, items }) => {
                 </button>
               </>
             ) : (
-              <>
-                <input
-                  onChange={(e) =>
-                    inputChangeHandler(header.value, e.target.value)
-                  }
-                  value={tableItems[header.value] || ""}
-                  onKeyUp={(e) => {
-                    keyUpHandler(e, header);
-                  }}
-                ></input>
+              <>{
+                  header.value==='date'?(<input
+                    onChange={(e) =>
+                      inputChangeHandler(header.value, e.target.value)
+                    }
+                    value={tableItems[header.value] || ""}
+                    type='date'
+                    min="1900-01-01"
+                    max="9999-12-31"
+                  ></input>):(<input
+                    onChange={(e) =>
+                      inputChangeHandler(header.value, e.target.value)
+                    }
+                    value={tableItems[header.value] || ""}
+                    onKeyUp={(e) => {
+                      keyUpHandler(e, header);
+                    }}
+                  ></input>)
+                
+              }
               </>
             )}
           </div>

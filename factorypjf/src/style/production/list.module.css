@@ -17,3 +17,6 @@ table{
     border: none;
     box-shadow: 1px 1px 2px 1px grey;
 }
+.filter-container{
+    display: flex;
+}
