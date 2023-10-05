@@ -13,7 +13,7 @@ import productionClasses from "style/production/production.module.css";
 import searchStyle from "style/common/searchStyle.module.css";
 import listStyle from "style/production/list.module.css";
 import { useReducer } from "react";
-import { getAxios } from "function/axiosFuction";
+import { getAxios, putAxios } from "function/axiosFuction";
 
 export default function Add() {
   const [grid01_items, set01Item] = useState();
@@ -496,10 +496,55 @@ export default function Add() {
       return { showModal: true, ...action.state };
     }
     if (action.type === "OFF_MODAL") {
-      return { ...modalInit };
+      console.log("in")
+      return {
+        ...modalInit
+      };
     }
   };
   const [modalState, modalDispatch] = useReducer(modalReducer, modalInit);
+
+  const submitHandler=()=>{
+    const {grid01Data,grid02Data,deleteData}={...modalState.data}
+    
+    //product, product_detail 테이블 수정
+    // const param={production:[],component:[],productionDelete:[]}
+    const param={}
+    
+    grid01Data.forEach((el)=>{
+      if(el.state==='edit'){
+        param.production=param.production?[...param.production,el]:[el]
+      }
+    })
+    // param.production.push(grid01Data.find((el)=>{
+    //   return el.state==='edit'
+    // }))
+    //product_relation 테이블 수정
+    
+    grid02Data.forEach((data)=>{
+      data.forEach((el)=>{
+        if(el.state==='edit'){
+          param.component=param.component?[...param.component,el]:[el]
+        }
+      })
+    })
+    // param.component.push(...componentArr)
+    
+
+    //product 테이블 delete
+    // param.productionDelete.push(deleteData)
+    param.productionDelete=param.productionDelete?[...param.productionDelete,deleteData]:[...deleteData]
+    console.log(param)
+    putAxios('production/list/edit',param,success,fail)
+    function success(data){
+      console.log(data)
+    }
+    function fail(data){
+      console.log(data)
+    }
+    modalDispatch({type:'OFF_MODAL'})    
+  }
+
 
   return (
     <div className={productionListClasses["production_list-container"]}>
@@ -514,7 +559,7 @@ export default function Add() {
             className={disabledBtn.class}
             onClick={searchHandler}
           >
-            저장
+            조회
           </button>
         </div>
         <div className={productionClasses.grid01}>
@@ -530,7 +575,7 @@ export default function Add() {
           </Table>
         </div>
         {modalState.showModal && (
-          <AlertModal offModal={offModal} modalState={modalState}></AlertModal>
+          <AlertModal offModal={offModal} modalState={modalState} onSubmit={submitHandler}></AlertModal>
         )}
         <div className={productionClasses.grid02}>
           <Table headers={grid02_headers}>
