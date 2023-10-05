@@ -5,6 +5,7 @@ import listStyle from "style/layout/dataTable/listTableData.module.css";
 import HelperModal from "component/common/helper/HelperModal";
 
 const HELPER_KEY = 113;
+const CLEAN_KEY=115;
 
 //headers: 테이블 header, items: 테이블 내용, onTrigger:부모 요소로 이벤트 발송할 수 있는 handler, onCheckboxChange: 선택 컬럼 체크시 handler
 export default function ListTable({
@@ -88,6 +89,14 @@ export default function ListTable({
       if(editHandler)editHandler(e,'list',coordinate)
     } else if (e.which === HELPER_KEY && !colInfo.helper) {
       console.log("도움창이 제공되지 않는 코드입니다.");
+      //도움창 컬럼 지우기
+    }else if(e.which === 8 || (e.which === CLEAN_KEY && colInfo.helper)){
+      e.preventDefault();
+      const copyItem=[...tableItems]
+      copyItem[coordinate.row][colInfo.value]=''
+      copyItem[coordinate.row][`${colInfo.value}Code`]=''
+      setTableItems([...copyItem])
+      console.log(tableItems)
     }else{
       if(editHandler)editHandler(e,'list',coordinate)
     }
