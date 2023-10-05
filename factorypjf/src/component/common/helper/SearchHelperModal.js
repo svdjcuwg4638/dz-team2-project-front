@@ -9,8 +9,9 @@ import styles from "style/storage/inquiry.module.css";
 
 const HELPER_KEY = 113;
 const CLEAN_KEY=115;
+const ENTER_KEY = 13;
 
-const SearchHelperModal = ({ headers, formHandler }) => {
+const SearchHelperModal = ({ headers, formHandler, enterHandler }) => {
   const modalInit = {
     showModal: false,
     codeValue: "", //
@@ -66,6 +67,8 @@ const SearchHelperModal = ({ headers, formHandler }) => {
 
       setTableItems(copyItems);
       console.log(tableItems);
+    }else if(e.which===13){
+      if(enterHandler)enterHandler();
     }
 
   };

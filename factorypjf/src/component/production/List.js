@@ -545,6 +545,7 @@ export default function Add() {
     modalDispatch({type:'OFF_MODAL'})    
   }
 
+  const enterHandler=searchHandler
 
   return (
     <div className={productionListClasses["production_list-container"]}>
@@ -554,6 +555,7 @@ export default function Add() {
           <SearchHelperModal
             headers={searchFilter}
             formHandler={formHandler}
+            enterHandler={enterHandler}
           ></SearchHelperModal>
           <button
             className={disabledBtn.class}
