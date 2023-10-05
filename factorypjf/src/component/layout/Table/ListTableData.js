@@ -5,6 +5,7 @@ import listStyle from "style/layout/dataTable/listTableData.module.css";
 import HelperModal from "component/common/helper/HelperModal";
 
 const HELPER_KEY = 113;
+const CLEAN_KEY=115;
 
 //headers: 테이블 header, items: 테이블 내용, onTrigger:부모 요소로 이벤트 발송할 수 있는 handler, onCheckboxChange: 선택 컬럼 체크시 handler
 export default function ListTable({
@@ -34,8 +35,8 @@ export default function ListTable({
         }
         copyArray.push(JSON.parse(JSON.stringify(tempObj)));
       }
-      setTableItems(copyArray);
     }
+    setTableItems(copyArray);
   }, [items]);
 
   //모달 끄고 닫는 핸들러
@@ -62,6 +63,21 @@ export default function ListTable({
   const [modalState, dispatch] = useReducer(modalReducer, modalInit);
 
   const [currentCol, setCurrentCol] = useState();
+  //mouseOver된 행 state
+  const [overRow, setOverRow]=useState();
+  const mouseHandler=(e)=>{
+    e.preventDefault();
+    //이벤트가 tr>td>input에서 발생하기 때문에 부모의 부모 노드 선택
+    let row = e.target.parentNode.parentNode;
+    if(e.type==='mouseover'){
+      row.className = listStyle["add-table-focus"];
+      setOverRow(row);
+    }
+    if(e.type==='mouseout'){
+     
+      overRow.className = listStyle[""];
+    }
+  }
 
   //colInfo: 컬럼 header, coordinate{row,col} 클릭한 위치
   const keyUpHandler = (e, colInfo, coordinate) => {
@@ -70,10 +86,20 @@ export default function ListTable({
       setCurrentCol({ ...coordinate });
       //모달 켜기
       onModalHanlder(colInfo.value, colInfo.text);
+      if(editHandler)editHandler(e,'list',coordinate)
     } else if (e.which === HELPER_KEY && !colInfo.helper) {
       console.log("도움창이 제공되지 않는 코드입니다.");
+      //도움창 컬럼 지우기
+    }else if(e.which === CLEAN_KEY && colInfo.helper){
+      e.preventDefault();
+      const copyItem=[...tableItems]
+      copyItem[coordinate.row][colInfo.value]=''
+      copyItem[coordinate.row][`${colInfo.value}Code`]=''
+      setTableItems([...copyItem])
+      console.log(tableItems)
+    }else{
+      if(editHandler)editHandler(e,'list',coordinate)
     }
-    if (editHandler) editHandler(e, "list", coordinate);
   };
 
   //코드 선택 handler
@@ -152,6 +178,8 @@ export default function ListTable({
             onClick={(e) => {
               selectRow(e, idx);
             }}
+            onMouseOver={mouseHandler}
+            onMouseOut={mouseHandler}
           >
             {headers.map((header, headerIdx) =>
               //선택 컬럼
