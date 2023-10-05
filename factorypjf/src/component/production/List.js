@@ -6,12 +6,14 @@ import ListTd from "component/layout/Table/ListTableData";
 import HelperModal from "component/common/helper/HelperModal";
 import SearchHelperModal from "component/common/helper/SearchHelperModal";
 import AlertModal from "component/common/AlertModal";
+import { camelToSnake, getToday, snakeToCamel, timeToKR } from "function/commonFunction";
 
 import productionListClasses from "style/production/list.module.css";
 import productionClasses from "style/production/production.module.css";
 import searchStyle from "style/common/searchStyle.module.css";
 import listStyle from "style/production/list.module.css";
 import { useReducer } from "react";
+import { getAxios } from "function/axiosFuction";
 
 export default function Add() {
   const [grid01_items, set01Item] = useState();
@@ -19,8 +21,8 @@ export default function Add() {
   const grid01_headers = [
     { text: "선택", value: "select", width: "3%" },
     { text: "순번", value: "index", width: "3%" },
-    // { text: "생산번호", value: "prouductNum", width: "9%", readonly: true },
-    { text: "날짜*", value: "date", width: "9%" },
+    { text: "생산번호", value: "productionCode", width: "9%", readonly: true },
+    { text: "생산일*", value: "date", width: "9%" },
     {
       text: "생산품*",
       value: "item",
@@ -28,10 +30,9 @@ export default function Add() {
 
       gridTrigger: true,
     },
-
+    { text: "수량*", value: "quantity", width: "3%",readonly:true },
     { text: "생산팀*", value: "team", width: "4%", helper: true },
     { text: "라인*", value: "line", width: "5%", helper: true },
-    { text: "수량*", value: "quantity", width: "3%" },
     { text: "창고*", value: "storage", width: "5%", helper: true },
     { text: "장소*", value: "location", width: "5%", helper: true },
     { text: "고객*", value: "partner", width: "9%", helper: true },
@@ -44,7 +45,7 @@ export default function Add() {
   const grid02_headers = [
     { text: "순번", value: "index", width: "5%" },
     { text: "자재*", value: "item", width: "15%", readonly: true },
-    { text: "필요수량", value: "quantity", width: "8%", readonly: true },
+    { text: "수량", value: "quantity", width: "8%", readonly: true },
     { text: "창고*", value: "storage", width: "10%", helper: true },
 
     {
@@ -56,7 +57,7 @@ export default function Add() {
     },
     {
       text: "재고",
-      value: "inventory",
+      value: "total",
       width: "5%",
       readonly: true,
       trigger: true,
@@ -65,184 +66,16 @@ export default function Add() {
   ];
   const searchFilter = [
     { text: "생산일", value: "date", width: "3%" },
-    { text: "생산품", value: "item", width: "3%" },
+    { text: "생산번호", value: "productionCode", width: "3%" },
+    { text: "생산품", value: "item", width: "3%",helper:true },
     { text: "생산팀", value: "team", width: "3%", helper: true },
-    { text: "품목", value: "item", width: "3%", helper: true },
     { text: "창고", value: "storage", width: "3%", helper: true },
     { text: "장소", value: "location", width: "3%", helper: true },
     { text: "고객", value: "partner", width: "3%", helper: true },
     { text: "담당자", value: "emp", width: "3%", helper: true },
     { text: "비고", value: "description", width: "3%" },
   ];
-  //=======================dummy=======================
-  const grid01Dummy01 = [
-    {
-      productionCode: "202309220001",
-      date: "2023-09-21",
-      item: "Laptop1",
-      itemCode: "I001",
-      team: "IT",
-      teamCode: "S1",
-      storage: "Warehouse A",
-      location: "Shelf 3",
-      partner: "ABC Electronics",
-      emp: "John Doe",
-      description: "High-end laptop for development",
-      line: "L1",
-      quantity: 1,
-      leadTime: "1h",
-      workForce: 1,
-    },
-    {
-      productionCode: "202309220002",
-      date: "2023-09-21",
-      item: "Laptop2",
-      itemCode: "I002",
-      team: "IT",
-      teamCode: "S1",
-      storage: "Warehouse A",
-      location: "Shelf 3",
-      partner: "ABC Electronics",
-      emp: "John Doe",
-      description: "High-end laptop for development",
-      line: "L1",
-      quantity: 1,
-      leadTime: "1h",
-      workForce: 1,
-    },
-    {
-      productionCode: "202309220003",
-      date: "2023-09-21",
-      item: "Laptop3",
-      itemCode: "I003",
-      team: "IT",
-      teamCode: "S1",
-      storage: "Warehouse A",
-      location: "Shelf 3",
-      partner: "ABC Electronics",
-      emp: "John Doe",
-      description: "High-end laptop for development",
-      line: "L1",
-      quantity: 1,
-      leadTime: "1h",
-      workForce: 1,
-    },
-  ];
-  const grid01Dummy02 = [
-    {
-      date: "2023-09-21",
-      item: "Laptop2",
-      team: "IT2",
-      storage: "Warehouse B",
-      location: "Shelf 02",
-      partner: "ABC Electronics2",
-      emp: "John Doe2",
-      description: "High-end laptop for development2",
-      line: "L2",
-      quantity: 1,
-      leadTime: "1h",
-      workForce: 1,
-    },
-    {
-      date: "2023-09-21",
-      item: "Laptop2",
-      team: "IT2",
-      storage: "Warehouse B",
-      location: "Shelf 02",
-      partner: "ABC Electronics2",
-      emp: "John Doe2",
-      description: "High-end laptop for development2",
-      line: "L2",
-      quantity: 1,
-      leadTime: "1h",
-      workForce: 1,
-    },
-  ];
-  const grid02Dummy01 = [
-    [
-      {
-        productionCode: "202309220001",
-        item: "Widget",
-        productCode: "I001",
-        quantity: 100,
-        total: 200,
-        storage: "Warehouse A",
-        location: "Shelf 3",
-        total: 5000,
-        description: "A small widget used in various applications.",
-      },
-      {
-        productionCode: "202309220001",
-        productCode: "I001",
-        item: "Widget",
-        quantity: 100,
-        total: 200,
-        storage: "Warehouse A",
-        location: "Shelf 3",
-        total: 5000,
-        description: "A small widget used in various applications.",
-      },
-    ],
-    [
-      {
-        productionCode: "202309220002",
-        item: "Widget2",
-        productCode: "I002",
-        quantity: 100,
-        total: 200,
-        storage: "Warehouse A2",
-        location: "Shelf 32",
-        total: 5000,
-        description: "A small widget used in various applications2.",
-      },
-      {
-        productionCode: "202309220002",
-        item: "Widget2",
-        productCode: "I002",
-        quantity: 100,
-        total: 200,
-        storage: "Warehouse A2",
-        location: "Shelf 32",
-        total: 5000,
-        description: "A small widget used in various applications2.",
-      },
-      {
-        productionCode: "202309220002",
-        item: "Widget2",
-        productCode: "I002",
-        quantity: 100,
-        total: 200,
-        storage: "Warehouse A2",
-        location: "Shelf 32",
-        total: 5000,
-        description: "A small widget used in various applications2.",
-      },
-      {
-        productionCode: "202309220002",
-        item: "Widget2",
-        productCode: "I002",
-        quantity: 100,
-        total: 200,
-        storage: "Warehouse A2",
-        location: "Shelf 32",
-        total: 5000,
-        description: "A small widget used in various applications2.",
-      },
-    ],
-    [
-      {
-        productionCode: "202309220003",
-        item: "Widget2",
-        productCode: "I003",
-        quantity: 100,
-        total: 200,
-        storage: "Warehouse A2",
-        location: "Shelf 32",
-        total: 5000,
-        description: "A small widget used in various applications2.",
-      },
-    ],
-  ];
+  
 
   const [disabledBtn, setDisabledBtn] = useState({
     state: true,
@@ -250,19 +83,21 @@ export default function Add() {
   });
 
   useEffect(() => {
-    //getAxios
-    let grid02Item;
-    for (let i = 0; i < grid01Dummy01.length; i++) {
-      grid01Dummy01[i].state = null;
-      grid02Dummy01[i].forEach((el) => {
-        el.state = null;
-      });
-    }
 
-    set01Item(grid01Dummy01);
-    set02Item(grid02Dummy01[0]);
-    cacheDispatch({ type: "INIT_CACHE", data: grid02Dummy01 });
-    console.log(grid01_items, grid02Cache);
+    const filter={date:getToday()}
+    getAxios('production/list',filter,searchResult,consoleError)
+
+    // for (let i = 0; i < grid01Dummy01.length; i++) {
+    //   grid01Dummy01[i].state = null;
+    //   grid02Dummy01[i].forEach((el) => {
+    //     el.state = null;
+    //   });
+    // }
+
+    // set01Item(grid01Dummy01);
+    // set02Item(grid02Dummy01[0]);
+    // cacheDispatch({ type: "INIT_CACHE", data: grid02Dummy01 });
+    
   }, []);
 
   const gridTriggerHandler = () => {};
@@ -314,7 +149,7 @@ export default function Add() {
   const saveHandler = () => {
     //수정된 item (state가 'edit'인것)
 
-    if (!grid01_items.find((data) => data.item)) return;
+    if (!grid01_items.find((data) => data.item)&&!deleteData) return;
     //====================테이블의 모든 input 가져오기====================
     const inputArr = [...document.querySelectorAll('[id*="grid"]')];
     let grid01Data = [];
@@ -360,7 +195,8 @@ export default function Add() {
               key === "state" ||
               key === "team" ||
               key === "select" ||
-              key === "index"
+              key === "index"||
+              key==="isDelete"
             ) &&
             !grid01Data[i][key]
           ) {
@@ -381,7 +217,7 @@ export default function Add() {
       }
     }
     //생산품이 하나도 입력되지 않았을때
-    if (!itemCount) {
+    if (!itemCount&&!deleteData) {
       alertHeader = "생산품";
       alert("저장할 " + alertHeader + "이 없습니다.");
     }
@@ -417,7 +253,7 @@ export default function Add() {
       }
     }
 
-    //확인 모달 띄우기
+    //수정된 row
     const edited = [];
     if (!alertHeader) {
       //수정
@@ -437,8 +273,7 @@ export default function Add() {
         }
       }
     }
-    
-
+    //모달에 들어갈 내용
     const state = {
       headLine: "알림",
       title: "아래 생산 내역을 수정/삭제하시겠습니까?",
@@ -462,7 +297,7 @@ export default function Add() {
           tableItem: deleteData,
         },
       ],
-      data: { grid01Data, grid02Data: grid02Cache.items },
+      data: { grid01Data, grid02Data: grid02Cache.items, deleteData },
     };
     modalDispatch({ type: "ON_MODAL", state });
   };
@@ -495,7 +330,80 @@ export default function Add() {
     setDisabledBtn({state:false,class:`${listStyle['btn_abled']}`});
     console.log(grid02Cache);
   };
-  const formHandler = () => {};
+  function searchResult(data){
+    console.log(data)
+    const production=data.data.production;
+    const component=data.data.component;
+    
+    const item01=[];
+    const item02=[]
+    for (let i = 0; i < production.length; i++) {
+      let obj01={};
+      for(let key in production[i]){
+        let header=''
+        if(key.includes('_name')){
+          //'name' 떼기 (item_name => item 으로 변경)
+          header=key.replace('_name','')
+        }else if(key==="production_date"){
+          header='date'
+          const dateKR=timeToKR(production[i][key])
+          obj01[header]=dateKR.match(/\d{4}-\d{2}-\d{2}/g)[0];
+          continue
+        }else{
+          header=snakeToCamel(key)
+        }
+        obj01[header]=production[i][key];
+      }
+      
+      let arr=[];
+      for(let j=0; j<component[i].length; j++){
+        let obj02={};
+        for(let key in component[i][j]){
+          let header=''
+          if(key.includes('_name')){
+            //'name' 떼기 (item_name => item 으로 변경)
+            header=key.replace('_name','')
+          }else if(key==="production_date"){
+            header='date'
+            const dateKR=timeToKR(component[i][j][key])
+            obj02[header]=dateKR.match(/\d{4}-\d{2}-\d{2}/g);
+            continue
+          }else{
+            header=snakeToCamel(key)
+          }
+          obj02[header]=component[i][j][key];
+        }
+        arr.push(obj02)
+      }
+      
+        item02.push(arr)
+        item01.push(obj01)
+    }
+
+    console.log(item01)
+    set01Item(item01)
+  
+    //grid02
+    cacheDispatch({type:'INIT_CACHE',data:item02})
+    console.log(item02)
+  }
+
+  function consoleError(error){
+    console.log(error)
+  }
+
+  //검색필터 state 변경시 handler
+  const formHandler = (filter) => {
+    const filterToSnake={};
+    if(Object.keys(filter).length>0){
+      // console.log(filter)
+      for(let key in filter){
+        filterToSnake[camelToSnake(key)]=filter[key];
+      }
+      // console.log(filterToSnake)
+      getAxios('production/list',filterToSnake,searchResult,consoleError)
+    }
+  };
 
   //grid01 row 선택시 그에 맞는 자재를 grid2에 출력하기 위해 입력 값을 저장하는 state
   const cacheInit = {
@@ -505,7 +413,8 @@ export default function Add() {
   const cacheReducer = (state, action) => {
     //cacheInit (행 선택하지 않음)
     if (action.type === "INIT_CACHE") {
-      return { idx: 0, items: [...action.data] };
+      
+      return {items: [...action.data] };
     }
     //처음으로 행을 선택할때
     if (state.idx === null) {
@@ -546,6 +455,9 @@ export default function Add() {
           set02Item(action.items ? [...action.items] : []);
           return { ...state, items: [...copyItems] };
         } else if (action.type === "EDIT") {
+          let copyItems = state.items
+          ? JSON.parse(JSON.stringify(state.items))
+          : [];
           copyItems[state.idx][action.idx].state = "edit";
           return { ...state, items: [...copyItems] };
         }

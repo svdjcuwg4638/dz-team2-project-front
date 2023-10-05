@@ -1,4 +1,5 @@
 import ListTd from "component/layout/Table/ListTableData";
+import { putAxios } from "function/axiosFuction";
 import { useEffect } from "react";
 
 import helperStyle from "style/common/helperModal.module.css";
@@ -20,8 +21,40 @@ function HelperOverlay({ modalState }) {
   });
 
   const submitHandler=()=>{
-    const {grid01Data,grid02Data}={...modalState.data}
+    const {grid01Data,grid02Data,deleteData}={...modalState.data}
     
+    //product, product_detail 테이블 수정
+    // const param={production:[],component:[],productionDelete:[]}
+    const param={}
+    
+    grid01Data.forEach((el)=>{
+      if(el.state==='edit'){
+        param.production=param.production?[...param.production,el]:el
+      }
+    })
+    // param.production.push(grid01Data.find((el)=>{
+    //   return el.state==='edit'
+    // }))
+    //product_relation 테이블 수정
+    
+    grid02Data.forEach((data)=>{
+      data.forEach((el)=>{
+        if(el.state==='edit'){
+          param.component=param.component?[...param.component,el]:el
+        }
+      })
+    })
+    // param.component.push(...componentArr)
+    
+
+    //product 테이블 delete
+    // param.productionDelete.push(deleteData)
+    param.productionDelete=param.production?[...param.productionDelete,deleteData]:deleteData
+    console.log(param)
+    putAxios('production/list/edit',param,print,print)
+    function print(data){
+      console.log(data)
+    }
   }
 
   return (
