@@ -1,0 +1,26 @@
+.modal {
+  border: 1px solid black;
+  width: 500px;
+  height: 300px;
+  background-color: white;
+  border-radius: 20px;
+  padding: 3rem;
+}
+
+.script {
+  display: flex;
+  height: 80%;
+  line-height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.buttonBox p {
+  color: #4373c0;
+  text-decoration: underline;
+}
+
+.buttonBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
