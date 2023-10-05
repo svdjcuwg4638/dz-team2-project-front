@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useReducer } from "react";
 
-import searchStyle from "style/common/searchStyle.module.css"
+import searchStyle from "style/common/searchStyle.module.css";
 import styles from "style/storage/inquiry.module.css";
 
 const HELPER_KEY = 113;
@@ -18,6 +18,11 @@ const SearchHelperModal = ({ headers, formHandler, enterHandler }) => {
     codeName: "",
   };
 
+  // useEffect(() => {
+  //   if (items !== undefined) {
+  //     setTableItems(items);
+  //   }
+  // }, [items]);
   //행 추가 handler
   const [tableItems, setTableItems] = useState({});
   //검색 필터 내용 바뀔때마다 formHandler 호출
@@ -48,17 +53,13 @@ const SearchHelperModal = ({ headers, formHandler, enterHandler }) => {
   };
   const [modalState, dispatch] = useReducer(modalReducer, modalInit);
 
-  const [currentCol, setCurrentCol] = useState();
-
   // 도움창 단축키 handler
-  const keyUpHandler = (e, colInfo, coordinate) => {
+  const keyUpHandler = (e, colInfo) => {
     if (e.which === HELPER_KEY && colInfo.helper) {
       onModalHanlder(colInfo.value, colInfo.text);
     } else if (e.which === CLEAN_KEY && colInfo.helper) {
       e.preventDefault();
       let copyItems = { ...tableItems };
-      console.log(copyItems);
-      console.log(colInfo.value);
       copyItems = {
         ...copyItems,
         [colInfo.value]: "",
@@ -70,13 +71,11 @@ const SearchHelperModal = ({ headers, formHandler, enterHandler }) => {
     }else if(e.which===13){
       if(enterHandler)enterHandler();
     }
-
   };
 
   // 도움창 버튼 handler
-  const buttonPressHandler = (e, colInfo, coordinate) => {
+  const buttonPressHandler = (e, colInfo) => {
     if (colInfo.helper) {
-      setCurrentCol({ ...coordinate });
       onModalHanlder(colInfo.value, colInfo.text);
     }
   };
@@ -124,12 +123,13 @@ const SearchHelperModal = ({ headers, formHandler, enterHandler }) => {
       {/* 도움창이 필요한 항목은 readonly, 도움창으로만 입력 가능 */}
       {headers.map((header, headerIdx) => (
         <td key={header.headerIdx}>
-          <div className={`${styles.searchCom} ${searchStyle['search_filter-wrap']}`}>
+          <div
+            className={`${styles.searchCom} ${searchStyle["search_filter-wrap"]}`}
+          >
             <label> {header.text}</label>
             {header.helper ? (
               <>
                 <input
-                  readOnly
                   value={tableItems[header.value] || ""}
                   onKeyUp={(e) => {
                     keyUpHandler(e, header);

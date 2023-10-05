@@ -27,13 +27,12 @@ const Dep2 = ({ bookMarkList }) => {
     ],
     inbound: [
       { link: "", name: "입고예정" },
-      { link: "/ing", name: "입고중" },
-      { link: "/after", name: "입고완료" },
+      { link: "/ongoing", name: "입고등록" },
+      { link: "/end", name: "입고현황" },
     ],
     outbound: [
       { link: "", name: "출고예정" },
-      { link: "/ing", name: "출고중" },
-      { link: "/after", name: "출고완료" },
+      { link: "/end", name: "출고현황" },
     ],
     management: [
       { link: "/item", name: "품목관리" },
@@ -45,6 +44,8 @@ const Dep2 = ({ bookMarkList }) => {
     ],
     storage: [
       { link: "", name: "재고조회" },
+      { link: "/movement", name: "재고이동" },
+      { link: "/movementsList", name: "재고이동내역" },
       { link: "/registration", name: "기초재고등록" },
     ],
   };
@@ -74,14 +75,14 @@ const Dep2 = ({ bookMarkList }) => {
     if (menuValue === "management") {
       menuNameValue = "기준정보관리";
     } else if (menuValue === "production") {
-      menuNameValue = "생산관리"; 
+      menuNameValue = "생산관리";
     } else if (menuValue === "inbound") {
-      menuNameValue = "입고관리"; 
+      menuNameValue = "입고관리";
     } else if (menuValue === "outbound") {
-      menuNameValue = "출고관리"; 
+      menuNameValue = "출고관리";
     } else if (menuValue === "storage") {
-      menuNameValue = "재고관리"; 
-    } 
+      menuNameValue = "재고관리";
+    }
 
     return { menu: menuValue, menuName: menuNameValue };
   }

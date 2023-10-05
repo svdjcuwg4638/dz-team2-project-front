@@ -2,7 +2,7 @@ import React, { cloneElement, isValidElement, useState } from "react";
 
 import tableStyle from "style/layout/dataTable/table.module.css";
 import addStyle from "style/layout/dataTable/addTableData.module.css";
-
+import { BsSearch } from "react-icons/bs";
 
 export default function DataTable({ headers, onModal, children }) {
   // header가 있어야만 table 출력
@@ -13,7 +13,7 @@ export default function DataTable({ headers, onModal, children }) {
   const childrenWithProps = cloneElement(children, { headers });
 
   return (
-    <div className="table-container">
+    <div className={tableStyle.tbl_container}>
       <table className={tableStyle.tbl_header}>
         <colgroup>
           {headers.map((header, idx) => {
@@ -25,16 +25,14 @@ export default function DataTable({ headers, onModal, children }) {
             {headers.map((header, idx) => (
               <th key={idx}>
                 {header.text}
+                {header.helper && <BsSearch></BsSearch>}
               </th>
             ))}
           </tr>
         </thead>
       </table>
 
-      <div
-        className={tableStyle.tbl_body_wrap}
-        
-      >
+      <div className={tableStyle.tbl_body_wrap}>
         <table className={tableStyle.tbl_body}>
           <colgroup>
             {headers.map((header, idx) => {

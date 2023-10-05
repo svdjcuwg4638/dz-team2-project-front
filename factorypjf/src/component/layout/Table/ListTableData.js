@@ -15,7 +15,7 @@ export default function ListTable({
   onCheckboxChange,
   emitItem,
   selectRowHandler,
-  editHandler
+  editHandler,
 }) {
   const modalInit = {
     showModal: false,
@@ -148,7 +148,7 @@ export default function ListTable({
     });
   };
 
-  const selectRow=(e, idx)=>{
+  const selectRow = (e, idx) => {
     // //클릭 이벤트가 tr>td>input에서 발생하기 때문에 부모의 부모 노드 선택
     // let row = e.target.parentNode.parentNode;
     // row.className = addStyle["add-table-focus"];
@@ -157,10 +157,10 @@ export default function ListTable({
     // }
     // setFocusRow(row);
 
-    if(selectRowHandler){
-      selectRowHandler(e,idx)
+    if (selectRowHandler) {
+      selectRowHandler(e, idx);
     }
-  }
+  };
 
   return (
     <>
