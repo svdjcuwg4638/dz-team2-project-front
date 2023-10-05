@@ -185,8 +185,10 @@ const Registration = () => {
         <ResultModalContainer setModalstate={setModalstate} linkTo="../" />
       )}
 
-      <div className={styles.headerSection}>
-        <h4 className={styles.header}> 기초재고등록</h4>
+      <div className={styles.headerCon}>
+        <div className={styles.headerSection}>
+          <h4 className={styles.header}> 기초재고등록</h4>
+        </div>
       </div>
 
       <div className={styles.SectionContainer}>

@@ -263,9 +263,12 @@ const Inquiry = () => {
 
   return (
     <>
-      <div className={styles.headerSection}>
-        <h4 className={styles.header}> 재고 조회</h4>
+      <div className={styles.headerCon}>
+        <div className={styles.headerSection}>
+          <h4 className={styles.header}> 재고 조회</h4>
+        </div>
       </div>
+
       <div className={styles.SectionContainer}>
         <div>
           <div>

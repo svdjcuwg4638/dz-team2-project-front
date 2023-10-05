@@ -129,8 +129,10 @@ export const MovementsList = () => {
 
   return (
     <>
-      <div className={styles.headerSection}>
-        <h4 className={styles.header}>재고이동내역</h4>
+      <div className={styles.headerCon}>
+        <div className={styles.headerSection}>
+          <h4 className={styles.header}>재고이동내역</h4>
+        </div>
       </div>
       <div className={styles.SectionContainer}>
         <div>
