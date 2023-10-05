@@ -55,7 +55,7 @@ const SearchHelperModal = ({ headers, formHandler, items }) => {
   const keyUpHandler = (e, colInfo) => {
     if (e.which === HELPER_KEY && colInfo.helper) {
       onModalHanlder(colInfo.value, colInfo.text);
-    } else if (e.which === 8 || (e.which === CLEAN_KEY && colInfo.helper)) {
+    } else if (e.which === CLEAN_KEY && colInfo.helper) {
       e.preventDefault();
       let copyItems = { ...tableItems };
       copyItems = {

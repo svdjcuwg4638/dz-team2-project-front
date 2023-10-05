@@ -7,10 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import api from "redux/api";
 import { commonAction } from "redux/actions/common/commonAction";
 import { BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
-import { useLocation, useNavigate  } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { saveCurrentPath } from "redux/actions/common/tabAction";
 
-const Layout = ({ children,setTabs,tabs, setActiveTab}) => {
+const Layout = ({ children, setTabs, tabs, setActiveTab }) => {
   const dispatch = useDispatch();
 
   //#region bookmark 코드
@@ -30,24 +30,23 @@ const Layout = ({ children,setTabs,tabs, setActiveTab}) => {
 
   const addBookMark = async () => {
     const submitData = {
-      company_id: "1",
+      company_id: 1,
       pageUrl: sessionStorage.getItem("current_page"),
     };
     try {
-      const rsponse = await api.post("/bookMark/add", submitData);
+      const response = await api.post("/bookMark/add", submitData);
     } catch (error) {
       console.log(error);
     }
     dispatch(commonAction.getBookMark());
   };
   //#endregion
-  
-  function tabHandler(i){
-    setActiveTab(i)
+
+  function tabHandler(i) {
+    setActiveTab(i);
   }
 
   return (
-
     <div className="wrap">
       <Dep1 />
       <div className="wd-100p">
@@ -57,12 +56,12 @@ const Layout = ({ children,setTabs,tabs, setActiveTab}) => {
           <div className="section_wrap">
             <div className="section_top">
               <div className="tap_wrap">
-                  <div>
-                    <div onClick={()=>tabHandler(0)}>tab{1}</div>
-                  </div>
-                  <div>
-                    <div onClick={()=>tabHandler(1)}>tab{2}</div>
-                  </div>
+                <div>
+                  <div onClick={() => tabHandler(0)}>tab{1}</div>
+                </div>
+                <div>
+                  <div onClick={() => tabHandler(1)}>tab{2}</div>
+                </div>
                 <div></div>
               </div>
               <div>
