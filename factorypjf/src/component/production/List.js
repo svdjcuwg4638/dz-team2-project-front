@@ -76,6 +76,7 @@ export default function Add() {
     { text: "비고", value: "description", width: "3%" },
   ];
   
+  const [inputFilter,setInputFilter]=useState();
 
   const [disabledBtn, setDisabledBtn] = useState({
     state: true,
@@ -381,11 +382,11 @@ export default function Add() {
     }
 
     console.log(item01)
-    set01Item(item01)
+    set01Item([...item01])
   
     //grid02
     cacheDispatch({type:'INIT_CACHE',data:item02})
-    console.log(item02)
+    console.log([...item02])
   }
 
   function consoleError(error){
@@ -400,10 +401,14 @@ export default function Add() {
       for(let key in filter){
         filterToSnake[camelToSnake(key)]=filter[key];
       }
+      setInputFilter(filterToSnake)
       // console.log(filterToSnake)
-      getAxios('production/list',filterToSnake,searchResult,consoleError)
     }
   };
+
+  const searchHandler=()=>{
+    getAxios('production/list',inputFilter,searchResult,consoleError)
+  }
 
   //grid01 row 선택시 그에 맞는 자재를 grid2에 출력하기 위해 입력 값을 저장하는 state
   const cacheInit = {
@@ -505,6 +510,12 @@ export default function Add() {
             headers={searchFilter}
             formHandler={formHandler}
           ></SearchHelperModal>
+          <button
+            className={disabledBtn.class}
+            onClick={searchHandler}
+          >
+            저장
+          </button>
         </div>
         <div className={productionClasses.grid01}>
           <Table headers={grid01_headers}>

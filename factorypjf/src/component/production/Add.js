@@ -313,10 +313,14 @@ export default function List() {
       console.log(grid01Data)
       console.log(grid02Cache.items)
 
-      postAxios('production/add',{production:grid01Data,component:grid02Cache.items},print,print)
+      postAxios('production/add',{production:grid01Data,component:grid02Cache.items},success,fail)
     }
-    function print(data){
+    function success(data){
+      alert('저장이 완료됐습니다')
+    }
+    function fail(data){
       console.log(data)
+      alert('ERROR! 데이터를 저장하지 못했습니다')
     }
     console.log(grid02Cache);
     console.log(grid02_items);
