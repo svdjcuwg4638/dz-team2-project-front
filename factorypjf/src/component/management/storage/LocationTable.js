@@ -1,8 +1,14 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import api from "redux/api";
 
-function LocationTable({ data, setSelectIds, selectIds }) {
+function LocationTable({ data, setSelectIds, selectIds, selectId }) {
   const [SearchList, setSearchList] = useState(data);
+
+  useEffect(() => {
+    setSearchList(
+      data.filter((data) => data.storage_code == selectId?.storage_code)
+    );
+  }, [selectId, data]);
 
   // #region 스크롤 이벤트 함수
   const tableRef = useRef(null);
@@ -24,86 +30,36 @@ function LocationTable({ data, setSelectIds, selectIds }) {
     }
   };
 
-  // #region 세부장소 검색
-  const [formData, setFormData] = useState({
-    storage_code: "",
-    location_name: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      setSearchList(
-        (await api.post("/storage/Locationsearch", formData)).data.data
-      );
-    } catch (error) {
-      console.log("error :", error);
-    }
-  };
-  // #endregion
-
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <div className="storage_search_wrap">
-          <div>
-            <div>창고코드</div>
-            <div className="inputBox">
-              <input type="text" name="storage_code" onChange={handleChange} />
-            </div>
-          </div>
-          <div>
+      <div className="ctable">
+        <div className="chead">
+          <div className="ctr storage_row_sub">
+            <div></div>
             <div>세부장소코드</div>
-            <div className="inputBox">
-              <input type="text" name="location_code" onChange={handleChange} />
-            </div>
-          </div>
-          <div>
-            <div>세부장소이름</div>
-            <div className="inputBox">
-              <input type="text" name="location_name" onChange={handleChange} />
-            </div>
+            <div>세부장소명</div>
           </div>
         </div>
-        <div className="button_wrap">
-          <button className="button">조회</button>
-        </div>
-      </form>
-      <table className="table_scroll">
-        <thead>
-          <tr>
-            <th></th>
-            <th>창고코드</th>
-            <th>세부장소코드</th>
-            <th>세부장소명</th>
-          </tr>
-        </thead>
-        <tbody className="storage_scrollable_table" onWheel={handleScroll}>
+      </div>
+
+      <div className="ctable">
+        <div className="cbody" onWheel={handleScroll}>
           {SearchList &&
             SearchList.map((data) => (
-              <tr>
-                <td>
+              <div className="ctr storage_row_sub">
+                <div>
                   <input
                     type="checkbox"
-                    checked={selectIds.includes(data.location_id)}
-                    onChange={() => handleCheckboxChange(data.location_id)}
+                    checked={selectIds.includes(data)}
+                    onChange={() => handleCheckboxChange(data)}
                   />
-                </td>
-                <td>{data.storage_code}</td>
-                <td>{data.location_code}</td>
-                <td>{data.location_name}</td>
-              </tr>
+                </div>
+                <div>{data.location_code}</div>
+                <div>{data.location_name}</div>
+              </div>
             ))}
-        </tbody>
-      </table>
+        </div>
+      </div>
     </>
   );
 }

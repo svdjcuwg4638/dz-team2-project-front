@@ -13,6 +13,8 @@ export default function ListTable({
   onTrigger,
   onCheckboxChange,
   emitItem,
+  selectRowHandler,
+  editHandler,
 }) {
   const modalInit = {
     showModal: false,
@@ -23,11 +25,18 @@ export default function ListTable({
   const [tableItems, setTableItems] = useState();
 
   useEffect(() => {
+    const copyArray = [];
     if (items) {
-      if (emitItem) emitItem(items);
-      setTableItems([...items]);
+      for (let item of items) {
+        let tempObj = {};
+        for (let key in item) {
+          tempObj = { ...tempObj, [key]: item[key] };
+        }
+        copyArray.push(JSON.parse(JSON.stringify(tempObj)));
+      }
+      setTableItems(copyArray);
     }
-  }, [items, emitItem]);
+  }, [items]);
 
   //모달 끄고 닫는 핸들러
   const onModalHanlder = (codeValue, codeName) => {
@@ -54,6 +63,7 @@ export default function ListTable({
 
   const [currentCol, setCurrentCol] = useState();
 
+  //colInfo: 컬럼 header, coordinate{row,col} 클릭한 위치
   const keyUpHandler = (e, colInfo, coordinate) => {
     if (e.which === HELPER_KEY && colInfo.helper) {
       //도움창을 연 컬럼 좌표 저장
@@ -63,6 +73,7 @@ export default function ListTable({
     } else if (e.which === HELPER_KEY && !colInfo.helper) {
       console.log("도움창이 제공되지 않는 코드입니다.");
     }
+    if (editHandler) editHandler(e, "list", coordinate);
   };
 
   //코드 선택 handler
@@ -111,6 +122,20 @@ export default function ListTable({
     });
   };
 
+  const selectRow = (e, idx) => {
+    // //클릭 이벤트가 tr>td>input에서 발생하기 때문에 부모의 부모 노드 선택
+    // let row = e.target.parentNode.parentNode;
+    // row.className = addStyle["add-table-focus"];
+    // if (focusRow && focusRow !== row) {
+    //   focusRow.className = addStyle[""];
+    // }
+    // setFocusRow(row);
+
+    if (selectRowHandler) {
+      selectRowHandler(e, idx);
+    }
+  };
+
   return (
     <>
       {modalState.showModal && (
@@ -122,7 +147,12 @@ export default function ListTable({
       )}
       {tableItems &&
         tableItems.map((item, idx) => (
-          <tr key={idx}>
+          <tr
+            key={idx}
+            onClick={(e) => {
+              selectRow(e, idx);
+            }}
+          >
             {headers.map((header, headerIdx) =>
               //선택 컬럼
               header.value === "select" ? (
@@ -134,9 +164,11 @@ export default function ListTable({
                 </td>
               ) : //순번 컬럼
               header.value === "index" ? (
-                <td key={headerIdx}>{idx + 1}</td>
+                <td key={`${headerIdx}${item[header.value]}`}>
+                  <div>{idx + 1}</div>
+                </td>
               ) : (
-                <td key={headerIdx}>
+                <td key={`${headerIdx}${item[header.value]}`}>
                   {/* headerKey를 key로 가진 item 값을 출력 */}
                   {header.helper || header.readonly ? (
                     <input

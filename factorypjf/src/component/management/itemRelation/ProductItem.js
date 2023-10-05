@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import api from "redux/api";
 
 const ProductItem = ({ itemAll, setSelectId, selectId }) => {
-
-  
-  const [itemList , setItemList] = useState(itemAll.data)
+  const [itemList, setItemList] = useState(itemAll.data);
   const [formData, setFormData] = useState({
     item_code: "",
     item_name: "",
@@ -12,15 +10,15 @@ const ProductItem = ({ itemAll, setSelectId, selectId }) => {
 
   const handleSearchSubmit = async (e) => {
     e.preventDefault();
-    const submitData = {
+    const submidivata = {
       ...formData,
     };
     try {
-      setItemList((await api.post("/item/search", submitData)).data.data);
+      setItemList((await api.post("/item/search", submidivata)).data.data);
     } catch (error) {
       console.log("error :", error);
     }
-    setSelectId(null)
+    setSelectId(null);
   };
 
   const handleSearchChange = (e) => {
@@ -33,10 +31,10 @@ const ProductItem = ({ itemAll, setSelectId, selectId }) => {
 
   return (
     <div>
-      <div className="productItem_search_wrap">
+      <form className="productItem_search_wrap">
         <div>
           <div>
-            <div>품목코드 : </div>
+            <div>품목코드</div>
             <div>
               <input
                 type="text"
@@ -46,7 +44,7 @@ const ProductItem = ({ itemAll, setSelectId, selectId }) => {
             </div>
           </div>
           <div>
-            <div>품목이름 : </div>
+            <div>품목이름</div>
             <div>
               <input
                 type="text"
@@ -63,19 +61,22 @@ const ProductItem = ({ itemAll, setSelectId, selectId }) => {
             </button>
           </div>
         </div>
+      </form>
+      <div className="ctable">
+        <div className="chead">
+          <div className="ctr relation_row">
+            <div style={{ widdiv: "150px" }}>품목코드</div>
+            <div>품목이름</div>
+          </div>
+        </div>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th style={{ width: "150px" }}>관리코드</th>
-            <th>관리코드명</th>
-          </tr>
-        </thead>
-        <tbody>
+
+      <div className="ctable">
+        <div className="cbody" style={{height:"26vh"}}>
           {itemList &&
             itemList.map((data) => (
-              <tr onClick={() => setSelectId(data)}>
-                <td
+              <div className="ctr relation_row" onClick={() => setSelectId(data)}>
+                <div
                   style={{
                     backgroundColor:
                       selectId?.item_code == data.item_code
@@ -84,8 +85,8 @@ const ProductItem = ({ itemAll, setSelectId, selectId }) => {
                   }}
                 >
                   {data.item_code}
-                </td>
-                <td
+                </div>
+                <div
                   style={{
                     backgroundColor:
                       selectId?.item_code == data.item_code
@@ -94,11 +95,11 @@ const ProductItem = ({ itemAll, setSelectId, selectId }) => {
                   }}
                 >
                   {data.item_name}
-                </td>
-              </tr>
+                </div>
+              </div>
             ))}
-        </tbody>
-      </table>
+        </div>
+      </div>
     </div>
   );
 };

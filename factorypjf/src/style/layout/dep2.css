@@ -1,7 +1,6 @@
 .dep2_wrap {
   background-color: #5390f0;
-  width: 170px;
-  height: 87.4vh;
+  width: 192px;
   display: flex;
   flex-flow: column;
   justify-content: center;
@@ -24,7 +23,7 @@
 }
 
 .menu_title {
-  padding: 20px 0;
+  padding-top: 20px;
 
   font-size: 18px;
   font-weight: bold;
@@ -52,12 +51,6 @@
 .menu_sub_wrap > div:hover > span {
   border-bottom: 3px solid #fff;
 }
-.section_top {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-}
-
 .tap_wrap {
   display: flex;
   margin-left: 20px;
@@ -68,4 +61,9 @@
   margin: 0px 15px;
   width: 100px;
   margin-top: 10px;
+}
+
+.menu_sub_wrap {
+  overflow-y: auto; 
+  max-height: 50%; 
 }

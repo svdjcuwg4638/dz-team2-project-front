@@ -6,6 +6,7 @@ import { itemAction } from "redux/actions/management/itemAction";
 import { ClipLoader } from "react-spinners";
 import { relationAction } from "redux/actions/management/relationAction";
 import "../../../style/management/relation.css"
+import "../../../style/management/management.css"
 const ItemRelation = () => {
   const dispatch = useDispatch();
 
@@ -58,6 +59,7 @@ const ItemRelation = () => {
 
   return (
     <div className="flex code_wrap">
+      <div>소모자재관리</div>
       {itemAll.data && codeAllData &&
         <>
           <ProductItem itemAll={itemAll} setSelectId={setSelectId} selectId={selectId}/>

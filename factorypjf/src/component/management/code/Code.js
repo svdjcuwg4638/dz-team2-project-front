@@ -5,6 +5,7 @@ import { codeAction } from "redux/actions/management/codeAction";
 import CommonCode from "./CommonCode";
 import ManageCode from "./ManageCode";
 import "../../../style/management/code.css";
+import "../../../style/management/management.css";
 
 const Code = () => {
   const dispatch = useDispatch();
@@ -32,15 +33,11 @@ const Code = () => {
       }
     };
     patchItems();
-
   }, []);
 
   useEffect(()=>{
-    if(!isLoading && manageCodeAll && manageCodeAll.data){
-      setSelectId(manageCodeAll?.data[0])
-    }
     setCodeAllData(codeAll.data)
-  },[isLoading])
+  },[codeAll])
 
 
   if (isLoading) {
@@ -60,6 +57,7 @@ const Code = () => {
 
   return (
     <div className="flex code_wrap">
+      <div>공통코드관리</div>
       {manageCodeAll && (
         <ManageCode
           manageCodeAll={manageCodeAll.data}

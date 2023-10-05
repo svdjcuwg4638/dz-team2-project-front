@@ -3,11 +3,18 @@ import { useSelector, useDispatch } from "react-redux";
 
 import "../../style/layout/dep2.css";
 import { BiSolidFactory } from "react-icons/bi";
-import { BsFillBookmarkFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { BsFillBookmarkFill, BsInfoCircle } from "react-icons/bs";
+import { Link, useLocation } from "react-router-dom";
+import { menuActions } from "redux/reducers/menu";
+import { LuFactory } from "react-icons/lu";
+import { FiMinusSquare, FiPlusSquare } from "react-icons/fi";
+import { MdOutlineInventory2 } from "react-icons/md";
 
-const Dep2 = () => {
+const Dep2 = ({ bookMarkList }) => {
   const currentMenu = useSelector((state) => state.currentMenu.currentMenu);
+
+  const dispatch = useDispatch();
+
   const currentMenuName = useSelector(
     (state) => state.currentMenu.currentMenuName
   );
@@ -28,10 +35,13 @@ const Dep2 = () => {
       { link: "/ing", name: "출고중" },
       { link: "/after", name: "출고완료" },
     ],
-    setting: [
-      { link: "", name: "기준정보1" },
-      { link: "/ing", name: "기준정보2" },
-      { link: "/after", name: "기준정보3" },
+    management: [
+      { link: "/item", name: "품목관리" },
+      { link: "/relation", name: "소모자재관리" },
+      { link: "/unitprice", name: "단가관리" },
+      { link: "/storage", name: "창고관리" },
+      { link: "/partner", name: "거래처관리" },
+      { link: "/code", name: "공통코드관리" },
     ],
     storage: [
       { link: "", name: "재고조회" },
@@ -39,13 +49,74 @@ const Dep2 = () => {
     ],
   };
 
+  function findMenuNameByUrl(url) {
+    for (let menuKey in subMenu) {
+      for (let menuItem of subMenu[menuKey]) {
+        if (menuItem.link.split("/")[1] === url.split("/")[2]) {
+          return menuItem.name;
+        }
+      }
+    }
+    return null;
+  }
+
+  function setMenu(url) {
+    const menu = findMenuByUrl(url);
+    if (menu) {
+      dispatch(menuActions.setBookmarkMenu(menu));
+    }
+  }
+
+  function findMenuByUrl(url) {
+    let menuValue = url.split("/")[1];
+    let menuNameValue = "";
+
+    if (menuValue === "management") {
+      menuNameValue = "기준정보관리";
+    } else if (menuValue === "production") {
+      menuNameValue = "생산관리"; 
+    } else if (menuValue === "inbound") {
+      menuNameValue = "입고관리"; 
+    } else if (menuValue === "outbound") {
+      menuNameValue = "출고관리"; 
+    } else if (menuValue === "storage") {
+      menuNameValue = "재고관리"; 
+    } 
+
+    return { menu: menuValue, menuName: menuNameValue };
+  }
+
   return (
     <div className="dep2_wrap">
       <div className="menu1">
         <div>
           <div className="menu_title">
             <div>
-              <BiSolidFactory size={40} color="#fff" />
+              <LuFactory
+                size={40}
+                color="#fff"
+                style={{ display: currentMenu == "production" ? "" : "none" }}
+              />
+              <FiPlusSquare
+                size={40}
+                color="#fff"
+                style={{ display: currentMenu == "inbound" ? "" : "none" }}
+              />
+              <FiMinusSquare
+                size={40}
+                color="#fff"
+                style={{ display: currentMenu == "outbound" ? "" : "none" }}
+              />
+              <MdOutlineInventory2
+                size={40}
+                color="#fff"
+                style={{ display: currentMenu == "storage" ? "" : "none" }}
+              />
+              <BsInfoCircle
+                size={40}
+                color="#fff"
+                style={{ display: currentMenu == "management" ? "" : "none" }}
+              />
             </div>
             <div>{currentMenuName}</div>
           </div>
@@ -68,15 +139,14 @@ const Dep2 = () => {
           <div>즐겨찾기</div>
         </div>
         <div className="menu_sub_wrap">
-          <div>
-            <span>즐겨찾기-1</span>
-          </div>
-          <div>
-            <span>즐겨찾기-2</span>
-          </div>
-          <div>
-            <span>즐겨찾기-3</span>
-          </div>
+          {bookMarkList &&
+            bookMarkList.map((data, index) => (
+              <div key={index}>
+                <Link to={data.pageUrl} onClick={() => setMenu(data.pageUrl)}>
+                  <span>{findMenuNameByUrl(data.pageUrl)}</span>
+                </Link>
+              </div>
+            ))}
         </div>
       </div>
     </div>
