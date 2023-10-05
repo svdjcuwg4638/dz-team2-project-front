@@ -1,0 +1,39 @@
+.wrap{
+    margin:20px;
+    height: 100%;
+    overflow: hidden;
+    position:relative;
+}
+.sub-menu-name{
+    font-size: 20px;
+    
+}
+.sub-menu-name::before{
+    content:'';
+    border:2px solid var(--main-color)
+}
+
+/* table */
+.data-table{
+    border: 1px solid #B9B9B9;
+}
+.grid01{
+    height: 40%;
+}
+
+.btn_add{
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 20px;
+    color: var(--font-color);
+    font-weight: bold;
+}
+
+.selectbox{
+    border: none;
+    outline: none;
+}
+

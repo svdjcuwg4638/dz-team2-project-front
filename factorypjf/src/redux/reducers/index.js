@@ -8,6 +8,8 @@ import unitPriceReducer from "./management/unitPriceReducer";
 import codeReducer from "./management/codeReducer";
 import codehelperReducer from "./storage/codehelperReducer";
 import inventoryReducer from "./storage/InventoryReducer";
+import inboundReducer from "./inbound/inboundReducer";
+import outboundReducer from "./outbound/ouboundReducer";
 import relationReducer from "./management/relationReducer";
 import commonReducer from "./common/commonReducer";
 import tabReducer from "./common/tabReducer";
@@ -24,6 +26,8 @@ export default combineReducers({
   relation: relationReducer,
   
   inventory: inventoryReducer,
+  inbound: inboundReducer,
+  outbound : outboundReducer,
 
   common: commonReducer,
   tab : tabReducer,
