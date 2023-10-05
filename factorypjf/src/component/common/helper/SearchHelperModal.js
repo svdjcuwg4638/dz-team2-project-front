@@ -17,11 +17,11 @@ const SearchHelperModal = ({ headers, formHandler, items }) => {
     codeName: "",
   };
 
-  useEffect(() => {
-    if (items !== undefined) {
-      setTableItems(items);
-    }
-  }, [items]);
+  // useEffect(() => {
+  //   if (items !== undefined) {
+  //     setTableItems(items);
+  //   }
+  // }, [items]);
   //행 추가 handler
   const [tableItems, setTableItems] = useState({});
   useEffect(() => {
