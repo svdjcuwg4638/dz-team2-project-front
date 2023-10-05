@@ -7,10 +7,12 @@
   width: 100%;
 }
 
+.headerCon {
+  padding-top: 3rem;
+  margin-left: 3rem;
+}
 .headerSection {
   border-left: 3px solid #5390f0;
-  margin-top: 3rem;
-  margin-left: 3rem;
 }
 
 .header {

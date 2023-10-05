@@ -11,12 +11,13 @@
   display: flex;
   justify-content: center;
 }
-.headerSection {
-  border-left: 3px solid #5390f0;
-  margin-top: 3rem;
+.headerCon {
+  padding-top: 3rem;
   margin-left: 3rem;
 }
-
+.headerSection {
+  border-left: 3px solid #5390f0;
+}
 .header {
   font-weight: bold;
   margin-left: 1rem;
