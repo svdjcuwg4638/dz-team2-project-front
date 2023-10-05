@@ -65,7 +65,6 @@ export default function Add() {
     { text: "비고", value: "description", width: "20%", readonly: true },
   ];
   const searchFilter = [
-    { text: "생산일", value: "date", width: "3%" },
     { text: "생산번호", value: "productionCode", width: "3%" },
     { text: "생산품", value: "item", width: "3%",helper:true },
     { text: "생산팀", value: "team", width: "3%", helper: true },
@@ -83,22 +82,14 @@ export default function Add() {
     class: `${listStyle['btn_disabled']}`,
   });
 
+  const [searchPeriod, setSearchPeriod]=useState({
+    startDate:'',
+    endDate:''
+  })
+
   useEffect(() => {
-
     const filter={date:getToday()}
-    getAxios('production/list',filter,searchResult,consoleError)
-
-    // for (let i = 0; i < grid01Dummy01.length; i++) {
-    //   grid01Dummy01[i].state = null;
-    //   grid02Dummy01[i].forEach((el) => {
-    //     el.state = null;
-    //   });
-    // }
-
-    // set01Item(grid01Dummy01);
-    // set02Item(grid02Dummy01[0]);
-    // cacheDispatch({ type: "INIT_CACHE", data: grid02Dummy01 });
-    
+    getAxios('production/list',filter,searchResult,consoleError) 
   }, []);
 
   const gridTriggerHandler = () => {};
@@ -404,10 +395,15 @@ export default function Add() {
       setInputFilter(filterToSnake)
       // console.log(filterToSnake)
     }
+    
   };
 
   const searchHandler=()=>{
-    getAxios('production/list',inputFilter,searchResult,consoleError)
+    const filter = {...inputFilter};
+    if(searchPeriod.startDate){filter.startDate=searchPeriod.startDate}
+    if(searchPeriod.endDate){filter.endDate=searchPeriod.endDate}
+    
+    getAxios('production/list',filter,searchResult,consoleError)
   }
 
   //grid01 row 선택시 그에 맞는 자재를 grid2에 출력하기 위해 입력 값을 저장하는 state
@@ -551,7 +547,30 @@ export default function Add() {
     <div className={productionListClasses["production_list-container"]}>
       <div className={productionClasses.wrap}>
         <p className={productionClasses["sub-menu-name"]}>생산내역조회</p>
-        <div className={searchStyle["container-search-helper"]}>
+        <div className={`${searchStyle['container-search-helper']} ${productionListClasses['filter-container']}`}>
+          <div>
+            <label> 생산일</label>
+            <input
+              onChange={(e) =>
+                setSearchPeriod({...searchPeriod, startDate:e.target.value})
+              }
+              type='date'
+              min="1900-01-01"
+              max="9999-12-31"
+            ></input>
+          </div>
+          <span>~</span>
+          <div>
+            <label> 생산일</label>
+            <input
+              onChange={(e) =>
+                setSearchPeriod({...searchPeriod, endDate:e.target.value})
+              }
+              type='date'
+              min="1900-01-01"
+              max="9999-12-31"
+            ></input>
+          </div>
           <SearchHelperModal
             headers={searchFilter}
             formHandler={formHandler}
