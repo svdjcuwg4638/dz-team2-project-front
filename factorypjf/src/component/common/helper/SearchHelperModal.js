@@ -11,7 +11,7 @@ const HELPER_KEY = 113;
 const CLEAN_KEY=115;
 const ENTER_KEY = 13;
 
-const SearchHelperModal = ({ headers, formHandler, enterHandler,items }) => {
+const SearchHelperModal = ({ headers, formHandler, enterHandler }) => {
   const modalInit = {
     showModal: false,
     codeValue: "", //
