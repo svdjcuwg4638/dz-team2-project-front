@@ -88,7 +88,7 @@ export default function Add() {
   })
 
   useEffect(() => {
-    const filter={date:getToday()}
+    const filter={startDate:getToday()}
     getAxios('production/list',filter,searchResult,consoleError) 
   }, []);
 
