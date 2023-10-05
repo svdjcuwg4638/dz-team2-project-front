@@ -1,0 +1,13 @@
+.container-search-helper{
+    height: 100px;
+}
+.search_filter-wrap{
+    display: flex;
+    flex-direction: column;
+}
+.search_filter-wrap label{
+    width: 100%;
+    text-align: start;
+    padding-left: 10px;
+}
+

@@ -3,9 +3,12 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useReducer } from "react";
-import styles from "../../../style/storage/inquiry.module.css";
+
+import searchStyle from "style/common/searchStyle.module.css"
+import styles from "style/storage/inquiry.module.css";
 
 const HELPER_KEY = 113;
+const CLEAN_KEY=115;
 
 const SearchHelperModal = ({ headers, formHandler }) => {
   const modalInit = {
@@ -48,9 +51,22 @@ const SearchHelperModal = ({ headers, formHandler }) => {
   // 도움창 단축키 handler
   const keyUpHandler = (e, colInfo, coordinate) => {
     if (e.which === HELPER_KEY && colInfo.helper) {
-      setCurrentCol({ ...coordinate });
       onModalHanlder(colInfo.value, colInfo.text);
+    } else if (e.which === 8 || (e.which === CLEAN_KEY && colInfo.helper)) {
+      e.preventDefault();
+      let copyItems = { ...tableItems };
+      console.log(copyItems);
+      console.log(colInfo.value);
+      copyItems = {
+        ...copyItems,
+        [colInfo.value]: "",
+        [`${colInfo.value}Code`]: "",
+      };
+
+      setTableItems(copyItems);
+      console.log(tableItems);
     }
+
   };
 
   // 도움창 버튼 handler
@@ -104,7 +120,7 @@ const SearchHelperModal = ({ headers, formHandler }) => {
       {/* 도움창이 필요한 항목은 readonly, 도움창으로만 입력 가능 */}
       {headers.map((header, headerIdx) => (
         <td key={header.headerIdx}>
-          <div className={styles.searchCom}>
+          <div className={`${styles.searchCom} ${searchStyle['search_filter-wrap']}`}>
             <label> {header.text}</label>
             {header.helper ? (
               <>

@@ -16,18 +16,18 @@ import ProductionRoutes from "router/ProductionRoutes";
 import InboundRoutes from "router/InboundRoutes";
 import OutboundRoutes from "router/OutboundRoutes";
 import ItemRelation from "component/management/itemRelation/ItemRelation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Main from "pages/Main";
 
 function App() {
-
-  const [currentPage, setCurrentPage] = useState('');
+  //#region 현재위치 세션저장
+  const [currentPage, setCurrentPage] = useState("");
   const location = useLocation();
-
   useEffect(() => {
     setCurrentPage(location.pathname);
-    sessionStorage.setItem('current_page', location.pathname);
+    sessionStorage.setItem("current_page", location.pathname);
   }, [location]);
+  //#endregion
 
   return (
     <Layout>
@@ -40,18 +40,22 @@ function App() {
           <Route path="" element={<StorageInquiry />} />
           <Route path="registration" element={<Registration />} />
         </Route>
+            <Route path="/storage/" element={<StorageRoutes />}>
+              <Route path="" element={<StorageInquiry />} />
+              <Route path="registration" element={<Registration />} />
+            </Route>
 
-        <Route path="/management" element={<Management />}>
-          <Route index path="item" element={<Item />} />
-          <Route path="storage" element={<Storage />} />
-          <Route path="partner" element={<Partner />} />
-          <Route path="unitprice" element={<UnitPrice />} />
-          <Route path="code" element={<Code />} />
-          <Route path="relation" element={<ItemRelation />} />
-        </Route>
-      </Routes>
-    </Layout>
-  );
-}
+            <Route path="/management" element={<Management />}>
+              <Route index path="item" element={<Item />} />
+              <Route path="storage" element={<Storage />} />
+              <Route path="partner" element={<Partner />} />
+              <Route path="unitprice" element={<UnitPrice />} />
+              <Route path="code" element={<Code />} />
+              <Route path="relation" element={<ItemRelation />} />
+            </Route>
+          </Routes>
+        </Layout>
+    );
+  };
 
 export default App;

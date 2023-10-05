@@ -12,6 +12,7 @@ import inboundReducer from "./inbound/inboundReducer";
 import outboundReducer from "./outbound/ouboundReducer";
 import relationReducer from "./management/relationReducer";
 import commonReducer from "./common/commonReducer";
+import tabReducer from "./common/tabReducer";
 
 export default combineReducers({
   currentMenu: menuReducer,
@@ -29,4 +30,5 @@ export default combineReducers({
   outbound : outboundReducer,
 
   common: commonReducer,
+  tab : tabReducer,
 });
