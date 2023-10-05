@@ -4,8 +4,8 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useReducer } from "react";
 
-import searchStyle from "style/common/searchStyle.module.css";
-import styles from "style/storage/inquiry.module.css";
+// import searchStyle from "style/common/searchStyle.module.css";
+import styles from "style/common/SearchHelperModal.module.css";
 
 const HELPER_KEY = 113;
 const CLEAN_KEY=115;
@@ -125,7 +125,7 @@ const SearchHelperModal = ({ headers, formHandler, enterHandler,items }) => {
       {headers.map((header, headerIdx) => (
         <td key={header.headerIdx}>
           <div
-            className={`${styles.searchCom} ${searchStyle["search_filter-wrap"]}`}
+            className={`${styles.searchCom}`}
           >
             <label> {header.text}</label>
             {header.helper ? (
