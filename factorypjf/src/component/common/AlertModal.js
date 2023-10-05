@@ -29,7 +29,7 @@ function HelperOverlay({ modalState }) {
     
     grid01Data.forEach((el)=>{
       if(el.state==='edit'){
-        param.production=param.production?[...param.production,el]:el
+        param.production=param.production?[...param.production,el]:[el]
       }
     })
     // param.production.push(grid01Data.find((el)=>{
@@ -40,7 +40,7 @@ function HelperOverlay({ modalState }) {
     grid02Data.forEach((data)=>{
       data.forEach((el)=>{
         if(el.state==='edit'){
-          param.component=param.component?[...param.component,el]:el
+          param.component=param.component?[...param.component,el]:[el]
         }
       })
     })
@@ -49,7 +49,7 @@ function HelperOverlay({ modalState }) {
 
     //product 테이블 delete
     // param.productionDelete.push(deleteData)
-    param.productionDelete=param.production?[...param.productionDelete,deleteData]:deleteData
+    param.productionDelete=param.productionDelete?[...param.productionDelete,deleteData]:[...deleteData]
     console.log(param)
     putAxios('production/list/edit',param,print,print)
     function print(data){
