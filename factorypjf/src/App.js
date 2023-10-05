@@ -31,8 +31,6 @@ function App() {
     <Layout>
       <Routes>
         <Route path="/" element={<Main/>}/>
-
-
         <Route path="/production/*" element={<ProductionRoutes/>}/>
         {/* <Route path="/inbound/*" element={<InboundRoutes/>}/>
         <Route path="/storage/*" element={<StorageRoutes/>}/> */}
