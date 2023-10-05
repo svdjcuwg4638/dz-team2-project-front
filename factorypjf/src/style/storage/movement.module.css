@@ -1,0 +1,157 @@
+.SectionContainer {
+  display: flex;
+  justify-content: center;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  padding-bottom: 3rem;
+  width: 100%;
+}
+.SectionContainer > div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.headerSection {
+  border-left: 3px solid #5390f0;
+  margin-top: 3rem;
+  margin-left: 3rem;
+}
+
+.header {
+  font-weight: bold;
+  margin-left: 1rem;
+}
+
+.arrange {
+  display: flex;
+  width: 80%;
+  height: 60vh;
+  flex-direction: column;
+}
+.topPart {
+  height: 40%;
+  border: 1px solid #becee7;
+  box-shadow: 0, 0, 0, 10px, rgba(83, 144, 240, 0.8);
+  border-radius: 20px;
+}
+.bottomPart {
+  height: 60%;
+  border-radius: 20px;
+  margin-top: 1rem;
+  border: none;
+}
+
+.tableCon {
+  height: 70%;
+}
+
+.btnBox {
+  margin-top: 3rem;
+  margin-right: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: right;
+}
+.btnTrue,
+.btnFalse {
+  width: 70px;
+  background: #4373c0;
+  border: none;
+  border-radius: 15px;
+
+  line-height: 29px;
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 1rem;
+
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  font: bold;
+  padding: 0.3rem 1rem;
+
+  margin-bottom: 1rem;
+}
+
+.btnTrue:hover,
+.btnTrue:active {
+  background: #4373c0;
+  border-color: #4373c0;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.26);
+}
+.btnFalse {
+  border: 1px solid #4373c0;
+  color: #4373c0;
+  background-color: white;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.26);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  margin-right: 3rem;
+}
+.bottompanel {
+  display: flex;
+  flex-direction: row;
+  margin-right: 3rem;
+  justify-content: right;
+}
+.panelContainer {
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+}
+.errorTrue {
+  color: red;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: initial;
+  -webkit-appearance: initial;
+}
+.inoutCon {
+  display: flex;
+  justify-content: center;
+}
+
+.bottompanel {
+  display: flex;
+  justify-content: right;
+  margin-right: 3rem;
+}
+.left,
+.right {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(83, 144, 240, 0.5);
+  border-radius: 20px;
+  padding: 1rem;
+}
+.arrow {
+  height: 160px;
+}
+.arrow::after {
+  display: inline-block;
+  height: 100%;
+  content: "";
+  vertical-align: middle;
+}
+.arrow img {
+  vertical-align: middle;
+}
+.left {
+  margin-right: 3rem;
+}
+
+.right {
+  margin-left: 3rem;
+}
+.inoutCon div td,
+.bottompanel td {
+  border: 0px;
+  width: auto;
+}
+.bottompanel input {
+  width: 150px;
+}

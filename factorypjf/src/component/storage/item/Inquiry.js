@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import styles from "../../../style/storage/inquiry.module.css";
-import AddTableData from "component/layout/Table/AddTableData";
 import Table from "../../layout/Table/Table";
 import axios from "axios";
 import ListTable from "component/layout/Table/ListTableData";
+import styles from "style/storage/inquiry.module.css";
 import { ReactComponent as Arrow } from "img/rightArrow.svg";
 import SearchHelperModal from "component/common/helper/SearchHelperModal";
 
@@ -13,7 +12,6 @@ const Inquiry = () => {
     { text: "창고", value: "storage", helper: true },
     { text: "장소", value: "location", helper: true },
     { text: "카테고리", value: "category", helper: true },
-    { text: "단위", value: "unit", helper: true },
     { text: "품목", value: "item", helper: true },
   ];
   const grid01_headers = [
@@ -44,7 +42,7 @@ const Inquiry = () => {
     { text: "카테고리", value: "category", width: "9%", readonly: true },
     { text: "규격", value: "standard", width: "9%", readonly: true },
     { text: "단위", value: "unit", width: "5%", readonly: true },
-    { text: "수량", value: "total", width: "7%", readonly: true },
+    { text: "재고량", value: "total", width: "7%", readonly: true },
   ];
   // #endregion
 
@@ -139,6 +137,7 @@ const Inquiry = () => {
         categorys: selectedCategorys.join(","), // category들을 콤마로 연결
       };
 
+      console.log("params", params);
       const response = await axios.get(
         "http://localhost:9091/inventory/searchTable",
         {
@@ -157,7 +156,7 @@ const Inquiry = () => {
           unit: data[i].unit,
           partner_name: data[i].partner_name,
           total: data[i].total,
-          storage_name: data[i].storage_code,
+          storage_name: data[i].storage_name,
           location_name: data[i].location_name,
         });
       }
@@ -246,7 +245,7 @@ const Inquiry = () => {
           standard: data[i].standard,
           unit: data[i].unit,
           total: data[i].total,
-          storage_name: data[i].storage_code,
+          storage_name: data[i].storage_name,
           location_name: data[i].location_name,
         });
       }
@@ -255,90 +254,112 @@ const Inquiry = () => {
       console.error("데이터 전송 중 오류 발생:", error);
     }
   };
+
+  const [isSearchSectionVisible, setSearchSectionVisible] = useState(true);
+
+  const toggleSearchSection = () => {
+    setSearchSectionVisible(!isSearchSectionVisible);
+  };
+
   return (
-    <div className={styles.SectionContainer}>
-      <div>
-        <div className={styles.headerSection}>
-          <h4 className={styles.header}> 재고 조회</h4>
-        </div>
+    <>
+      <div className={styles.headerSection}>
+        <h4 className={styles.header}> 재고 조회</h4>
+      </div>
+      <div className={styles.SectionContainer}>
         <div>
-          <div className={styles.SearchSection}>
-            <table>
-              <tbody>
-                <SearchHelperModal
-                  headers={search_headers}
-                  formHandler={formHandler}
-                />
-              </tbody>
-            </table>
-            <div className={styles.btnBox}>
-              <button className={styles.searchBtn} onClick={searchHandler}>
-                조회
-              </button>
+          <div>
+            <div className={styles.toggleButton} onClick={toggleSearchSection}>
+              {isSearchSectionVisible ? "" : "폼 검색"}
             </div>
-          </div>
-          <div className={styles.middlePart}>
-            <div className={styles.grid01}>
-              <Table headers={grid01_headers}>
-                <ListTable
-                  items={grid01_items}
-                  onCheckboxChange={(item) =>
-                    handleCheckboxChange(
-                      item,
-                      setSelectedStorageRows,
-                      selectedStorageRows
-                    )
-                  }
-                />
+            {isSearchSectionVisible && (
+              <div className={styles.SearchSection}>
+                <table>
+                  <tbody>
+                    <SearchHelperModal
+                      headers={search_headers}
+                      formHandler={formHandler}
+                    />
+                  </tbody>
+                </table>
+                <div className={styles.btnBox}>
+                  <button className={styles.searchBtn} onClick={searchHandler}>
+                    조회
+                  </button>
+                </div>
+              </div>
+            )}
+            <div className={styles.toggleButton} onClick={toggleSearchSection}>
+              {!isSearchSectionVisible ? "" : "테이블 검색"}
+            </div>
+            {!isSearchSectionVisible && (
+              <>
+                <div className={styles.middlePart}>
+                  <div className={styles.grid01}>
+                    <Table headers={grid01_headers}>
+                      <ListTable
+                        items={grid01_items}
+                        onCheckboxChange={(item) =>
+                          handleCheckboxChange(
+                            item,
+                            setSelectedStorageRows,
+                            selectedStorageRows
+                          )
+                        }
+                      />
+                    </Table>
+                  </div>
+                  <Arrow width="3%" height="175" />
+                  <div className={styles.grid02}>
+                    <Table headers={grid02_headers}>
+                      <ListTable
+                        items={grid02_items}
+                        onCheckboxChange={(item) =>
+                          handleCheckboxChange(
+                            item,
+                            setSelectedLocationRows,
+                            selectedLocationRows
+                          )
+                        }
+                      />
+                    </Table>
+                  </div>
+                  <Arrow width="3%" height="175" />
+                  <div className={styles.grid03}>
+                    <Table headers={grid03_headers}>
+                      <ListTable
+                        items={grid03_items}
+                        onCheckboxChange={(item) =>
+                          handleCheckboxChange(
+                            item,
+                            setSelectedCategoryRows,
+                            selectedCategoryRows
+                          )
+                        }
+                      />
+                    </Table>
+                  </div>
+                </div>
+                <div className={styles.btnBox}>
+                  <button
+                    className={styles.searchBtn}
+                    onClick={(e) => inventoryInquirykFn(e)}
+                  >
+                    조회
+                  </button>
+                </div>
+              </>
+            )}
+
+            <div className={styles.grid04}>
+              <Table headers={grid04_headers}>
+                <ListTable items={grid04_items} />
               </Table>
             </div>
-            <Arrow width="3%" height="175" />
-            <div className={styles.grid02}>
-              <Table headers={grid02_headers}>
-                <ListTable
-                  items={grid02_items}
-                  onCheckboxChange={(item) =>
-                    handleCheckboxChange(
-                      item,
-                      setSelectedLocationRows,
-                      selectedLocationRows
-                    )
-                  }
-                />
-              </Table>
-            </div>
-            <Arrow width="3%" height="175" />
-            <div className={styles.grid03}>
-              <Table headers={grid03_headers}>
-                <ListTable
-                  items={grid03_items}
-                  onCheckboxChange={(item) =>
-                    handleCheckboxChange(
-                      item,
-                      setSelectedCategoryRows,
-                      selectedCategoryRows
-                    )
-                  }
-                />
-              </Table>
-            </div>
-          </div>
-          <div className={styles.btnBox}>
-            <button
-              className={styles.searchBtn}
-              onClick={(e) => inventoryInquirykFn(e)}
-            >
-              조회
-            </button>
-          </div>
-          <div className={styles.grid04}>
-            <Table headers={grid04_headers}>
-              <ListTable items={grid04_items} />
-            </Table>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 export default Inquiry;

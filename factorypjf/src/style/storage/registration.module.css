@@ -1,11 +1,16 @@
 .SectionContainer {
   display: flex;
   justify-content: center;
-  margin: 3rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  padding-bottom: 3rem;
+  width: 100%;
 }
 
 .headerSection {
   border-left: 3px solid #5390f0;
+  margin-top: 3rem;
+  margin-left: 3rem;
 }
 
 .header {
@@ -71,7 +76,7 @@
 
 .resultContainer {
   margin-top: 1rem;
-  width: 81vw;
+  width: 78vw;
   height: 45vh;
 }
 .resultHeader {

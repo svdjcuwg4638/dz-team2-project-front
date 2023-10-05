@@ -13,21 +13,24 @@ import Code from "component/management/code/Code";
 import StorageRoutes from "./pages/Storage";
 import StorageInquiry from "./component/storage//item/Inquiry";
 import Registration from "./component/storage/registration/Registration";
-import ProductionRoutes from 'router/ProductionRoutes'
+import ProductionRoutes from "router/ProductionRoutes";
 import InBound from "component/management/inbound/InBound";
 import ItemRelation from "component/management/itemRelation/ItemRelation";
+import { MovementsList } from "component/storage/movement/MovementsList";
+import Movement from "component/storage/movement/Movement";
 
 function App() {
   return (
     <Layout>
       <Routes>
-        
-        <Route path="/production/*" element={<ProductionRoutes/>}/>
+        <Route path="/production/*" element={<ProductionRoutes />} />
         {/* <Route path="/inbound/*" element={<InboundRoutes/>}/>
         <Route path="/storage/*" element={<StorageRoutes/>}/> */}
-       
+
         <Route path="/storage/" element={<StorageRoutes />}>
           <Route path="" element={<StorageInquiry />} />
+          <Route path="movement" element={<Movement />} />
+          <Route path="movementsList" element={<MovementsList />} />
           <Route path="registration" element={<Registration />} />
         </Route>
 

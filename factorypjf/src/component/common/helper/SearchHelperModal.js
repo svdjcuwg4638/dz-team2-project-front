@@ -3,17 +3,23 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useReducer } from "react";
-import styles from "../../../style/storage/inquiry.module.css";
+import styles from "style/common/SearchHelperModal.module.css";
 
 const HELPER_KEY = 113;
+const CLEAN_KEY = 115;
 
-const SearchHelperModal = ({ headers, formHandler }) => {
+const SearchHelperModal = ({ headers, formHandler, items }) => {
   const modalInit = {
     showModal: false,
     codeValue: "", //
     codeName: "",
   };
 
+  useEffect(() => {
+    if (items !== undefined) {
+      setTableItems(items);
+    }
+  }, [items]);
   //행 추가 handler
   const [tableItems, setTableItems] = useState({});
   useEffect(() => {
@@ -47,6 +53,18 @@ const SearchHelperModal = ({ headers, formHandler }) => {
   const keyUpHandler = (e, colInfo) => {
     if (e.which === HELPER_KEY && colInfo.helper) {
       onModalHanlder(colInfo.value, colInfo.text);
+    } else if (e.which === 8 || (e.which === CLEAN_KEY && colInfo.helper)) {
+      e.preventDefault();
+      let copyItems = { ...tableItems };
+
+      copyItems = {
+        ...copyItems,
+        [colInfo.value]: "",
+        [`${colInfo.value}Code`]: "",
+      };
+
+      setTableItems(copyItems);
+      console.log(tableItems);
     }
   };
 
@@ -57,16 +75,6 @@ const SearchHelperModal = ({ headers, formHandler }) => {
     }
   };
 
-  // x 버튼 handler
-  const xbuttonPressHandler = (header) => {
-    let copyItems = { ...tableItems };
-    copyItems = {
-      ...copyItems,
-      [header]: "",
-      [`${header}Code`]: "",
-    };
-    setTableItems(copyItems);
-  };
   //코드 선택 handler
   const selectCodeHandler = (codeRow) => {
     let copyItems = { ...tableItems };
@@ -115,7 +123,6 @@ const SearchHelperModal = ({ headers, formHandler }) => {
             {header.helper ? (
               <>
                 <input
-                  readOnly
                   value={tableItems[header.value] || ""}
                   onKeyUp={(e) => {
                     keyUpHandler(e, header);
@@ -131,12 +138,6 @@ const SearchHelperModal = ({ headers, formHandler }) => {
                   }
                 >
                   ?
-                </button>
-                <button
-                  className={`${styles.helperBtn} ${styles.xBtn}`}
-                  onClick={(e) => xbuttonPressHandler(header.value)}
-                >
-                  X
                 </button>
               </>
             ) : (
