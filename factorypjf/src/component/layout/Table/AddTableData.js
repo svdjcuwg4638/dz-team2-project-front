@@ -119,7 +119,7 @@ export default function AddTableData({
     } else if (e.which === HELPER_KEY && !colInfo.helper) {
       console.log("도움창이 제공되지 않는 코드입니다.");
       //도움창 컬럼 지우기
-    }else if(e.which === 8 || (e.which === CLEAN_KEY && colInfo.helper)){
+    }else if(e.which === CLEAN_KEY && colInfo.helper){
       e.preventDefault();
       const copyItem=[...tableItems]
       copyItem[coordinate.row][colInfo.value]=''
