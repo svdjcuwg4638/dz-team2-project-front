@@ -115,7 +115,18 @@ export default function AddTableData({
       setCurrentCol({ ...coordinate });
       //모달 켜기
       onModalHanlder(colInfo.value, colInfo.text);
-      if (editHandler) editHandler(e,'add',coordinate);
+      if (editHandler) editHandler(e, "add", coordinate);
+    } else if (e.which === 8 || (e.which === CLEAN_KEY && colInfo.helper)) {
+      e.preventDefault();
+      setCurrentCol({ ...coordinate });
+      let copyItems = [...tableItems];
+      copyItems[currentCol.row] = {
+        ...copyItems[currentCol.row],
+        [colInfo.value]: "",
+        [`${colInfo.value}Code`]: "",
+      };
+      setTableItems(copyItems);
+      emitItem(copyItems);
     } else if (e.which === HELPER_KEY && !colInfo.helper) {
       console.log("도움창이 제공되지 않는 코드입니다.");
       //도움창 컬럼 지우기

@@ -13,9 +13,14 @@ import StorageRoutes from "./pages/Storage";
 import StorageInquiry from "./component/storage//item/Inquiry";
 import Registration from "./component/storage/registration/Registration";
 import ProductionRoutes from "router/ProductionRoutes";
+import InboundRoutes from "router/InboundRoutes";
+import OutboundRoutes from "router/OutboundRoutes";
 import ItemRelation from "component/management/itemRelation/ItemRelation";
 import { useCallback, useEffect, useState } from "react";
 import Main from "pages/Main";
+// import InBound from "component/management/inbound/InBound";
+import { MovementsList } from "component/storage/movement/MovementsList";
+import Movement from "component/storage/movement/Movement";
 
 function App() {
   //#region 현재위치 세션저장
@@ -30,27 +35,30 @@ function App() {
   return (
     <Layout>
       <Routes>
+
+        <Route path="/storage/" element={<StorageRoutes />}>
+          <Route path="" element={<StorageInquiry />} />
+          <Route path="movement" element={<Movement />} />
+          <Route path="movementsList" element={<MovementsList />} />
+          <Route path="registration" element={<Registration />} />
+        </Route>
+
         <Route path="/" element={<Main/>}/>
-        <Route path="/production/*" element={<ProductionRoutes/>}/>
-        {/* <Route path="/inbound/*" element={<InboundRoutes/>}/>
-        <Route path="/storage/*" element={<StorageRoutes/>}/> */}
+        <Route path="/production/*" element={<ProductionRoutes />} />
+        <Route path="/inbound/*" element={<InboundRoutes/>}/>
+        <Route path="/outbound/*" element={<OutboundRoutes/>}/>
 
-            <Route path="/storage/" element={<StorageRoutes />}>
-              <Route path="" element={<StorageInquiry />} />
-              <Route path="registration" element={<Registration />} />
-            </Route>
-
-            <Route path="/management" element={<Management />}>
-              <Route index path="item" element={<Item />} />
-              <Route path="storage" element={<Storage />} />
-              <Route path="partner" element={<Partner />} />
-              <Route path="unitprice" element={<UnitPrice />} />
-              <Route path="code" element={<Code />} />
-              <Route path="relation" element={<ItemRelation />} />
-            </Route>
-          </Routes>
-        </Layout>
-    );
-  };
+        <Route path="/management" element={<Management />}>
+          <Route index path="item" element={<Item />} />
+          <Route path="storage" element={<Storage />} />
+          <Route path="partner" element={<Partner />} />
+          <Route path="unitprice" element={<UnitPrice />} />
+          <Route path="code" element={<Code />} />
+          <Route path="relation" element={<ItemRelation />} />
+        </Route>
+      </Routes>
+    </Layout>
+  );
+}
 
 export default App;
