@@ -20,15 +20,15 @@ export const MovementsList = () => {
     { text: "이동일", value: "date" },
   ];
   const table_headers = [
-    { text: "이동일", value: "movement_date", width: "7%" },
-    { text: "품목", value: "item_name", helper: true, width: "7%" },
-    { text: "출고창고", value: "outbound_storage_name", helper: true },
-    { text: "출고장소", value: "outbound_location_name", helper: true },
-    { text: "입고창고", value: "inbound_storage_name", helper: true },
-    { text: "입고장소", value: "inbound_location_name", helper: true },
-    { text: "이동재고", value: "movement", width: "7%" },
-    { text: "담당자", value: "emp_name", helper: true, width: "9%" },
-    { text: "비고", value: "description" },
+    { text: "이동일", value: "movement_date", width: "7%", readonly: true },
+    { text: "품목", value: "item_name", width: "7%", readonly: true },
+    { text: "출고창고", value: "outbound_storage_name", readonly: true },
+    { text: "출고장소", value: "outbound_location_name", readonly: true },
+    { text: "입고창고", value: "inbound_storage_name", readonly: true },
+    { text: "입고장소", value: "inbound_location_name", readonly: true },
+    { text: "이동재고", value: "movement", width: "7%", readonly: true },
+    { text: "담당자", value: "emp_name", width: "9%", readonly: true },
+    { text: "비고", value: "description", readonly: true },
   ];
   const [searchOutboundData, setSearchOutboundData] = useState([]);
   const [searchInboundData, setSearchInboundData] = useState([]);

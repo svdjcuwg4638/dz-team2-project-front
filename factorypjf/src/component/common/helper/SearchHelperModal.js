@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useReducer } from "react";
 
 import searchStyle from "style/common/searchStyle.module.css";
-import styles from "style/storage/inquiry.module.css";
+import styles from "style/common/SearchHelperModal.module.css";
 
 const HELPER_KEY = 113;
 const CLEAN_KEY = 115;
@@ -119,9 +119,7 @@ const SearchHelperModal = ({ headers, formHandler, items }) => {
       {/* 도움창이 필요한 항목은 readonly, 도움창으로만 입력 가능 */}
       {headers.map((header, headerIdx) => (
         <td key={header.headerIdx}>
-          <div
-            className={`${styles.searchCom} ${searchStyle["search_filter-wrap"]}`}
-          >
+          <div className={`${styles.searchCom} `}>
             <label> {header.text}</label>
             {header.helper ? (
               <>
