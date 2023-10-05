@@ -124,7 +124,7 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
 };
 
   const handleAmountBlur = () => {
-    // formData 내의 unit_price와 amount 값을 가져와서 곱합니다.
+    
     const totalAmount = parseFloat(formData.unit_price || 0) * parseFloat(formData.amount || 0);
     
     // 결과를 tot_amount에 저장합니다.
