@@ -2,15 +2,38 @@
 table {
 }
 table th,
-tr,
-td,
+td {
+  border-bottom: solid 1px var(--border-color-light);
+  text-align: center;
+  padding: 0px;
+  height: 3rem;
+}
+
+/* input {
+  height: 80px;
+  line-height: 80px;
+} */
+
+th:first-child {
+  border-radius: 10px 0 0 0;
+}
+td:first-child {
+  border-radius: 10px 0 0 10px;
+}
+
+th:last-child {
+  border-radius: 0 10px 0 0;
+}
+td:last-child {
+  border-radius: 0 10px 10px 0;
+}
 input {
   border: solid 1px var(--border-color-light);
   text-align: center;
   padding: 0px;
 }
 table th {
-  border: 1px solid #4473BF;
+  /* border-bottom: 1px solid #4473bf; */
 }
 td > input {
   width: 100%;
@@ -18,7 +41,7 @@ td > input {
   background-color: transparent;
 }
 thead {
-  background-color: #5390f0;
+  background-color: #e9eef6;
 }
 
 /* table header */
@@ -61,6 +84,6 @@ thead {
 
 /* 선택된 셀 */
 .focused-row {
-  background-color: #f5f5f5;
+  /* background-color: #f5f5f5; */
+  background-color: #b9e0fd;
 }
-

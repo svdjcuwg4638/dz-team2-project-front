@@ -1,22 +1,22 @@
-.grid01{
-    height: 40%;
+.grid01 {
+  height: 40%;
 }
-table{
-    border: solid 1px #B9B9B9;
-    width:100%;
+table {
+  /* border: solid 1px #B9B9B9; */
+  width: 100%;
 }
-.btn_disabled{
-    background-color: var(--border-color-light);
-    color:white;
-    border:none;
-    box-shadow: 1px 1px 2px 1px grey
+.btn_disabled {
+  background-color: var(--border-color-light);
+  color: white;
+  border: none;
+  box-shadow: 1px 1px 2px 1px grey;
 }
-.btn_abled{
-    background-color: var(--main-color);
-    color: white;
-    border: none;
-    box-shadow: 1px 1px 2px 1px grey;
+.btn_abled {
+  background-color: var(--main-color);
+  color: white;
+  border: none;
+  box-shadow: 1px 1px 2px 1px grey;
 }
-.filter-container{
-    display: flex;
+.filter-container {
+  display: flex;
 }

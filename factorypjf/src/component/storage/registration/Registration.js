@@ -8,6 +8,7 @@ import { TempInventoryAction } from "redux/actions/storage/TempInventoryAction";
 import Table from "../../layout/Table/Table";
 import DataTable from "./DataTable";
 import ResultModalContainer from "../resultModal/ResultModalContainer";
+import api from "redux/api";
 const Registration = () => {
   const dispatch = useDispatch();
   const [tableitems, setTableitems] = useState([]);
@@ -112,10 +113,7 @@ const Registration = () => {
 
     // 백으로 전송
     try {
-      await axios.post(
-        "http://localhost:9091/inventory/registration/temp/add",
-        storageCodeArray
-      );
+      await api.post("/inventory/registration/temp/add", storageCodeArray);
       console.log("전송성공");
     } catch (error) {
       console.error("전송실패", error);
@@ -133,8 +131,8 @@ const Registration = () => {
 
     // 백으로 전송
     try {
-      const response = await axios.post(
-        "http://localhost:9091/inventory/registration/add",
+      const response = await api.post(
+        "/inventory/registration/add",
         storageCodeArray
       );
       console.log(response);
