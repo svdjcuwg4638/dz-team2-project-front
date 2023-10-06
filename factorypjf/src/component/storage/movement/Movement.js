@@ -8,6 +8,7 @@ import ResultModalContainer from "../resultModal/ResultModalContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { storageAction } from "redux/actions/management/storageAction";
 import fastforward from "img/fast-forward.png";
+import api from "redux/api";
 
 const Movement = () => {
   const header = [
@@ -312,8 +313,8 @@ const Movement = () => {
     console.log("전체데이터", movementArray);
 
     try {
-      const response = await axios.post(
-        "http://localhost:9091/inventory/movement/add",
+      const response = await api.post(
+        "/inventory/movement/add",
         movementArray
       );
 
@@ -340,8 +341,8 @@ const Movement = () => {
 
     console.log(movement);
     try {
-      const response = await axios.get(
-        "http://localhost:9091/inventory/movement",
+      const response = await api.get(
+        "/inventory/movement",
         { params: movement }
       );
       console.log("응답데이터", response.data.data);
