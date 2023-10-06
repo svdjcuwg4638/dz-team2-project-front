@@ -8,7 +8,7 @@ import { useReducer } from "react";
 import styles from "style/common/SearchHelperModal.module.css";
 
 const HELPER_KEY = 113;
-const CLEAN_KEY=115;
+const CLEAN_KEY = 115;
 const ENTER_KEY = 13;
 
 const SearchHelperModal = ({ headers, formHandler, enterHandler }) => {
@@ -69,8 +69,8 @@ const SearchHelperModal = ({ headers, formHandler, enterHandler }) => {
 
       setTableItems(copyItems);
       console.log(tableItems);
-    }else if(e.which===13){
-      if(enterHandler)enterHandler();
+    } else if (e.which === 13) {
+      if (enterHandler) enterHandler();
     }
   };
 
@@ -147,16 +147,19 @@ const SearchHelperModal = ({ headers, formHandler, enterHandler }) => {
                 </button>
               </>
             ) : (
-              <>{
-                  header.value==='date'?(<input
+              <>
+                {header.value === "date" ? (
+                  <input
                     onChange={(e) =>
                       inputChangeHandler(header.value, e.target.value)
                     }
                     value={tableItems[header.value] || ""}
-                    type='date'
+                    type="date"
                     min="1900-01-01"
                     max="9999-12-31"
-                  ></input>):(<input
+                  ></input>
+                ) : (
+                  <input
                     onChange={(e) =>
                       inputChangeHandler(header.value, e.target.value)
                     }
@@ -164,9 +167,8 @@ const SearchHelperModal = ({ headers, formHandler, enterHandler }) => {
                     onKeyUp={(e) => {
                       keyUpHandler(e, header);
                     }}
-                  ></input>)
-                
-              }
+                  ></input>
+                )}
               </>
             )}
           </div>
