@@ -46,7 +46,7 @@ const Dep1 = () => {
             <FiMinusSquare size={25} color="#fff" />
           </div>
         </Link>
-        <Link to="/storage" onClick={storageHandler}>
+        <Link to="/storage/list" onClick={storageHandler}>
           <div title="재고관리">
             <MdOutlineInventory2 size={25} color="#fff" />
           </div>

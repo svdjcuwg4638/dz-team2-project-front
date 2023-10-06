@@ -37,7 +37,7 @@ function App() {
       <Routes>
 
         <Route path="/storage/" element={<StorageRoutes />}>
-          <Route path="" element={<StorageInquiry />} />
+          <Route path="list" element={<StorageInquiry />} />
           <Route path="movement" element={<Movement />} />
           <Route path="movementsList" element={<MovementsList />} />
           <Route path="registration" element={<Registration />} />
