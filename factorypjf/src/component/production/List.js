@@ -6,7 +6,12 @@ import ListTd from "component/layout/Table/ListTableData";
 import HelperModal from "component/common/helper/HelperModal";
 import SearchHelperModal from "component/common/helper/SearchHelperModal";
 import AlertModal from "component/common/AlertModal";
-import { camelToSnake, getToday, snakeToCamel, timeToKR } from "function/commonFunction";
+import {
+  camelToSnake,
+  getToday,
+  snakeToCamel,
+  timeToKR,
+} from "function/commonFunction";
 
 import productionListClasses from "style/production/list.module.css";
 import productionClasses from "style/production/production.module.css";
@@ -30,7 +35,7 @@ export default function Add() {
 
       gridTrigger: true,
     },
-    { text: "수량*", value: "quantity", width: "3%",readonly:true },
+    { text: "수량*", value: "quantity", width: "3%", readonly: true },
     { text: "생산팀*", value: "team", width: "4%", helper: true },
     { text: "라인*", value: "line", width: "5%", helper: true },
     { text: "창고*", value: "storage", width: "5%", helper: true },
@@ -66,7 +71,7 @@ export default function Add() {
   ];
   const searchFilter = [
     { text: "생산번호", value: "productionCode", width: "3%" },
-    { text: "생산품", value: "item", width: "3%",helper:true },
+    { text: "생산품", value: "item", width: "3%", helper: true },
     { text: "생산팀", value: "team", width: "3%", helper: true },
     { text: "창고", value: "storage", width: "3%", helper: true },
     { text: "장소", value: "location", width: "3%", helper: true },
@@ -74,22 +79,31 @@ export default function Add() {
     { text: "담당자", value: "emp", width: "3%", helper: true },
     { text: "비고", value: "description", width: "3%" },
   ];
-  
-  const [inputFilter,setInputFilter]=useState();
+
+  const [inputFilter, setInputFilter] = useState();
 
   const [disabledBtn, setDisabledBtn] = useState({
     state: true,
-    class: `${listStyle['btn_disabled']}`,
+    class: `${listStyle["btn_disabled"]}`,
   });
 
-  const [searchPeriod, setSearchPeriod]=useState({
-    startDate:'',
-    endDate:''
-  })
+  const [searchPeriod, setSearchPeriod] = useState({
+    startDate: "",
+    endDate: "",
+  });
+
+  useEffect(()=>{
+    const copyFilter = {...inputFilter}
+    
+    copyFilter.start_date=searchPeriod.startDate;
+    copyFilter.end_date=searchPeriod.endDate;
+
+    setInputFilter({...copyFilter})
+  },[searchPeriod])
 
   useEffect(() => {
-    const filter={startDate:getToday()}
-    getAxios('production/list',filter,searchResult,consoleError) 
+    const filter = { start_date: getToday() };
+    getAxios("production/list", filter, searchResult, consoleError);
   }, []);
 
   const gridTriggerHandler = () => {};
@@ -124,12 +138,12 @@ export default function Add() {
   const triggerHandler = () => {};
 
   const editHandler = (e, tableType, coordinate) => {
-    setDisabledBtn({state:false,class:`${listStyle['btn_abled']}`});
+    setDisabledBtn({ state: false, class: `${listStyle["btn_abled"]}` });
     if (tableType === "add") {
       //grid01에 수정 표시
       let copyItem = JSON.parse(JSON.stringify(grid01_items));
       copyItem[coordinate.row].state = "edit";
-      set01Item([...copyItem])
+      set01Item([...copyItem]);
       // console.log(grid01Dummy01)
     } else if (tableType === "list") {
       //grid02에 수정 표시
@@ -141,7 +155,7 @@ export default function Add() {
   const saveHandler = () => {
     //수정된 item (state가 'edit'인것)
 
-    if (!grid01_items.find((data) => data.item)&&!deleteData) return;
+    if (!grid01_items.find((data) => data.item) && !deleteData) return;
     //====================테이블의 모든 input 가져오기====================
     const inputArr = [...document.querySelectorAll('[id*="grid"]')];
     let grid01Data = [];
@@ -187,8 +201,8 @@ export default function Add() {
               key === "state" ||
               key === "team" ||
               key === "select" ||
-              key === "index"||
-              key==="isDelete"
+              key === "index" ||
+              key === "isDelete"
             ) &&
             !grid01Data[i][key]
           ) {
@@ -209,7 +223,7 @@ export default function Add() {
       }
     }
     //생산품이 하나도 입력되지 않았을때
-    if (!itemCount&&!deleteData) {
+    if (!itemCount && !deleteData) {
       alertHeader = "생산품";
       alert("저장할 " + alertHeader + "이 없습니다.");
     }
@@ -261,7 +275,7 @@ export default function Add() {
             tempObj.item = grid01Data[i].item;
             edited.push(tempObj);
             break;
-          } 
+          }
         }
       }
     }
@@ -305,106 +319,109 @@ export default function Add() {
     }
     let copyItem = JSON.parse(JSON.stringify(grid01_items));
     let unDelete = [];
-    let deleteArr=[];
+    let deleteArr = [];
     for (let i = 0; i < copyItem.length; i++) {
       if (!idxArr.includes(i)) {
         unDelete.push(copyItem[i]);
-      }else{
-        deleteArr.push(copyItem[i])
+      } else {
+        deleteArr.push(copyItem[i]);
       }
     }
     //삭제한 행 제외하고 테이블 출력
     set01Item([...unDelete]);
     //삭제한 행 모아놓기
-    setDeleteData([...deleteArr])
+    setDeleteData([...deleteArr]);
 
     cacheDispatch({ type: "DELETE_ROW", idxArr });
-    setDisabledBtn({state:false,class:`${listStyle['btn_abled']}`});
+    setDisabledBtn({ state: false, class: `${listStyle["btn_abled"]}` });
     console.log(grid02Cache);
   };
-  function searchResult(data){
-    console.log(data)
-    const production=data.data.production;
-    const component=data.data.component;
-    
-    const item01=[];
-    const item02=[]
+  function searchResult(data) {
+    console.log(data);
+    const production = data.data.production;
+    const component = data.data.component;
+
+    const item01 = [];
+    const item02 = [];
     for (let i = 0; i < production.length; i++) {
-      let obj01={};
-      for(let key in production[i]){
-        let header=''
-        if(key.includes('_name')){
+      let obj01 = {};
+      for (let key in production[i]) {
+        let header = "";
+        if (key.includes("_name")) {
           //'name' 떼기 (item_name => item 으로 변경)
-          header=key.replace('_name','')
-        }else if(key==="production_date"){
-          header='date'
-          const dateKR=timeToKR(production[i][key])
-          obj01[header]=dateKR.match(/\d{4}-\d{2}-\d{2}/g)[0];
-          continue
-        }else{
-          header=snakeToCamel(key)
+          header = key.replace("_name", "");
+        } else if (key === "production_date") {
+          header = "date";
+          const dateKR = timeToKR(production[i][key]);
+          obj01[header] = dateKR.match(/\d{4}-\d{2}-\d{2}/g)[0];
+          continue;
+        } else {
+          header = snakeToCamel(key);
         }
-        obj01[header]=production[i][key];
+        obj01[header] = production[i][key];
       }
-      
-      let arr=[];
-      for(let j=0; j<component[i].length; j++){
-        let obj02={};
-        for(let key in component[i][j]){
-          let header=''
-          if(key.includes('_name')){
+
+      let arr = [];
+      for (let j = 0; j < component[i].length; j++) {
+        let obj02 = {};
+        for (let key in component[i][j]) {
+          let header = "";
+          if (key.includes("_name")) {
             //'name' 떼기 (item_name => item 으로 변경)
-            header=key.replace('_name','')
-          }else if(key==="production_date"){
-            header='date'
-            const dateKR=timeToKR(component[i][j][key])
-            obj02[header]=dateKR.match(/\d{4}-\d{2}-\d{2}/g);
-            continue
-          }else{
-            header=snakeToCamel(key)
+            header = key.replace("_name", "");
+          } else if (key === "production_date") {
+            header = "date";
+            const dateKR = timeToKR(component[i][j][key]);
+            obj02[header] = dateKR.match(/\d{4}-\d{2}-\d{2}/g);
+            continue;
+          } else {
+            header = snakeToCamel(key);
           }
-          obj02[header]=component[i][j][key];
+          obj02[header] = component[i][j][key];
         }
-        arr.push(obj02)
+        arr.push(obj02);
       }
-      
-        item02.push(arr)
-        item01.push(obj01)
+
+      item02.push(arr);
+      item01.push(obj01);
     }
 
-    console.log(item01)
-    set01Item([...item01])
-  
+    console.log(item01);
+    set01Item([...item01]);
+
     //grid02
-    cacheDispatch({type:'INIT_CACHE',data:item02})
-    console.log([...item02])
+    cacheDispatch({ type: "INIT_CACHE", data: item02 });
+    console.log([...item02]);
   }
 
-  function consoleError(error){
-    console.log(error)
+  function consoleError(error) {
+    console.log(error);
   }
 
   //검색필터 state 변경시 handler
   const formHandler = (filter) => {
-    const filterToSnake={};
-    if(Object.keys(filter).length>0){
+    const filterToSnake = {};
+    if (Object.keys(filter).length > 0) {
       // console.log(filter)
-      for(let key in filter){
-        filterToSnake[camelToSnake(key)]=filter[key];
+      for (let key in filter) {
+        filterToSnake[camelToSnake(key)] = filter[key];
       }
-      setInputFilter(filterToSnake)
+      setInputFilter(filterToSnake);
       // console.log(filterToSnake)
     }
-    
   };
 
-  const searchHandler=()=>{
-    const filter = {...inputFilter};
-    if(searchPeriod.startDate){filter.startDate=searchPeriod.startDate}
-    if(searchPeriod.endDate){filter.endDate=searchPeriod.endDate}
-    
-    getAxios('production/list',filter,searchResult,consoleError)
-  }
+  const searchHandler = () => {
+    // const filter = { ...inputFilter };
+    // if (searchPeriod.startDate) {
+    //   filter.startDate = searchPeriod.startDate;
+    // }
+    // if (searchPeriod.endDate) {
+    //   filter.endDate = searchPeriod.endDate;
+    // }
+
+    getAxios("production/list", inputFilter, searchResult, consoleError);
+  };
 
   //grid01 row 선택시 그에 맞는 자재를 grid2에 출력하기 위해 입력 값을 저장하는 state
   const cacheInit = {
@@ -414,8 +431,7 @@ export default function Add() {
   const cacheReducer = (state, action) => {
     //cacheInit (행 선택하지 않음)
     if (action.type === "INIT_CACHE") {
-      
-      return {items: [...action.data] };
+      return { items: [...action.data] };
     }
     //처음으로 행을 선택할때
     if (state.idx === null) {
@@ -457,8 +473,8 @@ export default function Add() {
           return { ...state, items: [...copyItems] };
         } else if (action.type === "EDIT") {
           let copyItems = state.items
-          ? JSON.parse(JSON.stringify(state.items))
-          : [];
+            ? JSON.parse(JSON.stringify(state.items))
+            : [];
           copyItems[state.idx][action.idx].state = "edit";
           return { ...state, items: [...copyItems] };
         }
@@ -469,7 +485,7 @@ export default function Add() {
   const [grid02Cache, cacheDispatch] = useReducer(cacheReducer, cacheInit);
 
   const [deleteIdx, setDeleteIdx] = useState();
-  const [deleteData,setDeleteData]=useState([]);
+  const [deleteData, setDeleteData] = useState([]);
 
   const [initFilter, setInitFilter] = useState();
 
@@ -492,69 +508,80 @@ export default function Add() {
       return { showModal: true, ...action.state };
     }
     if (action.type === "OFF_MODAL") {
-      console.log("in")
+      console.log("in");
       return {
-        ...modalInit
+        ...modalInit,
       };
     }
   };
   const [modalState, modalDispatch] = useReducer(modalReducer, modalInit);
 
-  const submitHandler=()=>{
-    const {grid01Data,grid02Data,deleteData}={...modalState.data}
-    
-    //product, product_detail 테이블 수정
-    // const param={production:[],component:[],productionDelete:[]}
-    const param={}
-    
-    grid01Data.forEach((el)=>{
-      if(el.state==='edit'){
-        param.production=param.production?[...param.production,el]:[el]
-      }
-    })
-    // param.production.push(grid01Data.find((el)=>{
-    //   return el.state==='edit'
-    // }))
-    //product_relation 테이블 수정
-    
-    grid02Data.forEach((data)=>{
-      data.forEach((el)=>{
-        if(el.state==='edit'){
-          param.component=param.component?[...param.component,el]:[el]
+  const submitHandler = (type) => {
+    const { grid01Data, grid02Data, deleteData } = { ...modalState.data };
+    if (type === "save") {
+
+      //product, product_detail 테이블 수정
+      // const param={production:[],component:[],productionDelete:[]}
+      const param = {};
+
+      grid01Data.forEach((el) => {
+        if (el.state === "edit") {
+          param.production = param.production
+            ? [...param.production, el]
+            : [el];
         }
-      })
-    })
-    // param.component.push(...componentArr)
-    
+      });
+      // param.production.push(grid01Data.find((el)=>{
+      //   return el.state==='edit'
+      // }))
+      //product_relation 테이블 수정
 
-    //product 테이블 delete
-    // param.productionDelete.push(deleteData)
-    param.productionDelete=param.productionDelete?[...param.productionDelete,deleteData]:[...deleteData]
-    console.log(param)
-    putAxios('production/list/edit',param,success,fail)
-    function success(data){
-      console.log(data)
-    }
-    function fail(data){
-      console.log(data)
-    }
-    modalDispatch({type:'OFF_MODAL'})    
-  }
+      grid02Data.forEach((data) => {
+        data.forEach((el) => {
+          if (el.state === "edit") {
+            param.component = param.component ? [...param.component, el] : [el];
+          }
+        });
+      });
+      // param.component.push(...componentArr)
 
-  const enterHandler=searchHandler
+      //product 테이블 delete
+      // param.productionDelete.push(deleteData)
+      param.productionDelete = param.productionDelete
+        ? [...param.productionDelete, deleteData]
+        : [...deleteData];
+      console.log(param);
+      putAxios("production/list/edit", param, success, fail);
+      function success(data) {
+        console.log(data);
+        modalDispatch({ type: "OFF_MODAL" });
+        searchHandler();
+      }
+      function fail(data) {
+        console.log(data);
+      }
+    }
+    if (type === "cancel") {
+      modalDispatch({ type: "OFF_MODAL" });
+    }
+  };
+
+  const enterHandler = searchHandler;
 
   return (
     <div className={productionListClasses["production_list-container"]}>
       <div className={productionClasses.wrap}>
         <p className={productionClasses["sub-menu-name"]}>생산내역조회</p>
-        <div className={`${searchStyle['container-search-helper']} ${productionListClasses['filter-container']}`}>
+        <div
+          className={`${searchStyle["container-search-helper"]} ${productionListClasses["filter-container"]}`}
+        >
           <div>
             <label> 생산일</label>
             <input
               onChange={(e) =>
-                setSearchPeriod({...searchPeriod, startDate:e.target.value})
+                setSearchPeriod({ ...searchPeriod, startDate: e.target.value })
               }
-              type='date'
+              type="date"
               min="1900-01-01"
               max="9999-12-31"
             ></input>
@@ -564,9 +591,9 @@ export default function Add() {
             <label> 생산일</label>
             <input
               onChange={(e) =>
-                setSearchPeriod({...searchPeriod, endDate:e.target.value})
+                setSearchPeriod({ ...searchPeriod, endDate: e.target.value })
               }
-              type='date'
+              type="date"
               min="1900-01-01"
               max="9999-12-31"
             ></input>
@@ -576,10 +603,7 @@ export default function Add() {
             formHandler={formHandler}
             enterHandler={enterHandler}
           ></SearchHelperModal>
-          <button
-            className={disabledBtn.class}
-            onClick={searchHandler}
-          >
+          <button className={disabledBtn.class} onClick={searchHandler}>
             조회
           </button>
         </div>
@@ -596,7 +620,11 @@ export default function Add() {
           </Table>
         </div>
         {modalState.showModal && (
-          <AlertModal offModal={offModal} modalState={modalState} onSubmit={submitHandler}></AlertModal>
+          <AlertModal
+            offModal={offModal}
+            modalState={modalState}
+            onSubmit={submitHandler}
+          ></AlertModal>
         )}
         <div className={productionClasses.grid02}>
           <Table headers={grid02_headers}>
