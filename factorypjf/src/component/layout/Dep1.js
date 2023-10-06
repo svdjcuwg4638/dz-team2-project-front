@@ -31,7 +31,7 @@ const Dep1 = () => {
   return (
     <div className="dap1">
       <div className="icon_wrap">
-        <Link to="/production" onClick={productionHandler}>
+        <Link to="/production/add" onClick={productionHandler}>
           <div title="생산관리">
             <LuFactory size={25} color="#fff" />
           </div>
