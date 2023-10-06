@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://backapp-db371ec5ae3f.herokuapp.com",
+  baseURL: "https://backapp-7bb14242f8f4.herokuapp.com",
   headers: {
     accept: "application/json",
   },
