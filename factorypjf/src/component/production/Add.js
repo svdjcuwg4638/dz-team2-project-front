@@ -130,6 +130,7 @@ export default function List() {
     const DEFAULT_ROW = 3;
     const tempArr = [];
 
+    //
     const num = data.data.match(/(\d{4})$/g)[0];
     for (let i = 1; i < DEFAULT_ROW + 1; i++) {
       let code = data.data.replace(num, `${parseInt(num) + i}`);
