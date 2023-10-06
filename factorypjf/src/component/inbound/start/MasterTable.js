@@ -3,6 +3,7 @@ import MasterRow from "./MasterRow";
 import inboundClasses from '../../../style/inbound/inbound.module.css';
 import {useDispatch, useSelector } from "react-redux";
 import { partnerAction } from "redux/actions/management/partnerAction";
+import '../../../style/inbound/start.css';
 
 const MasterTable = ({
   setMasterLength,
@@ -64,7 +65,8 @@ const MasterTable = ({
               
               if (!deletedBoundIds.includes(currentBoundId)) {
                 return (
-                  <MasterRow key={index}
+                  <MasterRow 
+                             key={index}
                              boundId={currentBoundId}
                              boundNo={currentBoundNo}
                              incrementedBoundNo={incrementedBoundNo}
