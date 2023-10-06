@@ -412,6 +412,7 @@ const Movement = () => {
                   <AddTable
                     selectRowHandler={setSelectedRow}
                     emitItem={setTableItems}
+                    items={tableItems}
                     isBtn={true}
                   />
                 </Table>
