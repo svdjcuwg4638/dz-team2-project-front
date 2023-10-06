@@ -29,7 +29,7 @@ const Inquiry = () => {
     { text: "카테고리", value: "category", width: "15%", readonly: true },
   ];
   const grid04_headers = [
-    { text: "창고명", value: "storage_name", width: "9%", readonly: true },
+    { text: "창고", value: "storage_name", width: "9%", readonly: true },
     { text: "장소", value: "location_name", width: "15%", readonly: true },
     {
       text: "품목코드",
