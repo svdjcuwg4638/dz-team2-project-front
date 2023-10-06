@@ -157,9 +157,11 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
           value={formData.bound_category}
           onChange={handleInputChange}
       >
-          <option value="">-- 선택 --</option>
-          <option value="판매">판매</option>
-          <option value="A/S">A/S</option>
+          <option value="" disabled selected hidden></option>
+            <option value="판매">판매</option>
+            <option value="반품">반품</option>
+            <option value="유상사급출고">유상사급출고</option>
+            <option value="기타출고">기타출고</option>
        </select>
       </td>
       <td>
@@ -172,6 +174,9 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
             if (e.key === "F2") {
               sedivelperScreenState(!HelperScreenState);
             }
+            if (e.key === "F4") { 
+              setFormData(prev => ({ ...prev, partner_code: "" }));
+          }
           }}
         ></input>
       </td>

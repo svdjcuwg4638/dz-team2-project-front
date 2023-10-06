@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useReducer } from "react";
 
+// import searchStyle from "style/common/searchStyle.module.css";
 import styles from "style/common/SearchHelperModal.module.css";
 
 const HELPER_KEY = 113;
@@ -22,6 +23,7 @@ const SearchHelperModal = ({ headers, formHandler, enterHandler }) => {
   //     setTableItems(items);
   //   }
   // }, [items]);
+  
   //행 추가 handler
   const [tableItems, setTableItems] = useState({});
   //검색 필터 내용 바뀔때마다 formHandler 호출
@@ -122,7 +124,7 @@ const SearchHelperModal = ({ headers, formHandler, enterHandler }) => {
       {/* 도움창이 필요한 항목은 readonly, 도움창으로만 입력 가능 */}
       {headers.map((header, headerIdx) => (
         <td key={header.headerIdx}>
-          <div className={`${styles.searchCom} `}>
+          <div className={styles.searchCom}>
             <label> {header.text}</label>
             {header.helper ? (
               <>
