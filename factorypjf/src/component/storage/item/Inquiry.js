@@ -139,7 +139,7 @@ const Inquiry = () => {
 
       console.log("params", params);
       const response = await axios.get(
-        "http://localhost:9091/inventory/searchTable",
+        "https://backapp-7bb14242f8f4.herokuapp.com/inventory/searchTable",
         {
           params: params,
         }
@@ -171,7 +171,7 @@ const Inquiry = () => {
     try {
       // 스토리지 데이터 가져오기
       const storageResponse = await axios.get(
-        `http://localhost:9091/storage/all`
+        `https://backapp-7bb14242f8f4.herokuapp.com/storage/all`
       );
       const storageData = storageResponse.data.data;
       let storageTableItems = [];
@@ -187,7 +187,7 @@ const Inquiry = () => {
       let locationTableItems = [];
 
       const locationResponse = await axios.get(
-        `http://localhost:9091/location/all`
+        `https://backapp-7bb14242f8f4.herokuapp.com/ocation/all`
       );
       const locationData = locationResponse.data.data;
       for (let i = 0; i < locationData.length; i++) {
@@ -201,7 +201,7 @@ const Inquiry = () => {
 
       //카테고리 데이터 가져오기
       const categoryResponse = await axios.get(
-        `http://localhost:9091/inventory/all`
+        `https://backapp-7bb14242f8f4.herokuapp.com/inventory/all`
       );
       const categoryData = categoryResponse.data.data;
       let categoryTableItems = [];
@@ -229,7 +229,7 @@ const Inquiry = () => {
     try {
       // formData를 백엔드로 전송
       const response = await axios.post(
-        "http://localhost:9091/inventory/searchForm",
+        "https://backapp-7bb14242f8f4.herokuapp.com/inventory/searchForm",
         formData
       );
 
