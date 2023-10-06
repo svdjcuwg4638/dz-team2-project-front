@@ -4,21 +4,28 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useReducer } from "react";
 
-import searchStyle from "style/common/searchStyle.module.css"
+import searchStyle from "style/common/searchStyle.module.css";
 import styles from "style/storage/inquiry.module.css";
 
 const HELPER_KEY = 113;
 const CLEAN_KEY=115;
+const ENTER_KEY = 13;
 
-const SearchHelperModal = ({ headers, formHandler }) => {
+const SearchHelperModal = ({ headers, formHandler, enterHandler }) => {
   const modalInit = {
     showModal: false,
     codeValue: "", //
     codeName: "",
   };
 
+  // useEffect(() => {
+  //   if (items !== undefined) {
+  //     setTableItems(items);
+  //   }
+  // }, [items]);
   //행 추가 handler
   const [tableItems, setTableItems] = useState({});
+  //검색 필터 내용 바뀔때마다 formHandler 호출
   useEffect(() => {
     formHandler(tableItems);
   }, [tableItems]);
@@ -33,7 +40,7 @@ const SearchHelperModal = ({ headers, formHandler }) => {
   //모달 reducer (on/off, 코드 타입)
   const modalReducer = (state, action) => {
     if (action.type === "ON_MODAL") {
-      console.log(action);
+      // console.log(action);
       return {
         showModal: true,
         codeValue: action.codeValue,
@@ -46,17 +53,13 @@ const SearchHelperModal = ({ headers, formHandler }) => {
   };
   const [modalState, dispatch] = useReducer(modalReducer, modalInit);
 
-  const [currentCol, setCurrentCol] = useState();
-
   // 도움창 단축키 handler
-  const keyUpHandler = (e, colInfo, coordinate) => {
+  const keyUpHandler = (e, colInfo) => {
     if (e.which === HELPER_KEY && colInfo.helper) {
       onModalHanlder(colInfo.value, colInfo.text);
-    } else if (e.which === 8 || (e.which === CLEAN_KEY && colInfo.helper)) {
+    } else if (e.which === CLEAN_KEY && colInfo.helper) {
       e.preventDefault();
       let copyItems = { ...tableItems };
-      console.log(copyItems);
-      console.log(colInfo.value);
       copyItems = {
         ...copyItems,
         [colInfo.value]: "",
@@ -65,14 +68,14 @@ const SearchHelperModal = ({ headers, formHandler }) => {
 
       setTableItems(copyItems);
       console.log(tableItems);
+    }else if(e.which===13){
+      if(enterHandler)enterHandler();
     }
-
   };
 
   // 도움창 버튼 handler
-  const buttonPressHandler = (e, colInfo, coordinate) => {
+  const buttonPressHandler = (e, colInfo) => {
     if (colInfo.helper) {
-      setCurrentCol({ ...coordinate });
       onModalHanlder(colInfo.value, colInfo.text);
     }
   };
@@ -120,12 +123,13 @@ const SearchHelperModal = ({ headers, formHandler }) => {
       {/* 도움창이 필요한 항목은 readonly, 도움창으로만 입력 가능 */}
       {headers.map((header, headerIdx) => (
         <td key={header.headerIdx}>
-          <div className={`${styles.searchCom} ${searchStyle['search_filter-wrap']}`}>
+          <div
+            className={`${styles.searchCom} ${searchStyle["search_filter-wrap"]}`}
+          >
             <label> {header.text}</label>
             {header.helper ? (
               <>
                 <input
-                  readOnly
                   value={tableItems[header.value] || ""}
                   onKeyUp={(e) => {
                     keyUpHandler(e, header);
@@ -144,16 +148,26 @@ const SearchHelperModal = ({ headers, formHandler }) => {
                 </button>
               </>
             ) : (
-              <>
-                <input
-                  onChange={(e) =>
-                    inputChangeHandler(header.value, e.target.value)
-                  }
-                  value={tableItems[header.value] || ""}
-                  onKeyUp={(e) => {
-                    keyUpHandler(e, header);
-                  }}
-                ></input>
+              <>{
+                  header.value==='date'?(<input
+                    onChange={(e) =>
+                      inputChangeHandler(header.value, e.target.value)
+                    }
+                    value={tableItems[header.value] || ""}
+                    type='date'
+                    min="1900-01-01"
+                    max="9999-12-31"
+                  ></input>):(<input
+                    onChange={(e) =>
+                      inputChangeHandler(header.value, e.target.value)
+                    }
+                    value={tableItems[header.value] || ""}
+                    onKeyUp={(e) => {
+                      keyUpHandler(e, header);
+                    }}
+                  ></input>)
+                
+              }
               </>
             )}
           </div>

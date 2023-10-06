@@ -12,35 +12,41 @@ import Code from "component/management/code/Code";
 import StorageRoutes from "./pages/Storage";
 import StorageInquiry from "./component/storage//item/Inquiry";
 import Registration from "./component/storage/registration/Registration";
-import ProductionRoutes from 'router/ProductionRoutes'
+import ProductionRoutes from "router/ProductionRoutes";
+import InboundRoutes from "router/InboundRoutes";
+import OutboundRoutes from "router/OutboundRoutes";
 import ItemRelation from "component/management/itemRelation/ItemRelation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Main from "pages/Main";
+// import InBound from "component/management/inbound/InBound";
+import { MovementsList } from "component/storage/movement/MovementsList";
+import Movement from "component/storage/movement/Movement";
 
 function App() {
-
-  const [currentPage, setCurrentPage] = useState('');
+  //#region 현재위치 세션저장
+  const [currentPage, setCurrentPage] = useState("");
   const location = useLocation();
-
   useEffect(() => {
     setCurrentPage(location.pathname);
-    sessionStorage.setItem('current_page', location.pathname);
+    sessionStorage.setItem("current_page", location.pathname);
   }, [location]);
+  //#endregion
 
   return (
     <Layout>
       <Routes>
-        <Route path="/" element={<Main/>}/>
-
-
-        <Route path="/production/*" element={<ProductionRoutes/>}/>
-        {/* <Route path="/inbound/*" element={<InboundRoutes/>}/>
-        <Route path="/storage/*" element={<StorageRoutes/>}/> */}
 
         <Route path="/storage/" element={<StorageRoutes />}>
           <Route path="" element={<StorageInquiry />} />
+          <Route path="movement" element={<Movement />} />
+          <Route path="movementsList" element={<MovementsList />} />
           <Route path="registration" element={<Registration />} />
         </Route>
+
+        <Route path="/" element={<Main/>}/>
+        <Route path="/production/*" element={<ProductionRoutes />} />
+        <Route path="/inbound/*" element={<InboundRoutes/>}/>
+        <Route path="/outbound/*" element={<OutboundRoutes/>}/>
 
         <Route path="/management" element={<Management />}>
           <Route index path="item" element={<Item />} />

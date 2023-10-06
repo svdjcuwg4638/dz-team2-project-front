@@ -1,4 +1,5 @@
 import ListTd from "component/layout/Table/ListTableData";
+import { putAxios } from "function/axiosFuction";
 import { useEffect } from "react";
 
 import helperStyle from "style/common/helperModal.module.css";
@@ -14,14 +15,13 @@ function HelperBackdrop({ offModal }) {
   );
 }
 
-function HelperOverlay({ modalState }) {
+function HelperOverlay({ modalState,onSubmit }) {
   useEffect(() => {
     console.log(modalState);
   });
 
   const submitHandler=()=>{
-    const {grid01Data,grid02Data}={...modalState.data}
-    
+    onSubmit();
   }
 
   return (
@@ -63,12 +63,12 @@ function HelperOverlay({ modalState }) {
 }
 
 //======================모달 root=========================
-export default function HelperModal({ offModal, modalState, onSelectCode }) {
+export default function HelperModal({ offModal, modalState, onSelectCode,onSubmit }) {
   return (
     <>
       <div className={helperStyle["helper-modal"]}>
         <HelperBackdrop offModal={offModal} />
-        <HelperOverlay offModal={offModal} modalState={modalState} />
+        <HelperOverlay offModal={offModal} modalState={modalState} onSubmit={onSubmit} />
       </div>
     </>
   );

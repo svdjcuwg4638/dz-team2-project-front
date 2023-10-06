@@ -6,6 +6,7 @@ let initalState={
 
 function codeReducer(state = initalState, action){
   let { type, payload} = action;
+  
   switch(type){
     case "GET_REQUEST":
       return{
