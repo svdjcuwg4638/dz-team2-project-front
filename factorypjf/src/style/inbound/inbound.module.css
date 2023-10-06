@@ -37,3 +37,22 @@
     outline: none;
 }
 
+.col-select {
+    width: 2%;
+  }
+  
+  .col-boundno {
+    width: 3%;
+  }
+  
+  .col-type {
+    width: 3%;
+  }
+  
+  .col-partner {
+    width: 3%;
+  }
+  
+  .col-itemName {
+    width: 3%;
+  }

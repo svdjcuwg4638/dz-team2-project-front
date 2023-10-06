@@ -173,9 +173,11 @@ function OutboundEnd() {
         <div>유형</div>
         <div>
           <select onChange={handleBoundTypeChange}>
-            <option value="" disabled selected hidden></option>
+          <option value="" disabled selected hidden></option>
             <option value="판매">판매</option>
-            <option value="A/S">A/S</option>
+            <option value="반품">반품</option>
+            <option value="유상사급출고">유상사급출고</option>
+            <option value="기타출고">기타출고</option>
           </select>
         </div>
         <div>거래처명</div>
