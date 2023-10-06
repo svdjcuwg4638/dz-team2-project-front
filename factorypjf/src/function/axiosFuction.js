@@ -1,10 +1,12 @@
 import axios from "axios";
 
 const DEV_URL = "http://localhost:9091/";
+const OP_URL = "https://backapp-7bb14242f8f4.herokuapp.com/";
+
 
 export function getAxios(url, param, successFunction, failFunction) {
   axios
-    .get(`${DEV_URL + url}`, {
+    .get(`${OP_URL + url}`, {
       params: param,
     })
     .then((response) => {
@@ -18,7 +20,7 @@ export function getAxios(url, param, successFunction, failFunction) {
 
 export function postAxios(url, param, successFunction, failFunction) {
   axios
-    .post(`${DEV_URL + url}`, param)
+    .post(`${OP_URL + url}`, param)
     .then((response) => {
       return response.data;
     })
@@ -30,7 +32,7 @@ export function postAxios(url, param, successFunction, failFunction) {
 
 export function putAxios(url, param, successFunction, failFunction) {
   axios
-    .put(`${DEV_URL + url}`, param)
+    .put(`${OP_URL + url}`, param)
     .then((response) => {
       return response.data;
     })
