@@ -124,9 +124,7 @@ const SearchHelperModal = ({ headers, formHandler, enterHandler }) => {
       {/* 도움창이 필요한 항목은 readonly, 도움창으로만 입력 가능 */}
       {headers.map((header, headerIdx) => (
         <td key={header.headerIdx}>
-          <div
-            className={`${styles.searchCom}`}
-          >
+          <div className={styles.searchCom}>
             <label> {header.text}</label>
             {header.helper ? (
               <>
