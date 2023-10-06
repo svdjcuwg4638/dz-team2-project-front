@@ -187,7 +187,7 @@ const Inquiry = () => {
       let locationTableItems = [];
 
       const locationResponse = await axios.get(
-        `https://backapp-7bb14242f8f4.herokuapp.com/ocation/all`
+        `https://backapp-7bb14242f8f4.herokuapp.com/location/all`
       );
       const locationData = locationResponse.data.data;
       for (let i = 0; i < locationData.length; i++) {
