@@ -9,10 +9,15 @@ function LeftBox({ storageAll, selectId, setSelectId }) {
   const [selectCodes, setSelectCodes] = useState([]);
 
   const handleDelete = async () => {
-    await api.post("/storage/delete", selectCodes);
-    dispatch(storageAction.getstorageAll());
-    alert("선택한 창고가 삭제되었습니다.");
-    setSelectCodes([]);
+    const result = await api.post("/storage/delete", selectCodes);
+    if(result.data.code != 1){
+      alert('삭제 불가\n'+result.data.data.map((data)=>data) + '\n재고가 남아있는 창고입니다.') 
+      return 
+    }else{
+      dispatch(storageAction.getstorageAll());
+      alert("선택한 창고가 삭제되었습니다.");
+      setSelectCodes([]);
+    }
   };
 
   // #region 창고 추가코드
