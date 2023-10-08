@@ -35,8 +35,9 @@ function App() {
   return (
     <Layout>
       <Routes>
+        <Route path="/:tabId/" element={<Main />} />
 
-        <Route path="/storage/" element={<StorageRoutes />}>
+        <Route path="/:tabId/storage/" element={<StorageRoutes />}>
           <Route path="" element={<StorageInquiry />} />
           <Route path="movement" element={<Movement />} />
           <Route path="movementsList" element={<MovementsList />} />
@@ -48,7 +49,7 @@ function App() {
         <Route path="/inbound/*" element={<InboundRoutes/>}/>
         <Route path="/outbound/*" element={<OutboundRoutes/>}/>
 
-        <Route path="/management" element={<Management />}>
+        <Route path="/:tabId/management" element={<Management />}>
           <Route index path="item" element={<Item />} />
           <Route path="storage" element={<Storage />} />
           <Route path="partner" element={<Partner />} />
