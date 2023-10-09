@@ -112,7 +112,7 @@ const Dep2 = ({ bookMarkList,currentTab,subMenu }) => {
           {bookMarkList &&
             bookMarkList.map((data, index) => (
               <div key={index}>
-                <Link to={'/'+currentTab+'/'+data.pageUrl} onClick={() => setMenu(data.pageUrl)}>
+                <Link to={'/'+currentTab+data.pageUrl} onClick={() => setMenu(data.pageUrl)}>
                   <span>{findMenuNameByUrl(data.pageUrl)}</span>
                 </Link>
               </div>

@@ -75,17 +75,6 @@ textarea {
   cursor: pointer;
 }
 
-.tap_wrap > div:hover{
-  cursor: pointer;
-  background-color: #C1D3F0;
-}
-
-.tap_wrap > div{
-  display: flex;
-  justify-content: space-between;
-  border-radius: 10px;
-}
-
 .button{
   cursor: pointer;
   background-color: #5390F0;
@@ -96,15 +85,6 @@ textarea {
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-}
-
-.button:hover{
-  border: 4px solid #dadada;
-}
-
-.tap_wrap > div > *{
-  margin: 0px 15px;
-  line-height: 2;
 }
 
 .loader_wrap{
@@ -214,3 +194,54 @@ td{
   cursor: pointer;
 }
 
+/* 탭 css */
+.tap_wrap > div:hover{
+  cursor: pointer;
+  background-color: #C1D3F0;
+}
+
+.tap_wrap > div{
+  display: flex;
+  border-radius: 10px;
+}
+
+.tap_wrap > div > *{
+  line-height: 2;
+}
+
+.tab-x-button{
+  align-items: center;
+  width: 30px;
+  position: absolute;
+  right: 0;
+  top: 6px;
+  justify-content: center;
+  display: none;
+}
+.tab_sub_wrap{
+  position: relative;
+}
+
+.tab_sub_wrap:hover .tab-x-button{
+  display: flex;
+  align-items: center;
+}
+
+.tab_add_button_wrap{
+  width: 30px;
+  background-color: #dadada !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tab_add_button{
+  display: none;
+}
+
+.tab_add_button_wrap:hover{
+  background-color: #fff !important;
+}
+.tab_add_button_wrap:hover .tab_add_button{
+  display: flex;
+}

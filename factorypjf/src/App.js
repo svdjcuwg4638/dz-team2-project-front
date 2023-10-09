@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "style/App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import "style/Table.css";
@@ -26,6 +26,12 @@ function App() {
   //#region 현재위치 세션저장
   const [currentPage, setCurrentPage] = useState("");
   const location = useLocation();
+
+  const navi = useNavigate();
+
+  if(location.pathname == "/"){
+    navi("/1/")
+  }
   useEffect(() => {
     setCurrentPage(location.pathname);
     sessionStorage.setItem("current_page", location.pathname);

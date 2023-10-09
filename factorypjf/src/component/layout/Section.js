@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Section = ({children,idx}) => {
+const Section = ({children}) => {
   return (
-    <div className='section_style' style={{display : idx == 1 ? "bock" : "none"}}>
+    <div className='section_style'>
       {children}
     </div>
   )

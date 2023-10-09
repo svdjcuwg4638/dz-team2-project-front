@@ -54,6 +54,10 @@
 .tap_wrap {
   display: flex;
   margin-left: 20px;
+  width: 1300px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  margin-top: 25px;
 }
 
 .tap_wrap > div {
@@ -61,6 +65,7 @@
   margin: 0px 15px;
   width: 100px;
   margin-top: 10px;
+  max-height: 32px;
 }
 
 .menu_sub_wrap {
