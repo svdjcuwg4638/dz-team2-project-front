@@ -258,6 +258,11 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
               if (e.key === "F2") {
                 sedivelperScreenState(!HelperScreenState);
               }
+              if (e.key === "F4") {
+                setFormData(prev => ({ ...prev, item_code: "" }));
+                setFormData(prev => ({ ...prev, item_name: "" }));
+                setFormData(prev => ({ ...prev, unit_price: "" }));
+            }
             }}
           ></input>
         </td>

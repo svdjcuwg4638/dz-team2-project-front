@@ -218,3 +218,55 @@ td {
   border-radius: 5px;
   cursor: pointer;
 }
+
+/* 탭 css */
+.tap_wrap > div:hover {
+  cursor: pointer;
+  background-color: #c1d3f0;
+}
+
+.tap_wrap > div {
+  display: flex;
+  border-radius: 10px;
+}
+
+.tap_wrap > div > * {
+  line-height: 2;
+}
+
+.tab-x-button {
+  align-items: center;
+  width: 30px;
+  position: absolute;
+  right: 0;
+  top: 6px;
+  justify-content: center;
+  display: none;
+}
+.tab_sub_wrap {
+  position: relative;
+}
+
+.tab_sub_wrap:hover .tab-x-button {
+  display: flex;
+  align-items: center;
+}
+
+.tab_add_button_wrap {
+  width: 30px;
+  background-color: #dadada !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tab_add_button {
+  display: none;
+}
+
+.tab_add_button_wrap:hover {
+  background-color: #fff !important;
+}
+.tab_add_button_wrap:hover .tab_add_button {
+  display: flex;
+}

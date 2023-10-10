@@ -31,27 +31,27 @@ const Dep1 = () => {
   return (
     <div className="dap1">
       <div className="icon_wrap">
-        <Link to="/production" onClick={productionHandler}>
+        <Link to="1/production" onClick={productionHandler}>
           <div title="생산관리">
             <LuFactory size={25} color="#fff" />
           </div>
         </Link>
-        <Link to="/inbound" onClick={inboundHandler}>
+        <Link to="1/inbound" onClick={inboundHandler}>
           <div title="입고관리">
             <FiPlusSquare size={25} color="#fff" />
           </div>
         </Link>
-        <Link to="/outbound" onClick={outboundHandler}>
+        <Link to="1/outbound" onClick={outboundHandler}>
           <div title="출고관리">
             <FiMinusSquare size={25} color="#fff" />
           </div>
         </Link>
-        <Link to="/storage" onClick={storageHandler}>
+        <Link to="1/storage" onClick={storageHandler}>
           <div title="재고관리">
             <MdOutlineInventory2 size={25} color="#fff" />
           </div>
         </Link>
-        <Link to="/management/item" onClick={managementHandler}>
+        <Link to="1/management/item" onClick={managementHandler}>
           <div title="기준정보관리">
             <BsInfoCircle size={25} color="#fff" />
           </div>

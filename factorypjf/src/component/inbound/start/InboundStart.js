@@ -59,26 +59,26 @@ const InBoundStart = () => {
   };
   //#region 헤더정의
   const grid01_headers = [
-    { text: "선택", value: "select", width: "3%" },
-    { text: "문서번호", value: "boundno", width: "9%" },
-    { text: "유형", value: "type", width: "9%" },
+    { text: "선택", value: "select", width: "2%" },
+    { text: "문서번호", value: "boundno", width: "3%" },
+    { text: "유형", value: "type", width: "3%" },
     {
       text: "거래처",
       value: "partner",
-      width: "9%",
+      width: "3%",
       helper: true,
       gridTrigger: true,
     },
-    { text: "입고예정일", value: "itemName", width: "9%", helper: true },
+    { text: "입고예정일", value: "itemName", width: "3%",},
   ];
   const grid02_headers = [
     { text: "선택", value: "select", width: "3%" },
-    { text: "품목코드", value: "item_code", width: "6%" },
+    { text: "품목코드", value: "item_code", width: "6%" ,helper: true },
     { text: "품목명", value: "item_name", width: "6%" },
     { text: "단가", value: "unit_price", width: "4%" },
     // { text: "재고", value: "stock", width: "4%" },
     { text: "수량", value: "amount", width: "6%" },
-    { text: "총액", value: "tot_amount", width: "4%", helper: true },
+    { text: "총액", value: "tot_amount", width: "4%",  },
     { text: "입고예정일", value: "detail_date", width: "10%" },
     { text: "비고", value: "description", width: "10%" },
   ];

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import api from "redux/api";
 import SearchHelper from "component/storage/item/SearchHelper";
+import inboundClasses from '../../../style/inbound/inbound.module.css';
 
 
 const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFlag, setCheckedBoundIds,partnerAll }) => {
@@ -113,7 +114,7 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
   return (
     <>
     <tr onClick={() => setMaseterFocus(formData["bound_id"])}>
-      <td>
+    <td>
         <input
           type="checkbox"
           name="check"
@@ -135,9 +136,12 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
           value={formData.bound_category}
           onChange={handleInputChange}
       >
-          <option value="">-- 선택 --</option>
-          <option value="구매">구매</option>
-          <option value="반품">반품</option>
+            <option value="" disabled selected hidden></option>
+            <option value="구매">구매</option>
+            <option value="반품">반품</option>
+            <option value="재작업입고">재작업입고</option>
+            <option value="유상사급입고">유상사급입고</option>
+            <option value="기타입고">기타입고</option>
        </select>
       </td>
       <td>
@@ -150,6 +154,9 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
             if (e.key === "F2") {
               sedivelperScreenState(!HelperScreenState);
             }
+            if (e.key === "F4") { 
+              setFormData(prev => ({ ...prev, partner_code: "" }));
+          }
           }}
         ></input>
       </td>

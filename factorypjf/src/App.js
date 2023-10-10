@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "style/App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import "style/Table.css";
@@ -26,6 +26,12 @@ function App() {
   //#region 현재위치 세션저장
   const [currentPage, setCurrentPage] = useState("");
   const location = useLocation();
+
+  const navi = useNavigate();
+
+  if(location.pathname == "/"){
+    navi("/1/")
+  }
   useEffect(() => {
     setCurrentPage(location.pathname);
     sessionStorage.setItem("current_page", location.pathname);
@@ -35,8 +41,9 @@ function App() {
   return (
     <Layout>
       <Routes>
+        <Route path="/:tabId/" element={<Main />} />
 
-        <Route path="/storage/" element={<StorageRoutes />}>
+        <Route path="/:tabId/storage/" element={<StorageRoutes />}>
           <Route path="" element={<StorageInquiry />} />
           <Route path="movement" element={<Movement />} />
           <Route path="movementsList" element={<MovementsList />} />
@@ -48,7 +55,7 @@ function App() {
         <Route path="/inbound/*" element={<InboundRoutes/>}/>
         <Route path="/outbound/*" element={<OutboundRoutes/>}/>
 
-        <Route path="/management" element={<Management />}>
+        <Route path="/:tabId/management" element={<Management />}>
           <Route index path="item" element={<Item />} />
           <Route path="storage" element={<Storage />} />
           <Route path="partner" element={<Partner />} />

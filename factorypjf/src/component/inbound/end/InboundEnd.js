@@ -172,11 +172,15 @@ function InboundEnd() {
             <option value="" disabled selected hidden></option>
             <option value="구매">구매</option>
             <option value="반품">반품</option>
+            <option value="재작업입고">재작업입고</option>
+            <option value="유상사급입고">유상사급입고</option>
+            <option value="기타입고">기타입고</option>
           </select>
         </div>
         <div>거래처명</div>
         <div>
-          <input type="text" value={searchSectionData.master.partner_code} />
+          <input type="text" value={searchSectionData.master.partner_code}
+           />
         </div>
         <button
           onClick={(e) => {

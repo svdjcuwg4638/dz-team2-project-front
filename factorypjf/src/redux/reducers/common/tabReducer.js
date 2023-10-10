@@ -1,17 +1,24 @@
-const initialState = {
-  currentPath: null
+let initialState = {
+  tab:{},
 };
 
-function tabReducer(state = initialState, action) {
-  switch (action.type) {
-    case 'SAVE_CURRENT_PATH':
+const tabsReducer = (state = initialState, action) => {
+  let { type, payload } = action;
+
+  switch (type) {
+    case 'UPDATE_TAB_CONTENT_SUCCESS':
       return {
         ...state,
-        currentPath: action.payload
+        [payload.tabId]: payload.content
+      };
+    case 'UPDATE_TAB_CONTENT_FAIL':
+      return {
+        ...state,
+        error: payload
       };
     default:
       return state;
   }
-}
+};
 
-export default tabReducer;
+export default tabsReducer;
