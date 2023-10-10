@@ -54,7 +54,7 @@ const Item = () => {
   }
   return (
     <div className="item_wrap">
-      <div style={{ height: "90%", margin: "50px" }}>
+      <div style={{ height: "90%", margin: "5px" }}>
         {itemAll.data && (
           <ItemList
             itemAll={itemAll}
@@ -72,7 +72,7 @@ const Item = () => {
         >
           <button
             className="button"
-            style={{ backgroundColor: selectIds.length > 0 ? "red" :"#dadada" }}
+            style={{ backgroundColor: selectIds.length > 0 ? "#fff" :"#dadada", color:selectIds.length > 0 ? "red" : ""  }}
             disabled={selectIds.length > 0 ? false : true}
             onClick={handleDelete}
           >
@@ -83,7 +83,6 @@ const Item = () => {
       <div>
         <DetailItem selectItem={selectItem} setSelectItem={setSelectItem}/>
       </div>
-      <div className="itme_title">품목관리</div>
     </div>
   );
 };

@@ -1,9 +1,31 @@
 import { useEffect, useState } from "react";
 import SearchHelper from "./SearchHelper";
 
-
+const rowHoverStyle = {
+    backgroundColor: "#f0f0f0", // 원하는 배경색으로 변경하세요.
+  };
 function Modal({ isOpen, onClose, boundId, details = [], locationAll, storageAll, setUpdatedDetails}) { // 기본값 설정
 // 연결된 bound_id를 기반으로 상세 정보를 필터링합니다.
+
+
+  // 각 <tr> 요소마다 hover 상태를 관리하기 위한 상태 변수
+  const [hoveredRows, setHoveredRows] = useState({});
+
+  // 마우스가 특정 행 위로 올라갔을 때 호출되는 이벤트 핸들러
+  const handleMouseEnter = (detailId) => {
+    setHoveredRows((prevHoveredRows) => ({
+      ...prevHoveredRows,
+      [detailId]: true, // 해당 detailId의 행을 hover 상태로 설정
+    }));
+  };
+
+  // 마우스가 특정 행 위에서 벗어났을 때 호출되는 이벤트 핸들러
+  const handleMouseLeave = (detailId) => {
+    setHoveredRows((prevHoveredRows) => ({
+      ...prevHoveredRows,
+      [detailId]: false, // 해당 detailId의 행을 hover 해제 상태로 설정
+    }));
+  };
 
 const matchingDetails = details.filter(detail => detail.bound_id === boundId && detail.detail_state === 'ongoing');
 const [formData, setFormData] = useState([]);
@@ -126,7 +148,15 @@ return (
                 </thead>
                 <tbody>
                     {matchingDetails.map((detail, index) => (
-                        <tr key={index}>
+                        <tr key={index}
+                        style={
+                            hoveredRows[detail.detail_id] // 해당 행의 hover 상태에 따라 스타일 적용
+                              ? rowHoverStyle
+                              : {}
+                          }
+                          onMouseEnter={() => handleMouseEnter(detail.detail_id)} // 해당 행의 hover 상태를 true로 설정
+                          onMouseLeave={() => handleMouseLeave(detail.detail_id)} // 해당 행의 hover 상태를 false로 설정
+                        >
                             <td>{detail.item_code}</td>
                             <td>{detail.item_name}</td>
                             <td>{detail.amount}</td>

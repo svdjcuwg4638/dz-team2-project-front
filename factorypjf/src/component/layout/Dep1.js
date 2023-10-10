@@ -36,12 +36,12 @@ const Dep1 = () => {
             <LuFactory size={25} color="#fff" />
           </div>
         </Link>
-        <Link to="1/inbound" onClick={inboundHandler}>
+        <Link to="1/inbound/start" onClick={inboundHandler}>
           <div title="입고관리">
             <FiPlusSquare size={25} color="#fff" />
           </div>
         </Link>
-        <Link to="1/outbound" onClick={outboundHandler}>
+        <Link to="1/outbound/start" onClick={outboundHandler}>
           <div title="출고관리">
             <FiMinusSquare size={25} color="#fff" />
           </div>

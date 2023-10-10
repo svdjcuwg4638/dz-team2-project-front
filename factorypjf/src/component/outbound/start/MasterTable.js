@@ -53,7 +53,12 @@ const MasterTable = ({
 
   return (
     <div>
-      <div>
+        <div
+        style={{
+          maxHeight: masterLength > 3 ? "200px" : "none",
+          overflowY: masterLength > 3 ? "auto" : "visible"
+        }}
+        >
         <tbody>
           {boundId !== 0 && boundId && masterLength > 0 &&
             Array.from({ length: masterLength }).map((_, index) => {
