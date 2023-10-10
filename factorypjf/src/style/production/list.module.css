@@ -24,3 +24,9 @@ table {
 .production_list-container{
   height: 100%;
 }
+.search_date{
+  display: flex;
+}
+.search_date{
+  width: 22% !important;
+}

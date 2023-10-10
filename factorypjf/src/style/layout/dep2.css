@@ -29,6 +29,7 @@
   background-color: rgba(185, 185, 185, 0.3);
   height: 45%;
   width: 100%;
+  overflow: auto;
 }
 
 .menu_title {

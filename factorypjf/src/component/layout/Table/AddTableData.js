@@ -148,7 +148,7 @@ export default function AddTableData({
     let row = e.target.parentNode.parentNode;
     
     if(e.type==='mouseover'){
-      console.log(addStyle[" add-table-focus"])
+      // console.log(addStyle[" add-table-focus"])
       row.className += row.className?` ${addStyle["add-table-focus"]}`:`${addStyle["add-table-focus"]}`;
       setOverRow(row);
     }

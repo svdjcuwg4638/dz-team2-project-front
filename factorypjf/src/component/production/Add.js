@@ -496,7 +496,7 @@ export default function List() {
   return (
     <>
       <div>
-        <p className={productionClasses["sub-menu-name"]}>생산품</p>
+        <div className={productionClasses["sub-menu-name"]}>생산품</div>
         <div className={productionClasses.grid01}>
           <Table headers={grid01_headers}>
             <AddTd
@@ -511,7 +511,7 @@ export default function List() {
             ></AddTd>
           </Table>
         </div>
-        <p className={productionClasses["sub-menu-name"]}>소모자재</p>
+        <div className={productionClasses["sub-menu-name"]}>소모자재</div>
         <div className={productionClasses.grid02}>
           <Table headers={grid02_headers}>
             <ListTd

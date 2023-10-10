@@ -7,8 +7,8 @@
 .sub-menu-name{
     font-size: 17px;
     font-weight: bold;
-    margin-left: 5px;
-    
+    margin-left: 8px;
+    margin-bottom: 2px;
 }
 /* .sub-menu-name::before{
     content:'';
