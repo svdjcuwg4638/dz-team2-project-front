@@ -59,17 +59,17 @@ const OutBoundStart = () => {
   };
   //#region 헤더정의
   const grid01_headers = [
-    { text: "선택", value: "select", width: "10%" },
-    { text: "문서번호", value: "boundno", width: "30%" },
-    { text: "유형", value: "type", width: "8%" },
+    { text: "선택", value: "select", width: "2.2%" },
+    { text: "문서번호", value: "boundno", width: "2.2%" },
+    { text: "유형", value: "type", width: "2.5%" },
     {
       text: "거래처",
       value: "partner",
-      width: "28%",
+      width: "2.5%",
       helper: true,
       gridTrigger: true,
     },
-    { text: "출고일", value: "itemName", width: "24%" },
+    { text: "출고일", value: "itemName", width: "2.5%" },
   ];
   const grid02_headers = [
     { text: "선택", value: "select", width: "8%" },

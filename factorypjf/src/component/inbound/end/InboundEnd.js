@@ -155,7 +155,7 @@ function InboundEnd() {
   return (
     <div className={inboundClasses.wrap}>
       <p className={inboundClasses["sub-menu-name"]}>입고현황</p>
-      <div className="searchsection" style={{ display: "flex" }}>
+      <div className="searchsection" style={{ display: "flex", border: '1px solid blue' }}>
         <div>문서번호</div>
         <div>
           <input

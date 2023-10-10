@@ -12,6 +12,53 @@ const rowHoverStyle = {
   backgroundColor: "#f0f0f0", // 원하는 배경색으로 변경하세요.
 };
 
+const styles = {
+  wrapBtn: {
+    display: "flex",
+    justifyContent: "end",
+    marginTop: "10px",
+  },
+  btnDelete: {
+    backgroundColor: "white",
+    color: "var(--red-color)",
+    border: "1px solid var(--red-color)",
+    boxShadow: "1px 1px 2px 1px grey",
+    borderRadius: "8px",
+    fontSize: "14px",
+    fontWeight: "bold",
+    width: "50px",
+    height: "30px",
+    margin: "5px",
+  },
+  btnSave: {
+    backgroundColor: "var(--main-color)",
+    color: "white",
+    border: "none",
+    boxShadow: "1px 1px 2px 1px grey",
+    borderRadius: "8px",
+    fontSize: "14px",
+    fontWeight: "bold",
+    width: "62px",
+    height: "30px",
+    margin: "5px",
+  },
+  btnSave1: {
+    backgroundColor: "var(--main-color)",
+    color: "white",
+    border: "none",
+    boxShadow: "1px 1px 2px 1px grey",
+    borderRadius: "8px",
+    fontSize: "14px",
+    fontWeight: "bold",
+    width: "90px",
+    height: "30px",
+    margin: "5px",
+  },
+  btnSaveDelete: {
+    paddingTop: "2px",
+  },
+};
+
 function InboundOngoing() {
 
   const [hovered, setHovered] = useState(false); // 마우스 호버 상태를 저장하기 위한 상태 변수
@@ -135,8 +182,8 @@ function InboundOngoing() {
                 if (!header.value) {
                   return (
                     <td key="warehouse-location" style={{ flex: "20%" }}>
-                      <button onClick={() => handleOpenModal(data.bound_id)}>
-                        창고/장소
+                      <button style={styles.btnSave1} onClick={() => handleOpenModal(data.bound_id)}>
+                        창고/장소 선택
                       </button>
                     </td>
                   );
@@ -152,8 +199,9 @@ function InboundOngoing() {
           </tr>
         )}
       </div>
-      <button onClick={handleSendToServer}>입고처리</button>
-
+      <div style={styles.wrapBtn}>
+      <button style={styles.btnSave} onClick={handleSendToServer}>입고처리</button>
+      </div>    
       <DetailModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}

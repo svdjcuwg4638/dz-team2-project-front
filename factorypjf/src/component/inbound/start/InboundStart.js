@@ -7,6 +7,41 @@ import Table from "../table/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { unitPriceAction } from "redux/actions/management/unitPriceAction";
 
+const styles = {
+  wrapBtn: {
+    display: "flex",
+    justifyContent: "end",
+    marginTop: "10px",
+  },
+  btnDelete: {
+    backgroundColor: "white",
+    color: "var(--red-color)",
+    border: "1px solid var(--red-color)",
+    boxShadow: "1px 1px 2px 1px grey",
+    borderRadius: "8px",
+    fontSize: "14px",
+    fontWeight: "bold",
+    width: "50px",
+    height: "30px",
+    margin: "5px",
+  },
+  btnSave: {
+    backgroundColor: "var(--main-color)",
+    color: "white",
+    border: "none",
+    boxShadow: "1px 1px 2px 1px grey",
+    borderRadius: "8px",
+    fontSize: "14px",
+    fontWeight: "bold",
+    width: "50px",
+    height: "30px",
+    margin: "5px",
+  },
+  btnSaveDelete: {
+    paddingTop: "2px",
+  },
+};
+
 const InBoundStart = () => {
   const dispatch = useDispatch();
   const { unitPriceAll } = useSelector((state) => state.unitPrice);
@@ -59,17 +94,17 @@ const InBoundStart = () => {
   };
   //#region 헤더정의
   const grid01_headers = [
-    { text: "선택", value: "select", width: "10%" },
-    { text: "문서번호", value: "boundno", width: "30%" },
-    { text: "유형", value: "type", width: "8%" },
+    { text: "선택", value: "select", width: "2.2%" },
+    { text: "문서번호", value: "boundno", width: "2.2%" },
+    { text: "유형", value: "type", width: "2.5%" },
     {
       text: "거래처",
       value: "partner",
-      width: "28%",
+      width: "2.5%",
       helper: true,
       gridTrigger: true,
     },
-    { text: "입고예정일", value: "itemName", width: "24%",},
+    { text: "입고예정일", value: "itemName", width: "2.5%",},
   ];
   const grid02_headers = [
     { text: "선택", value: "select", width: "12.5%" },
@@ -180,9 +215,9 @@ const InBoundStart = () => {
         setCheckedSubBoundIds={setCheckedSubBoundIds}
         deletedIndex={deletedIndex}
       />
-      <div style={{ display: "flex", justifyContent: "flex-end", marginRight: "10px", marginBottom: "10px" }}>
-        <button onClick={handleDeleteCheckedRows}>삭제</button>
-        <button onClick={() => handleSave()}>저장</button>
+      <div style={styles.wrapBtn}>
+        <button style={styles.btnDelete} onClick={handleDeleteCheckedRows}>삭제</button>
+        <button style={styles.btnSave} onClick={() => handleSave()}>저장</button>
       </div>
     </div>
   );
