@@ -48,6 +48,7 @@ export default function List() {
     { text: "순번", value: "index", width: "5%" },
     { text: "자재", value: "item", width: "15%", readonly: true },
     { text: "필요수량", value: "quantity", width: "8%", readonly: true },
+    { text: "필요수량 총합", value: "totalQuantity", width: "8%", readonly: true },
     { text: "창고", value: "storage", width: "10%", helper: true },
 
     {
@@ -68,6 +69,9 @@ export default function List() {
   ];
 
   const [deleteIdx, setDeleteIdx] = useState();
+
+  //재고가 자재 필요 수량보다 많은지
+  const [quantityValid,setQuantityValid] = useState();
 
   //grid01 row 선택시 그에 맞는 자재를 grid2에 출력하기 위해 입력 값을 저장하는 state
   const cacheInit = {
@@ -127,9 +131,10 @@ export default function List() {
 
   function setProductionCode(data) {
     //첫 렌더링시 기본 3행
-    const DEFAULT_ROW = 3;
+    const DEFAULT_ROW = 1;
     const tempArr = [];
 
+    //
     const num = data.data.match(/(\d{4})$/g)[0];
     for (let i = 1; i < DEFAULT_ROW + 1; i++) {
       let code = data.data.replace(num, `${parseInt(num) + i}`);
@@ -162,42 +167,13 @@ export default function List() {
     if (header.value === "item") {
       itemCode = tableItems[currentCol.row].itemCode;
     }
-    //자재 관계 가져오는 request
-    // axios
-    // .get(`http://localhost:9091/production/add/component`, {
-    //   params: { itemCode },
-    // })
-    // .then((res) => {
-    //   return res.data.data;
-    // })
-    // .then((data) => {
-    //   let newTableItems = [];
 
-    //   for (let i = 0; i < data.length; i++) {
-    //     newTableItems.push({
-    //       productCode: data[i].item_code,
-    //       item: data[i].component_name,
-    //       itemCode: data[i].component_code,
-    //       quantity: data[i].quantity,
-    //       // storage:data[i].storage_name,
-    //       // storageCode:data[i].storage_code,
-    //       // location: data[i].location_name,
-    //       // locationCode: data[i].location_code,
-    //       // total:data[i].total,
-    //       description: data[i].description,
-    //     });
-    //   }
-    //   cacheDispatch({
-    //     type: "TRIGGER",
-    //     idx: currentCol.row,
-    //     items: newTableItems,
-    //   });
+    const grid01QuantityEl =  document.querySelector(`#grid01_${currentCol.row}_quantity`);
+    console.log(grid01QuantityEl);
 
-    //   console.log(grid02Cache.items);
-    // })
-    // .catch((error) => console.log(error));
-
+    //소요자재 요청
     getAxios("production/add/component", { itemCode }, success, fail);
+
     function success(resData) {
       let data = resData.data;
       let newTableItems = [];
@@ -208,6 +184,7 @@ export default function List() {
           item: data[i].component_name,
           itemCode: data[i].component_code,
           quantity: data[i].quantity,
+          totalQuantity: data[i].quantity*grid01QuantityEl.value,
           // storage:data[i].storage_name,
           // storageCode:data[i].storage_code,
           // location: data[i].location_name,
@@ -223,11 +200,35 @@ export default function List() {
       });
 
       console.log(grid02Cache.items);
+      
     }
     function fail(error) {
       console.log(error);
     }
   };
+  function editHandler(e,tableType ,colInfo, coordinate){
+    //grid01 수량 변경했을 때
+    if(tableType==='add'&&colInfo.value==='quantity'){
+      if(grid02_items){
+
+        const copyItem = [...grid02_items]
+        for (let i = 0; i < copyItem.length; i++) {
+          //필요수량 * 생산수량
+          let totalQuantity= copyItem[i].quantity*e.target.value;
+          copyItem[i].totalQuantity=totalQuantity;
+          //소요자재>재고이면 css 변경
+          if(totalQuantity>copyItem[i].inventory){
+            let inventoryEl = document.querySelector(`#grid02_${i}_inventory`);
+            let totalQuantityEl = document.querySelector(`#grid02_${i}_totalQuantity`);
+            inventoryEl.className+=` ${productionClasses['out-stock']}`
+            totalQuantityEl.className+=` ${productionClasses['out-stock']}`
+            console.log(totalQuantityEl,inventoryEl)
+          }
+        }
+        set02Item([...copyItem])
+      }
+    }
+  }
 
   //grid2 trigger handler (창고와 세부장소에 맞는 재고 가져오기)
   const triggerHandler = (header, tableItems, currentCol) => {
@@ -261,33 +262,23 @@ export default function List() {
           idx: currentCol.row,
           items: [...copyItems],
         });
+
+        //소요자재 재고 확인 (필요자재 > 재고이면 css 변경)
+        let totalQuantity= rowItem.totalQuantity;
+
+        if(totalQuantity>rowItem.inventory){
+          let inventoryEl = document.querySelector(`#grid02_${currentRow}_inventory`);
+          let totalQuantityEl = document.querySelector(`#grid02_${currentRow}_totalQuantity`);
+          inventoryEl.className+=` ${productionClasses['out-stock']}`
+          totalQuantityEl.className+=` ${productionClasses['out-stock']}`
+          console.log(totalQuantityEl,inventoryEl)
+        }
       }
 
       function fail(error) {
-        console.lor(error);
+        console.log(error);
       }
-      //   axios
-      //     .get(`http://localhost:9091/production/add/inventory`, {
-      //       params: { itemCode, storageCode, locationCode },
-      //     })
-      //     .then((res) => {
-      //       return res.data.data;
-      //     })
-      //     .then((data) => {
-      //       //================선택한 코드 테이블에 출력===============
-      //       let copyItems = tableItems;
-      //       let currentRow = currentCol.row;
 
-      //       copyItems[currentRow].inventory = data.total;
-      //       // set02Item([...copyItems]);
-      //       cacheDispatch({
-      //         type: "TRIGGER",
-      //         idx: currentCol.row,
-      //         items: [...copyItems],
-      //       });
-      //     })
-      //     .catch((error) => console.log(error));
-      // }
     }
   };
 
@@ -381,6 +372,7 @@ export default function List() {
                 ) &&
                 !grid02Cache.items[i][j][key]
               ) {
+                //빈 컬럼 찾기
                 alertHeader = grid02_headers.find((header) => {
                   return header.value === key;
                 });
@@ -389,6 +381,10 @@ export default function List() {
                 } else {
                   alert("하위테이블 " + alertHeader.text + "를 입력해주세요");
                 }
+                return;
+              }
+              if( grid02Cache.items[i][j].totalQuantity>grid02Cache.items[i][j].inventory){
+                alert("자재 재고가 부족한 생산품이 있습니다.")
                 return;
               }
             }
@@ -410,6 +406,7 @@ export default function List() {
     }
     function success(data) {
       alert("저장이 완료됐습니다");
+      window.location.reload();
     }
     function fail(data) {
       console.log(data);
@@ -417,9 +414,34 @@ export default function List() {
     }
     console.log(grid02Cache);
     console.log(grid02_items);
+
   };
 
-  const selectRowHandler = (idx) => {
+  const selectRowHandler = (idx,e) => {
+    //========필수항목일 경우 input 색상 변경=======
+    let inputId = e.target.id
+    let inputHeader = inputId.match(/(?<=\w_)[a-zA-z_]+/g)[0];
+    e.target.className=e.target.className.replace('input_red','')
+    e.target.className=e.target.className.replace('input_black','')
+    // e.target.className=e.target.className.replace('input_blue','')
+    
+    // e.target.className.replace(`${productionClasses["input_red"]}`,null)
+    // e.target.className.replace(`${productionClasses["input_black"]}`,null)
+    grid01_headers.map((header)=>{
+      if(inputHeader===header.value){
+        //필수항목이고 빈칸이면
+        if(header.text.includes('*')&&e.target.value===''){
+          // e.target.className= e.target.className?e.target.className+`${productionClasses[" input_red"]}`:`${productionClasses["input_red"]}`
+          e.target.className= e.target.className?e.target.className+' input_red':'input_red'
+        }else{
+          // e.target.className= e.target.className?e.target.className+`${productionClasses[" input_black"]}`:`${productionClasses["input_black"]}`
+          e.target.className= e.target.className?e.target.className+' input_black':'input_black'
+        }
+      }
+    })
+
+
+    //========선택 생산품에 대한 grid02 정보 출력하기========
     const inputArr = [...document.querySelectorAll('input[id*="grid02"]')];
     // console.log(inputArr)
 
@@ -439,7 +461,7 @@ export default function List() {
         [header]: el.value,
       };
     });
-    console.log(elementItem);
+    // console.log(elementItem);
 
     cacheDispatch({ type: "SELECT_ROW", idx, items: [...elementItem] });
     // console.log(grid02Cache.items)
@@ -465,6 +487,7 @@ export default function List() {
     // set01Item([...copyItem])
     cacheDispatch({ type: "DELETE_ROW", idxArr });
 
+    checked.forEach(el=>el.checked=false)
     console.log(grid02Cache);
   };
 
@@ -482,6 +505,7 @@ export default function List() {
               emitItem={set01Item}
               deleteItem={deleteIdx}
               addRowEmit={addRowEmitHandler}
+              editHandler={editHandler}
             ></AddTd>
           </Table>
         </div>
@@ -496,13 +520,13 @@ export default function List() {
         </div>
         <div className={productionClasses["product_btn-wrap"]}>
           <button
-            className={productionClasses["product_btn_delete"]}
+            className="btn_delete"
             onClick={deleteHandler}
           >
             삭제
           </button>
           <button
-            className={productionClasses["product_btn_save"]}
+            className="btn_save"
             onClick={saveHandler}
           >
             저장

@@ -25,19 +25,18 @@
 .product_btn-wrap button{
     margin:10px;
     width: 50px;
-    border-radius: 8px;
-}
-.product_btn_delete{
-    background-color: var(--red-color);
-    color: white;
-    border: none;
-    box-shadow: 1px 1px 2px 1px grey;
+    
 }
 
-.product_btn_save{
-    background-color: var(--main-color);
-    color: white;
-    border: none;
-    box-shadow: 1px 1px 2px 1px grey;
+.out-stock{
+    color:var(--red-color);
+    font-weight: bold;
 }
-
+td>input[type='text']{
+    height: 60%;
+    margin-bottom: 5px;
+}
+td>input[type='checkbox']{
+    height: 40%;
+    margin-top: 5px;
+}

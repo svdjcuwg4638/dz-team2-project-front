@@ -35,10 +35,16 @@ input {
 table th {
   /* border-bottom: 1px solid #4473bf; */
 }
-td > input {
+td>input{
   width: 100%;
-  border: none;
+  /* height: 60%; */
   background-color: transparent;
+  border-radius: 5px;
+  border-width: 2px;
+}
+
+td > input:empty {
+  border: solid 3px white;
 }
 thead {
   background-color: #e9eef6;

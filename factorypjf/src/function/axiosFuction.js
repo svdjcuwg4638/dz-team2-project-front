@@ -6,7 +6,7 @@ const OP_URL = "https://backapp-7bb14242f8f4.herokuapp.com/";
 
 export function getAxios(url, param, successFunction, failFunction) {
   axios
-    .get(`${OP_URL + url}`, {
+    .get(`${DEV_URL + url}`, {
       params: param,
     })
     .then((response) => {
@@ -20,7 +20,7 @@ export function getAxios(url, param, successFunction, failFunction) {
 
 export function postAxios(url, param, successFunction, failFunction) {
   axios
-    .post(`${OP_URL + url}`, param)
+    .post(`${DEV_URL + url}`, param)
     .then((response) => {
       return response.data;
     })
@@ -32,7 +32,7 @@ export function postAxios(url, param, successFunction, failFunction) {
 
 export function putAxios(url, param, successFunction, failFunction) {
   axios
-    .put(`${OP_URL + url}`, param)
+    .put(`${DEV_URL + url}`, param)
     .then((response) => {
       return response.data;
     })

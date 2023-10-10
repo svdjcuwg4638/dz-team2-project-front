@@ -137,7 +137,7 @@ export default function Add() {
 
   const triggerHandler = () => {};
 
-  const editHandler = (e, tableType, coordinate) => {
+  const editHandler = (e, tableType, colInfo, coordinate) => {
     setDisabledBtn({ state: false, class: `${listStyle["btn_abled"]}` });
     if (tableType === "add") {
       //grid01에 수정 표시
@@ -335,6 +335,8 @@ export default function Add() {
     cacheDispatch({ type: "DELETE_ROW", idxArr });
     setDisabledBtn({ state: false, class: `${listStyle["btn_abled"]}` });
     console.log(grid02Cache);
+
+    checked.forEach(el=>el.checked=false)
   };
   function searchResult(data) {
     console.log(data);
@@ -431,7 +433,8 @@ export default function Add() {
   const cacheReducer = (state, action) => {
     //cacheInit (행 선택하지 않음)
     if (action.type === "INIT_CACHE") {
-      return { items: [...action.data] };
+      set02Item([]);
+      return { items: action.data?[...action.data]:[] };
     }
     //처음으로 행을 선택할때
     if (state.idx === null) {
@@ -453,7 +456,7 @@ export default function Add() {
               unDelete.push(copyItems[i]);
             }
           }
-          set02Item(unDelete[0]);
+          set02Item([]);
           return { idx: 0, items: [...unDelete] };
         }
       } else {
@@ -552,10 +555,15 @@ export default function Add() {
         : [...deleteData];
       console.log(param);
       putAxios("production/list/edit", param, success, fail);
+
       function success(data) {
         console.log(data);
         modalDispatch({ type: "OFF_MODAL" });
         searchHandler();
+        let checkedArr = document.querySelectorAll('input[type="checkbox"]:checked')
+        checkedArr=Array.from(checkedArr);
+        checkedArr.forEach(el=>el.checked=false)
+        setDisabledBtn({ state: false, class: `${listStyle["btn_abled"]}` });
       }
       function fail(data) {
         console.log(data);
