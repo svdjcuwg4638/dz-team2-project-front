@@ -250,12 +250,30 @@ function InboundEnd() {
         </div>
       </div>
       <Table headers={grid01_headers}></Table>
+      <div
+        id="mastertable-container"
+        style={{
+          maxHeight: "300px", // 원하는 높이로 설정
+          overflowY: "auto",  // 수직 스크롤만 필요한 경우 설정
+          border: "1px solid #ccc", // 테이블 주위에 경계선을 추가할 수 있습니다.
+        }}
+      >
       <MasterTable
         searchData={searchData}
         onRowClick={(boundId) => setSelectedBoundId(boundId)}
       />
+      </div>
       <Table headers={grid02_headers}></Table>
+      <div
+        id="subtable-container"
+        style={{
+          maxHeight: "200px", // 원하는 높이로 설정
+          overflowY: "auto",  // 수직 스크롤만 필요한 경우 설정
+          border: "1px solid #ccc", // 테이블 주위에 경계선을 추가할 수 있습니다.
+        }}
+      >
       <SubTable filteredDetailData={filteredDetailData} />
+      </div>
 
       {HelperScreenState && (
         <div
