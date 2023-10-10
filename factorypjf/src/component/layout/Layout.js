@@ -48,8 +48,6 @@ const Layout = ({ children }) => {
       { link: "/movement", name: "재고이동" },
       { link: "/movementsList", name: "재고이동내역" },
       { link: "/registration", name: "기초재고등록" },
-      { link: "/movement", name: "재고이동" },
-      { link: "/movementsList", name: "재고이동내역" },
     ],
   };
 
