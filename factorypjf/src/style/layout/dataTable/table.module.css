@@ -1,5 +1,6 @@
 /* table common */
 table {
+  border: none;
 }
 table th,
 td {
@@ -28,7 +29,7 @@ td:last-child {
   border-radius: 0 10px 10px 0;
 }
 input {
-  border: solid 1px var(--border-color-light);
+  border-bottom: solid 1px var(--border-color-light);
   text-align: center;
   padding: 0px;
 }
