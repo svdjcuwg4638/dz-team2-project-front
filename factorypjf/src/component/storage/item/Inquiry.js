@@ -5,6 +5,7 @@ import ListTable from "component/layout/Table/ListTableData";
 import styles from "style/storage/inquiry.module.css";
 import { ReactComponent as Arrow } from "img/rightArrow.svg";
 import SearchHelperModal from "component/common/helper/SearchHelperModal";
+import api from "redux/api";
 
 const Inquiry = () => {
   // #region table headers
@@ -138,12 +139,9 @@ const Inquiry = () => {
       };
 
       console.log("params", params);
-      const response = await axios.get(
-        "http://localhost:9091/inventory/searchTable",
-        {
-          params: params,
-        }
-      );
+      const response = await api.get("/inventory/searchTable", {
+        params: params,
+      });
       const data = response.data.data;
 
       let tableItems = [];
@@ -170,9 +168,7 @@ const Inquiry = () => {
   const fetchData = async () => {
     try {
       // 스토리지 데이터 가져오기
-      const storageResponse = await axios.get(
-        `http://localhost:9091/storage/all`
-      );
+      const storageResponse = await api.get(`/storage/all`);
       const storageData = storageResponse.data.data;
       let storageTableItems = [];
       for (let i = 0; i < storageData.length; i++) {
@@ -186,9 +182,7 @@ const Inquiry = () => {
       // 로케이션 데이터 가져오기
       let locationTableItems = [];
 
-      const locationResponse = await axios.get(
-        `http://localhost:9091/location/all`
-      );
+      const locationResponse = await api.get(`/location/all`);
       const locationData = locationResponse.data.data;
       for (let i = 0; i < locationData.length; i++) {
         locationTableItems.push({
@@ -200,9 +194,7 @@ const Inquiry = () => {
       setLocationTableItems(locationTableItems);
 
       //카테고리 데이터 가져오기
-      const categoryResponse = await axios.get(
-        `http://localhost:9091/inventory/all`
-      );
+      const categoryResponse = await api.get(`/inventory/all`);
       const categoryData = categoryResponse.data.data;
       let categoryTableItems = [];
       for (let i = 0; i < categoryData.length; i++) {
@@ -228,10 +220,7 @@ const Inquiry = () => {
 
     try {
       // formData를 백엔드로 전송
-      const response = await axios.post(
-        "http://localhost:9091/inventory/searchForm",
-        formData
-      );
+      const response = await api.post("/inventory/searchForm", formData);
 
       const data = response.data.data;
 

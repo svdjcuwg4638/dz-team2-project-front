@@ -9,6 +9,9 @@ const Header = () => {
         <div>
           <img src={mainLogo} width={70} />
         </div>
+        <div className="header_right">
+          <div>김성민사원님 반갑습니다.</div>
+        </div>
       </div>
     </div>
   );

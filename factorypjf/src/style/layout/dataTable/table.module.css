@@ -3,30 +3,52 @@ table {
   border: none;
 }
 table th,
-tr,
-td,
+td {
+  border-bottom: solid 1px var(--border-color-light);
+  text-align: center;
+  padding: 0px;
+  height: 3rem;
+}
+
+/* input {
+  height: 80px;
+  line-height: 80px;
+} */
+
+th:first-child {
+  border-radius: 10px 0 0 0;
+}
+td:first-child {
+  border-radius: 10px 0 0 10px;
+}
+
+th:last-child {
+  border-radius: 0 10px 0 0;
+}
+td:last-child {
+  border-radius: 0 10px 10px 0;
+}
 input {
   border-bottom: solid 1px var(--border-color-light);
   text-align: center;
   padding: 0px;
 }
 table th {
-  border-bottom: 1px solid var(--border-color-light);
+  /* border-bottom: 1px solid #4473bf; */
 }
-td > input {
+td>input{
   width: 100%;
-  border: none;
+  /* height: 60%; */
   background-color: transparent;
+  border-radius: 5px;
+  border-width: 2px;
+}
+
+td > input:empty {
+  border: solid 3px white;
 }
 thead {
   background-color: #e9eef6;
-  height: 2rem;
-}
-thead th:first-child {
-  border-radius: 10px 0 0 0;
-}
-thead th:last-child {
-  border-radius: 0 10px 0 0;
 }
 
 /* table header */
@@ -69,5 +91,6 @@ thead th:last-child {
 
 /* 선택된 셀 */
 .focused-row {
-  background-color: #f5f5f5;
+  /* background-color: #f5f5f5; */
+  background-color: #b9e0fd;
 }

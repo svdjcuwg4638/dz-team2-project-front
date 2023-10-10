@@ -25,5 +25,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .add-table-focus {
-  background-color: var(--focus-row-color);
+  /* background-color: rgba(224, 224, 224, 0.363) */
+  background-color: #f9fbff;
 }

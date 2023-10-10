@@ -5,6 +5,7 @@ import Table from "component/layout/Table/Table";
 import styles from "style/storage/movementsList.module.css";
 import axios from "axios";
 import { ReactComponent as Arrow } from "img/rightArrow.svg";
+import api from "redux/api";
 export const MovementsList = () => {
   const search_outbound_headers = [
     { text: "출고창고", value: "storage", helper: true },
@@ -60,21 +61,17 @@ export const MovementsList = () => {
         emp_id: searchEtcData["empCode"],
         item_code: searchEtcData["itemCode"],
       };
-      const response = await axios.get(
-        `http://localhost:9091/inventory/movement/search`,
-        {
-          params: {
-            page: page,
-            pageSize,
-            ...formDatas, // Include search parameters if provided
-          },
-        }
-      );
+      const response = await api.get(`inventory/movement/search`, {
+        params: {
+          page: page,
+          pageSize,
+          ...formDatas, // Include search parameters if provided
+        },
+      });
       console.log("page", "pageSize", pageSize, "response", response);
-      const countresponse = await axios.get(
-        "http://localhost:9091/inventory/movement/totalcount",
-        { params: formDatas }
-      );
+      const countresponse = await api.get("/inventory/movement/totalcount", {
+        params: formDatas,
+      });
       setTotalPages(Math.ceil(countresponse.data.data / pageSize));
       console.log(countresponse.data.data, totalPages);
       setTableItems(response.data.data);

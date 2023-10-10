@@ -20,8 +20,8 @@ function HelperOverlay({ modalState,onSubmit }) {
     console.log(modalState);
   });
 
-  const submitHandler=()=>{
-    onSubmit();
+  const submitHandler=(type)=>{
+    onSubmit(type);
   }
 
   return (
@@ -56,8 +56,8 @@ function HelperOverlay({ modalState,onSubmit }) {
         ))}
       </div>
 
-      <button>취소</button>
-      <button onClick={submitHandler}>확인</button>
+      <button onClick={()=>{submitHandler('cancel')}}>취소</button>
+      <button onClick={()=>{submitHandler('save')}}>확인</button>
     </div>
   );
 }

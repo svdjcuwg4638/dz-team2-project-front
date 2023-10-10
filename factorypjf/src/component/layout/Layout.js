@@ -22,19 +22,18 @@ const Layout = ({ children }) => {
 
   const subMenu = {
     production: [
-      { link: "", name: "생산등록" },
+      { link: "/add", name: "생산등록" },
       { link: "/list", name: "생산내역조회" },
       { link: "/line", name: "생산라인관리" },
     ],
     inbound: [
       { link: "", name: "입고예정" },
-      { link: "/ing", name: "입고중" },
-      { link: "/after", name: "입고완료" },
+      { link: "/ongoing", name: "입고등록" },
+      { link: "/end", name: "입고현황" },
     ],
     outbound: [
       { link: "", name: "출고예정" },
-      { link: "/ing", name: "출고중" },
-      { link: "/after", name: "출고완료" },
+      { link: "/end", name: "출고현황" },
     ],
     management: [
       { link: "/item", name: "품목관리" },
@@ -49,6 +48,8 @@ const Layout = ({ children }) => {
       { link: "/movement", name: "재고이동" },
       { link: "/movementsList", name: "재고이동내역" },
       { link: "/registration", name: "기초재고등록" },
+      { link: "/movement", name: "재고이동" },
+      { link: "/movementsList", name: "재고이동내역" },
     ],
   };
 

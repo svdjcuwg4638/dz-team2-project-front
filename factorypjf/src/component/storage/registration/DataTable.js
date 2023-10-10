@@ -3,6 +3,7 @@ import HelperModal from "component/common/helper/HelperModal";
 import { useEffect, useReducer, useState } from "react";
 import tableStyle from "style/layout/dataTable/table.module.css";
 import styles from ".././../../style/storage/registration.module.css";
+import api from "redux/api";
 
 const DataTable = ({ headers, Eitems, items, setItems, setErrorCount }) => {
   const HELPER_KEY = 113;
@@ -26,19 +27,14 @@ const DataTable = ({ headers, Eitems, items, setItems, setErrorCount }) => {
   // 데이터 로드
   const dataloadFn = async () => {
     try {
-      const storageData = await axios.post(
-        "http://localhost:9091/common/help",
-        {
-          searchOption: "0",
-          keyword: "",
-          codeType: "storage",
-        }
-      );
+      const storageData = await api.post("/common/help", {
+        searchOption: "0",
+        keyword: "",
+        codeType: "storage",
+      });
 
-      const locationData = await axios.get(
-        "http://localhost:9091/location/all"
-      );
-      const itemData = await axios.get("http://localhost:9091/item/all");
+      const locationData = await api.get("/location/all");
+      const itemData = await axios.get("/item/all");
       setStorageData(storageData.data.data);
       setLocationData(locationData.data.data);
       setItemData(itemData.data.data);
