@@ -3,13 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-<<<<<<< HEAD
     "@fortawesome/free-brands-svg-icons": "^6.4.2",
     "@fortawesome/free-regular-svg-icons": "^6.4.2",
     "@reduxjs/toolkit": "^1.9.5",
-=======
     "@reduxjs/toolkit": "^1.9.7",
->>>>>>> 55b3ad4a81e8230e1109e4150324c1ee2abda58a
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",

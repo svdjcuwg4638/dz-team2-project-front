@@ -3,7 +3,7 @@ table {
   border: none;
 }
 table th,
-td {
+.tbl_body_data td {
   border-bottom: solid 1px var(--border-color-light);
   text-align: center;
   padding: 0px;

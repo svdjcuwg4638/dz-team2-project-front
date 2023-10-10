@@ -5,19 +5,24 @@
     position:relative;
 }
 .sub-menu-name{
-    font-size: 20px;
+    font-size: 17px;
+    font-weight: bold;
+    margin-left: 5px;
     
 }
-.sub-menu-name::before{
+/* .sub-menu-name::before{
     content:'';
     border:2px solid var(--main-color)
-}
+} */
 
 /* table */
 .data-table{
     border: 1px solid #B9B9B9;
 }
 .grid01{
+    height: 40%;
+}
+.grid02{
     height: 40%;
 }
 

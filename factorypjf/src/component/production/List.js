@@ -645,14 +645,14 @@ export default function Add() {
             ></ListTd>
           </Table>
         </div>
-        <div className={productionClasses["product_btn-wrap"]}>
-          <button
+        <div className="wrap-btn">
+          <button class="btn_delete"
             className={productionClasses["product_btn_delete"]}
             onClick={deleteHandler}
           >
             삭제
           </button>
-          <button
+          <button class="btn_save"
             className={disabledBtn.class}
             onClick={saveHandler}
             disabled={disabledBtn.state}

@@ -5,7 +5,7 @@ import Table from "component/layout/Table/Table";
 import HelperModal from "component/common/helper/HelperModal";
 import SearchHelperModal from "component/common/helper/SearchHelperModal";
 
-import productionListClasses from "style/production/list.module.css";
+import lineStyle from "style/production/line.module.css";
 import productionClasses from "style/production/production.module.css";
 import { getAxios, postAxios } from "function/axiosFuction";
 import { snakeToCamel } from "function/commonFunction";
@@ -160,8 +160,8 @@ export default function Line() {
 
   return (
     <div>
-      <p className={productionClasses["sub-menu-name"]}>생산라인관리</p>
-      <div className={productionClasses.grid01}>
+      {/* <p className={productionClasses["sub-menu-name"]}>생산라인관리</p> */}
+      <div className={lineStyle.grid01}>
         <Table headers={header}>
           <AddTd
             isBtn={true}
@@ -175,15 +175,15 @@ export default function Line() {
           ></AddTd>
         </Table>
       </div>
-      <div className={productionClasses["product_btn-wrap"]}>
+      <div className="wrap-btn">
         <button
-          className={productionClasses["product_btn_delete"]}
+          className="btn_delete"
           onClick={deleteHandler}
         >
           삭제
         </button>
         <button
-          className={productionClasses["product_btn_save"]}
+          className="btn_save"
           onClick={saveHandler}
         >
           저장
