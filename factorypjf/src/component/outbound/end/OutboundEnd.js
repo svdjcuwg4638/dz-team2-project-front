@@ -101,7 +101,7 @@ function OutboundEnd() {
       width: "9%",
       gridTrigger: true,
     },
-    { text: "입고일", value: "itemName", width: "9%" },
+    { text: "출고일", value: "itemName", width: "9%" },
   ];
   const grid02_headers = [
     { text: "품목코드", value: "item_code", width: "6%" },
@@ -111,7 +111,7 @@ function OutboundEnd() {
     { text: "총액", value: "tot_amount", width: "6%" },
     { text: "창고", value: "storage_code", width: "4%" },
     { text: "장소", value: "location_code", width: "4%" },
-    { text: "입고일", value: "detail_date", width: "10%" },
+    { text: "품목출고일", value: "detail_date", width: "10%" },
     { text: "비고", value: "description", width: "10%" },
   ];
   const handleMasterSearch = async () => {
@@ -174,8 +174,7 @@ function OutboundEnd() {
         <div>
           <select onChange={handleBoundTypeChange}>
           <option value="" disabled selected hidden></option>
-            <option value="판매">판매</option>
-            <option value="반품">반품</option>
+            <option value="판매">판매</option>  
             <option value="유상사급출고">유상사급출고</option>
             <option value="기타출고">기타출고</option>
           </select>

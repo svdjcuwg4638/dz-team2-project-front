@@ -27,12 +27,12 @@ const Layout = ({ children }) => {
       { link: "/line", name: "생산라인관리" },
     ],
     inbound: [
-      { link: "", name: "입고예정" },
+      { link: "/start", name: "입고예정" },
       { link: "/ongoing", name: "입고등록" },
       { link: "/end", name: "입고현황" },
     ],
     outbound: [
-      { link: "", name: "출고예정" },
+      { link: "/start", name: "출고예정" },
       { link: "/end", name: "출고현황" },
     ],
     management: [
