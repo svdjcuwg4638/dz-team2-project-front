@@ -94,6 +94,10 @@ textarea {
 .button{
   cursor: pointer;
   background-color: #c1d3f0;
+  border: 1px solid #d9d9d9 ;
+  background: rgba(217, 217, 217, 0);
+  box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 7px;
 }
 
 .tap_wrap > div {
@@ -112,10 +116,6 @@ textarea {
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-}
-
-.button:hover {
-  border: 4px solid #dadada;
 }
 
 .tap_wrap > div > * {
@@ -266,10 +266,11 @@ td {
 
 .tab_add_button_wrap {
   width: 30px;
-  background-color: #dadada !important;
+  background-color: #fff !important;
   display: flex;
   justify-content: center;
   align-items: center;
+  border: none;
 }
 
 .tab_add_button {
@@ -277,7 +278,7 @@ td {
 }
 
 .tab_add_button_wrap:hover {
-  background-color: #fff !important;
+  background-color: rgb(245, 245, 245) !important;
 }
 .tab_add_button_wrap:hover .tab_add_button {
   display: flex;

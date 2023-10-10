@@ -296,7 +296,7 @@ const Layout = ({ children }) => {
                   </div>
                 ))}
                 <div className="tab_add_button_wrap" style={{ width: "30px" }}>
-                  <button className="tab_add_button" onClick={() => addTab()}>
+                  <button className="tab_add_button" style={{ margin: '10px'}} onClick={() => addTab()}>
                     +
                   </button>
                 </div>

@@ -104,7 +104,7 @@
 
 .cbody{
   display: block;
-  height:  34vh;
+  height:  41vh;
   overflow: scroll;
   box-sizing: unset;
 }
@@ -118,4 +118,9 @@
 .detail_button_wrap button{
   margin: 0 10px;
   background-color: #4473BF;
+}
+
+.common_help_table tbody tr:hover{
+  background-color: #dadada;
+  cursor: pointer;
 }
