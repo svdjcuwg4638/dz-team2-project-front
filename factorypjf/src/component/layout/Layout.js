@@ -207,14 +207,13 @@ const Layout = ({ children }) => {
                     onClick={() => handleTabClick(tab)}
                     style={{
                       backgroundColor: tab == currentTab ? "#5390f0" : "#fff",
-                      width: "200px",
                     }}
                   >
                     {tab == currentTab && (
                       <>
                         <div
                           style={{
-                            margin: "0px 10px",
+                            'margin-top': "0px",
                             display: "flex",
                             alignItems: "center",
                           }}
@@ -325,7 +324,7 @@ const Layout = ({ children }) => {
                   }}
                 />
                 <BsBookmarkCheckFill
-                  size={45}
+                  size={35}
                   color="#5390f0"
                   onClick={() => addBookMark()}
                   style={{

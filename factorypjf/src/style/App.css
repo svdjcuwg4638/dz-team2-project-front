@@ -219,6 +219,8 @@ td {
 }
 .tab_wrap > div > * {
   line-height: 2;
+  margin-top: 3px;
+
 }
 .tab_wrap {
   display: flex;
@@ -234,13 +236,15 @@ td {
   /* max-height: 32px; */
   display: flex;
   border-radius: 10px;
+  font-size: 14px;
 }
 .tab_sub_wrap{
   background-color: #fff;
   border: 1px solid #b9b9b9;
-  width: 50px;
-  height: 30px;
+  width: 120px;
+  height: 35px;
   box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+  justify-content: space-around;
 }
 .tab_wrap>div>svg{
   width: 20px;
