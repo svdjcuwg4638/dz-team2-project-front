@@ -60,7 +60,7 @@ export default function Line() {
       e.target.readOnly=false;
     }
   };
-  const editHandler = (e,tableType,coordinate) => {
+  const editHandler = (e,tableType,colInfo, coordinate) => {
     const copyItem=JSON.parse(JSON.stringify(item))
     copyItem[coordinate.row].state='edit';
     setItem([...copyItem])

@@ -116,12 +116,12 @@ export default function AddTableData({
       //모달 켜기
       onModalHanlder(colInfo.value, colInfo.text);
       if (editHandler) editHandler(e, "add", coordinate);
-    } else if (e.which === 8 || (e.which === CLEAN_KEY && colInfo.helper)) {
+    } else if (e.which === CLEAN_KEY && colInfo.helper) {
       e.preventDefault();
       setCurrentCol({ ...coordinate });
       let copyItems = [...tableItems];
-      copyItems[currentCol.row] = {
-        ...copyItems[currentCol.row],
+      copyItems[coordinate.row] = {
+        ...copyItems[coordinate.row],
         [colInfo.value]: "",
         [`${colInfo.value}Code`]: "",
       };
@@ -138,7 +138,7 @@ export default function AddTableData({
       setTableItems([...copyItem])
       console.log(tableItems)
     }else{
-      if (editHandler) editHandler(e,'add',coordinate);
+      if (editHandler) editHandler(e,'add',colInfo, coordinate);
     }
   };
 

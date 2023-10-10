@@ -1,4 +1,10 @@
-import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import "style/App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import "style/Table.css";
@@ -29,8 +35,8 @@ function App() {
 
   const navi = useNavigate();
 
-  if(location.pathname == "/"){
-    navi("/1/")
+  if (location.pathname == "/") {
+    navi("/1/");
   }
   useEffect(() => {
     setCurrentPage(location.pathname);
@@ -43,19 +49,18 @@ function App() {
       <Routes>
         <Route path="/:tabId/" element={<Main />} />
 
-        <Route path="/:tabId/storage/" element={<StorageRoutes />}>
-          <Route path="" element={<StorageInquiry />} />
+        <Route path="/:tabId/storage" element={<StorageRoutes />}>
+          <Route index path="list" element={<StorageInquiry />} />
           <Route path="movement" element={<Movement />} />
           <Route path="movementsList" element={<MovementsList />} />
           <Route path="registration" element={<Registration />} />
         </Route>
 
-        <Route path="/production/*" element={<ProductionRoutes />} />
+        <Route path="/:tabId/production/*" element={<ProductionRoutes />} />
 
-        <Route path="/inbound/*" element={<InboundRoutes/>}/>
-        
-        <Route path="/outbound/*" element={<OutboundRoutes/>}/>
-
+        <Route path="/:tabId/inbound/*" element={<InboundRoutes/>}/>
+        <Route path="/:tabId/outbound/*" element={<OutboundRoutes/>}/>
+          
         <Route path="/:tabId/management" element={<Management />}>
           <Route index path="item" element={<Item />} />
           <Route path="storage" element={<Storage />} />

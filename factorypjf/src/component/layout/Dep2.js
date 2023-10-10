@@ -19,6 +19,37 @@ const Dep2 = ({ bookMarkList,currentTab,subMenu }) => {
     (state) => state.currentMenu.currentMenuName
   );
 
+  // const subMenu = {
+  //   production: [
+  //     { link: "/line", name: "생산라인관리" },
+  //     { link: "/add", name: "생산등록" },
+  //     { link: "/list", name: "생산내역조회" },
+  //   ],
+  //   inbound: [
+  //     { link: "", name: "입고예정" },
+  //     { link: "/ongoing", name: "입고등록" },
+  //     { link: "/end", name: "입고현황" },
+  //   ],
+  //   outbound: [
+  //     { link: "", name: "출고예정" },
+  //     { link: "/end", name: "출고현황" },
+  //   ],
+  //   management: [
+  //     { link: "/item", name: "품목관리" },
+  //     { link: "/relation", name: "소모자재관리" },
+  //     { link: "/unitprice", name: "단가관리" },
+  //     { link: "/storage", name: "창고관리" },
+  //     { link: "/partner", name: "거래처관리" },
+  //     { link: "/code", name: "공통코드관리" },
+  //   ],
+  //   storage: [
+  //     { link: "/list", name: "재고조회" },
+  //     { link: "/movement", name: "재고이동" },
+  //     { link: "/movementsList", name: "재고이동내역" },
+  //     { link: "/registration", name: "기초재고등록" },
+  //   ],
+  // };
+
   function findMenuNameByUrl(url) {
     for (let menuKey in subMenu) {
       for (let menuItem of subMenu[menuKey]) {
@@ -61,7 +92,7 @@ const Dep2 = ({ bookMarkList,currentTab,subMenu }) => {
       <div className="menu1">
         <div>
           <div className="menu_title">
-            <div>
+            {/* <div>
               <LuFactory
                 size={40}
                 color="#fff"
@@ -87,7 +118,7 @@ const Dep2 = ({ bookMarkList,currentTab,subMenu }) => {
                 color="#fff"
                 style={{ display: currentMenu == "management" ? "" : "none" }}
               />
-            </div>
+            </div> */}
             <div>{currentMenuName}</div>
           </div>
           <div className="menu_sub_wrap">
@@ -103,9 +134,9 @@ const Dep2 = ({ bookMarkList,currentTab,subMenu }) => {
       </div>
       <div className="menu2">
         <div className="menu_title">
-          <div>
+          {/* <div>
             <BsFillBookmarkFill size={25} color="#fff" />
-          </div>
+          </div> */}
           <div>즐겨찾기</div>
         </div>
         <div className="menu_sub_wrap">

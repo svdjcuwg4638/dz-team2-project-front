@@ -8,7 +8,7 @@ import ProductionList from 'component/production/List'
 export default function ProductionRoutes() {
   return (
     <Routes>
-      <Route  path="" index element={<ProductionAdd /> } />
+      <Route  path="add" index element={<ProductionAdd /> } />
       <Route  path="line" element={<ProductionLine />} />
       <Route  path="list" element={<ProductionList />} />
     </Routes>
