@@ -101,7 +101,7 @@ const ItemList = ({
       <div>
         <div className="ctable">
           <div className="chead">
-            <div className="ctr item_row">
+            <div className="ctr item_row" style={{border:"none"}}>
               <div></div>
               <div>품목코드</div>
               <div>품목이름</div>
