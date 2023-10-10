@@ -8,7 +8,32 @@ import DetailModal from "./Modal"; // 수정된 부분
 import { storageAction } from "redux/actions/management/storageAction";
 import api from "redux/api";
 
+const rowHoverStyle = {
+  backgroundColor: "#f0f0f0", // 원하는 배경색으로 변경하세요.
+};
+
 function InboundOngoing() {
+
+  const [hovered, setHovered] = useState(false); // 마우스 호버 상태를 저장하기 위한 상태 변수
+
+  // 마우스가 행 위로 올라갔을 때 호출되는 이벤트 핸들러
+  const handleMouseEnter = (boundId) => {
+    setHovered(boundId);
+  };
+
+  // 마우스가 행 위에서 벗어났을 때 호출되는 이벤트 핸들러
+  const handleMouseLeave = () => {
+    setHovered(null);
+  };
+
+  const grid01_headers = [
+    { text: "문서번호", value: "bound_no", width: "3%" },
+    { text: "유형", value: "bound_category", width: "9%" },
+    { text: "거래처", value: "partner_code", width: "9%" },
+    { text: "입고예정일", value: "bound_date", width: "9%" },
+    { text: "창고/장소", value: "", width: "9%", helper: true },
+  ];
+  
   const dispatch = useDispatch();
 
   const { inboundAll, inboundDetailAll, loading } = useSelector(
@@ -85,19 +110,13 @@ function InboundOngoing() {
 
       if (response.status === 200 || response.status === 201) {
         console.log("Success");
+        alert('입고처리 완료');
         window.location.reload();
       }
     } catch (error) {
       console.log("Error : ", error);
     }
   };
-  const grid01_headers = [
-    { text: "문서번호", value: "bound_no", width: "3%" },
-    { text: "유형", value: "bound_category", width: "9%" },
-    { text: "거래처", value: "partner_code", width: "9%" },
-    { text: "입고예정일", value: "bound_date", width: "9%" },
-    { text: "창고/장소", value: "", width: "9%", helper: true },
-  ];
 
   return (
     <div className={inboundClasses.wrap}>
@@ -106,7 +125,12 @@ function InboundOngoing() {
       <tbody>
         {matchingMasters && matchingMasters.length > 0 ? (
           matchingMasters.map((data, index) => (
-            <tr key={index}>
+            <tr
+              key={index}
+              onMouseEnter={() => handleMouseEnter(data.bound_id)} // 개별 tr에 대한 이벤트 핸들러 설정
+              onMouseLeave={handleMouseLeave} // 공통 이벤트 핸들러
+              style={hovered === data.bound_id ? rowHoverStyle : {}} // hover 상태에 따라 스타일 적용
+            >
               {grid01_headers.map((header) => {
                 if (!header.value) {
                   return (

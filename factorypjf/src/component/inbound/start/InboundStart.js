@@ -59,8 +59,8 @@ const InBoundStart = () => {
   };
   //#region 헤더정의
   const grid01_headers = [
-    { text: "선택", value: "select", width: "2%" },
-    { text: "문서번호", value: "boundno", width: "3%" },
+    { text: "선택", value: "select", width: "1.8%" },
+    { text: "문서번호", value: "boundno", width: "6%" },
     { text: "유형", value: "type", width: "3%" },
     {
       text: "거래처",
@@ -180,8 +180,10 @@ const InBoundStart = () => {
         setCheckedSubBoundIds={setCheckedSubBoundIds}
         deletedIndex={deletedIndex}
       />
-      <button onClick={handleDeleteCheckedRows}>삭제</button>
-      <button onClick={() => handleSave()}>저장</button>
+      <div style={{ display: "flex", justifyContent: "flex-end", marginRight: "10px", marginBottom: "10px" }}>
+        <button onClick={handleDeleteCheckedRows}>삭제</button>
+        <button onClick={() => handleSave()}>저장</button>
+      </div>
     </div>
   );
 };

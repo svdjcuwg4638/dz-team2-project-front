@@ -108,7 +108,7 @@ function InboundEnd() {
     { text: "총액", value: "tot_amount", width: "6%" },
     { text: "창고", value: "storage_code", width: "4%" },
     { text: "장소", value: "location_code", width: "4%" },
-    { text: "입고일", value: "detail_date", width: "10%" },
+    { text: "품목입고일", value: "detail_date", width: "10%" },
     { text: "비고", value: "description", width: "10%" },
   ];
   const handleMasterSearch = async () => {
@@ -171,7 +171,6 @@ function InboundEnd() {
           <select onChange={handleBoundTypeChange}>
             <option value="" disabled selected hidden></option>
             <option value="구매">구매</option>
-            <option value="반품">반품</option>
             <option value="재작업입고">재작업입고</option>
             <option value="유상사급입고">유상사급입고</option>
             <option value="기타입고">기타입고</option>
