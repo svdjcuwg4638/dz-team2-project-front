@@ -8,23 +8,22 @@
     color: var(--font-color);
     font-weight: bold;
 } */
-td{
-    padding:0;
-    background-color: transparent;
+td {
+  padding: 0;
+  background-color: transparent;
 }
 
-.input_date{
-    max-width: 90px;
-    font-size: 14px;
+.input_date {
+  max-width: 90px;
+  font-size: 14px;
 }
 
-Hide Calendar Icon In Chrome
-input[type="date"]::-webkit-inner-spin-button,
+Hide Calendar Icon In Chrome input[type="date"]::-webkit-inner-spin-button,
 input[type="date"]::-webkit-calendar-picker-indicator {
-    display: none;
-    -webkit-appearance: none;
+  display: none;
+  -webkit-appearance: none;
 }
 
-.add-table-focus{
-    background-color: rgba(224, 224, 224, 0.363)
+.add-table-focus {
+  background-color: var(--focus-row-color);
 }

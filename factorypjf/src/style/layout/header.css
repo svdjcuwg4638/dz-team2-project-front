@@ -1,22 +1,21 @@
-.header_wrap{
-  background-color: #4473BF;
+.header_wrap {
+  border-bottom: 1px solid #b9b9b9;
+  background: #fff;
   height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.header_right{
+.header_right {
   right: 21px;
   position: absolute;
 }
 
-.header_right > div{
+.header_right > div {
   margin: 25px 0;
 }
 
-.header_right > div:nth-child(1){
+.header_right > div:nth-child(1) {
   padding-right: 25px;
   color: #fff;
 }
-
-
