@@ -1,8 +1,8 @@
-/* .container {
-    border: 3px red solid;
-}
-
-.master{
-    width: 103%;
-    border: 3px purple solid;
-} */
+.master-table-container {
+    max-height: 300px; /* 원하는 높이로 설정 */
+    overflow-y: auto; /* 세로 스크롤을 사용하려면 auto 또는 scroll로 설정 */
+  }
+  
+  .master-table-container.scrollable {
+    max-height: none; /* 스크롤이 나타날 때 높이 제한 해제 */
+  }
