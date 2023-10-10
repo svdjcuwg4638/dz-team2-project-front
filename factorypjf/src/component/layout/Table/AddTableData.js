@@ -146,13 +146,14 @@ export default function AddTableData({
     e.preventDefault();
     //이벤트가 tr>td>input에서 발생하기 때문에 부모의 부모 노드 선택
     let row = e.target.parentNode.parentNode;
+    
     if(e.type==='mouseover'){
-      row.className = addStyle["add-table-focus"];
+      console.log(addStyle[" add-table-focus"])
+      row.className += row.className?` ${addStyle["add-table-focus"]}`:`${addStyle["add-table-focus"]}`;
       setOverRow(row);
     }
-    if(e.type==='mouseout'&&focusRow!==overRow){
-     
-      overRow.className = addStyle[""];
+    if(e.type==='mouseout'){
+      overRow.className = overRow.className.replace(`${addStyle["add-table-focus"]}`,'');
     }
   }
 
@@ -200,9 +201,9 @@ export default function AddTableData({
   const selectRow = (e, idx) => {
     //클릭 이벤트가 tr>td>input에서 발생하기 때문에 부모의 부모 노드 선택
     let row = e.target.parentNode.parentNode;
-    row.className = addStyle["add-table-focus"];
+    row.className += row.className?` ${addStyle["add-table-focus"]}`:`${addStyle["add-table-focus"]}`;
     if (focusRow && focusRow !== row) {
-      focusRow.className = addStyle[""];
+      focusRow.className = focusRow.className.replace(`${addStyle["add-table-focus"]}`,'');
     }
     setFocusRow(row);
 
