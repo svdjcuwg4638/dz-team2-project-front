@@ -61,7 +61,7 @@ const Dep2 = ({ bookMarkList,currentTab,subMenu }) => {
       <div className="menu1">
         <div>
           <div className="menu_title">
-            <div>
+            {/* <div>
               <LuFactory
                 size={40}
                 color="#fff"
@@ -87,7 +87,7 @@ const Dep2 = ({ bookMarkList,currentTab,subMenu }) => {
                 color="#fff"
                 style={{ display: currentMenu == "management" ? "" : "none" }}
               />
-            </div>
+            </div> */}
             <div>{currentMenuName}</div>
           </div>
           <div className="menu_sub_wrap">
@@ -103,9 +103,9 @@ const Dep2 = ({ bookMarkList,currentTab,subMenu }) => {
       </div>
       <div className="menu2">
         <div className="menu_title">
-          <div>
+          {/* <div>
             <BsFillBookmarkFill size={25} color="#fff" />
-          </div>
+          </div> */}
           <div>즐겨찾기</div>
         </div>
         <div className="menu_sub_wrap">

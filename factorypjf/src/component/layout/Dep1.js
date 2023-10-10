@@ -6,12 +6,12 @@ import "style/layout/dep1.css";
 import { BsInfoCircle } from "react-icons/bs";
 import { MdOutlineInventory2 } from "react-icons/md";
 import { LuFactory } from "react-icons/lu";
-import { FiMinusSquare,FiPlusSquare } from "react-icons/fi";
+import { FiMinusSquare, FiPlusSquare } from "react-icons/fi";
 import { menuActions } from "../../redux/reducers/menu";
 
 const Dep1 = () => {
   const dispatch = useDispatch();
-  
+
   const productionHandler = () => {
     dispatch(menuActions.production());
   };
@@ -46,7 +46,7 @@ const Dep1 = () => {
             <FiMinusSquare size={25} color="#fff" />
           </div>
         </Link>
-        <Link to="1/storage" onClick={storageHandler}>
+        <Link to="1/storage/list" onClick={storageHandler}>
           <div title="재고관리">
             <MdOutlineInventory2 size={25} color="#fff" />
           </div>

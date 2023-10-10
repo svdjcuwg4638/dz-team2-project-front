@@ -45,7 +45,9 @@ const Layout = ({ children }) => {
       { link: "/code", name: "공통코드관리" },
     ],
     storage: [
-      { link: "", name: "재고조회" },
+      { link: "/list", name: "재고조회" },
+      { link: "/movement", name: "재고이동" },
+      { link: "/movementsList", name: "재고이동내역" },
       { link: "/registration", name: "기초재고등록" },
     ],
   };
@@ -69,7 +71,7 @@ const Layout = ({ children }) => {
 
   const addBookMark = async () => {
     const currentUrl = sessionStorage.getItem("current_page");
-  const modifiedUrl = '/' + currentUrl.split('/').slice(2).join('/');
+    const modifiedUrl = "/" + currentUrl.split("/").slice(2).join("/");
 
     const submitData = {
       company_id: 1,
@@ -111,16 +113,16 @@ const Layout = ({ children }) => {
     navi(newTab + "/"); // 초기 URL로 이동
   };
 
-const removeTab = (tabToRemove) => {
+  const removeTab = (tabToRemove) => {
     const newTabs = tabs.filter((tab) => tab !== tabToRemove);
     setTabs(newTabs);
 
-    if(currentTab == tabToRemove){
-        const firstTab = newTabs[0]; 
-        const url = sessionStorage.getItem(`tab_${firstTab}_url`);
-        location.href = url
+    if (currentTab == tabToRemove) {
+      const firstTab = newTabs[0];
+      const url = sessionStorage.getItem(`tab_${firstTab}_url`);
+      location.href = url;
     }
-};
+  };
 
   // 탭을 클릭했을 때
   const handleTabClick = (tab) => {
@@ -217,7 +219,9 @@ const removeTab = (tabToRemove) => {
                           }}
                         >
                           {getCurrentIcon(
-                            sessionStorage.getItem("current_page")?.split("/")[2]
+                            sessionStorage
+                              .getItem("current_page")
+                              ?.split("/")[2]
                           )}
                         </div>
                         <div style={{ color: "#fff" }}>
@@ -278,9 +282,10 @@ const removeTab = (tabToRemove) => {
                             display: tabs.length > 1 ? "" : "none",
                           }}
                           className="tab-x-button"
-                          onClick={(e) =>{ 
+                          onClick={(e) => {
                             e.stopPropagation();
-                            removeTab(tab)}}
+                            removeTab(tab);
+                          }}
                         >
                           <TiDeleteOutline
                             size={20}
@@ -291,18 +296,28 @@ const removeTab = (tabToRemove) => {
                     )}
                   </div>
                 ))}
-                <div className="tab_add_button_wrap" style={{width:"30px"}}>
-                  <button className="tab_add_button" onClick={() => addTab()}>+</button>
+                <div className="tab_add_button_wrap" style={{ width: "30px" }}>
+                  <button className="tab_add_button" onClick={() => addTab()}>
+                    +
+                  </button>
                 </div>
               </div>
-              <div style={{display:location.pathname.split('/').length <= 3 ? "none" : ""}}>
+              <div
+                style={{
+                  display:
+                    location.pathname.split("/").length <= 3 ? "none" : "",
+                }}
+              >
                 <BsBookmarkCheck
                   size={45}
                   color="#5390f0"
                   onClick={() => addBookMark()}
                   style={{
-                    display:  bookMarkList?.find(
-                      (data) => data.pageUrl =='/'+ location.pathname.split('/').slice(2).join('/').trim()
+                    display: bookMarkList?.find(
+                      (data) =>
+                        data.pageUrl ==
+                        "/" +
+                          location.pathname.split("/").slice(2).join("/").trim()
                     )
                       ? "none"
                       : "",
@@ -314,7 +329,10 @@ const removeTab = (tabToRemove) => {
                   onClick={() => addBookMark()}
                   style={{
                     display: bookMarkList?.find(
-                      (data) => data.pageUrl =='/' + location.pathname.split('/').slice(2).join('/').trim()
+                      (data) =>
+                        data.pageUrl ==
+                        "/" +
+                          location.pathname.split("/").slice(2).join("/").trim()
                     )
                       ? ""
                       : "none",
