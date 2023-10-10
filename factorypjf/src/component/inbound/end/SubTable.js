@@ -1,31 +1,69 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { storageAction } from "redux/actions/management/storageAction";
+
+const rowHoverStyle = {
+  backgroundColor: "#f0f0f0", // 원하는 배경색으로 변경하세요.
+};
 
 function SubTable({ filteredDetailData }) {
-    console.log('디테일필터데이터는',filteredDetailData)
-    return (
-        <table>
-            <tbody>
-                {filteredDetailData.map((filteredDetailData, index) => (
-                    <tr key={index}>
-                        <td>{filteredDetailData.item_code}</td>
-                        <td>{filteredDetailData.item_name}</td>
-                        <td>{filteredDetailData.amount}</td>
-                        <td>{filteredDetailData.unit_price}</td>
-                        <td>{filteredDetailData.storage_code}</td>
-                        <td>{filteredDetailData.location_code}</td>
-                        <td>{filteredDetailData.detail_date}</td>
-                        <td>{filteredDetailData.description}</td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
-    );
+  const dispatch = useDispatch();
+
+  const { storageAll, locationAll } = useSelector((state) => state.storage);
+  const storageAll1 = storageAll.data || []; // 데이터가 없을 경우 빈 배열을 기본값으로 설정
+  const locationAll1 = locationAll.data || [];
+
+  useEffect(() => {
+    dispatch(storageAction.getstorageAll());
+  }, []);
+
+  useEffect(() => {
+    console.log('스토리지', locationAll1);
+  }, [locationAll1]);
+
+  return (
+    <table>
+      <tbody>
+        {filteredDetailData.map((detail, index) => (
+          <SubTableRow key={index} rowData={detail} storageAll={storageAll1} locationAll={locationAll1} />
+        ))}
+      </tbody>
+    </table>
+  );
 }
 
+function SubTableRow({ rowData, storageAll, locationAll }) {
+  const [hovered, setHovered] = useState(false);
 
+  const handleMouseEnter = () => {
+    setHovered(true);
+  };
 
+  const handleMouseLeave = () => {
+    setHovered(false);
+  };
 
+  // storage_code와 location_code를 storage_name과 location_name으로 변환
+  const storageName = storageAll.find(storage => storage.storage_code === rowData.storage_code)?.storage_name || rowData.storage_code;
+  const locationName = locationAll.find(location => location.location_code === rowData.location_code)?.location_name || rowData.location_code;
 
+  return (
+    <tr
+      style={hovered ? rowHoverStyle : {}}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <td>{rowData.item_code}</td>
+      <td>{rowData.item_name}</td>
+      <td>{rowData.amount}</td>
+      <td>{rowData.unit_price}</td>
+      <td>{rowData.tot_amount}</td>
+      <td>{storageName}</td>
+      <td>{locationName}</td>
+      <td>{rowData.detail_date}</td>
+      <td>{rowData.description}</td>
+    </tr>
+  );
+}
 
-
-export default SubTable
+export default SubTable;
