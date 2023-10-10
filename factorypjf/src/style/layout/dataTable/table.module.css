@@ -16,21 +16,21 @@ td {
   line-height: 80px;
 } */
 
-th:first-child {
+.tbl_container th:first-child {
   border-radius: 10px 0 0 0;
 }
-td:first-child {
-  border-radius: 10px 0 0 10px;
-}
+/* td:first-child {
+  border-radius: 0 10px 0 0;
+} */
 
-th:last-child {
+.tbl_container th:last-child {
   border-radius: 0 10px 0 0;
 }
-td:last-child {
+/* .tbl_container td:last-child {
   border-radius: 0 10px 10px 0;
-}
+} */
 input {
-  border-bottom: solid 1px var(--border-color-light);
+  /* border-bottom: solid 1px var(--border-color-light); */
   text-align: center;
   padding: 0px;
 }
@@ -44,10 +44,18 @@ td>input{
   border-radius: 5px;
   border-width: 2px;
   font-size: 14px;
+  padding-top:5px;
+}
+td input[type="text"]{
+  height: 80%;
+}
+input[type="date"]{
+  margin-bottom: 4px;
 }
 
+
 td > input:empty {
-  border: solid 3px white;
+  /* border: solid 3px white; */
 }
 thead {
   background-color: #e9eef6;

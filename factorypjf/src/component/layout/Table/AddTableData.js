@@ -255,6 +255,7 @@ export default function AddTableData({
                       keyUpHandler(e, header, { row: idx, col: headerIdx });
                     }}
                     defaultValue={item ? item[header.value] : ""}
+                    type="text"
                   ></input>
                 ) : header.value === "date" ? (
                   <input
@@ -276,6 +277,7 @@ export default function AddTableData({
                       keyUpHandler(e, header, { row: idx, col: headerIdx });
                     }}
                     defaultValue={item ? item[header.value] : ""}
+                    type="text"
                   ></input>
                 )}
               </td>

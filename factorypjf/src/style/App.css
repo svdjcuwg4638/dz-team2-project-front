@@ -27,11 +27,11 @@ button {
   cursor: pointer; /* 버튼에 마우스 포인터 스타일을 추가합니다. */
 }
 
-input,
+/* input,
 textarea {
-  border: none; /* 입력란과 텍스트 영역의 기본 테두리를 제거합니다. */
-  outline: none; /* 입력란과 텍스트 영역의 외곽선을 제거합니다. */
-}
+  border: none; 
+  outline: none; 
+} */
 
 .wrap {
   display: flex;
@@ -120,7 +120,7 @@ textarea {
   height: 100%;
 }
 
-/* 모든 input 포커스시 태두리와 기본상태 태두리 삭제*/
+/* 모든 input 태두리와 기본상태 태두리 삭제*/
 input {
   border: 0;
   outline: none;
@@ -298,27 +298,38 @@ td {
 /* ================CSS=================== */
 /* 포커스됐을 때 input 테두리 red */
 .input_red:focus{
-  border-color: var(--red-color);
+  border:3px solid var(--red-color) !important;
   outline: none;
 }
 /* 포커스됐을 때 input 테두리 black */
 .input_black:focus{
-  border-color: grey;
+  border:2px solid var(--font-color) !important;
   outline: none;
 }
 /* 포커스됐을 때 input 테두리 blue */
 .input_blue:focus{
-  border-color: var(--main-color);
+  border:3px solid var(--main-color) !important;
   outline: none;
 }
 
+/* ===========저장 / 삭제버튼=========== */
+.wrap-btn{
+  display: flex;
+  justify-content: end;
+  margin-top:10px;
+}
 /* 삭제버튼 (빨강) */
 .btn_delete{
-  background-color: var(--red-color);
-  color: white;
-  border: none;
+  background-color: white;
+  color: var(--red-color);
+  border: 1px solid var(--red-color);
   box-shadow: 1px 1px 2px 1px grey;
   border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  width: 50px;
+  height: 30px;
+  margin: 5px;
 }
 /* 기본버튼 (파랑) */
 .btn_save{
@@ -327,9 +338,17 @@ td {
   border: none;
   box-shadow: 1px 1px 2px 1px grey;
   border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  width: 50px;
+  height: 30px;
+  margin: 5px;
+}
+.btn_save, .btn_delete{
+  padding-top:2px;
 }
 
-/* 모달 배경 */
+/* 모달 */
 .helper-modal_back-drop {
   position: fixed;
   top: 0;
@@ -344,12 +363,25 @@ td {
   position: fixed;
   left: 40%;
   top: 25%;
-  box-shadow: 1px 1px 1px grey;
-  width: 300px;
+  box-shadow: 2px 4px 10px grey;
+  width: 350px;
   height: 50%;
   border-radius: 20px;
   background-color: white;
   z-index: 100;
+  padding:15px 10px;
+  align-items: center;
+  display: flex;
+  flex-direction: column
+}
+.option-selector{
+  height: 30px;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+.helper-modal_overlay input{
+  border: 1px solid var(--font-color);
+  height: 30px;
 }
 .modal_title{
   text-align: center;
@@ -360,7 +392,7 @@ td {
   display: block;
   width: 100px;
   border-bottom: 3px solid var(--main-color);
-  margin-left: 87px;
+  
   margin-top: 5px;
 }
 .wrap-search-icon{

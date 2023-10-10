@@ -110,8 +110,10 @@ function HelperOverlay({ modalState, onSelectCode }) {
   return (
     <div className="helper-modal_overlay">
       <h4 className="modal_title">{codeName.replace('*','')} </h4>
-      <form action="submit" onSubmit={submitHandler}>
+
+      <form action="submit" onSubmit={submitHandler} className={helperStyle['modal_form']}>
         <select
+          class="option-selector"
           name="searchOption"
           defaultValue={"0"}
           onChange={selectOptionHandler}
@@ -121,18 +123,23 @@ function HelperOverlay({ modalState, onSelectCode }) {
           <option value="2">이름</option>
         </select>
         <input type="text" name="" id="keyword" />
-        <button>검색</button>
+        <button className="btn_save">검색</button>
       </form>
-      {codeData ? (
-        <HelperTable
-          headers={headers}
-          items={codeData}
-          onSelectCode={onSelectCode}
-        ></HelperTable>
-      ) : (
-        <p>해당 데이터를 찾을 수 없습니다.</p>
-      )}
-    </div>
+      <div className={helperStyle['wrap-helper__table']}>
+
+        {codeData ? (
+          <HelperTable
+            headers={headers}
+            items={codeData}
+            onSelectCode={onSelectCode}
+          ></HelperTable>
+        ) : (
+          <p style={{textAlign:"center"}}
+          
+      >해당 데이터를 찾을 수 없습니다.</p>
+        )}
+      </div>
+      </div>
   );
 }
 

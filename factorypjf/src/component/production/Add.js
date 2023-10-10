@@ -18,24 +18,24 @@ export default function List() {
   const grid01_headers = [
     { text: "선택", value: "select", width: "3%" },
     { text: "순번", value: "index", width: "3%" },
-    { text: "생산번호", value: "productionCode", width: "9%", readonly: true },
-    { text: "생산일", value: "date", width: "9%" },
+    { text: "생산번호", value: "productionCode", width: "9%", readonly: true,required:true },
+    { text: "생산일", value: "date", width: "9%",required:true },
     {
       text: "생산품",
       value: "item",
       width: "5%",
       helper: true,
-      gridTrigger: true,
+      gridTrigger: true,required:true
     },
 
-    { text: "생산팀", value: "team", width: "5%", helper: true },
-    { text: "라인", value: "line", width: "5%", helper: true },
-    { text: "수량", value: "quantity", width: "5%" },
-    { text: "창고", value: "storage", width: "5%", helper: true },
-    { text: "장소", value: "location", width: "5%", helper: true },
-    { text: "고객", value: "partner", width: "5%", helper: true },
-    { text: "담당자", value: "emp", width: "5%", helper: true },
-    { text: "소요시간", value: "leadTime", width: "5%" },
+    { text: "생산팀", value: "team", width: "5%", helper: true ,required:true},
+    { text: "라인", value: "line", width: "5%", helper: true,required:true },
+    { text: "수량", value: "quantity", width: "5%" ,required:true},
+    { text: "창고", value: "storage", width: "5%", helper: true ,required:true},
+    { text: "장소", value: "location", width: "5%", helper: true ,required:true},
+    { text: "고객", value: "partner", width: "5%", helper: true,required:true },
+    { text: "담당자", value: "emp", width: "5%", helper: true,required:true },
+    { text: "소요시간", value: "leadTime", width: "5%" ,required:true},
     { text: "작업인원", value: "workForce", width: "5%" },
 
     { text: "비고", value: "description", width: "9%" },
@@ -419,26 +419,28 @@ export default function List() {
 
   const selectRowHandler = (idx,e) => {
     //========필수항목일 경우 input 색상 변경=======
-    let inputId = e.target.id
-    let inputHeader = inputId.match(/(?<=\w_)[a-zA-z_]+/g)[0];
-    e.target.className=e.target.className.replace('input_red','')
-    e.target.className=e.target.className.replace('input_black','')
-    // e.target.className=e.target.className.replace('input_blue','')
-    
-    // e.target.className.replace(`${productionClasses["input_red"]}`,null)
-    // e.target.className.replace(`${productionClasses["input_black"]}`,null)
-    grid01_headers.map((header)=>{
-      if(inputHeader===header.value){
-        //필수항목이고 빈칸이면
-        if(header.text.includes('*')&&e.target.value===''){
-          // e.target.className= e.target.className?e.target.className+`${productionClasses[" input_red"]}`:`${productionClasses["input_red"]}`
-          e.target.className= e.target.className?e.target.className+' input_red':'input_red'
-        }else{
-          // e.target.className= e.target.className?e.target.className+`${productionClasses[" input_black"]}`:`${productionClasses["input_black"]}`
-          e.target.className= e.target.className?e.target.className+' input_black':'input_black'
+    if(e.target.type==='text'){
+      let inputId = e.target.id
+      let inputHeader = inputId.match(/(?<=\w_)[a-zA-z_]+/g)[0];
+      e.target.className=e.target.className.replace('input_red','')
+      e.target.className=e.target.className.replace('input_black','')
+      // e.target.className=e.target.className.replace('input_blue','')
+      
+      // e.target.className.replace(`${productionClasses["input_red"]}`,null)
+      // e.target.className.replace(`${productionClasses["input_black"]}`,null)
+      grid01_headers.map((header)=>{
+        if(inputHeader===header.value){
+          //필수항목이고 빈칸이면
+          if(header.required&&e.target.value===''){
+            // e.target.className= e.target.className?e.target.className+`${productionClasses[" input_red"]}`:`${productionClasses["input_red"]}`
+            e.target.className= e.target.className?e.target.className+' input_red':'input_red'
+          }else{
+            // e.target.className= e.target.className?e.target.className+`${productionClasses[" input_black"]}`:`${productionClasses["input_black"]}`
+            e.target.className= e.target.className?e.target.className+' input_black':'input_black'
+          }
         }
-      }
-    })
+      })
+    }
 
 
     //========선택 생산품에 대한 grid02 정보 출력하기========
@@ -518,7 +520,7 @@ export default function List() {
             ></ListTd>
           </Table>
         </div>
-        <div className={productionClasses["product_btn-wrap"]}>
+        <div className="wrap-btn">
           <button
             className="btn_delete"
             onClick={deleteHandler}
