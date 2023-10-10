@@ -344,7 +344,7 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
               <div style={{width:"100%"}}>
                 <div>
                   <button
-                    style={{ width: "30px", borderRadius: "5px" }}
+                    style={{ width: "30px", borderRadius: "5px", color:"#fff" }}
                     onClick={() => handleComplete()}
                   >
                     X

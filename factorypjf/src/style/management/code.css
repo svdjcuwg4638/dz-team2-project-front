@@ -16,6 +16,9 @@
 .code_wrap > div:nth-child(2) {
   width: 40%;
 }
+.code_wrap > div:nth-child(3) {
+  width: 40%;
+}
 
 .code_wrap > div:nth-child(2) tr {
   cursor: pointer;
