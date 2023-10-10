@@ -4,7 +4,23 @@ import SearchHelper from "../start/SearchHelper";
 import { useDispatch, useSelector } from "react-redux";
 import { unitPriceAction } from "redux/actions/management/unitPriceAction";
 
+const rowHoverStyle = {
+  backgroundColor: "#ffffff", // 원하는 배경색으로 변경하세요.
+};
+
 const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestSuccess,checkedSubBoundIds,setCheckedSubBoundIds, index, itemAll}) => {
+  const [hovered, setHovered] = useState(false); // 마우스 호버 상태를 저장하기 위한 상태 변수
+
+  // 마우스가 행 위로 올라갔을 때 호출되는 이벤트 핸들러
+  const handleMouseEnter = () => {
+    setHovered(true);
+  };
+
+  // 마우스가 행 위에서 벗어났을 때 호출되는 이벤트 핸들러
+  const handleMouseLeave = () => {
+    setHovered(false);
+  };
+  
   const dispatch = useDispatch();
   const { unitPriceAll } = useSelector((state) => state.unitPrice);
   useEffect(() => {
@@ -151,7 +167,14 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
 
   return (
     <>
-      <tr style={{display:masterFocus == formData["bound_id"] ? "block":"none"}}>
+      <tr
+        style={{
+          display: masterFocus === formData["bound_id"] ? "block" : "none",
+          ...hovered ? rowHoverStyle : {},
+        }}
+        onMouseEnter={handleMouseEnter} // 마우스 호버 이벤트 리스너 추가
+        onMouseLeave={handleMouseLeave} // 마우스 이탈 이벤트 리스너 추가
+      >
         <td>
           <input
               type="checkbox"

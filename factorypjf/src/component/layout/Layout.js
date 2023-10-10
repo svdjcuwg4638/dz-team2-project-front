@@ -27,12 +27,12 @@ const Layout = ({ children }) => {
       { link: "/line", name: "생산라인관리" },
     ],
     inbound: [
-      { link: "", name: "입고예정" },
+      { link: "/start", name: "입고예정" },
       { link: "/ongoing", name: "입고등록" },
       { link: "/end", name: "입고현황" },
     ],
     outbound: [
-      { link: "", name: "출고예정" },
+      { link: "/start", name: "출고예정" },
       { link: "/end", name: "출고현황" },
     ],
     management: [
@@ -48,8 +48,6 @@ const Layout = ({ children }) => {
       { link: "/movement", name: "재고이동" },
       { link: "/movementsList", name: "재고이동내역" },
       { link: "/registration", name: "기초재고등록" },
-      { link: "/movement", name: "재고이동" },
-      { link: "/movementsList", name: "재고이동내역" },
     ],
   };
 
@@ -313,7 +311,7 @@ const Layout = ({ children }) => {
                   </div>
                 ))}
                 <div className="tab_add_button_wrap" style={{ width: "30px" }}>
-                  <button className="tab_add_button" onClick={() => addTab()}>
+                  <button className="tab_add_button" style={{ margin: '10px'}} onClick={() => addTab()}>
                     +
                   </button>
                 </div>

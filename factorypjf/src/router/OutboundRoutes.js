@@ -6,7 +6,7 @@ import OutboundEnd from "component/outbound/end/OutboundEnd";
 function OutboundRoutes() {
   return (
     <Routes>
-      <Route path="" index element={<OutboundStart />} />
+      <Route path="start" index element={<OutboundStart />} />
       <Route path="end" element={<OutboundEnd />} />
     </Routes>
   );

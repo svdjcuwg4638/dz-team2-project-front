@@ -182,8 +182,10 @@ const OutBoundStart = () => {
         setCheckedSubBoundIds={setCheckedSubBoundIds}
         deletedIndex={deletedIndex}
       />
-      <button onClick={handleDeleteCheckedRows}>삭제</button>
-      <button onClick={() => handleSave()}>저장</button>
+      <div style={{ display: "flex", justifyContent: "flex-end", marginRight: "10px", marginBottom: "10px" }}>
+        <button onClick={handleDeleteCheckedRows}>삭제</button>
+        <button onClick={() => handleSave()}>저장</button>
+      </div>
     </div>
   );
 };

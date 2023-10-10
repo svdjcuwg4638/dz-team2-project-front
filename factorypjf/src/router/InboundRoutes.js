@@ -9,7 +9,7 @@ import InboundEnd from "component/inbound/end/InboundEnd";
 export default function InboundRoutes() {
   return (
     <Routes>
-      <Route path="" index element={<InboundStart />} />
+      <Route path="start" index element={<InboundStart />} />
       <Route path="ongoing" element={<InboundOngoing />} />
       <Route path="end" element={<InboundEnd />} />
     </Routes>

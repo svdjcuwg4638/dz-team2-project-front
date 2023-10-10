@@ -2,8 +2,23 @@ import React, { useEffect, useState } from "react";
 import api from "redux/api";
 import SearchHelper from "component/storage/item/SearchHelper";
 
+const rowHoverStyle = {
+  backgroundColor: "#f0f0f0", // 원하는 배경색으로 변경하세요.
+};
+
 
 const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFlag, setCheckedBoundIds,partnerAll }) => {
+  const [hovered, setHovered] = useState(false); // 마우스 호버 상태를 저장하기 위한 상태 변수
+
+  // 마우스가 행 위로 올라갔을 때 호출되는 이벤트 핸들러
+  const handleMouseEnter = () => {
+    setHovered(true);
+  };
+
+  // 마우스가 행 위에서 벗어났을 때 호출되는 이벤트 핸들러
+  const handleMouseLeave = () => {
+    setHovered(false);
+  };
   const [formData, setFormData] = useState({
     bound_id: boundId != 0 && boundId != null ? boundId : 0,
     company_id: "1",
@@ -134,7 +149,11 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
 
   return (
     <>
-    <tr onClick={() => setMaseterFocus(formData["bound_id"])}>
+    <tr onClick={() => setMaseterFocus(formData["bound_id"])}
+    style={hovered ? rowHoverStyle : {}} // 마우스 호버 상태에 따라 스타일 적용
+    onMouseEnter={handleMouseEnter} // 마우스 호버 이벤트 리스너 추가
+    onMouseLeave={handleMouseLeave} // 마우스 이탈 이벤트 리스너 추가
+    >
       <td>
         <input
           type="checkbox"
@@ -159,7 +178,6 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
       >
           <option value="" disabled selected hidden></option>
             <option value="판매">판매</option>
-            <option value="반품">반품</option>
             <option value="유상사급출고">유상사급출고</option>
             <option value="기타출고">기타출고</option>
        </select>
@@ -181,14 +199,14 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
         ></input>
       </td>
       <td>
-        <input
-          type="text"
-          pattern="\d{4}-\d{2}-\d{2}" // YYYY-MM-DD 형식 강제
-          placeholder="YYYY-MM-DD"
-          name="bound_date"
-          value={formData["bound_date"]}
-          onChange={handleDateChange}
-        ></input>
+      <input
+        type="date"
+        min="1900-01-01"
+        max="9999-12-31"
+        value={formData.bound_date} // 값을 formData.bound_date로 설정
+        name="bound_date" // name 속성을 바운드_데이트로 설정
+        onChange={handleInputChange} // 핸들러에 직접 전달
+      ></input>
       </td>
     </tr>
     {HelperScreenState && (

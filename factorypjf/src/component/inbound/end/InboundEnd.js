@@ -108,7 +108,7 @@ function InboundEnd() {
     { text: "총액", value: "tot_amount", width: "6%" },
     { text: "창고", value: "storage_code", width: "4%" },
     { text: "장소", value: "location_code", width: "4%" },
-    { text: "입고일", value: "detail_date", width: "10%" },
+    { text: "품목입고일", value: "detail_date", width: "10%" },
     { text: "비고", value: "description", width: "10%" },
   ];
   const handleMasterSearch = async () => {
@@ -171,7 +171,6 @@ function InboundEnd() {
           <select onChange={handleBoundTypeChange}>
             <option value="" disabled selected hidden></option>
             <option value="구매">구매</option>
-            <option value="반품">반품</option>
             <option value="재작업입고">재작업입고</option>
             <option value="유상사급입고">유상사급입고</option>
             <option value="기타입고">기타입고</option>
@@ -251,12 +250,30 @@ function InboundEnd() {
         </div>
       </div>
       <Table headers={grid01_headers}></Table>
+      <div
+        id="mastertable-container"
+        style={{
+          maxHeight: "300px", // 원하는 높이로 설정
+          overflowY: "auto",  // 수직 스크롤만 필요한 경우 설정
+          border: "1px solid #ccc", // 테이블 주위에 경계선을 추가할 수 있습니다.
+        }}
+      >
       <MasterTable
         searchData={searchData}
         onRowClick={(boundId) => setSelectedBoundId(boundId)}
       />
+      </div>
       <Table headers={grid02_headers}></Table>
+      <div
+        id="subtable-container"
+        style={{
+          maxHeight: "200px", // 원하는 높이로 설정
+          overflowY: "auto",  // 수직 스크롤만 필요한 경우 설정
+          border: "1px solid #ccc", // 테이블 주위에 경계선을 추가할 수 있습니다.
+        }}
+      >
       <SubTable filteredDetailData={filteredDetailData} />
+      </div>
 
       {HelperScreenState && (
         <div
