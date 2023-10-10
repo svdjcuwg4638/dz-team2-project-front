@@ -11,10 +11,10 @@
   background: rgba(217, 217, 217, 0);
   color: #5f5b5b;
   text-align: center;
-  font-family: NanumGothicCoding;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
+  /* font-family: NanumGothicCoding;
+  font-size: 12px;
+  font-style: normal; */
+  
   line-height: normal;
 }
 
@@ -48,8 +48,7 @@
   cursor: pointer;
   color: #828282;
   text-align: center;
-  font-family: NanumGothicCoding;
-  font-size: 18px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -58,25 +57,7 @@
 .menu_sub_wrap > div:hover > span {
   border-bottom: 3px solid #fff;
 }
-.tap_wrap {
-  display: flex;
-  margin-left: 20px;
-  width: 1300px;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  margin-top: 25px;
-}
 
-.tap_wrap > div {
-  /* background-color: #fff; */
-  margin: 0px 15px;
-  width: 100px;
-  margin-top: 10px;
-  background-color: #fff;
-  border: 1px solid #b9b9b9;
-  box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
-  max-height: 32px;
-}
 
 .menu_sub_wrap {
   overflow-y: auto;

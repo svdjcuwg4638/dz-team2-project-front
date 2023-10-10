@@ -8,6 +8,7 @@ td {
   text-align: center;
   padding: 0px;
   height: 3rem;
+  font-size: 14px;
 }
 
 /* input {
@@ -42,6 +43,7 @@ td>input{
   background-color: transparent;
   border-radius: 5px;
   border-width: 2px;
+  font-size: 14px;
 }
 
 td > input:empty {

@@ -199,7 +199,7 @@ const Layout = ({ children }) => {
           />
           <div className="section_wrap">
             <div className="section_top">
-              <div className="tap_wrap">
+              <div className="tab_wrap">
                 {tabs.map((tab) => (
                   <div
                     className="tab_sub_wrap"
@@ -310,7 +310,7 @@ const Layout = ({ children }) => {
                 }}
               >
                 <BsBookmarkCheck
-                  size={45}
+                  size={35}
                   color="#5390f0"
                   onClick={() => addBookMark()}
                   style={{
