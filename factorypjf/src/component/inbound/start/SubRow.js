@@ -246,9 +246,9 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
         </td>
         <td>
         <input
-            type="text" // 'date' 대신 'text'로 변경
-            pattern="\d{4}-\d{2}-\d{2}" // YYYY-MM-DD 형식 강제
-            placeholder="YYYY-MM-DD"
+             type="date"
+             min="1900-01-01"
+             max="9999-12-31"
             name="detail_date"
             value={formData["detail_date"]}
             onChange={handleDateChange}

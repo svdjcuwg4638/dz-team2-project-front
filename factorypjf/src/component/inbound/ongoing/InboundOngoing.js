@@ -27,11 +27,11 @@ function InboundOngoing() {
   };
 
   const grid01_headers = [
-    { text: "문서번호", value: "bound_no", width: "3%" },
-    { text: "유형", value: "bound_category", width: "9%" },
-    { text: "거래처", value: "partner_code", width: "9%" },
-    { text: "입고예정일", value: "bound_date", width: "9%" },
-    { text: "창고/장소", value: "", width: "9%", helper: true },
+    { text: "문서번호", value: "bound_no", width: "20%" },
+    { text: "유형", value: "bound_category", width: "20%" },
+    { text: "거래처", value: "partner_code", width: "20%" },
+    { text: "입고예정일", value: "bound_date", width: "20%" },
+    { text: "창고/장소", value: "", width: "20%", helper: true },
   ];
   
   const dispatch = useDispatch();
@@ -122,35 +122,36 @@ function InboundOngoing() {
     <div className={inboundClasses.wrap}>
       <p className={inboundClasses["sub-menu-name"]}>입고등록</p>
       <Table headers={grid01_headers}></Table>
-      <tbody>
+      <div style={{overflow: "auto", maxHeight: "400px" }}>
         {matchingMasters && matchingMasters.length > 0 ? (
           matchingMasters.map((data, index) => (
-            <tr
+            <div
               key={index}
               onMouseEnter={() => handleMouseEnter(data.bound_id)} // 개별 tr에 대한 이벤트 핸들러 설정
               onMouseLeave={handleMouseLeave} // 공통 이벤트 핸들러
-              style={hovered === data.bound_id ? rowHoverStyle : {}} // hover 상태에 따라 스타일 적용
+              style={{ ...hovered === data.bound_id ? rowHoverStyle : {}, display: "flex" }} // hover 상태에 따라 스타일 적용
             >
               {grid01_headers.map((header) => {
                 if (!header.value) {
                   return (
-                    <td key="warehouse-location">
+                    <td key="warehouse-location" style={{ flex: "20%" }}>
                       <button onClick={() => handleOpenModal(data.bound_id)}>
                         창고/장소
                       </button>
                     </td>
                   );
                 }
-                return <td key={header.value}>{data[header.value]}</td>;
+                return <td key={header.value} style={{ flex: "20%" }}>{data[header.value]}</td>
               })}
-            </tr>
+            </div>
+
           ))
         ) : (
           <tr>
             <td colSpan={grid01_headers.length}>데이터가 없습니다.</td>
           </tr>
         )}
-      </tbody>
+      </div>
       <button onClick={handleSendToServer}>입고처리</button>
 
       <DetailModal

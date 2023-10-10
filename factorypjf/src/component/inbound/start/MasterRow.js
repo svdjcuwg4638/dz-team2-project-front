@@ -135,14 +135,14 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
     onMouseEnter={handleMouseEnter} // 마우스 호버 이벤트 리스너 추가
     onMouseLeave={handleMouseLeave} // 마우스 이탈 이벤트 리스너 추가
     >
-    <td style={{ width: '200px' }}>
+    <td style={{ width: '10%' }}>
         <input
           type="checkbox"
           name="check"
           onChange={handleCheckboxChange}
         ></input>
       </td>
-      <td  style={{ width: '550px' }}>
+      <td  style={{ width: '30%' }}>
         <input
           type="text"
           value={boundNo}
@@ -151,7 +151,7 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
           readOnly
         ></input>
       </td>
-      <td style={{ width: '150px' }}>
+      <td style={{ width: '8%' }}>
         <select
           name="bound_category"
           value={formData.bound_category}
@@ -164,7 +164,7 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
             <option value="기타입고">기타입고</option>
        </select>
       </td>
-      <td style={{ width: '350px' }}>
+      <td style={{ width: '28%' }}>
         <input
            type="text"
            value={formData.partner_code}
@@ -180,7 +180,7 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
           }}
         ></input>
       </td>
-      <td style={{ width: '350px' }}>
+      <td style={{ width: '24%' }}>
       <input
         type="date"
         min="1900-01-01"

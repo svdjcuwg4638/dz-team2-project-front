@@ -104,15 +104,15 @@ function OutboundEnd() {
     { text: "출고일", value: "itemName", width: "9%" },
   ];
   const grid02_headers = [
-    { text: "품목코드", value: "item_code", width: "6%" },
-    { text: "품목명", value: "item_name", width: "6%" },
-    { text: "수량", value: "amount", width: "4%" },
-    { text: "단가", value: "unit_price_id", width: "4%" },
-    { text: "총액", value: "tot_amount", width: "6%" },
-    { text: "창고", value: "storage_code", width: "4%" },
-    { text: "장소", value: "location_code", width: "4%" },
-    { text: "품목출고일", value: "detail_date", width: "10%" },
-    { text: "비고", value: "description", width: "10%" },
+    { text: "품목코드", value: "item_code", width: "8%" },
+    { text: "품목명", value: "item_name", width: "8%" },
+    { text: "수량", value: "amount", width: "8%" },
+    { text: "단가", value: "unit_price_id", width: "8%" },
+    { text: "총액", value: "tot_amount", width: "8%" },
+    { text: "창고", value: "storage_code", width: "8%" },
+    { text: "장소", value: "location_code", width: "8%" },
+    { text: "품목출고일", value: "detail_date", width: "20%" },
+    { text: "비고", value: "description", width: "24%" },
   ];
   const handleMasterSearch = async () => {
     try {
