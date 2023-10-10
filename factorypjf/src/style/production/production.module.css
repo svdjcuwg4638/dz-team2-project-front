@@ -22,11 +22,11 @@
 }
 
 /* btn */
-.product_btn-wrap button{
+/* .product_btn-wrap button{
     margin:10px;
     width: 50px;
     
-}
+} */
 
 .out-stock{
     color:var(--red-color);

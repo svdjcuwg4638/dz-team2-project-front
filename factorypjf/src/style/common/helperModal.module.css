@@ -26,7 +26,24 @@
   background-color: white;
   z-index: 100;
 }
+.overlay input{
+  border: 1px solid var(--font-color);
+  height: 30px;
+}
+
 
 .clickable-col:hover {
   cursor: pointer;
+}
+.modal_form{
+  text-align: center;
+  margin: 20px 10px;
+}
+.helper-table__data{
+  max-height: 100%;
+  overflow-y: scroll;
+}
+.wrap-helper__table{
+  height: 50%;
+  margin: 0px 15px;
 }

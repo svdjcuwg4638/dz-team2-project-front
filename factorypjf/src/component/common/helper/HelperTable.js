@@ -30,7 +30,8 @@ export default function HelperTable({ headers, items, onSelectCode }) {
           </tr>
         </thead>
       </table>
-      <table className={helperStyle["helper-table__data"]}>
+      <div className={helperStyle["helper-table__data"]}>
+      <table >
         <colgroup>
           {headers.map((header, idx) => {
             return <col key={idx} width={header.width}></col>;
@@ -62,6 +63,7 @@ export default function HelperTable({ headers, items, onSelectCode }) {
           ))}
         </tbody>
       </table>
+      </div>
     </>
   );
 }
