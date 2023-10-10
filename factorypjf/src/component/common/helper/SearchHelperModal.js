@@ -21,7 +21,7 @@ const SearchHelperModal = ({ headers, formHandler, enterHandler }) => {
   //     setTableItems(items);
   //   }
   // }, [items]);
-  
+
   //행 추가 handler
   const [tableItems, setTableItems] = useState({});
   //검색 필터 내용 바뀔때마다 formHandler 호출
@@ -132,7 +132,7 @@ const SearchHelperModal = ({ headers, formHandler, enterHandler }) => {
                     keyUpHandler(e, header);
                   }}
                 ></input>
-                <button
+                {/* <button
                   className={styles.helperBtn}
                   onClick={(e) =>
                     buttonPressHandler(e, header, {
@@ -142,7 +142,7 @@ const SearchHelperModal = ({ headers, formHandler, enterHandler }) => {
                   }
                 >
                   ?
-                </button>
+                </button> */}
               </>
             ) : (
               <>
