@@ -14,7 +14,7 @@ const Movement = () => {
   const header = [
     { text: "순번", value: "index", width: "3%" },
     {
-      text: "품목",
+      text: "품목*",
       value: "item",
       helper: true,
       width: "15%",
@@ -31,7 +31,7 @@ const Movement = () => {
       readonly: true,
       width: "9%",
     },
-    { text: "개수", value: "movement", width: "9%" },
+    { text: "개수*", value: "movement", width: "9%" },
     { text: "비고", value: "description", width: "15%" },
   ];
   const outbound_header = [
@@ -313,17 +313,41 @@ const Movement = () => {
     console.log("전체데이터", movementArray);
 
     try {
-      const response = await api.post(
-        "/inventory/movement/add",
-        movementArray
-      );
+      const response = await api.post("/inventory/movement/add", movementArray);
 
       if (response.status === 200) setModalstate(true);
     } catch (error) {
       console.error("전송실패", error);
     }
   };
+  const selectRowHandler = (idx, e) => {
+    setSelectedRow(idx);
+    //========필수항목일 경우 input 색상 변경=======
+    let inputId = e.target.id;
+    let inputHeader = inputId.match(/(?<=\w_)[a-zA-z_]+/g)[0];
+    e.target.className = e.target.className.replace("input_red", "");
+    e.target.className = e.target.className.replace("input_black", "");
+    // e.target.className=e.target.className.replace('input_blue','')
 
+    // e.target.className.replace(`${productionClasses["input_red"]}`,null)
+    // e.target.className.replace(`${productionClasses["input_black"]}`,null)
+    header.map((header) => {
+      if (inputHeader === header.value) {
+        //필수항목이고 빈칸이면
+        if (header.text.includes("*") && e.target.value === "") {
+          // e.target.className= e.target.className?e.target.className+`${productionClasses[" input_red"]}`:`${productionClasses["input_red"]}`
+          e.target.className = e.target.className
+            ? e.target.className + " input_red"
+            : "input_red";
+        } else {
+          // e.target.className= e.target.className?e.target.className+`${productionClasses[" input_black"]}`:`${productionClasses["input_black"]}`
+          e.target.className = e.target.className
+            ? e.target.className + " input_black"
+            : "input_black";
+        }
+      }
+    });
+  };
   // 재고 가져오기
   const stockHandler = async (outbound, inbound, item, selectedRow) => {
     console.log(outbound, inbound, item, selectedRow);
@@ -341,10 +365,9 @@ const Movement = () => {
 
     console.log(movement);
     try {
-      const response = await api.get(
-        "/inventory/movement",
-        { params: movement }
-      );
+      const response = await api.get("/inventory/movement", {
+        params: movement,
+      });
       console.log("응답데이터", response.data.data);
 
       // 새로운 배열에 업데이트된 값을 설정합니다.
@@ -411,7 +434,7 @@ const Movement = () => {
               <div className={styles.tableCon}>
                 <Table className={styles.tableHeader} headers={header}>
                   <AddTable
-                    selectRowHandler={setSelectedRow}
+                    selectRowHandler={selectRowHandler}
                     emitItem={setTableItems}
                     items={tableItems}
                     isBtn={true}
