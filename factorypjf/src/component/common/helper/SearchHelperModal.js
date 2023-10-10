@@ -3,10 +3,8 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useReducer } from "react";
-
-// import searchStyle from "style/common/searchStyle.module.css";
 import styles from "style/common/SearchHelperModal.module.css";
-
+// import searchStyle from "style/common/searchStyle.module.css";
 const HELPER_KEY = 113;
 const CLEAN_KEY = 115;
 const ENTER_KEY = 13;
