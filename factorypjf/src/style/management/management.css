@@ -61,12 +61,8 @@
   display: block;
   text-align: center;
 }
-.ctable .chead .ctr div{
-  border: 1px solid #4473BF;
-}
 
 .ctable .cbody .ctr div {
-  border: 1px solid #332f2f;
   overflow-x: auto; 
   cursor: pointer;
 }
@@ -78,13 +74,16 @@
 .chead{
   font-size: 17px;
   font-weight: bold;
-  color: #fff;
-  background-color: #5390f0;
+  color: #000;
+  background-color: #e9eef6;
   width: 99%;
 }
 .ctr{
   display: flex;
   background-color:inherit;
+  border: 1px solid #d9d9d9;
+  height: 50px;
+  align-items: center;
 }
 
 .cbody .ctr:hover{
@@ -97,7 +96,7 @@
 
 .cbody{
   display: block;
-  height:  45vh;
+  height:  34vh;
   overflow: scroll;
   box-sizing: unset;
 }
