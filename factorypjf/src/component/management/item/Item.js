@@ -72,7 +72,7 @@ const Item = () => {
         >
           <button
             className="button"
-            style={{ backgroundColor: selectIds.length > 0 ? "red" :"#dadada" }}
+            style={{ backgroundColor: selectIds.length > 0 ? "#fff" :"#dadada", color:selectIds.length > 0 ? "red" : ""  }}
             disabled={selectIds.length > 0 ? false : true}
             onClick={handleDelete}
           >

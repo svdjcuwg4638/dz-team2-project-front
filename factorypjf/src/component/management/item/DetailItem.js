@@ -340,7 +340,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
                   ref={inputRefs.item_code}
                   readOnly={formMod == "add" ? false : true}
                   style={{
-                    backgroundColor: formMod == "add" ? "" : "#dadada",
+                    backgroundColor: formMod == "add" ? "" : "#F5F5F5",
                     border:
                       !readOnly && errorField === "item_code"
                         ? "3px solid red"
@@ -359,7 +359,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
                 <input
                   ref={inputRefs.item_name}
                   style={{
-                    backgroundColor: readOnly ? "#dadada" : "",
+                    backgroundColor: readOnly ? "#F5F5F5" : "",
                     border:
                       !readOnly && errorField === "item_name"
                         ? "3px solid red"
@@ -381,7 +381,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
               <div className="flex">
                 <input
                   readOnly
-                  style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                  style={{ backgroundColor: readOnly ? "#F5F5F5" : "" }}
                   value={formData["category_name"]}
                   type="text"
                   name="category_name"
@@ -401,7 +401,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
               <div className="flex">
                 <input
                   readOnly
-                  style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                  style={{ backgroundColor: readOnly ? "#F5F5F5" : "" }}
                   value={formData["standard_name"]}
                   type="text"
                   name="standard_name"
@@ -426,7 +426,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
                   ref={inputRefs.storage_code}
                   readOnly
                   style={{
-                    backgroundColor: readOnly ? "#dadada" : "",
+                    backgroundColor: readOnly ? "#F5F5F5" : "",
                     border:
                       !readOnly && errorField === "storage_code"
                         ? "3px solid red"
@@ -447,7 +447,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
                     ref={inputRefs.location_code}
                     readOnly
                     style={{
-                      backgroundColor: readOnly ? "#dadada" : "",
+                      backgroundColor: readOnly ? "#F5F5F5" : "",
                       border:
                         !readOnly && errorField === "storage_code"
                           ? "3px solid red"
@@ -494,7 +494,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
                   type="text"
                   name="width"
                   readOnly={readOnly}
-                  style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                  style={{ backgroundColor: readOnly ? "#F5F5F5" : "" }}
                   value={formData["width"]}
                   onChange={handleInputChange}
                 />
@@ -517,7 +517,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
                   type="text"
                   name="length"
                   readOnly={readOnly}
-                  style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                  style={{ backgroundColor: readOnly ? "#F5F5F5" : "" }}
                   value={formData["length"]}
                   onChange={handleInputChange}
                 />
@@ -543,7 +543,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
                   type="text"
                   name="height"
                   readOnly={readOnly}
-                  style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                  style={{ backgroundColor: readOnly ? "#F5F5F5" : "" }}
                   value={formData["height"]}
                   onChange={handleInputChange}
                 />
@@ -566,7 +566,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
                   type="text"
                   name="volume"
                   readOnly={readOnly}
-                  style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                  style={{ backgroundColor: readOnly ? "#F5F5F5" : "" }}
                   value={formData["volume"]}
                   onChange={handleInputChange}
                 />
@@ -592,7 +592,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
                   type="text"
                   name="weight"
                   readOnly={readOnly}
-                  style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                  style={{ backgroundColor: readOnly ? "#F5F5F5" : "" }}
                   value={formData["weight"]}
                   onChange={handleInputChange}
                 />
@@ -615,7 +615,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
                   type="text"
                   name="unit"
                   readOnly
-                  style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                  style={{ backgroundColor: readOnly ? "#F5F5F5" : "" }}
                   value={formData["unit"]}
                   onChange={handleInputChange}
                 />
@@ -643,7 +643,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
                   style={{
                     width: "100%",
                     height: "9vh",
-                    backgroundColor: readOnly ? "#dadada" : "",
+                    backgroundColor: readOnly ? "#F5F5F5" : "",
                     border: "initial",
                     borderRadius: "5px",
                   }}
@@ -678,7 +678,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
             onClick={buttonHandler}
             disabled={!selectItem}
             style={{
-              backgroundColor: selectItem ? "" : "#dadada",
+              backgroundColor: selectItem ? "" : "#F5F5F5",
               display: formMod == "add" ? "none" : "",
             }}
           >

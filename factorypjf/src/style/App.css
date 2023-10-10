@@ -107,7 +107,7 @@ textarea {
   background-color: #5390f0;
   color: #fff;
   width: 60px;
-  height: 40px;
+  height: 32px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -250,7 +250,7 @@ td {
   align-items: center;
   width: 30px;
   position: absolute;
-  right: 0;
+  right: -40px;
   top: 6px;
   justify-content: center;
   display: none;
