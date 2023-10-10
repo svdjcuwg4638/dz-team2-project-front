@@ -16,7 +16,7 @@ function HelperBackdrop({ offModal }) {
     offModal();
   };
   return (
-    <div onClick={clickHandler} className={helperStyle["back-drop"]}>
+    <div onClick={clickHandler} className="helper-modal_back-drop">
       
     </div>
   );
@@ -74,7 +74,7 @@ function HelperOverlay({ modalState, onSelectCode }) {
   //테이블 headers
   const headers = [
     {
-      text: `${codeName}코드`,
+      text: `${codeName.replace('*','')}코드`,
       value: `${codeValue}Code`,
       width: "50%",
       //누른 컬럼이 code에 관한 컬럼이면 도움창의 코드 컬럼만 selectable
@@ -82,7 +82,7 @@ function HelperOverlay({ modalState, onSelectCode }) {
     },
     {
       
-      text: `${codeName}명`,
+      text: `${codeName.replace('*','')}명`,
       value: `${codeValue}Name`,
       width: "50%",
       //누른 컬럼이 코드명에 관한 컬럼이면 도움창의 코드명 컬럼만 selectable
@@ -108,8 +108,8 @@ function HelperOverlay({ modalState, onSelectCode }) {
   };
 
   return (
-    <div className={helperStyle.overlay}>
-      <h3>{codeName} </h3>
+    <div className="helper-modal_overlay">
+      <h4 className="modal_title">{codeName.replace('*','')} </h4>
       <form action="submit" onSubmit={submitHandler}>
         <select
           name="searchOption"
