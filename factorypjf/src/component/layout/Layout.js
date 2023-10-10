@@ -210,30 +210,39 @@ const Layout = ({ children }) => {
                     }}
                   >
                     {tab == currentTab && (
-                      <>
-                        <div
-                          style={{
-                            'margin-top': "0px",
-                            display: "flex",
-                            alignItems: "center",
-                          }}
-                        >
-                          {getCurrentIcon(
-                            sessionStorage
-                              .getItem("current_page")
-                              ?.split("/")[2]
-                          )}
-                        </div>
-                        <div style={{ color: "#fff" }}>
-                          {sessionStorage.getItem("current_page") &&
-                            getNameByLink(
+                      < >
+                        <div className="tab_left" >
+                          <div
+                            style={{
+                              "margin-top": "0px",
+
+                              display: "flex",
+                              alignItems: "center",
+                            }}
+                          >
+                            {getCurrentIcon(
                               sessionStorage
                                 .getItem("current_page")
-                                ?.split("/")[2],
-                              sessionStorage
-                                .getItem("current_page")
-                                ?.split("/")[3]
+                                ?.split("/")[2]
                             )}
+                          </div>
+                          <div
+                            style={{
+                              color: "#fff",
+                              "margin-left": "10px",
+                              "margin-top": "5px",
+                            }}
+                          >
+                            {sessionStorage.getItem("current_page") &&
+                              getNameByLink(
+                                sessionStorage
+                                  .getItem("current_page")
+                                  ?.split("/")[2],
+                                sessionStorage
+                                  .getItem("current_page")
+                                  ?.split("/")[3]
+                              )}
+                          </div>
                         </div>
                         <button
                           style={{
@@ -252,30 +261,37 @@ const Layout = ({ children }) => {
 
                     {tab != currentTab && (
                       <>
-                        <div
-                          style={{
-                            margin: "0px 10px",
-                            display: "flex",
-                            alignItems: "center",
-                            color: "#000",
-                          }}
-                        >
-                          {sessionStorage.getItem("current_page") &&
-                            getDefaultCurrentIcon(
+                        <div className="tab_left">
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              color: "#000",
+                            }}
+                          >
+                            {sessionStorage.getItem("current_page") &&
+                              getDefaultCurrentIcon(
+                                sessionStorage
+                                  .getItem(`tab_${tab}_url`)
+                                  ?.split("/")[2]
+                              )}
+                          </div>
+                          <div
+                            style={{
+                              color: "#000",
+                              "margin-left": "10px",
+                              "margin-top": "5px",
+                            }}
+                          >
+                            {getNameByLink(
                               sessionStorage
                                 .getItem(`tab_${tab}_url`)
-                                ?.split("/")[2]
+                                ?.split("/")[2],
+                              sessionStorage
+                                .getItem(`tab_${tab}_url`)
+                                ?.split("/")[3]
                             )}
-                        </div>
-                        <div style={{ color: "#000" }}>
-                          {getNameByLink(
-                            sessionStorage
-                              .getItem(`tab_${tab}_url`)
-                              ?.split("/")[2],
-                            sessionStorage
-                              .getItem(`tab_${tab}_url`)
-                              ?.split("/")[3]
-                          )}
+                          </div>
                         </div>
                         <button
                           style={{
