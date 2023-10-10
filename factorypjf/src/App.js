@@ -50,10 +50,12 @@ function App() {
           <Route path="registration" element={<Registration />} />
         </Route>
 
-        <Route path="/" element={<Main/>}/>
-        <Route path="/production/*" element={<ProductionRoutes />} />
-        <Route path="/inbound/*" element={<InboundRoutes/>}/>
-        <Route path="/outbound/*" element={<OutboundRoutes/>}/>
+        {/* <Route path="/" element={<Main/>}/> */}
+
+        <Route path="/:tabId/production/*" element={<ProductionRoutes />} />
+
+        <Route path="/:tabId/inbound/*" element={<InboundRoutes/>}/>
+        <Route path="/:tabId/outbound/*" element={<OutboundRoutes/>}/>
 
         <Route path="/:tabId/management" element={<Management />}>
           <Route index path="item" element={<Item />} />
