@@ -6,6 +6,8 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store"
+//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 ReactDOM.render(
   <React.StrictMode>

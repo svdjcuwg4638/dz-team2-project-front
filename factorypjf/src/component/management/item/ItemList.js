@@ -61,7 +61,7 @@ const ItemList = ({
     <div>
       <div className="item_search_wrap">
         <form>
-          <div>
+          <div className='item_search_content'>
             <div style={{ marginRight: "20px" }}>
               <div>
                 <div>품목코드</div>
@@ -84,16 +84,16 @@ const ItemList = ({
                   />
                 </div>
               </div>
+              <div>
+                <button
+                  type="submit"
+                  className="button"
+                  onClick={handleSearchSubmit}
+                >
+                  조회
+                </button>
+              </div>
             </div>
-          </div>
-          <div>
-            <button
-              type="submit"
-              className="button"
-              onClick={handleSearchSubmit}
-            >
-              조회
-            </button>
           </div>
         </form>
       </div>
@@ -101,7 +101,7 @@ const ItemList = ({
       <div>
         <div className="ctable">
           <div className="chead">
-            <div className="ctr item_row">
+            <div className="ctr item_row" style={{border:"none"}}>
               <div></div>
               <div>품목코드</div>
               <div>품목이름</div>

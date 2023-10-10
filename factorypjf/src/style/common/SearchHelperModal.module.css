@@ -1,19 +1,23 @@
 .searchCom {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
   border: none;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   width: 100%;
+  flex-direction: column;
 }
-
+td {
+  height: auto;
+}
 .searchCom input {
-  width: 60%;
+  text-align: left;
+  border-radius: 2px;
+  border: 1px solid #b9b9b9;
+  background: #fff;
 }
 .searchCom label {
-  margin-right: 1rem;
   text-align: left;
+  width: 100%;
 }
 
 .helperBtn {

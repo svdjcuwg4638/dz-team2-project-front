@@ -2,7 +2,7 @@
   height: 100vh;
   background-color: var(--main-color);
   border: 1px solid #b9b9b9;
-  width: 63px;
+  /* width: 63px; */
   /* height: 954px; */
   display: flex;
   justify-content: center;
@@ -13,6 +13,9 @@
   margin: 55px 0px;
   cursor: pointer;
   position: relative;
+}
+.icon_wrap > a > div>svg {
+  margin:0px 10px;
 }
 
 .icon_wrap > a > div::after {
