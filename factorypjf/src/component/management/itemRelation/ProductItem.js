@@ -31,30 +31,32 @@ const ProductItem = ({ itemAll, setSelectId, selectId }) => {
 
   return (
     <div>
-      <form className="productItem_search_wrap">
-        <div>
+      <form className="management_search_wrap">
+        <div className="management_search_content">
           <div>
-            <div>품목코드</div>
             <div>
-              <input
-                type="text"
-                name="item_code"
-                onChange={handleSearchChange}
-              ></input>
+              <div>품목코드</div>
+              <div>
+                <input
+                  type="text"
+                  name="item_code"
+                  onChange={handleSearchChange}
+                ></input>
+              </div>
             </div>
           </div>
           <div>
-            <div>품목이름</div>
             <div>
-              <input
-                type="text"
-                name="item_name"
-                onChange={handleSearchChange}
-              ></input>
+              <div>품목이름</div>
+              <div>
+                <input
+                  type="text"
+                  name="item_name"
+                  onChange={handleSearchChange}
+                ></input>
+              </div>
             </div>
           </div>
-        </div>
-        <div>
           <div>
             <button className="button" onClick={handleSearchSubmit}>
               조회
@@ -72,10 +74,13 @@ const ProductItem = ({ itemAll, setSelectId, selectId }) => {
       </div>
 
       <div className="ctable">
-        <div className="cbody" style={{height:"26vh"}}>
+        <div className="cbody" style={{ height: "26vh" }}>
           {itemList &&
             itemList.map((data) => (
-              <div className="ctr relation_row" onClick={() => setSelectId(data)}>
+              <div
+                className="ctr relation_row"
+                onClick={() => setSelectId(data)}
+              >
                 <div
                   style={{
                     backgroundColor:
