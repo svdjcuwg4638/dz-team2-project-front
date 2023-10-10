@@ -21,9 +21,9 @@ const Dep2 = ({ bookMarkList }) => {
 
   const subMenu = {
     production: [
+      { link: "/line", name: "생산라인관리" },
       { link: "/add", name: "생산등록" },
       { link: "/list", name: "생산내역조회" },
-      { link: "/line", name: "생산라인관리" },
     ],
     inbound: [
       { link: "", name: "입고예정" },
