@@ -2,10 +2,10 @@
 
 :root {
   /* color */
-  --main-color: #5390f0;
-  --border-color-light: #b9b9b9;
-  --font-color: #4d4d4d;
-  --red-color: #c35757;
+  --main-color:#5390F0;
+  --border-color-light:#B9B9B9;
+  --font-color:#4D4D4D;
+  --red-color:#C35757;
 }
 body {
   margin: 0;
