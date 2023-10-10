@@ -84,7 +84,8 @@ export default function Add() {
 
   const [disabledBtn, setDisabledBtn] = useState({
     state: true,
-    class: `${listStyle["btn_disabled"]}`,
+    class: "btn_disabled",
+    // class: `${listStyle["btn_disabled"]}`,
   });
 
   const [searchPeriod, setSearchPeriod] = useState({
@@ -138,7 +139,7 @@ export default function Add() {
   const triggerHandler = () => {};
 
   const editHandler = (e, tableType, colInfo, coordinate) => {
-    setDisabledBtn({ state: false, class: `${listStyle["btn_abled"]}` });
+    setDisabledBtn({ state: false, class: "btn_save" });
     if (tableType === "add") {
       //grid01에 수정 표시
       let copyItem = JSON.parse(JSON.stringify(grid01_items));
@@ -333,7 +334,7 @@ export default function Add() {
     setDeleteData([...deleteArr]);
 
     cacheDispatch({ type: "DELETE_ROW", idxArr });
-    setDisabledBtn({ state: false, class: `${listStyle["btn_abled"]}` });
+    setDisabledBtn({ state: false, class: "btn_save" });
     console.log(grid02Cache);
 
     checked.forEach(el=>el.checked=false)
@@ -563,7 +564,7 @@ export default function Add() {
         let checkedArr = document.querySelectorAll('input[type="checkbox"]:checked')
         checkedArr=Array.from(checkedArr);
         checkedArr.forEach(el=>el.checked=false)
-        setDisabledBtn({ state: false, class: `${listStyle["btn_abled"]}` });
+        setDisabledBtn({ state: false, class: "btn_save" });
       }
       function fail(data) {
         console.log(data);
@@ -577,16 +578,17 @@ export default function Add() {
   const enterHandler = searchHandler;
 
   return (
-    <div className={productionListClasses["production_list-container"]}>
-      <div className={productionClasses.wrap}>
-        <p className={productionClasses["sub-menu-name"]}>생산내역조회</p>
+    <div className={listStyle["production_list-container"]}>
+      
         <div
           className={`${searchStyle["container-search-helper"]} ${productionListClasses["filter-container"]}`}
         >
+        
           <div>
-            <label> 생산일</label>
+            <label style={{marginLeft:'2px'}}>생산일</label>
             <input
               onChange={(e) =>
+        
                 setSearchPeriod({ ...searchPeriod, startDate: e.target.value })
               }
               type="date"
@@ -594,9 +596,9 @@ export default function Add() {
               max="9999-12-31"
             ></input>
           </div>
-          <span>~</span>
+          <span style={{marginTop:'20px'}}>~</span>
           <div>
-            <label> 생산일</label>
+            <label> </label>
             <input
               onChange={(e) =>
                 setSearchPeriod({ ...searchPeriod, endDate: e.target.value })
@@ -611,11 +613,12 @@ export default function Add() {
             formHandler={formHandler}
             enterHandler={enterHandler}
           ></SearchHelperModal>
-          <button className={disabledBtn.class} onClick={searchHandler}>
+          <button className="btn_save" onClick={searchHandler}>
             조회
           </button>
         </div>
-        <div className={productionClasses.grid01}>
+        <p className={productionClasses["sub-menu-name"]}>생산품</p>
+        <div className={listStyle.grid01}>
           <Table headers={grid01_headers}>
             <AddTd
               items={grid01_items}
@@ -634,7 +637,8 @@ export default function Add() {
             onSubmit={submitHandler}
           ></AlertModal>
         )}
-        <div className={productionClasses.grid02}>
+        <p className={productionClasses["sub-menu-name"]}>소모자재</p>
+        <div className={listStyle.grid02}>
           <Table headers={grid02_headers}>
             <ListTd
               items={grid02_items}
@@ -661,6 +665,6 @@ export default function Add() {
           </button>
         </div>
       </div>
-    </div>
+    
   );
 }

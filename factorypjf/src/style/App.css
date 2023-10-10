@@ -353,7 +353,20 @@ td {
   height: 30px;
   margin: 5px;
 }
-.btn_save, .btn_delete{
+/* 비활성화버튼 */
+.btn_disabled{
+  background-color: var(--light-grey);
+  color: white;
+  border: none;
+  box-shadow: 1px 1px 2px 1px grey;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  width: 50px;
+  height: 30px;
+  margin: 5px;
+}
+.btn_save, .btn_delete,.btn_disabled{
   padding-top:2px;
 }
 
