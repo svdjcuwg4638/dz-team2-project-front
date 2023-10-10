@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { storageAction } from "redux/actions/management/storageAction";
 import "../../../style/management/storage.css";
@@ -10,9 +10,26 @@ const StorageHelp = ({ handleInputChange, setShowFlag }) => {
   }, []);
 
   const { storageAll, locationAll } = useSelector((state) => state.storage);
+  const [filterData, setFilterData ] = useState();
+  useEffect(() => {
+    searchStorageData()
+  }, [storageAll, locationAll]);
 
-  function searchStorageData(e) {
-    e.preventDefault();
+  function searchStorageData() {
+
+    const filteredLocationData = locationAll?.data
+      .filter((locdata) => locdata.location_name.includes(locationNameInput))
+      .map((locdata) => {
+        const correspondingStorage = storageAll?.data.find(
+          (stdata) => stdata.storage_code === locdata.storage_code
+        );
+        return {
+          ...locdata,
+          storage_name: correspondingStorage?.storage_name,
+        };
+      });
+
+    setFilterData(filteredLocationData);
   }
 
   function insertStorageVal(data) {
@@ -30,21 +47,49 @@ const StorageHelp = ({ handleInputChange, setShowFlag }) => {
     });
   }
 
+  const [storageNameInput, setStorageNameInput] = useState("");
+  const [locationNameInput, setLocationNameInput] = useState("");
+
   return (
     <div>
-      <div className="storage_help_bg"></div>
+      <div className="storage_help_bg" onClick={() => setShowFlag(false)}></div>
       <div className="storage_help_modal">
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <div
+            style={{
+              borderBottom: "2px solid rgb(83, 144, 240)",
+              fontSize: "30px",
+              fontWeight: "bold",
+              padding: "3px",
+              margin: "23px",
+              width: "26%",
+              textAlign: "center",
+            }}
+          >
+            창고코드
+          </div>
+        </div>
         <form style={{ display: "flex", justifyContent: "center" }}>
           <div style={{ display: "flex", width: "35%", margin: "0" }}>
-            <div>창고명 : </div>
+            <div style={{ marginRight: "10px" }}>창고명 </div>
             <div>
-              <input type="text" name="storage_name"></input>
+              <input
+                type="text"
+                name="storage_name"
+                value={storageNameInput}
+                onChange={(e) => setStorageNameInput(e.target.value)}
+              />
             </div>
           </div>
           <div style={{ display: "flex", width: "40%", margin: "0" }}>
-            <div>세부장소명 : </div>
+            <div style={{ marginRight: "10px" }}>세부장소명 </div>
             <div>
-              <input type="text" name="location_name"></input>
+              <input
+                type="text"
+                name="location_name"
+                value={locationNameInput}
+                onChange={(e) => setLocationNameInput(e.target.value)}
+              />
             </div>
           </div>
           <div
@@ -64,7 +109,7 @@ const StorageHelp = ({ handleInputChange, setShowFlag }) => {
             </button>
           </div>
         </form>
-        <table>
+        <table style={{ marginTop: "10px" }}>
           <thead>
             <tr>
               <th>창고코드</th>
@@ -76,8 +121,8 @@ const StorageHelp = ({ handleInputChange, setShowFlag }) => {
           <tbody>
             {locationAll.data &&
               storageAll.data &&
-              locationAll.data.map((data) => {
-                const storageData = storageAll.data.find(
+              filterData?.map((data) => {
+                const storageData = storageAll?.data.find(
                   (stdata) => stdata.storage_code === data.storage_code
                 );
                 return (
@@ -87,11 +132,11 @@ const StorageHelp = ({ handleInputChange, setShowFlag }) => {
                         ...data,
                         storage_name: storageData.storage_name,
                       });
-                      setShowFlag(false)
+                      setShowFlag(false);
                     }}
                   >
                     <td>{data.storage_code}</td>
-                    <td>{storageData.storage_name}</td>
+                    <td>{data.storage_name}</td>
                     <td>{data.location_code}</td>
                     <td>{data.location_name}</td>
                   </tr>

@@ -54,7 +54,7 @@ const Item = () => {
   }
   return (
     <div className="item_wrap">
-      <div style={{ height: "90%", margin: "50px" }}>
+      <div style={{ height: "90%", margin: "5px" }}>
         {itemAll.data && (
           <ItemList
             itemAll={itemAll}
@@ -83,7 +83,6 @@ const Item = () => {
       <div>
         <DetailItem selectItem={selectItem} setSelectItem={setSelectItem}/>
       </div>
-      <div className="itme_title">품목관리</div>
     </div>
   );
 };

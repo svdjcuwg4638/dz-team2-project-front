@@ -94,7 +94,6 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
   }, [selectItem]);
   // #endregion
 
-
   //#region 미입력 input창 입력시 빨간색 테두리제거
   useEffect(() => {
     if (errorField == "item_name") {
@@ -112,7 +111,6 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
     }
   }, [formData.storage_code]);
   //#endregion
-
 
   //#region 입력헨들러
   const handleInputChange = (event) => {
@@ -328,6 +326,10 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
   };
   // #endregion
 
+  useEffect(()=>{
+    console.log(showFlag);
+  },[showFlag])
+
   return (
     <div className="detail_wrap" style={{ width: "100%" }}>
       <form onSubmit={submitHandler} className="detail_wrap_sub">
@@ -418,7 +420,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
             </div>
           </div>
 
-          <div>
+          <div style={{position:"relative"}}>
             <div>
               <div>창고{!readOnly && "*"}</div>
               <div>
@@ -470,6 +472,11 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
                       textAlign: "center",
                       marginRight: "10px",
                       marginLeft: "5px",
+                      borderRadius: "25px",
+                      backgroundColor: "#5390f0",
+                      color: "#fff",
+                      position: "absolute",
+                      right: "-22px",
                     }}
                     onClick={() => setShowFlag(true)}
                   >

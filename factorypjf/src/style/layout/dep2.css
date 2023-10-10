@@ -68,7 +68,6 @@
 }
 
 .tap_wrap > div {
-  /* background-color: #fff; */
   margin: 0px 15px;
   width: 100px;
   margin-top: 10px;
@@ -77,6 +76,12 @@
   box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
   max-height: 32px;
 }
+
+.tap_wrap > div:nth-last-child(1){
+  border: none;
+  box-shadow: none;
+}
+
 
 .menu_sub_wrap {
   overflow-y: auto;
