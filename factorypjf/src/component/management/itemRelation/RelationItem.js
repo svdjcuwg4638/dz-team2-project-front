@@ -281,9 +281,10 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
           <button
             type="button"
             disabled={!selectId}
-            className="btn_save"
+            className="btn_delete"
             style={{
-              backgroundColor: selectCodes.length > 0 ? "red" : "#dadada",
+              backgroundColor: selectCodes.length > 0 ? "#fff" : "#dadada",
+              color : selectCodes.length > 0 ? "" : "#fff",
             }}
             onClick={handleDelete}
           >

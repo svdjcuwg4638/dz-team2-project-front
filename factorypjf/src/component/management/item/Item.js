@@ -71,8 +71,8 @@ const Item = () => {
           }}
         >
           <button
-            className="button"
-            style={{ backgroundColor: selectIds.length > 0 ? "#fff" :"#dadada", color:selectIds.length > 0 ? "red" : ""  }}
+            className="btn_delete"
+            style={{ backgroundColor: selectIds.length > 0 ? "#fff" :"#dadada", color:selectIds.length > 0 ? "" : "#fff"  }}
             disabled={selectIds.length > 0 ? false : true}
             onClick={handleDelete}
           >

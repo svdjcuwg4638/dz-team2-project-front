@@ -202,12 +202,12 @@ const CommonCode = ({ selectId, codeAll, setCodeAllData }) => {
           </div>
         </div>
         <div className="button_wrap">
-          <button type="submit" className="button">
+          <button type="submit" className="btn_save">
             추가
           </button>
           <button
-            className="button"
-            style={{ backgroundColor:selectCodes.length > 0 ?  "red": "#dadada" }}
+            className="btn_delete"
+            style={{ backgroundColor: selectCodes.length > 0 ? "#fff" :"#dadada", color:selectCodes.length > 0 ? "" : "#fff"  }}
             onClick={handleDelete}
             disabled={!selectCodes.length > 0}
           >
