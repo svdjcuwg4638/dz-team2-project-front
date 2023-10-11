@@ -336,9 +336,10 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
         <div className="detail_content_wrap">
           <div>
             <div>
-              <div>품목코드{!readOnly && "*"}</div>
+              <div>품목코드</div>
               <div>
                 <input
+                  className="input_red"
                   ref={inputRefs.item_code}
                   readOnly={formMod == "add" ? false : true}
                   style={{
