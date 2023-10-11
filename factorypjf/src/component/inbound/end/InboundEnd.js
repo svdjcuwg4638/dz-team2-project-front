@@ -10,6 +10,72 @@ import { partnerAction } from "redux/actions/management/partnerAction";
 import { itemAction } from "redux/actions/management/itemAction";
 import api from "redux/api";
 
+const styles = {
+  btnSave: {
+          backgroundColor: "var(--main-color)",
+          color: "white",
+          border: "none",
+          boxShadow: "1px 1px 2px 1px grey",
+          borderRadius: "8px",
+          fontSize: "14px",
+          fontWeight: "bold",
+          width: "50px",
+          height: "30px",
+          margin: "5px",
+        },
+
+      container1_sons: {
+        display: "flex",
+        flexDirection: 'column',
+        justifyContent: "center",
+        alignItems: 'flex-start', 
+
+        width: '120px',
+        height: '80px'
+      },
+
+      container1_sons1: {
+        display: "flex",
+        flexDirection: 'column',
+        justifyContent: "center",
+        alignItems: 'flex-start', 
+
+        width: '280px',
+        height: '80px'
+      },
+
+      container1_sons2: {
+        display: "flex",
+        flexDirection: 'column',
+        justifyContent: "center",
+        alignItems: 'flex-start', 
+
+        width: '80px',
+        height: '80px'
+      },
+
+      container1_last_child_bottom: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: "center",
+
+        width: '100%',
+        height: '40px'
+      },
+      container1_sons_upper: {
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-end',
+
+        margin: '0',
+
+        width: '100%',
+        height: '20px',
+        
+      }
+   };
+
+
 function InboundEnd() {
   const dispatch = useDispatch();
 
@@ -155,19 +221,113 @@ function InboundEnd() {
   return (
     <div className={inboundClasses.wrap}>
       <p className={inboundClasses["sub-menu-name"]}>입고현황</p>
-      <div className="searchsection" style={{ display: "flex", border: '1px solid blue' }}>
-        <div>문서번호</div>
-        <div>
-          <input
-            type="text"
-            value={searchSectionData.master.bound_no}
-            onChange={(e) =>
-              handleInputChange("master", "bound_no", e.target.value)
+
+      <div style={{border: '2px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <div className="container1" style={{  display: 'flex', width: '55%', justifyContent: "space-around", alignItems: 'center' }}>
+          <div style={styles.container1_sons}>
+            <p style={styles.container1_sons_upper}>문서번호</p>
+            <input style={{width: '125px', height: '40px'}}
+              type="text"
+              value={searchSectionData.master.bound_no}
+              onChange={(e) =>
+                handleInputChange("master", "bound_no", e.target.value)
             }
-          />
+            />
+          </div>
+          <div style={styles.container1_sons}>
+            <p style={styles.container1_sons_upper}>유형</p>
+            <div style={{height: '40px', display: 'flex', alignItems: 'center'}}>
+              <select style={{ height: '25px'}} onChange={handleBoundTypeChange}>
+                <option value="" disabled selected hidden></option>
+                <option value="구매">구매</option>
+                <option value="재작업입고">재작업입고</option>
+                <option value="유상사급입고">유상사급입고</option>
+                <option value="기타입고">기타입고</option>
+              </select>
+            </div>
+          </div>
+          <div style={styles.container1_sons}>
+            <p style={styles.container1_sons_upper}>거래처명</p>
+            <div style={styles.container1_last_child_bottom}>
+              <input type="text" value={searchSectionData.master.partner_code} style={{width: '120px', height: '40px'}}/>
+              <button
+                onClick={(e) => {
+                  setSelectedHelperItem(item);
+                  sedivelperScreenState(!HelperScreenState);
+                }}
+              >
+                ?
+              </button>
+            </div>
+          </div>
+          <div style={styles.container1_sons1}>
+            <p style={styles.container1_sons_upper}>&nbsp;&nbsp;입고일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;입고일</p>
+            <div style={styles.container1_last_child_bottom}>
+              <input
+              type="date"
+              value={searchSectionData.detail.detail_start_date}
+              onChange={(e) =>
+                handleInputChange("detail", "detail_start_date", e.target.value)
+              }
+              />
+              <input
+              type="date"
+              value={searchSectionData.detail.detail_end_date}
+              onChange={(e) =>
+                handleInputChange("detail", "detail_end_date", e.target.value)
+              }
+              />
+              <button style={styles.btnSave} onClick={handleMasterSearch}>조회</button>
+            </div>
+          </div>
         </div>
-        <div>유형</div>
-        <div>
+        <div className="container2" style={{ display: 'flex', width: '45%', justifyContent:"space-around", alignItems: 'center'}}>
+          <div style={styles.container1_sons2}>
+            <p style={styles.container1_sons_upper}>품목명</p>
+            <div style={styles.container1_last_child_bottom}>
+              <input style={{width: '120px', height: '40px'}}
+              type="text" value={searchSectionData.detail.item_name} />
+              <button
+                onClick={(e) => {
+                  setSelectedHelperItem(item2);
+                  sedivelperScreenState(!HelperScreenState);
+                }}
+              >
+                ?
+              </button>
+            </div>
+          </div>
+          <div style={styles.container1_sons1}>
+            <p style={styles.container1_sons_upper}>&nbsp;&nbsp;품목입고일&nbsp; &nbsp;~ &nbsp;&nbsp;품목입고일</p>
+            <div style={styles.container1_last_child_bottom}>
+              <input
+              type="date"
+              value={searchSectionData.detail.detail_start_date}
+              onChange={(e) =>
+                handleInputChange("detail", "detail_start_date", e.target.value)
+              }
+              />
+              <input
+              type="date"
+              value={searchSectionData.detail.detail_end_date}
+              onChange={(e) =>
+                handleInputChange("detail", "detail_end_date", e.target.value)
+              }
+              />
+              <button style={styles.btnSave} onClick={handleDetailSearch}>조회</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* <div style={{display:"flex", justifyContent:"space-between"}}> */}
+        {/* <div className="container3" style={{border: '3px solid blue', width:'55%', display:"flex", justifyContent:"space-between"}}>
+          <input
+          type="text"
+          value={searchSectionData.master.bound_no}
+          onChange={(e) =>
+            handleInputChange("master", "bound_no", e.target.value)
+          }
+          />
           <select onChange={handleBoundTypeChange}>
             <option value="" disabled selected hidden></option>
             <option value="구매">구매</option>
@@ -175,80 +335,60 @@ function InboundEnd() {
             <option value="유상사급입고">유상사급입고</option>
             <option value="기타입고">기타입고</option>
           </select>
-        </div>
-        <div>거래처명</div>
-        <div>
-          <input type="text" value={searchSectionData.master.partner_code}
-           />
-        </div>
-        <button
-          onClick={(e) => {
-            setSelectedHelperItem(item);
-            sedivelperScreenState(!HelperScreenState);
-          }}
-        >
-          ?
-        </button>
-        <div>입고일</div>
-        <div>
+          <input type="text" value={searchSectionData.master.partner_code}/>
+          <button
+            onClick={(e) => {
+              setSelectedHelperItem(item);
+              sedivelperScreenState(!HelperScreenState);
+            }}
+          >
+            ?
+          </button>
           <input
-            type="date"
-            value={searchSectionData.master.bound_start_date}
-            onChange={(e) =>
-              handleInputChange("master", "bound_start_date", e.target.value)
-            }
+          type="date"
+          value={searchSectionData.master.bound_start_date}
+          onChange={(e) =>
+            handleInputChange("master", "bound_start_date", e.target.value)
+          }
           />
-        </div>
-        <div>~</div>
-        <div>
           <input
-            type="date"
-            value={searchSectionData.master.bound_end_date}
-            onChange={(e) =>
-              handleInputChange("master", "bound_end_date", e.target.value)
-            }
-          />
-        </div>
-        <div>
-          <button onClick={handleMasterSearch}>Master 검색</button>
-        </div>
-        <h3>/</h3>
-        <div>품목명</div>
-        <div>
+          type="date"
+          value={searchSectionData.master.bound_end_date}
+          onChange={(e) =>
+            handleInputChange("master", "bound_end_date", e.target.value)
+          }
+            />
+          <button style={styles.btnSave} onClick={handleMasterSearch}>조회</button>
+        </div> */}
+        {/* <div className="container4" style={{border: '3px solid black', width:'45%', display:"flex", justifyContent:"space-between"}}>
           <input type="text" value={searchSectionData.detail.item_name} />
-        </div>
-        <button
-          onClick={(e) => {
-            setSelectedHelperItem(item2);
-            sedivelperScreenState(!HelperScreenState);
-          }}
-        >
-          ?
-        </button>
-        <div>품목입고일</div>
-        <div>
+          <button
+            onClick={(e) => {
+              setSelectedHelperItem(item2);
+              sedivelperScreenState(!HelperScreenState);
+            }}
+          >
+            ?
+          </button>
           <input
-            type="date"
-            value={searchSectionData.detail.detail_start_date}
-            onChange={(e) =>
-              handleInputChange("detail", "detail_start_date", e.target.value)
-            }
+          type="date"
+          value={searchSectionData.detail.detail_start_date}
+          onChange={(e) =>
+            handleInputChange("detail", "detail_start_date", e.target.value)
+          }
           />
-        </div>
-        <div>~</div>
-        <div>
           <input
-            type="date"
-            value={searchSectionData.detail.detail_end_date}
-            onChange={(e) =>
-              handleInputChange("detail", "detail_end_date", e.target.value)
-            }
+          type="date"
+          value={searchSectionData.detail.detail_end_date}
+          onChange={(e) =>
+            handleInputChange("detail", "detail_end_date", e.target.value)
+          }
           />
-        </div>
-        <div>
-          <button onClick={handleDetailSearch}>Detail 검색</button>
-        </div>
-      </div>
+          <button style={styles.btnSave} onClick={handleDetailSearch}>조회</button>
+        </div> */}
+      {/* </div> */}
+
+
       <Table headers={grid01_headers}></Table>
       <div
         id="mastertable-container"
