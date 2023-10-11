@@ -163,7 +163,7 @@ const CommonCode = ({ selectId, codeAll, setCodeAllData }) => {
         </div>
       </div>
       <form className="mt-3" onSubmit={handleSubmit}>
-        <div className="input_wrap">
+        <div className="input_wrap management_inputBox">
           <div>
             <div>코드</div>
             <div  style={{ marginRight: "10px" }}>

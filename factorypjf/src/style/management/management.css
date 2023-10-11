@@ -166,3 +166,7 @@
   width: 38px !important;
   margin-top: 8px;
 }
+
+.management_inputBox input{
+  border-radius: 5px;
+}
