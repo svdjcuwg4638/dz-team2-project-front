@@ -17,6 +17,7 @@ import { FiMinusSquare, FiPlusSquare } from "react-icons/fi";
 import { MdOutlineInventory2 } from "react-icons/md";
 import { TiDeleteOutline } from "react-icons/ti";
 import { AiOutlineHome } from "react-icons/ai";
+import { menuActions } from "redux/reducers/menu";
 const Layout = ({ children }) => {
   const dispatch = useDispatch();
 
@@ -137,6 +138,29 @@ const Layout = ({ children }) => {
     } else {
       navi(tab + "/");
     }
+
+    const menuName = lastUrl.split('/')[2]
+
+    if(menuName != null){
+      switch(menuName){
+        case 'production' :
+          dispatch(menuActions.production())
+          break
+        case 'inbound' :
+          dispatch(menuActions.inbound())
+          break
+        case 'outbound' :
+          dispatch(menuActions.outbound())
+          break
+        case 'storage' :
+          dispatch(menuActions.storage())
+          break
+        case 'management' :
+          dispatch(menuActions.management())
+          break
+      }
+    }
+
   };
 
   const getCurrentIcon = (menu) => {
@@ -186,7 +210,8 @@ const Layout = ({ children }) => {
 
   return (
     <div className="wrap">
-      <Dep1 />
+      <Dep1 
+        currentTab={currentTab}/>
       <div className="wd-100p">
         <Header />
         <div className="flex">
@@ -208,8 +233,8 @@ const Layout = ({ children }) => {
                     }}
                   >
                     {tab == currentTab && (
-                      < >
-                        <div className="tab_left" >
+                      <>
+                        <div className="tab_left">
                           <div
                             style={{
                               "margin-top": "0px",
@@ -311,7 +336,11 @@ const Layout = ({ children }) => {
                   </div>
                 ))}
                 <div className="tab_add_button_wrap" style={{ width: "30px" }}>
-                  <button className="tab_add_button" style={{ margin: '10px'}} onClick={() => addTab()}>
+                  <button
+                    className="tab_add_button"
+                    style={{ margin: "10px" }}
+                    onClick={() => addTab()}
+                  >
                     +
                   </button>
                 </div>

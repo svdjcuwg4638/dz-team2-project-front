@@ -28,7 +28,6 @@ export default function DataTable({ headers, onModal, children }) {
                 {header.helper && (
                   <span class="wrap-search-icon">
                     <i class="fa-solid fa-magnifying-glass search-icon"></i>
-
                   </span>
                 )}
               </th>
@@ -44,7 +43,7 @@ export default function DataTable({ headers, onModal, children }) {
               return <col key={idx} width={header.width}></col>;
             })}
           </colgroup>
-          <tbody>{childrenWithProps}</tbody>
+          <tbody className={tableStyle['tbl_body_data']}>{childrenWithProps}</tbody>
         </table>
       </div>
     </div>

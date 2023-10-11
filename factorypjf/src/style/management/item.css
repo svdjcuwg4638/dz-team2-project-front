@@ -2,6 +2,7 @@
   display: flex;
   height: 100%;
   position: relative;
+  padding: 7px;
 }
 .item_wrap td {
   background-color: inherit;
@@ -228,11 +229,15 @@
 
 .item_search_content > div > div{
   margin:0 10px;
-  font-weight: bold;
 }
 
 .item_search_content > div > div:nth-child(3){
   display: flex;
-  align-items: center;
-  margin-left: 60px ;
+  align-items: end;
+}
+
+.item_search_wrap input{
+  border: 1px solid #000;
+  border-radius: 0;
+  font-weight: 0;
 }

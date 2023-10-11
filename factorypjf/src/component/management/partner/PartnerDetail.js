@@ -200,17 +200,18 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
         <div className="detail_content_wrap">
           <div>
             <div>
-              <div>거래처코드{!readOnly ? "*" : ""} </div>
+              <div>거래처코드 </div>
               <input
                 ref={inputRefs.partner_code}
                 readOnly={formMod == "modify" || readOnly}
                 style={{
-                  backgroundColor: formMod != "add" ? "#dadada" : "",
+                  backgroundColor: formMod != "add" ? "rgb(245, 245, 245)" : "",
                   border:
                   !readOnly && errorField === "partner_code"
                     ? "3px solid red"
                     : "",
                 }}
+                className={!readOnly && 'input_red'}
                 type="text"
                 name="partner_code"
                 value={formData.partner_code}
@@ -218,12 +219,13 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
               />
             </div>
             <div>
-              <div>사업자번호{!readOnly ? "*" : ""} </div>
+              <div>사업자번호</div>
               <input
+              className={!readOnly && 'input_red'}
               ref={inputRefs.bizNum}
                 readOnly={readOnly}
                 style={{
-                  backgroundColor: readOnly ? "#dadada" : "",
+                  backgroundColor: readOnly ? "rgb(245, 245, 245)" : "",
                   border:
                   !readOnly && errorField === "bizNum"
                     ? "3px solid red"
@@ -239,12 +241,13 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
 
           <div>
             <div>
-              <div>거래처명{!readOnly ? "*" : ""} </div>
+              <div>거래처명 </div>
               <input
+              className={!readOnly && 'input_red'}
                 ref={inputRefs.partner_name}
                 readOnly={readOnly}
                 style={{
-                  backgroundColor: readOnly ? "#dadada" : "",
+                  backgroundColor: readOnly ? "rgb(245, 245, 245)" : "",
                   border:
                   !readOnly && errorField === "partner_name"
                     ? "3px solid red"
@@ -261,7 +264,7 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
               <input
                 readOnly={readOnly}
                 style={{
-                  backgroundColor: readOnly ? "#dadada" : "",
+                  backgroundColor: readOnly ? "rgb(245, 245, 245)" : "",
                 }}
                 type="text"
                 name="representative"
@@ -277,7 +280,7 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
               <input
                 readOnly={readOnly}
                 style={{
-                  backgroundColor: readOnly ? "#dadada" : "",
+                  backgroundColor: readOnly ? "rgb(245, 245, 245)" : "",
                 }}
                 type="text"
                 name="ph_num"
@@ -289,7 +292,7 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
             <div>
               <div>이메일 </div>
               <input
-                style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                style={{ backgroundColor: readOnly ? "rgb(245, 245, 245)" : "" }}
                 readOnly={readOnly}
                 type="text"
                 name="email"
@@ -303,7 +306,7 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
             <div>
               <div>팩스번호</div>
               <input
-                style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                style={{ backgroundColor: readOnly ? "rgb(245, 245, 245)" : "" }}
                 readOnly={readOnly}
                 type="text"
                 name="fax_num"
@@ -321,7 +324,7 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
                 readOnly={readOnly}
                 onChange={handleInputChange}
                 style={{
-                  backgroundColor: readOnly ? "#dadada" : "",
+                  backgroundColor: readOnly ? "rgb(245, 245, 245)" : "",
                 }}
                 type="text"
                 name="post_num"
@@ -330,9 +333,9 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
             </div>
             {!readOnly && (
               <button
-                style={{ width: "150px" ,marginTop: "11px", backgroundColor:"#4473BF"}}
+                style={{ width: "150px" ,marginTop: "11px", backgroundColor:"#5390F0"}}
                 onClick={handleComplete}
-                className="button"
+                className="btn_save"
                 type="button"
               >
                 우편번호 찾기
@@ -363,7 +366,7 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
               <input
                 onChange={handleInputChange}
                 style={{
-                  backgroundColor: readOnly ? "#dadada" : "",
+                  backgroundColor: readOnly ? "rgb(245, 245, 245)" : "",
                   width: "200%",
                 }}
                 readOnly={readOnly}
@@ -380,7 +383,7 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
               <input
                 onChange={handleInputChange}
                 style={{
-                  backgroundColor: readOnly ? "#dadada" : "",
+                  backgroundColor: readOnly ? "rgb(245, 245, 245)" : "",
                   width: "200%",
                 }}
                 readOnly={readOnly}
@@ -397,7 +400,7 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
               <input
                 onChange={handleInputChange}
                 style={{
-                  backgroundColor: readOnly ? "#dadada" : "",
+                  backgroundColor: readOnly ? "rgb(245, 245, 245)" : "",
                   width: "200%",
                 }}
                 readOnly={readOnly}
@@ -415,7 +418,7 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
                 onChange={handleInputChange}
                 readOnly={readOnly}
                 style={{
-                  backgroundColor: readOnly ? "#dadada" : "",
+                  backgroundColor: readOnly ? "rgb(245, 245, 245)" : "",
                 }}
                 type="text"
                 name="account_code"
@@ -428,7 +431,7 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
                 onChange={handleInputChange}
                 readOnly={readOnly}
                 style={{
-                  backgroundColor: readOnly ? "#dadada" : "",
+                  backgroundColor: readOnly ? "rgb(245, 245, 245)" : "",
                 }}
                 type="text"
                 name="account_holder"
@@ -442,7 +445,7 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
               <div>계좌번호 </div>
               <input
                 onChange={handleInputChange}
-                style={{ backgroundColor: readOnly ? "#dadada" : "" }}
+                style={{ backgroundColor: readOnly ? "rgb(245, 245, 245)" : "" }}
                 readOnly={readOnly}
                 type="text"
                 name="account_num"
@@ -460,7 +463,7 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
                     margin: "0 5px",
                     width: "50px",
                     textAlign: "center",
-                    backgroundColor: readOnly ? "#dadada" : "",
+                    backgroundColor: readOnly ? "rgb(245, 245, 245)" : "",
                   }}
                   type="text"
                   name="collect_date"
@@ -475,7 +478,7 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
         className="detail_button_wrap">
           <button
             type="button"
-            className="button"
+            className="btn_save"
             name="add"
             onClick={buttonHandler}
             style={{ display: formMod == "modify" ? "none" : "" }}
@@ -484,12 +487,12 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
           </button>
           <button
             type="button"
-            className="button"
+            className="btn_save"
             name="modify"
             onClick={buttonHandler}
             disabled={!selectPartner}
             style={{
-              backgroundColor: selectPartner ? "#4473BF" : "#dadada",
+              backgroundColor: selectPartner ? "#5390F0" : "rgb(245, 245, 245)",
               display: formMod == "add" ? "none" : "",
             }}
           >
@@ -498,7 +501,7 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
 
           <button
             type="submit"
-            className="button"
+            className="btn_save"
             style={{ display: readOnly ? "none" : "" }}
           >
             저장

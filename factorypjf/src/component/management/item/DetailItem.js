@@ -336,9 +336,10 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
         <div className="detail_content_wrap">
           <div>
             <div>
-              <div>품목코드{!readOnly && "*"}</div>
+              <div>품목코드</div>
               <div>
                 <input
+                  className={!readOnly && 'input_red'}
                   ref={inputRefs.item_code}
                   readOnly={formMod == "add" ? false : true}
                   style={{
@@ -356,10 +357,11 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
               </div>
             </div>
             <div>
-              <div>품목이름{!readOnly && "*"}</div>
+              <div>품목이름</div>
               <div>
                 <input
                   ref={inputRefs.item_name}
+                  className={!readOnly && 'input_red'}
                   style={{
                     backgroundColor: readOnly ? "#F5F5F5" : "",
                     border:
@@ -422,9 +424,10 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
 
           <div style={{position:"relative"}}>
             <div>
-              <div>창고{!readOnly && "*"}</div>
+              <div>창고</div>
               <div>
                 <input
+                  className={!readOnly && 'input_red'}
                   ref={inputRefs.storage_code}
                   readOnly
                   style={{
@@ -442,10 +445,11 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
               </div>
             </div>
             <div>
-              <div>세부장소{!readOnly && "*"}</div>
+              <div>세부장소</div>
               <div className="flex">
                 <div>
                   <input
+                    className={!readOnly && 'input_red'}
                     ref={inputRefs.location_code}
                     readOnly
                     style={{
@@ -671,7 +675,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
         >
           <button
             type="button"
-            className="button"
+            className="btn_save"
             name="add"
             onClick={buttonHandler}
             style={{ display: formMod == "modify" ? "none" : "" }}

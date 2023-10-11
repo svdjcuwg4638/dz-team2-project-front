@@ -37,7 +37,7 @@
 }
 .modal_form{
   text-align: center;
-  margin: 20px 10px;
+  margin: 20px 0px;
 }
 .helper-table__data{
   max-height: 100%;
@@ -46,4 +46,7 @@
 .wrap-helper__table{
   height: 50%;
   margin: 0px 15px;
+}
+.helper-modal td{
+  height: 2rem;
 }

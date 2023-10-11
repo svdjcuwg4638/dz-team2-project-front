@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -9,7 +9,7 @@ import { LuFactory } from "react-icons/lu";
 import { FiMinusSquare, FiPlusSquare } from "react-icons/fi";
 import { menuActions } from "../../redux/reducers/menu";
 
-const Dep1 = () => {
+const Dep1 = ({currentTab}) => {
   const dispatch = useDispatch();
 
   const productionHandler = () => {
@@ -28,30 +28,31 @@ const Dep1 = () => {
     dispatch(menuActions.management());
   };
 
+
   return (
     <div className="dap1">
       <div className="icon_wrap">
-        <Link to="1/production/add" onClick={productionHandler}>
+        <Link to={currentTab+"/production/add"} onClick={productionHandler}>
           <div title="생산관리">
             <LuFactory size={25} color="#fff" />
           </div>
         </Link>
-        <Link to="1/inbound/start" onClick={inboundHandler}>
+        <Link to={currentTab+"/inbound/start"} onClick={inboundHandler}>
           <div title="입고관리">
             <FiPlusSquare size={25} color="#fff" />
           </div>
         </Link>
-        <Link to="1/outbound/start" onClick={outboundHandler}>
+        <Link to={currentTab+"/outbound/start"} onClick={outboundHandler}>
           <div title="출고관리">
             <FiMinusSquare size={25} color="#fff" />
           </div>
         </Link>
-        <Link to="1/storage/list" onClick={storageHandler}>
+        <Link to={currentTab+"/storage/list"} onClick={storageHandler}>
           <div title="재고관리">
             <MdOutlineInventory2 size={25} color="#fff" />
           </div>
         </Link>
-        <Link to="1/management/item" onClick={managementHandler}>
+        <Link to={currentTab+"/management/item"} onClick={managementHandler}>
           <div title="기준정보관리">
             <BsInfoCircle size={25} color="#fff" />
           </div>

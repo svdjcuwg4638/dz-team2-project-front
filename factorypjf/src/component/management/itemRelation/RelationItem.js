@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { relationAction } from "redux/actions/management/relationAction";
 import api from "redux/api";
 
+
 const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
   const dispatch = useDispatch();
   const [searchData, setSearchData] = useState(null);
@@ -13,14 +14,14 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
       (data) => data.item_code === selectId?.item_code
     );
     setSearchData(filteredData);
-    setSelectCodes([])
+    setSelectCodes([]);
     setFormData({
       company_id: "1",
       item_code: "",
       item_name: "",
       quantity: "",
       component_code: "",
-    })
+    });
   }, [selectId, codeAllData]);
 
   // #region 스크롤
@@ -57,20 +58,20 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const fieldsToCheck = ['item_code', 'item_name', 'quantity'];
+    const fieldsToCheck = ["item_code", "item_name", "quantity"];
 
     const fieldNames = {
-      item_code: '품목 코드',
-      item_name: '품목 이름',
-      quantity: '소모수량',
+      item_code: "품목 코드",
+      item_name: "품목 이름",
+      quantity: "소모수량",
     };
 
     for (const field of fieldsToCheck) {
-      if (!formData[field] || formData[field].trim() === '') {
-        setErrorField(field); 
-        alert(fieldNames[field] +' 입력해주세요')
-        inputRefs[field].current.focus(); 
-        return; 
+      if (!formData[field] || formData[field].trim() === "") {
+        setErrorField(field);
+        alert(fieldNames[field] + " 입력해주세요");
+        inputRefs[field].current.focus();
+        return;
       }
     }
 
@@ -81,12 +82,12 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
     };
     try {
       const response = await api.post("/relation/add", submitdata);
-      if(response.data.code == 1){
+      if (response.data.code == 1) {
         const adData = response.data.data;
         setSearchData((state) => [...state, adData]);
         setCodeAllData((state) => [...state, adData]);
-      }else{
-        alert(response.data.message)
+      } else {
+        alert(response.data.message);
       }
     } catch (error) {
       console.log("error :", error);
@@ -159,6 +160,7 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
                 <div>
                   <input
                     type="checkbox"
+                    className="management_checkBox"
                     checked={selectCodes.includes(data)}
                     onChange={() => handleCheckboxChange(data)}
                   />
@@ -179,19 +181,24 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
       <form className="mt-3" onSubmit={handleSubmit}>
         <div className="relation_input_wrap">
           <div>
-            <div>자재코드(f2)</div>
-            <div  style={{ marginRight: "10px" }}>
+            <div>
+              자재코드
+              <span class="wrap-search-icon">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+              </span>
+            </div>
+            <div style={{ marginRight: "10px" }}>
               <input
                 ref={inputRefs.item_code}
                 type="text"
                 name="item_code"
                 value={formData.item_code}
-                onChange={(e) =>{
-                  handleInputChange(e)
-                  setErrorField(null)
+                onChange={(e) => {
+                  handleInputChange(e);
+                  setErrorField(null);
                 }}
                 style={{
-                  border:errorField === "item_code" ? "3px solid red" : "",
+                  border: errorField === "item_code" ? "3px solid red" : "",
                 }}
                 onKeyDown={(e) => {
                   if (e.key === "F2") {
@@ -202,19 +209,24 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
             </div>
           </div>
           <div>
-            <div>자재이름(f2)</div>
-            <div  style={{ marginRight: "10px" }}>
+            <div>
+              자재이름
+              <span class="wrap-search-icon">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+              </span>
+            </div>
+            <div style={{ marginRight: "10px" }}>
               <input
                 ref={inputRefs.item_name}
                 type="text"
                 name="item_name"
                 value={formData.item_name}
-                onChange={(e) =>{
-                  handleInputChange(e)
-                  setErrorField(null)
+                onChange={(e) => {
+                  handleInputChange(e);
+                  setErrorField(null);
                 }}
                 style={{
-                  border:errorField === "item_code" ? "3px solid red" : "",
+                  border: errorField === "item_code" ? "3px solid red" : "",
                 }}
                 onKeyDown={(e) => {
                   if (e.key === "F2") {
@@ -245,32 +257,34 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
           </div>
           <div>
             <div>소모수량</div>
-            <div  style={{ marginRight: "10px" }}>
+            <div style={{ marginRight: "10px" }}>
               <input
                 ref={inputRefs.quantity}
                 type="text"
                 name="quantity"
                 style={{
-                  border:errorField === "quantity" ? "3px solid red" : "",
+                  border: errorField === "quantity" ? "3px solid red" : "",
                 }}
                 value={formData.quantity}
-                onChange={(e) =>{
-                  handleInputChange(e)
-                  setErrorField(null)
+                onChange={(e) => {
+                  handleInputChange(e);
+                  setErrorField(null);
                 }}
               />
             </div>
           </div>
         </div>
         <div className="button_wrap">
-          <button type="submit" className="button">
+          <button type="submit" className="btn_save">
             추가
           </button>
           <button
             type="button"
             disabled={!selectId}
-            className="button"
-            style={{ backgroundColor: selectCodes.length > 0 ? "red": "#dadada" }}
+            className="btn_save"
+            style={{
+              backgroundColor: selectCodes.length > 0 ? "red" : "#dadada",
+            }}
             onClick={handleDelete}
           >
             삭제

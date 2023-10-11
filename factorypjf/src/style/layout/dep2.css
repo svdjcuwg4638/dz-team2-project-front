@@ -29,6 +29,7 @@
   background-color: rgba(185, 185, 185, 0.3);
   height: 45%;
   width: 100%;
+  overflow: auto;
 }
 
 .menu_title {
@@ -40,10 +41,10 @@
 }
 .menu_title > div:nth-child(1),
 .menu_sub_wrap > div {
-  padding-bottom: 2rem;
+  padding-bottom: 0.5rem;
 }
 
-.menu_sub_wrap > div > a > span {
+.menu_sub_wrap > div >div> a > div {
   font-size: 20px;
   cursor: pointer;
   color: #828282;
@@ -58,15 +59,6 @@
   border-bottom: 3px solid #fff;
 }
 
-.tap_wrap > div {
-  margin: 0px 15px;
-  width: 100px;
-  margin-top: 10px;
-  background-color: #fff;
-  border: 1px solid #b9b9b9;
-  box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
-  max-height: 32px;
-}
 
 .tap_wrap > div:nth-last-child(1){
   border: none;
@@ -77,4 +69,15 @@
 .menu_sub_wrap {
   overflow-y: auto;
   max-height: 50%;
+}
+
+.menu_sub_wrap > div{
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+}
+
+.menu_sub_wrap > div > div{
+  padding: 10px 20px;
+  border-radius: 10px;
 }

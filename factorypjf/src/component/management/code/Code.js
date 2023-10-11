@@ -56,8 +56,8 @@ const Code = () => {
   }
 
   return (
-    <div className="flex code_wrap">
-      <div>공통코드관리</div>
+    <div className="flex code_wrap" style={{marginTop:"23px"}}>
+      <div></div>
       {manageCodeAll && (
         <ManageCode
           manageCodeAll={manageCodeAll.data}

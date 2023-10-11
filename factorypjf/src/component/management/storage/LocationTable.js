@@ -49,6 +49,7 @@ function LocationTable({ data, setSelectIds, selectIds, selectId }) {
               <div className="ctr storage_row_sub">
                 <div>
                   <input
+                    className="management_checkBox"
                     type="checkbox"
                     checked={selectIds.includes(data)}
                     onChange={() => handleCheckboxChange(data)}
