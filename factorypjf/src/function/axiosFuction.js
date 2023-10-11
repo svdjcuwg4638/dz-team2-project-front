@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const DEV_URL = "https://backapp-7bb14242f8f4.herokuapp.com/";
-const OP_URL = "https://backapp-7bb14242f8f4.herokuapp.com/";
+const DEV_URL = "https://dzback-0313054dd3dc.herokuapp.com/";
+const OP_URL = "https://dzback-0313054dd3dc.herokuapp.com/";
 
 
 export function getAxios(url, param, successFunction, failFunction) {
