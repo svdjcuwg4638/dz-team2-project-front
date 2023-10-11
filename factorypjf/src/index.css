@@ -6,7 +6,9 @@
   --border-color-light:#B9B9B9;
   --font-color:#4D4D4D;
   --red-color:#C35757;
-  --light-grey:#d3d3d3
+  --light-grey:#d3d3d3;
+  
+
 }
 body {
   margin: 0;

@@ -368,7 +368,7 @@ td {
   padding-top:2px;
 }
 
-/* 모달 */
+/* 코드도움 모달 */
 .helper-modal_back-drop {
   position: fixed;
   top: 0;
@@ -415,12 +415,26 @@ td {
   
   margin-top: 5px;
 }
+
+/* 검색섹션 */
 .wrap-search-icon{
   vertical-align: top;
 
 }
-.search-icon{
+.search_icon{
   font-size: 12px;
+}
+.helper_icon{
+  font-size: 12px;
+  color: #767272;
+  margin-left:2px;
+}
+.search_label,.search_label_helper{
+  width: 100%;
+  color:var(--font-color)
+}
+.search_label_helper:hover, .search_label_helper label:hover{
+  cursor: pointer;
 }
 
 .header-tab-x-button{

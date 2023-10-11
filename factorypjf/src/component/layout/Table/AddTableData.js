@@ -2,8 +2,10 @@ import React, { useEffect, useMemo, useReducer, useRef, useState } from "react";
 import axios from "axios";
 import HelperModal from "component/common/helper/HelperModal";
 import { getAxios } from "function/axiosFuction";
+
 import tableStyle from "style/layout/dataTable/table.module.css";
 import addStyle from "style/layout/dataTable/addTableData.module.css";
+import productionStyle from "style/production/production.module.css"
 
 //도움창 단축키 코드
 const HELPER_KEY = 113;
@@ -21,8 +23,8 @@ export default function AddTableData({
   editHandler,
   addRowEmit
 }) {
-  //첫 렌더링시 빈 테이블 3줄
-  const DEFAULT_ROW = 3;
+  //첫 렌더링시 테이블 행수
+  const DEFAULT_ROW = 1;
   const DEFAULT_ARR = useMemo(() => {
     let row = {};
     headers.forEach((header) => {
@@ -115,7 +117,7 @@ export default function AddTableData({
       setCurrentCol({ ...coordinate });
       //모달 켜기
       onModalHanlder(colInfo.value, colInfo.text);
-      if (editHandler) editHandler(e, "add", coordinate);
+      if (editHandler) editHandler(e, "add", colInfo, coordinate);
     } else if (e.which === CLEAN_KEY && colInfo.helper) {
       e.preventDefault();
       setCurrentCol({ ...coordinate });
@@ -257,6 +259,7 @@ export default function AddTableData({
                     }}
                     defaultValue={item ? item[header.value] : ""}
                     type="text"
+                    className={header.readonly&&`${productionStyle['input_read-only']}`}
                   ></input>
                 ) : header.value === "date" ? (
                   <input
