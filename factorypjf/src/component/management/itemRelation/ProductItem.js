@@ -83,7 +83,7 @@ const ProductItem = ({ itemAll, setSelectId, selectId }) => {
                 style={{
                   backgroundColor:
                     selectId?.item_code == data.item_code
-                      ? "#dadada"
+                      ? "rgb(245, 245, 245)"
                       : "transparent",
                 }}
               >

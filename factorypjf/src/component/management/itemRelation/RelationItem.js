@@ -183,7 +183,7 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
             <div>
               자재코드
               <span class="wrap-search-icon">
-                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <i class="fa-solid fa-circle-info"></i>
               </span>
             </div>
             <div style={{ marginRight: "10px" }}>
@@ -212,7 +212,7 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
             <div>
               자재이름
               <span class="wrap-search-icon">
-                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <i class="fa-solid fa-circle-info"></i>
               </span>
             </div>
             <div style={{ marginRight: "10px" }}>
@@ -237,8 +237,10 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
             </div>
             {HelperScreenState && (
               <div>
-                <div className="relation_back_modal" onClick={()=>sedivelperScreenState(!HelperScreenState)}>
-                </div>
+                <div
+                  className="relation_back_modal"
+                  onClick={() => sedivelperScreenState(!HelperScreenState)}
+                ></div>
                 <div
                   style={{
                     position: "absolute",
@@ -287,7 +289,7 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
             disabled={!selectId}
             className="btn_delete"
             style={{
-              backgroundColor: selectCodes.length > 0 ? "#fff" : "#dadada",
+              backgroundColor: selectCodes.length > 0 ? "#fff" : "rgb(245, 245, 245)",
               color: selectCodes.length > 0 ? "" : "#fff",
             }}
             onClick={handleDelete}

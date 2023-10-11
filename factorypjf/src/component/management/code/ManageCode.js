@@ -22,7 +22,7 @@ const ManageCode = ({ manageCodeAll, setSelectId, selectId }) => {
                 style={{
                   backgroundColor:
                     selectId?.management_code == data.management_code
-                      ? "#dadada"
+                      ? "rgb(245, 245, 245)"
                       : "transparent",
                 }}
               >

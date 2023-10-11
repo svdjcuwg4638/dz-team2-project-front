@@ -207,7 +207,7 @@ const CommonCode = ({ selectId, codeAll, setCodeAllData }) => {
           </button>
           <button
             className="btn_delete"
-            style={{ backgroundColor: selectCodes.length > 0 ? "#fff" :"#dadada", color:selectCodes.length > 0 ? "" : "#fff"  }}
+            style={{ backgroundColor: selectCodes.length > 0 ? "#fff" :"rgb(245, 245, 245)", color:selectCodes.length > 0 ? "" : "#fff"  }}
             onClick={handleDelete}
             disabled={!selectCodes.length > 0}
           >
