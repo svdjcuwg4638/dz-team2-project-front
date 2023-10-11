@@ -149,7 +149,7 @@ export const MovementsList = () => {
                     formHandler={setSearchOutboundData}
                   />
                 </div>
-                <Arrow width="3%" height="138" />
+                <Arrow width="30px" height="138" />
 
                 <div className={styles.right}>
                   <SearchHelperModal

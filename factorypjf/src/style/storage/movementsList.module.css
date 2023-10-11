@@ -3,6 +3,7 @@
   justify-content: center;
   width: 100%;
   height: 93%;
+  padding: 50px 40px;
 }
 
 .SectionContainer > div {
@@ -110,20 +111,28 @@
 .right {
   margin-left: 3rem;
 }
-.left > td > div > label,
-.right > td > div > label,
-.etcCon > td > div > label,
+.left > td > div > div,
+.right > td > div > div {
+  line-height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.left > td > div > div > label,
+.right > td > div > div > label,
+.etcCon > td > div > div > label,
 .dateCon > label {
-  width: 80px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
 }
 
-.left > td > div > label,
-.right > td > div > label {
+.left > td > div > div > label,
+.right > td > div > div > label {
   text-align: center;
   line-height: 25px;
 }
+
 .left > td > div > input,
 .right > td > div > input {
   border-radius: 2px;
@@ -137,7 +146,7 @@
   display: flex;
   align-items: normal;
   flex-direction: initial;
-  height: 20px;
+  height: 25px;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
@@ -147,8 +156,9 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
-
 .inoutCon > div > td {
   border: 0px;
 }
@@ -209,15 +219,7 @@
   border: 1px solid #b9b9b9;
   background: #fff;
 }
-.arrow {
-  height: 138px;
-}
-.arrow::after {
-  display: inline-block;
-  height: 100%;
-  content: "";
-  vertical-align: middle;
-}
-.arrow img {
-  vertical-align: middle;
+.tableCon > div > div > table > tbody > tr > td > input {
+  color: var(--font-color);
+  font-weight: normal;
 }
