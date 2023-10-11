@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   width: 100%;
+  padding: 50px 40px;
 }
 .SectionContainer > div {
   width: 100%;
@@ -30,6 +31,17 @@
 
 .tableCon {
   height: 70%;
+}
+
+.tableCon > div {
+  padding-top: 1rem;
+  height: 300px;
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+.tableCon > div > div {
+  height: 100%;
 }
 
 .btnBox {
@@ -134,21 +146,27 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   display: flex;
   align-items: normal;
   flex-direction: initial;
-  height: 20px;
+  height: 25px;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
 
-.left > td > div > label,
-.right > td > div > label,
-.etcCon > td > div > label,
+.left > td > div > div,
+.right > td > div > div {
+  line-height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.left > td > div > div > label,
+.right > td > div > div > label,
+.etcCon > td > div > div > label,
 .dateCon > label {
-  width: 80px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
 }
-.left > td > div > label,
-.right > td > div > label {
+.left > td > div > div > label,
+.right > td > div > div > label {
   text-align: center;
   line-height: 25px;
 }
@@ -170,6 +188,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   width: 100%;
   display: flex;
   justify-content: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .bottompanel > input {
