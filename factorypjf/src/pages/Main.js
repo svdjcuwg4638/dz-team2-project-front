@@ -5,18 +5,23 @@ import { getAxios } from "function/axiosFuction";
 const Main = () => {
   const dispatch = useDispatch();
 
-  const [summary, setSummary] = useState({inventory:'',inBound:'',outBound:'',production:''});
+  const [summary, setSummary] = useState({
+    inventory: "",
+    inBound: "",
+    outBound: "",
+    production: "",
+  });
 
   useEffect(() => {
     getAxios("main", null, success, fail);
   }, []);
   function success(data) {
-    let obj={}
-    for(let key in data.data){
-      if(data.data[key]===null){
-        obj[key]='0'
-      }else{
-        obj[key]=data.data[key]
+    let obj = {};
+    for (let key in data.data) {
+      if (data.data[key] === null) {
+        obj[key] = "0";
+      } else {
+        obj[key] = data.data[key];
       }
     }
     setSummary(obj);
@@ -63,7 +68,6 @@ const Main = () => {
         <div className="content_middle">
           <div className="notice_label">TODAY</div>
           <div className="summary_wrap">
-            
             <div className="wrap-summary">
               <h4 className="summary_title">입고량</h4>
               <div className="summary_content">{summary.inBound}&nbsp;건</div>
@@ -81,30 +85,38 @@ const Main = () => {
           </div>
         </div>
         <div className="content_right">
-          <div className="menu-link">
-            <div className="link_text">생산관리 + </div>
-            <div className="link_icon">
-              <i class="fa-solid fa-industry"></i>
+          <a href="production/add">
+            <div className="menu-link">
+              <div className="link_text">생산관리 + </div>
+              <div className="link_icon">
+                <i class="fa-solid fa-industry"></i>
+              </div>
             </div>
-          </div>
+          </a>
+          <a href="storage/list">
           <div className="menu-link">
             <div className="link_text">재고관리 + </div>
             <div className="link_icon">
               <i class="fa-solid fa-box"></i>
             </div>
           </div>
+          </a>
+          <a href="inbound/start">
           <div className="menu-link">
             <div className="link_text">입고관리 + </div>
             <div className="link_icon">
               <i class="fa-solid fa-right-to-bracket"></i>
             </div>
           </div>
+          </a>
+          <a href="outbound/start">
           <div className="menu-link">
             <div className="link_text">출고관리 + </div>
             <div className="link_icon">
               <i class="fa-solid fa-right-from-bracket"></i>
             </div>
           </div>
+          </a>
         </div>
       </div>
     </div>
