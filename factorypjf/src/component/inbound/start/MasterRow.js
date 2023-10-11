@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import api from "redux/api";
 import SearchHelper from "component/storage/item/SearchHelper";
 import inboundClasses from '../../../style/inbound/inbound.module.css';
+import '../../../style/inbound/overlay.css'
 
 const rowHoverStyle = {
   backgroundColor: "#f0f0f0", // 원하는 배경색으로 변경하세요.
@@ -130,19 +131,19 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
 
   return (
     <>
-    <tr onClick={() => setMaseterFocus(formData["bound_id"])}
-    style={hovered ? rowHoverStyle : {}} // 마우스 호버 상태에 따라 스타일 적용
-    onMouseEnter={handleMouseEnter} // 마우스 호버 이벤트 리스너 추가
-    onMouseLeave={handleMouseLeave} // 마우스 이탈 이벤트 리스너 추가
-    >
-    <td style={{ width: '200px' }}>
+      <tr onClick={() => setMaseterFocus(formData["bound_id"])}
+      style={hovered ? rowHoverStyle : {}} // 마우스 호버 상태에 따라 스타일 적용
+      onMouseEnter={handleMouseEnter} // 마우스 호버 이벤트 리스너 추가
+      onMouseLeave={handleMouseLeave} // 마우스 이탈 이벤트 리스너 추가
+      >
+    <td style={{ width: '3%' }}>
         <input
           type="checkbox"
           name="check"
           onChange={handleCheckboxChange}
         ></input>
       </td>
-      <td  style={{ width: '550px' }}>
+      <td  style={{ width: '3%' }}>
         <input
           type="text"
           value={boundNo}
@@ -151,7 +152,7 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
           readOnly
         ></input>
       </td>
-      <td style={{ width: '150px' }}>
+      <td style={{ width: '3%', textAlign: 'center' }}>
         <select
           name="bound_category"
           value={formData.bound_category}
@@ -164,7 +165,7 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
             <option value="기타입고">기타입고</option>
        </select>
       </td>
-      <td style={{ width: '350px' }}>
+      <td style={{ width: '3%' }}>
         <input
            type="text"
            value={formData.partner_code}
@@ -180,7 +181,7 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
           }}
         ></input>
       </td>
-      <td style={{ width: '350px' }}>
+      <td style={{ width: '3%' }}>
       <input
         type="date"
         min="1900-01-01"
@@ -192,6 +193,8 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
       </td>
     </tr>
     {HelperScreenState && (
+            <div>
+              <div className="subRowBk" onClick={()=>sedivelperScreenState(!HelperScreenState)}></div>
               <div
                 style={{
                   position: "absolute",
@@ -208,6 +211,7 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
                   menu={item}
                   searchPartner={selectedPartnerFn}
                 />
+              </div>
               </div>
             )}
     </>

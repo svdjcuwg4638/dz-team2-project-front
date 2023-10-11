@@ -59,7 +59,7 @@ const MasterTable = ({
           overflowY: masterLength > 3 ? "auto" : "visible"
         }}
         >
-        <tbody>
+        <div>
           {boundId !== 0 && boundId && masterLength > 0 &&
             Array.from({ length: masterLength }).map((_, index) => {
               const currentBoundId = boundId + index;
@@ -84,14 +84,14 @@ const MasterTable = ({
               return null; // 삭제된 boundId에 해당하는 row는 렌더링하지 않음.
             })}
           <tr>
-            <td colSpan="3">
+            <td colSpan="15">
               <button className={inboundClasses.btn_add}
                       onClick={() => plustHandler()}>
                 +
               </button>
             </td>
           </tr>
-        </tbody>
+        </div>
       </div>
     </div>
   );

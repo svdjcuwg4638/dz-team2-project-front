@@ -120,7 +120,7 @@ const ItemList = ({
                   onClick={() => setSelectItem(data)}
                   style={{
                     backgroundColor:
-                      selectItem?.item_code == data?.item_code ? "#dadada" : "",
+                      selectItem?.item_code == data?.item_code ? "rgb(245, 245, 245)" : "",
                   }}
                 >
                   <div onClick={(e) => e.stopPropagation()}>

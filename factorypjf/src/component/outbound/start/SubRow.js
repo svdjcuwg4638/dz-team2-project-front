@@ -4,6 +4,7 @@ import SearchHelper from "../start/SearchHelper";
 import { useDispatch, useSelector } from "react-redux";
 import { unitPriceAction } from "redux/actions/management/unitPriceAction";
 import LocationSearchHelper from "./LocationSearchHelper";
+import '../../../style/inbound/overlay.css'
 
 const rowHoverStyle = {
   backgroundColor: "#f0f0f0", // 원하는 배경색으로 변경하세요.
@@ -258,14 +259,14 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
     <>
       <tr style={{display:masterFocus == formData["bound_id"] ? "block":"none"}}
       >
-        <td>
+        <td style={{width: '8%'}}>
           <input
               type="checkbox"
               checked={checkedSubBoundIds.includes(index)}
               onChange={handleCheckboxChange}
           ></input>
         </td>
-        <td>
+        <td style={{width: '8%'}}>
           <input
             type="text"
             name="item_code"
@@ -283,7 +284,7 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
             }}
           ></input>
         </td>
-        <td>
+        <td style={{width: '8%'}}>
           <input
             type="text"
             name="item_name"
@@ -292,7 +293,7 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
             readOnly
           ></input>
         </td>
-        <td>
+        <td style={{width: '8%'}}>
           <input
             type="text"
             name="unit_price"
@@ -301,7 +302,7 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
             readOnly
           ></input>
         </td>
-        <td>
+        <td style={{width: '8%'}}>
           <input
             type="text"
             name="storage_code"
@@ -314,7 +315,7 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
             }}
           ></input>
         </td>
-        <td>
+        <td style={{width: '8%'}}>
           <input
             type="text"
             name="location_code"
@@ -327,7 +328,7 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
             }}
           ></input>
         </td>
-        <td>
+        <td style={{width: '8%'}}>
           <input
             type="text"
             name="stock"
@@ -335,7 +336,7 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
             onChange={handleInputChange}
           ></input>
         </td>
-        <td>
+        <td style={{width: '8%'}}>
           <input
             type="text"
             name="amount"
@@ -345,7 +346,7 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
             readOnly={parseInt(formData["stock"]) <= 0}
           ></input>
         </td>
-        <td>
+        <td style={{width: '8%'}}>
           <input
             type="text"
             name="tot_amount"
@@ -354,17 +355,17 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
             readOnly
           ></input>
         </td>
-        <td>
+        <td style={{width: '12%'}}>
         <input
-            type="text" // 'date' 대신 'text'로 변경
-            pattern="\d{4}-\d{2}-\d{2}" // YYYY-MM-DD 형식 강제
-            placeholder="YYYY-MM-DD"
+             type="date"
+             min="1900-01-01"
+             max="9999-12-31"
             name="detail_date"
             value={formData["detail_date"]}
             onChange={handleDateChange}
         />
         </td>
-        <td>
+        <td style={{width: '16%'}}>
           <input
             type="text"
             name="description"
@@ -393,6 +394,8 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
         </div>
       )}
       {AHelperScreenState && (
+        <div>
+        <div className="subRowBk" onClick={()=>sedivelperScreenState(!HelperScreenState)}></div>
             <div
                 style={{
                     position: "absolute",
@@ -411,6 +414,7 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
                     currentDetailId={currentDetailId}
                 />
             </div>
+          </div>
         )}
       </>
   );

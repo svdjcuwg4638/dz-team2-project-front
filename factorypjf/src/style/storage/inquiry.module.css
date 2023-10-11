@@ -1,35 +1,45 @@
+table {
+  width: auto;
+}
+
 .SectionContainer {
   display: flex;
   justify-content: center;
-  padding-left: 3rem;
-  padding-right: 3rem;
-  padding-bottom: 3rem;
   width: 100%;
+  padding: 50px 40px;
 }
 
-.SearchSection table tbody td {
+.SearchSection td {
   border: 0px;
+  width: 140px;
 }
 
-.headerCon {
-  padding-top: 3rem;
-  margin-left: 3rem;
+.SearchSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
-.headerSection {
-  border-left: 3px solid #5390f0;
-}
-.SearchSection table {
+.SearchSection > td > div {
   border: none;
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  align-items: flex-start;
 }
-
-.header {
-  font-weight: bold;
-  margin-left: 1rem;
+.SearchSection > td > div > div > label {
+  font-size: 14px;
 }
-
+.SearchSection > td > div > input {
+  width: 120px;
+  height: 25px;
+  border-radius: 2px;
+  border: 1px solid #b9b9b9;
+  background: #fff;
+}
 .middlePart {
   display: flex;
   flex-direction: row;
+  margin-top: 1rem;
 }
 
 .arrow {
@@ -43,37 +53,73 @@
   height: 150px;
 }
 .grid04 {
-  margin-bottom: 3rem;
-  height: 500px;
+}
+.formresultStyle {
+  height: 580px;
+}
+.tableresultStyle {
+  height: 410px;
 }
 
-.searchBtn {
-  width: 70px;
-  background: #4373c0;
-  border: none;
-  border-radius: 15px;
-
-  line-height: 29px;
-  text-align: center;
-  color: #ffffff;
-  margin-bottom: 1rem;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-  font: bold;
-  padding: 0.3rem 1rem;
-
-  margin-bottom: 1rem;
-}
-
-.btnBox {
+.btnWrap {
   width: 100%;
   display: flex;
   justify-content: right;
 }
 
-/* 토글 버튼 스타일링 */
+.btnBox {
+  /* width: 100%;
+  justify-content: right; */
+
+  border-radius: 10px;
+  border: 1px solid #e9eef6;
+  background: #fff;
+  box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.25);
+  padding: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.toggleContainer {
+  display: flex;
+  width: 200px; /* 원하는 너비 설정 */
+  margin: 0 auto; /* 가운데 정렬을 위한 스타일 */
+}
+
 .toggleButton {
+  flex: 1;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: center;
+  font-weight: bold;
   cursor: pointer;
-  color: blue;
-  text-decoration: underline;
+  font-size: 12px;
+}
+.toggleContainer :nth-child(1) {
+  border-radius: 10px 0 0 10px;
+}
+.toggleContainer :nth-child(2) {
+  border-radius: 0 10px 10px 0;
+}
+/* 활성화된 쪽에 배경색 적용 */
+.active {
+  background-color: var(--main-color); /* 원하는 배경색 설정 */
+  color: #fff; /* 텍스트 색상 설정 */
+}
+
+/* 활성화되지 않은 쪽에 배경색 지우기 */
+.inactive {
+  background-color: #fff;
+  color: var(--main-color);
+  border: 1px solid var(--main-color);
+}
+
+.grid04 > div > div > table > tbody > tr > td > input,
+.grid01 > div > div > table > tbody > tr > td > input,
+.grid02 > div > div > table > tbody > tr > td > input,
+.grid03 > div > div > table > tbody > tr > td > input {
+  color: var(--font-color);
+  font-weight: normal;
 }

@@ -16,7 +16,7 @@ const ResultModal = ({ setModalstate, linkTo }) => {
         <h5>입력완료되었습니다</h5>
       </div>
       <div className={styles.buttonBox}>
-        <p onClick={handleNavigate}>내역으로 이동</p>
+        <p onClick={handleNavigate}>목록으로 이동</p>
         <p onClick={(e) => (setModalstate(false), window.location.reload())}>
           확인
         </p>

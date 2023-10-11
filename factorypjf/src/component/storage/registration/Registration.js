@@ -7,7 +7,7 @@ import { InventoryAction } from "redux/actions/storage/InventoryAction";
 import { TempInventoryAction } from "redux/actions/storage/TempInventoryAction";
 import Table from "../../layout/Table/Table";
 import DataTable from "./DataTable";
-import ResultModalContainer from "../resultModal/ResultModalContainer";
+import ModalContainer from "../resultModal/ModalContainer";
 import api from "redux/api";
 const Registration = () => {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const Registration = () => {
   const [filename, setFilename] = useState();
   const { tempinventoryAll } = useSelector((state) => state.tempinventory);
   const [tempstate, setTempState] = useState(true);
-  const [modalstate, setModalstate] = useState(false);
+  const [sendmodalstate, setSendModalstate] = useState(false);
   let storageCodeArray = [];
   useEffect(() => {
     loadfn();
@@ -50,8 +50,10 @@ const Registration = () => {
     }
   }, [tempinventoryAll]);
   useEffect(() => {
-    if (errorMessage === "오류가 0건 있습니다.") setErrorMessage();
-    else if (
+    if (errorMessage === "오류가 0건 있습니다.") {
+      console.log("이거라서 ㅇ벗음", errorMessage);
+      setErrorMessage();
+    } else if (
       tableitems.length === 0 ||
       tableitems.every((item) => Object.values(item).every((value) => !value))
     ) {
@@ -136,7 +138,7 @@ const Registration = () => {
         storageCodeArray
       );
       console.log(response);
-      if (response.status === 201) setModalstate(true);
+      if (response.status === 201) setSendModalstate(true);
       console.log("전송성공");
     } catch (error) {
       console.error("전송실패", error);
@@ -179,22 +181,22 @@ const Registration = () => {
 
   return (
     <>
-      {modalstate && (
-        <ResultModalContainer setModalstate={setModalstate} linkTo="../" />
+      {sendmodalstate && (
+        <ModalContainer
+          setModalstate={setSendModalstate}
+          type="result"
+          linkTo="../list"
+        />
       )}
-
-      <div className={styles.headerCon}>
-        <div className={styles.headerSection}>
-          <h4 className={styles.header}> 기초재고등록</h4>
-        </div>
-      </div>
 
       <div className={styles.SectionContainer}>
         <div>
           <div>
             <div className={styles.btnSection}>
               <button
-                className={`${!tempstate ? styles.btnFalse : styles.btnTrue}`}
+                className={`${
+                  !tempstate ? styles.btn_disabled : styles.btn_save
+                }`}
                 disabled={!tempstate ? true : false}
                 onClick={downloadExcelFile}
               >
@@ -208,20 +210,14 @@ const Registration = () => {
                   disabled={!tempstate ? true : false}
                 ></input>
                 <button
-                  className={`${!tempstate ? styles.btnFalse : styles.btnTrue}`}
+                  className={`${
+                    !tempstate ? styles.btn_disabled : styles.btn_save
+                  }`}
                   disabled={!tempstate ? true : false}
                 >
                   기초 재고 파일 업로드
                 </button>
               </div>
-              <button
-                className={`${!tempstate ? styles.btnFalse : styles.btnTrue} ${
-                  styles.guideBtn
-                }`}
-                disabled={!tempstate ? true : false}
-              >
-                ?
-              </button>
             </div>
             <div>
               <div className={styles.resultContainer}>
@@ -254,14 +250,14 @@ const Registration = () => {
                       <div className={styles.btnSection}>
                         <div className={styles.error}>{errorMessage}</div>
                         <button
-                          className={`${styles.btnTrue} ${styles.submitBtn}`}
+                          className={`${styles.btn_save} ${styles.submitBtn}`}
                           onClick={fetchTemp}
                         >
                           임시저장
                         </button>
                         <button
                           className={`${
-                            errorMessage ? styles.btnFalse : styles.btnTrue
+                            errorMessage ? styles.btn_disabled : styles.btn_save
                           } ${styles.submitBtn}`}
                           disabled={errorMessage}
                           onClick={fetch}

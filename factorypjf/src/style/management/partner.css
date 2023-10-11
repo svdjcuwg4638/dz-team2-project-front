@@ -124,3 +124,8 @@
 .content_wrap{
   position: relative;
 }
+
+.partner_detail_content_wrap > div{
+  margin-bottom: 6px;
+  font-size: 13px;
+}

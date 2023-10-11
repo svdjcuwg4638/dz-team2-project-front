@@ -31,7 +31,7 @@ const SearchHelper = ({
   let filteredData = [];
 
   const lowerCasedSearchTerm = searchTerm.toLowerCase();
-  
+
   if (menu.dataAll[menu.type_all].data) {
     filteredData = menu.dataAll[menu.type_all].data;
 
@@ -39,14 +39,20 @@ const SearchHelper = ({
       if (menu.name == "공통코드") {
         filteredData = menu.dataAll[menu.type_all].data.filter(
           (item) =>
-            (item[menu.code_column].toLowerCase().includes(lowerCasedSearchTerm) ||
-              item[menu.name_column].toLowerCase().includes(lowerCasedSearchTerm)) &&
+            (item[menu.code_column]
+              .toLowerCase()
+              .includes(lowerCasedSearchTerm) ||
+              item[menu.name_column]
+                .toLowerCase()
+                .includes(lowerCasedSearchTerm)) &&
             item["management_code"] == menu.common_code_type
         );
       } else {
         filteredData = menu.dataAll[menu.type_all].data.filter(
           (item) =>
-            item[menu.code_column].toLowerCase().includes(lowerCasedSearchTerm) ||
+            item[menu.code_column]
+              .toLowerCase()
+              .includes(lowerCasedSearchTerm) ||
             item[menu.name_column].toLowerCase().includes(lowerCasedSearchTerm)
         );
       }
@@ -121,7 +127,7 @@ const SearchHelper = ({
               textAlign: "center",
             }}
           >
-            공통코드
+            {menu.name}코드
           </div>
         </div>
         <div>
@@ -143,8 +149,8 @@ const SearchHelper = ({
             <input
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              onKeyPress={(e) => {  
-                if (e.key === 'Enter') {
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
                   e.preventDefault();
                   clickFn(e);
                 }
@@ -173,11 +179,14 @@ const SearchHelper = ({
           className="body m-3"
           style={{ height: "400px", overflowY: "scroll" }}
         >
-          <table style={{ color: "#000" }} className="common_help_table">
+          <table
+            style={{ color: "#000", textAlign: "center" }}
+            className="common_help_table"
+          >
             <thead>
               <tr>
-                <th>{menu.name}코드</th>
-                <th>{menu.name}명</th>
+                <th style={{ width: "50%" }}>{menu.name}코드</th>
+                <th style={{ width: "50%" }}>{menu.name}명</th>
               </tr>
             </thead>
             <tbody>
