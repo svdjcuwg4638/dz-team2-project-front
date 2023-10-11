@@ -4,6 +4,53 @@ import SearchHelper from "./SearchHelper";
 const rowHoverStyle = {
     backgroundColor: "#f0f0f0", // 원하는 배경색으로 변경하세요.
   };
+  const styles = {
+    wrapBtn: {
+      display: "flex",
+      justifyContent: "end",
+      marginTop: "10px",
+    },
+    btnDelete: {
+      backgroundColor: "white",
+      color: "var(--red-color)",
+      border: "1px solid var(--red-color)",
+      boxShadow: "1px 1px 2px 1px grey",
+      borderRadius: "8px",
+      fontSize: "14px",
+      fontWeight: "bold",
+      width: "50px",
+      height: "30px",
+      margin: "5px",
+    },
+    btnSave: {
+      backgroundColor: "var(--main-color)",
+      color: "white",
+      border: "none",
+      boxShadow: "1px 1px 2px 1px grey",
+      borderRadius: "8px",
+      fontSize: "14px",
+      fontWeight: "bold",
+      width: "50px",
+      height: "30px",
+      margin: "5px",
+    },
+    btnSave1: {
+        backgroundColor: "var(--main-color)",
+        color: "white",
+        border: "none",
+        boxShadow: "1px 1px 2px 1px grey",
+        borderRadius: "8px",
+        fontSize: "14px",
+        fontWeight: "bold",
+        width: "65px",
+        height: "30px",
+        margin: "5px",
+      },
+    btnSaveDelete: {
+      paddingTop: "2px",
+    },
+  };
+
 function Modal({ isOpen, onClose, boundId, details = [], locationAll, storageAll, setUpdatedDetails}) { // 기본값 설정
 // 연결된 bound_id를 기반으로 상세 정보를 필터링합니다.
 
@@ -128,7 +175,7 @@ return (
         <div style={{
            backgroundColor: 'white',
            padding: '20px',
-           maxWidth: '800px',
+           maxWidth: '1200px',
            width: '90%',
            borderRadius: '10px',
         }}>
@@ -146,7 +193,7 @@ return (
                         <th>장소</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody style={{textAlign: 'center'}}>
                     {matchingDetails.map((detail, index) => (
                         <tr key={index}
                         style={
@@ -163,29 +210,31 @@ return (
                             <td>{detail.unit_price}</td>
                             <td>{detail.tot_amount}</td>
                             <td>{detail.detail_date}</td>
-                            <td>{detail.decription}</td>
-                            <td>
+                            <td style={{width: '500px'}}>{detail.decription}</td>
+                            <td style={{width: '200px'}}>
                                 <input
                                     data-detail-id={detail.detail_id}
                                     name="storage_code"
                                     value={formData.find(fd => fd.detail_id === detail.detail_id)?.storage_name || ''}
                                 />
-                                 <button onClick={() => handleButtonClick('storage',detail.detail_id)}>창고선택</button>
+                                 <button style={styles.btnSave1} onClick={() => handleButtonClick('storage',detail.detail_id)}>창고선택</button>
                             </td>
-                            <td>
+                            <td style={{width: '200px'}}>
                                 <input
                                     data-detail-id={detail.detail_id} 
                                     name="location_code"
                                     value={formData.find(fd => fd.detail_id === detail.detail_id)?.location_name || ''}
                                 />
-                                <button onClick={() => handleButtonClick('location',detail.detail_id)}>장소선택</button>
+                                <button style={styles.btnSave1} onClick={() => handleButtonClick('location',detail.detail_id)}>장소선택</button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-            <button onClick={handleSaveChanges}>저장</button>
-            <button onClick={onClose}>닫기</button>
+            <div style={styles.wrapBtn}>
+            <button style={styles.btnDelete}onClick={onClose}>닫기</button>
+            <button style={styles.btnSave}onClick={handleSaveChanges}>저장</button>
+            </div>
         </div>
         {HelperScreenState && (
             <div

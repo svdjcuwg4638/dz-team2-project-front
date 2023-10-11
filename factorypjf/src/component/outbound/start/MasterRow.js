@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import api from "redux/api";
 import SearchHelper from "component/storage/item/SearchHelper";
+import '../../../style/inbound/overlay.css'
 
 const rowHoverStyle = {
   backgroundColor: "#f0f0f0", // 원하는 배경색으로 변경하세요.
@@ -154,14 +155,14 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
     onMouseEnter={handleMouseEnter} // 마우스 호버 이벤트 리스너 추가
     onMouseLeave={handleMouseLeave} // 마우스 이탈 이벤트 리스너 추가
     >
-      <td>
+      <td style={{ width: '3%' }}>
         <input
           type="checkbox"
           name="check"
           onChange={handleCheckboxChange}
         ></input>
       </td>
-      <td>
+      <td style={{ width: '3%' }}>
         <input
           type="text"
           value={boundNo}
@@ -170,7 +171,7 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
           readOnly
         ></input>
       </td>
-      <td>
+      <td style={{ width: '3%', textAlign:'center' }}>
         <select
           name="bound_category"
           value={formData.bound_category}
@@ -182,7 +183,7 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
             <option value="기타출고">기타출고</option>
        </select>
       </td>
-      <td>
+      <td style={{ width: '3%' }}>
         <input
            type="text"
            value={formData.partner_code}
@@ -198,7 +199,7 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
           }}
         ></input>
       </td>
-      <td>
+      <td style={{ width: '3%' }}>
       <input
         type="date"
         min="1900-01-01"
@@ -210,6 +211,8 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
       </td>
     </tr>
     {HelperScreenState && (
+            <div>
+            <div className="subRowBk" onClick={()=>sedivelperScreenState(!HelperScreenState)}></div>
               <div
                 style={{
                   position: "absolute",
@@ -226,6 +229,7 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
                   menu={item}
                   searchPartner={selectedPartnerFn}
                 />
+              </div>
               </div>
             )}
     </>
