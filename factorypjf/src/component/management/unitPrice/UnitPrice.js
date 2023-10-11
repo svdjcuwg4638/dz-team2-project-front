@@ -44,7 +44,7 @@ const UnitPrice = () => {
     <div className="unitprice_wrap">
       <UnitPriceList itemAll={itemAll}/>
       {itemAll.data && <AddUnitPrice itemAll={itemAll} />}
-      <div className="unitprice_title">단가관리</div>
+      <div className="unitprice_title"></div>
     </div>
   );
 };

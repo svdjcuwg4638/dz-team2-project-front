@@ -68,9 +68,10 @@ const SubTable = ({ boundId, masterLength, masterFocus, subFlag, deletedBoundIds
         style={{
           maxHeight: "300px", // 원하는 높이로 설정
           overflowY: "auto",  // 세로 스크롤을 사용하려면 auto 또는 scroll로 설정
+          
         }}
               >
-        <tbody>
+        <div>
           {boundId && masterLength &&
             subRowArray.map((boundId, index) => {
               if (deletedBoundIds && !deletedBoundIds.includes(boundId) && !deletedIndex.includes(index)) {
@@ -89,11 +90,13 @@ const SubTable = ({ boundId, masterLength, masterFocus, subFlag, deletedBoundIds
               return null;
             })}
           <tr>
-            <button className={inboundClasses.btn_add}
-              onClick={() => addSubArray(masterFocus)}
-            >+</button>
+            <td style={{width : "1600px"}}>
+              <button className={inboundClasses.btn_add}
+                onClick={() => addSubArray(masterFocus)}
+              >+</button>
+            </td>
           </tr>
-        </tbody>
+        </div>
       </div>
     </div>
   );

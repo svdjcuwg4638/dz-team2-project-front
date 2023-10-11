@@ -49,19 +49,19 @@ function SubTableRow({ rowData, storageAll, locationAll }) {
 
   return (
     <tr
-      style={hovered ? rowHoverStyle : {}}
+      style={{ ...(hovered ? rowHoverStyle : {}), textAlign: 'center' }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <td>{rowData.item_code}</td>
-      <td>{rowData.item_name}</td>
-      <td>{rowData.amount}</td>
-      <td>{rowData.unit_price}</td>
-      <td>{rowData.tot_amount}</td>
-      <td>{storageName}</td>
-      <td>{locationName}</td>
-      <td>{rowData.detail_date}</td>
-      <td>{rowData.description}</td>
+      <td style={{width: '8%'}}>{rowData.item_code}</td>
+      <td style={{width: '8%'}}>{rowData.item_name}</td>
+      <td style={{width: '8%'}}>{rowData.amount}</td>
+      <td style={{width: '8%'}}>{rowData.unit_price}</td>
+      <td style={{width: '8%'}}>{rowData.tot_amount}</td>
+      <td style={{width: '8%'}}>{storageName}</td>
+      <td style={{width: '8%'}}>{locationName}</td>
+      <td style={{width: '20%'}}>{rowData.detail_date}</td>
+      <td style={{width: '24%'}}>{rowData.description}</td>
     </tr>
   );
 }

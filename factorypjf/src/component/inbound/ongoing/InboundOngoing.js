@@ -12,6 +12,53 @@ const rowHoverStyle = {
   backgroundColor: "#f0f0f0", // 원하는 배경색으로 변경하세요.
 };
 
+const styles = {
+  wrapBtn: {
+    display: "flex",
+    justifyContent: "end",
+    marginTop: "10px",
+  },
+  btnDelete: {
+    backgroundColor: "white",
+    color: "var(--red-color)",
+    border: "1px solid var(--red-color)",
+    boxShadow: "1px 1px 2px 1px grey",
+    borderRadius: "8px",
+    fontSize: "14px",
+    fontWeight: "bold",
+    width: "50px",
+    height: "30px",
+    margin: "5px",
+  },
+  btnSave: {
+    backgroundColor: "var(--main-color)",
+    color: "white",
+    border: "none",
+    boxShadow: "1px 1px 2px 1px grey",
+    borderRadius: "8px",
+    fontSize: "14px",
+    fontWeight: "bold",
+    width: "62px",
+    height: "30px",
+    margin: "5px",
+  },
+  btnSave1: {
+    backgroundColor: "var(--main-color)",
+    color: "white",
+    border: "none",
+    boxShadow: "1px 1px 2px 1px grey",
+    borderRadius: "8px",
+    fontSize: "14px",
+    fontWeight: "bold",
+    width: "90px",
+    height: "30px",
+    margin: "5px",
+  },
+  btnSaveDelete: {
+    paddingTop: "2px",
+  },
+};
+
 function InboundOngoing() {
 
   const [hovered, setHovered] = useState(false); // 마우스 호버 상태를 저장하기 위한 상태 변수
@@ -27,11 +74,11 @@ function InboundOngoing() {
   };
 
   const grid01_headers = [
-    { text: "문서번호", value: "bound_no", width: "3%" },
-    { text: "유형", value: "bound_category", width: "9%" },
-    { text: "거래처", value: "partner_code", width: "9%" },
-    { text: "입고예정일", value: "bound_date", width: "9%" },
-    { text: "창고/장소", value: "", width: "9%", helper: true },
+    { text: "문서번호", value: "bound_no", width: "20%" },
+    { text: "유형", value: "bound_category", width: "20%" },
+    { text: "거래처", value: "partner_code", width: "20%" },
+    { text: "입고예정일", value: "bound_date", width: "20%" },
+    { text: "창고/장소", value: "", width: "20%", helper: true },
   ];
   
   const dispatch = useDispatch();
@@ -119,51 +166,56 @@ function InboundOngoing() {
   };
 
   return (
-    <div className={inboundClasses.wrap}>
-      <p className={inboundClasses["sub-menu-name"]}>입고등록</p>
-      <Table headers={grid01_headers}></Table>
-      <tbody>
-        {matchingMasters && matchingMasters.length > 0 ? (
-          matchingMasters.map((data, index) => (
-            <tr
-              key={index}
-              onMouseEnter={() => handleMouseEnter(data.bound_id)} // 개별 tr에 대한 이벤트 핸들러 설정
-              onMouseLeave={handleMouseLeave} // 공통 이벤트 핸들러
-              style={hovered === data.bound_id ? rowHoverStyle : {}} // hover 상태에 따라 스타일 적용
-            >
-              {grid01_headers.map((header) => {
-                if (!header.value) {
-                  return (
-                    <td key="warehouse-location">
-                      <button onClick={() => handleOpenModal(data.bound_id)}>
-                        창고/장소
-                      </button>
-                    </td>
-                  );
-                }
-                return <td key={header.value}>{data[header.value]}</td>;
-              })}
-            </tr>
-          ))
-        ) : (
-          <tr>
-            <td colSpan={grid01_headers.length}>데이터가 없습니다.</td>
-          </tr>
-        )}
-      </tbody>
-      <button onClick={handleSendToServer}>입고처리</button>
+  <div style={{padding:'0px'}}>
+      <div className={inboundClasses.wrap}>
+        <p className={inboundClasses["sub-menu-name"]}>입고등록</p>
+        <Table headers={grid01_headers}></Table>
+        <div style={{overflow: "auto", maxHeight: "400px", textAlign: 'center'}}>
+          {matchingMasters && matchingMasters.length > 0 ? (
+            matchingMasters.map((data, index) => (
+              <div
+                key={index}
+                onMouseEnter={() => handleMouseEnter(data.bound_id)} // 개별 tr에 대한 이벤트 핸들러 설정
+                onMouseLeave={handleMouseLeave} // 공통 이벤트 핸들러
+                style={{ ...hovered === data.bound_id ? rowHoverStyle : {}, display: "flex" }} // hover 상태에 따라 스타일 적용
+              >
+                {grid01_headers.map((header) => {
+                  if (!header.value) {
+                    return (
+                      <td key="warehouse-location" style={{ flex: "20%" }}>
+                        <button style={styles.btnSave1} onClick={() => handleOpenModal(data.bound_id)}>
+                          창고/장소 선택
+                        </button>
+                      </td>
+                    );
+                  }
+                  return <td key={header.value} style={{ flex: "20%" }}>{data[header.value]}</td>
+                })}
+              </div>
 
-      <DetailModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        boundId={selectedBoundId}
-        details={searchDetailData}
-        storageAll={storageAll}
-        locationAll={locationAll}
-        setUpdatedDetails={setUpdatedDetails}
-      />
+            ))
+          ) : (
+            <tr>
+              <td colSpan={grid01_headers.length}>데이터가 없습니다.</td>
+            </tr>
+          )}
+        </div>
+        <div style={styles.wrapBtn}>
+        <button style={styles.btnSave} onClick={handleSendToServer}>입고처리</button>
+        </div>    
+        <DetailModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          boundId={selectedBoundId}
+          details={searchDetailData}
+          storageAll={storageAll}
+          locationAll={locationAll}
+          setUpdatedDetails={setUpdatedDetails}
+        />
+      </div>
     </div>
   );
+  
 }
 
 export default InboundOngoing;

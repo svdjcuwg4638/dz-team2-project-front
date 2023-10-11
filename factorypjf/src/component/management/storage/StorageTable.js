@@ -62,6 +62,7 @@ function StorageTable({
                 >
                   <input
                     type="checkbox"
+                    className="management_checkBox"
                     checked={selectCodes.includes(data.storage_code)}
                     onChange={(e) => {
                       e.stopPropagation();

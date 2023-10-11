@@ -44,7 +44,7 @@ const PartnerList = ({
       </div>
 
       <div className="ctable">
-        <div className="cbody" onWheel={handleScroll}>
+        <div className="cbody" style={{height:"38vh"}} onWheel={handleScroll}>
           {partnerAll &&
             partnerAll.length > 0 &&
             partnerAll.map((data) => (
@@ -53,12 +53,13 @@ const PartnerList = ({
                 style={{
                   background:
                     selectPartner?.partner_code == data?.partner_code
-                      ? "#dadada"
+                      ? "rgb(245, 245, 245)"
                       : "",
                 }}
               >
                 <div>
                   <input
+                    className="management_checkBox"
                     type="checkbox"
                     checked={selectCodes?.includes(data?.partner_code)}
                     onChange={() => handleCheckboxChange(data?.partner_code)}

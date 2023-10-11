@@ -87,7 +87,7 @@ const ItemList = ({
               <div>
                 <button
                   type="submit"
-                  className="button"
+                  className="btn_save"
                   onClick={handleSearchSubmit}
                 >
                   조회
@@ -120,11 +120,12 @@ const ItemList = ({
                   onClick={() => setSelectItem(data)}
                   style={{
                     backgroundColor:
-                      selectItem?.item_code == data?.item_code ? "#dadada" : "",
+                      selectItem?.item_code == data?.item_code ? "rgb(245, 245, 245)" : "",
                   }}
                 >
                   <div onClick={(e) => e.stopPropagation()}>
                     <input
+                    className="management_checkBox"
                       type="checkbox"
                       checked={selectIds.includes(data.item_code)}
                       onChange={(e) => {

@@ -1,7 +1,7 @@
 .unit_price_tab_wrap {
   display: flex;
   position: absolute;
-  top: 143px;
+  top: 91px;
 }
 
 .unitprice_wrap{
@@ -11,7 +11,7 @@
 }
 .unitprice_wrap > div:nth-child(1){
   width: 60%;
-  padding: 30px;
+  padding: 23px;
 }
 
 .unitprice_wrap > div:nth-child(2) select{
@@ -27,9 +27,9 @@
   width: 120px;
   text-align: center;
   border-radius: 5px;
-  color: #fff;
+  color: #000;
   height: 40px;
-  background-color: #5390EF;
+  background-color: #e9eef6;
   display: flex;
   align-items: center;
   justify-content: center;

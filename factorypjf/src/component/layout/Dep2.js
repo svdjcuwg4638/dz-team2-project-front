@@ -2,53 +2,22 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import "../../style/layout/dep2.css";
-import { BiSolidFactory } from "react-icons/bi";
-import { BsFillBookmarkFill, BsInfoCircle } from "react-icons/bs";
 import { Link, useLocation } from "react-router-dom";
 import { menuActions } from "redux/reducers/menu";
-import { LuFactory } from "react-icons/lu";
-import { FiMinusSquare, FiPlusSquare } from "react-icons/fi";
-import { MdOutlineInventory2 } from "react-icons/md";
 
-const Dep2 = ({ bookMarkList,currentTab,subMenu }) => {
+const Dep2 = ({ bookMarkList, currentTab, subMenu }) => {
   const currentMenu = useSelector((state) => state.currentMenu.currentMenu);
+
+  const location = useLocation();
+  const pathParts = location.pathname.split("/").slice(2);
+  const currentPage = pathParts.length > 0 ? "/" + pathParts.join("/") : location.pathname;
+
 
   const dispatch = useDispatch();
 
   const currentMenuName = useSelector(
     (state) => state.currentMenu.currentMenuName
   );
-
-  // const subMenu = {
-  //   production: [
-  //     { link: "/line", name: "생산라인관리" },
-  //     { link: "/add", name: "생산등록" },
-  //     { link: "/list", name: "생산내역조회" },
-  //   ],
-  //   inbound: [
-  //     { link: "", name: "입고예정" },
-  //     { link: "/ongoing", name: "입고등록" },
-  //     { link: "/end", name: "입고현황" },
-  //   ],
-  //   outbound: [
-  //     { link: "", name: "출고예정" },
-  //     { link: "/end", name: "출고현황" },
-  //   ],
-  //   management: [
-  //     { link: "/item", name: "품목관리" },
-  //     { link: "/relation", name: "소모자재관리" },
-  //     { link: "/unitprice", name: "단가관리" },
-  //     { link: "/storage", name: "창고관리" },
-  //     { link: "/partner", name: "거래처관리" },
-  //     { link: "/code", name: "공통코드관리" },
-  //   ],
-  //   storage: [
-  //     { link: "/list", name: "재고조회" },
-  //     { link: "/movement", name: "재고이동" },
-  //     { link: "/movementsList", name: "재고이동내역" },
-  //     { link: "/registration", name: "기초재고등록" },
-  //   ],
-  // };
 
   function findMenuNameByUrl(url) {
     for (let menuKey in subMenu) {
@@ -87,6 +56,10 @@ const Dep2 = ({ bookMarkList,currentTab,subMenu }) => {
     return { menu: menuValue, menuName: menuNameValue };
   }
 
+  useEffect(() => {
+    console.log(currentPage);
+  }, [currentTab]);
+
   return (
     <div className="dep2_wrap">
       <div className="menu1">
@@ -122,13 +95,33 @@ const Dep2 = ({ bookMarkList,currentTab,subMenu }) => {
             <div>{currentMenuName}</div>
           </div>
           <div className="menu_sub_wrap">
-            {currentTab && subMenu[currentMenu].map((el, index) => (
-              <div key={index}>
-                <Link to={'/'+currentTab+'/'+currentMenu + el.link}>
-                  <span>{el.name}</span>
-                </Link>
-              </div>
-            ))}
+            {currentTab &&
+              subMenu[currentMenu].map((el, index) => (
+                <div>
+                  <div
+                    key={index}
+                    style={{
+                      backgroundColor:
+                        "/" + currentMenu + el.link == currentPage
+                          ? "#5390F0"
+                          : "",
+                    }}
+                  >
+                    <Link to={"/" + currentTab + "/" + currentMenu + el.link}>
+                      <div
+                        style={{
+                          color:
+                            "/" + currentMenu + el.link == currentPage
+                              ? "#fff"
+                              : "",
+                        }}
+                      >
+                        {el.name}
+                      </div>
+                    </Link>
+                  </div>
+                </div>
+              ))}
           </div>
         </div>
       </div>
@@ -142,10 +135,12 @@ const Dep2 = ({ bookMarkList,currentTab,subMenu }) => {
         <div className="menu_sub_wrap">
           {bookMarkList &&
             bookMarkList.map((data, index) => (
-              <div key={index}>
-                <Link to={'/'+currentTab+data.pageUrl} onClick={() => setMenu(data.pageUrl)}>
-                  <span>{findMenuNameByUrl(data.pageUrl)}</span>
-                </Link>
+              <div>
+                <div>
+                  <Link to={"/" + currentTab + data.pageUrl} onClick={() => setMenu(data.pageUrl)}>
+                    <div>{findMenuNameByUrl(data.pageUrl)}</div>
+                  </Link>
+                </div>
               </div>
             ))}
         </div>

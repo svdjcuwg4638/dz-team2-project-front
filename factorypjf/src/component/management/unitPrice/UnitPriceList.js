@@ -73,6 +73,9 @@ const UnitPriceList = ({ itemAll }) => {
         if (formData.type && data.type !== formData.type) {
           valid = false;
         }
+        if (formData.start_date && data.start_date !== formData.start_date) {
+          valid = false;
+        }
         return valid;
       })
     );
@@ -145,86 +148,87 @@ const UnitPriceList = ({ itemAll }) => {
 
   return (
     <div>
-      <form className="unit_price_search_form mt-4">
-        <div>
-          <div>
-            <div>품목이름</div>
-            <div className="flex">
-              <input
-                readOnly
-                type="text"
-                onChange={handleInputChange}
-                value={formData["item_name"]}
-              ></input>
-              {formData["item_code"] != "" && (
-                <div>
-                  <button
-                    name="item"
-                    onClick={delvalue}
-                    style={{ width: "20px", color: "red", background: "#fff" }}
-                  >
-                    x
-                  </button>
-                </div>
-              )}
-              <Modal menu={itemCode} handleInputChange={handleInputChange} />
-            </div>
-          </div>
-          <div>
-            <div>거래처</div>
-            <div className="flex">
-              <input
-                tyep="text"
-                name="partner_name"
-                onChange={handleInputChange}
-                value={formData["partner_name"]}
-              ></input>
-              <Modal menu={partnerCode} handleInputChange={handleInputChange} />
-            </div>
-          </div>
-          <div>
-            <div>입고/출고</div>
+      <form className="management_search_wrap">
+        <div className="management_search_content">
+          <div style={{ display: "flex" }}>
             <div>
-              <select name="type" onChange={handleInputChange}>
-                <option value=""></option>
-                <option value="inbound">입고</option>
-                <option value="outbound">출고</option>
-              </select>
+              <div>품목이름</div>
+              <div  style={{ display: "flex" }}>
+                <input
+                  style={{width:"100px"}}
+                  readOnly
+                  type="text"
+                  onChange={handleInputChange}
+                  value={formData["item_name"]}
+                ></input>
+                <Modal menu={itemCode} handleInputChange={handleInputChange} />
+              </div>
+            </div>
+
+            <div style={{ flexFlow: "column", alignItems: "start" }}>
+              <div>거래처</div>
+              <div className="flex">
+                <input
+                  style={{width:"100px"}}
+                  tyep="text"
+                  name="partner_name"
+                  onChange={handleInputChange}
+                  value={formData["partner_name"]}
+                ></input>
+                <Modal
+                  menu={partnerCode}
+                  handleInputChange={handleInputChange}
+                />
+              </div>
+            </div>
+            <div style={{ flexFlow: "column" ,margin:"0"}}>
+              <div>입고/출고</div>
+              <div>
+                <select name="type" onChange={handleInputChange} style={{height:"22.8px"}}>
+                  <option value=""></option>
+                  <option value="inbound">입고</option>
+                  <option value="outbound">출고</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <div>시작일</div>
+              <div>
+                <input
+                  type="date"
+                  name="start_date"
+                  onChange={handleInputChange}
+                ></input>
+              </div>
             </div>
           </div>
           <div>
-            <div>시작일</div>
-            <div>
-              <input
-                tyep="text"
-                name="itme_code"
-                onChange={handleInputChange}
-              ></input>
-            </div>
+            <button type="button" className="btn_save" onClick={filterData}>
+              조회
+            </button>
           </div>
-        </div>
-        <div>
-          <button type="button" className="button" onClick={filterData}>
-            조회
-          </button>
         </div>
       </form>
       <div className="unit_price_tab_wrap">
         <div
           onClick={() => setListFlag("current")}
-          style={{ backgroundColor: listFalg == "current" ? "#4473BF" : "" }}
+          style={{ backgroundColor: listFalg != "current" ? "#e9eef6" : "rgb(83, 144, 240)" ,
+                color : listFalg != "current" ? "" : "#fff"
+        }}
         >
           현재단가
         </div>
         <div
           onClick={() => setListFlag("expected")}
-          style={{ backgroundColor: listFalg == "expected" ? "#4473BF" : "" }}
+          style={{ backgroundColor: listFalg != "expected" ? "#e9eef6" : "rgb(83, 144, 240)" ,
+          color : listFalg != "expected" ? "" : "#fff"}}
         >
           변경예정단가
         </div>
         <div
           onClick={() => setListFlag("all")}
-          style={{ backgroundColor: listFalg == "all" ? "#4473BF" : "" }}
+          style={{ backgroundColor: listFalg != "all" ? "#e9eef6" : "rgb(83, 144, 240)",
+          color : listFalg != "all" ? "" : "#fff" }}
         >
           전체
         </div>
@@ -245,13 +249,14 @@ const UnitPriceList = ({ itemAll }) => {
         </div>
       </div>
       <div className="ctable">
-        <div className="cbody">
+        <div className="cbody" style={{height:"38vh"}}>
           {unitPriceAll &&
             searchList?.map((data) => (
               <div className="ctr unitprice_row">
                 <div>
                   <input
                     type="checkbox"
+                    className="management_checkBox"
                     checked={selectCodes?.includes(data?.partner_code)}
                     onChange={() => handleCheckboxChange(data?.partner_code)}
                   />
@@ -282,10 +287,8 @@ const UnitPriceList = ({ itemAll }) => {
       <div className="button_wrap">
         <button
           disabled={selectCodes.length > 0 ? false : true}
-          className="button"
-          style={{
-            backgroundColor: selectCodes.length > 0 ? "red" : "#dadada",
-          }}
+          className="btn_delete"
+          style={{ backgroundColor: selectCodes.length > 0 ? "#fff" :"rgb(245, 245, 245)", color:selectCodes.length > 0 ? "" : "#fff"  }}
           onClick={handleDelete}
         >
           삭제

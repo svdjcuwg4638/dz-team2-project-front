@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import "style/layout/dep1.css";
@@ -9,7 +9,7 @@ import { LuFactory } from "react-icons/lu";
 import { FiMinusSquare, FiPlusSquare } from "react-icons/fi";
 import { menuActions } from "../../redux/reducers/menu";
 
-const Dep1 = () => {
+const Dep1 = ({ currentTab }) => {
   const dispatch = useDispatch();
 
   const productionHandler = () => {
@@ -28,32 +28,77 @@ const Dep1 = () => {
     dispatch(menuActions.management());
   };
 
+  const location = useLocation();
+  const currentMenu = location.pathname.split("/")[2];
+
   return (
     <div className="dap1">
       <div className="icon_wrap">
-        <Link to="1/production/add" onClick={productionHandler}>
-          <div title="생산관리">
-            <LuFactory size={25} color="#fff" />
+        <Link to={currentTab + "/production/add"} onClick={productionHandler}>
+          <div
+            title="생산관리"
+            style={{
+              backgroundColor: currentMenu == "production" ? "#fff" : "",
+            }}
+          >
+            <LuFactory
+              size={25}
+              color={currentMenu === "production" ? "#5390F0" : "#fff"}
+            />
           </div>
         </Link>
-        <Link to="1/inbound/start" onClick={inboundHandler}>
-          <div title="입고관리">
-            <FiPlusSquare size={25} color="#fff" />
+        <Link to={currentTab + "/inbound/start"} onClick={inboundHandler}>
+          <div
+            title="입고관리"
+            style={{
+              backgroundColor: currentMenu == "inbound" ? "#fff" : "",
+            }}
+          >
+            <FiPlusSquare
+              size={25}
+              color={currentMenu === "inbound" ? "#5390F0" : "#fff"}
+            />
           </div>
         </Link>
-        <Link to="1/outbound/start" onClick={outboundHandler}>
-          <div title="출고관리">
-            <FiMinusSquare size={25} color="#fff" />
+
+        <Link to={currentTab + "/outbound/start"} onClick={outboundHandler}>
+          <div
+            title="출고관리"
+            style={{
+              backgroundColor: currentMenu == "outbound" ? "#fff" : "",
+            }}
+          >
+            <FiMinusSquare
+              size={25}
+              color={currentMenu === "outbound" ? "#5390F0" : "#fff"}
+            />
           </div>
         </Link>
-        <Link to="1/storage/list" onClick={storageHandler}>
-          <div title="재고관리">
-            <MdOutlineInventory2 size={25} color="#fff" />
+
+        <Link to={currentTab + "/storage/list"} onClick={storageHandler}>
+          <div
+            title="재고관리"
+            style={{
+              backgroundColor: currentMenu == "storage" ? "#fff" : "",
+            }}
+          >
+            <MdOutlineInventory2
+              size={25}
+              color={currentMenu === "storage" ? "#5390F0" : "#fff"}
+            />
           </div>
         </Link>
-        <Link to="1/management/item" onClick={managementHandler}>
-          <div title="기준정보관리">
-            <BsInfoCircle size={25} color="#fff" />
+        <Link to={currentTab + "/management/item"} onClick={managementHandler}>
+          <div
+            title="기준정보관리"
+            style={{
+              backgroundColor: currentMenu == "management" ? "#fff" : "",
+            }}
+          >
+            <BsInfoCircle
+              size={25}
+              color={currentMenu === "management" ? "#5390F0" : "#fff"}
+            />
           </div>
         </Link>
       </div>

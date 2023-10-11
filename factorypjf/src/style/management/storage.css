@@ -1,7 +1,7 @@
 .storage_wrap {
   width: 100%;
   height: 100%;
-  padding-top: 111px;
+  padding-top: 42px;
   position: relative;
 }
 
@@ -150,10 +150,6 @@
 .storage_row_sub >div:nth-child(1){ width: 10%;}
 .storage_row_sub >div:nth-child(2){ width: 45%;}
 .storage_row_sub >div:nth-child(3){ width: 45%;}
-
-.storage_bottom > div > div > div:nth-child(1){
-  font-weight: bold;
-}
 
 .storage_wrap .storage_row_sub > div {
   cursor: auto !important;

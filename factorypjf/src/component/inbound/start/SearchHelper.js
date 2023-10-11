@@ -4,7 +4,22 @@ import { partnerAction } from "../../../redux/actions/management/partnerAction";
 import { itemAction } from "../../../redux/actions/management/itemAction";
 import { storageAction } from "../../../redux/actions/management/storageAction";
 import { codeAction } from "redux/actions/management/codeAction";
+import '../../../style/inbound/overlay.css'
 
+const styles = {
+  btnSave: {
+      backgroundColor: "var(--main-color)",
+      color: "white",
+      border: "none",
+      boxShadow: "1px 1px 2px 1px grey",
+      borderRadius: "8px",
+      fontSize: "14px",
+      fontWeight: "bold",
+      width: "50px",
+      height: "30px",
+      margin: "5px",
+    },
+  };
 const SearchHelper = ({
   searchPartner,
   code_type,
@@ -97,6 +112,7 @@ const SearchHelper = ({
     setInputboxText(e.target[0].value);
   };
   return (
+    <div class="md_overlay1">
     <div
       style={{
         border: "1px solid black",
@@ -105,14 +121,35 @@ const SearchHelper = ({
         backgroundColor: "white",
       }}
     >
-      <div className="header" style={{ backgroundColor: "#5390F0" }}>
+      <div className="header">
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <div
+              style={{
+                borderBottom: "2px solid rgb(83, 144, 240)",
+                fontSize: "30px",
+                fontWeight: "bold",
+                padding: "3px",
+                margin: "23px",
+                width: "43%",
+                textAlign: "center",
+              }}
+            >
+              {menu.name}
+            </div>
+        </div>
         <div>
           <select
             onChange={(e) => setCategory(e.target.value)}
             className="mt-3"
-            style={{ width: "25%", height: "30px" }}
+            style={{
+              width: "25%",
+              height: "30px",
+              margin: "0 5px",
+              border: "1px solid #d9d9d9",
+              textAlign: "center",
+            }}
           >
-            <option value="default">공통</option>
+            <option value="default">전체</option>
             <option value="code">{menu.name}코드</option>
             <option value="name">{menu.name}명</option>
           </select>
@@ -120,15 +157,16 @@ const SearchHelper = ({
             <input
               style={{
                 border: "1px solid black",
-                width: "70%",
+                width: "50%",
                 height: "31px",
+                border: "1px solid #d9d9d9",
               }}
             ></input>
-            <div style={{ textAlign: "right", marginRight: "10px" }}>
-              <button className="btn" type="submit">
-                조회
+            {/* <div style={{ textAlign: "right", marginRight: "10px" }}> */}
+              <button style={styles.btnSave}className="btn" type="submit">
+                검색
               </button>
-            </div>
+            {/* </div> */}
           </form>
         </div>
       </div>
@@ -150,6 +188,7 @@ const SearchHelper = ({
                   onClick={(e) => {
                     rowClickHandler(datarow);
                   }}
+                 style={{textAlign: 'center'}}
                 >
                   <td>{datarow[menu.code_column]}</td>
                   <td> {datarow[menu.name_column]}</td>
@@ -159,6 +198,7 @@ const SearchHelper = ({
           </table>
         </div>
       </div>
+    </div>
     </div>
   );
 };
