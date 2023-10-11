@@ -27,7 +27,7 @@ export default function DataTable({ headers, onModal, children }) {
                 {header.text}
                 {header.helper && (
                   <span class="wrap-search-icon">
-                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <i class="fa-solid fa-circle-info helper_icon"></i>
                   </span>
                 )}
               </th>

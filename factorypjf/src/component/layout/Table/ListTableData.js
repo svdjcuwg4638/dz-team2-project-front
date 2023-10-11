@@ -1,8 +1,10 @@
 import React, { useEffect, useReducer, useState } from "react";
 
+import HelperModal from "component/common/helper/HelperModal";
+
 import tableStyle from "style/layout/dataTable/table.module.css";
 import listStyle from "style/layout/dataTable/listTableData.module.css";
-import HelperModal from "component/common/helper/HelperModal";
+import productionStyle from "style/production/production.module.css"
 
 const HELPER_KEY = 113;
 const CLEAN_KEY=115;
@@ -33,7 +35,7 @@ export default function ListTable({
         for (let key in item) {
           tempObj = { ...tempObj, [key]: item[key] };
         }
-        copyArray.push(JSON.parse(JSON.stringify(tempObj)));
+        copyArray.push({...tempObj});
       }
     }
     setTableItems(copyArray);
@@ -85,7 +87,7 @@ export default function ListTable({
       setCurrentCol({ ...coordinate });
       //모달 켜기
       onModalHanlder(colInfo.value, colInfo.text);
-      if(editHandler)editHandler(e,'list',coordinate)
+      if(editHandler)editHandler(e,'list',colInfo,coordinate)
     } else if (e.which === HELPER_KEY && !colInfo.helper) {
       console.log("도움창이 제공되지 않는 코드입니다.");
       //도움창 컬럼 지우기
@@ -205,6 +207,7 @@ export default function ListTable({
                       onKeyUp={(e) => {
                         keyUpHandler(e, header, { row: idx, col: headerIdx });
                       }}
+                      className={header.readonly&&`${productionStyle['input_read-only']}`}
                     ></input>
                   ) : (
                     <input
