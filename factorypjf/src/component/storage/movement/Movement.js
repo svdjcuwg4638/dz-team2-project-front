@@ -4,20 +4,22 @@ import Table from "../../layout/Table/Table";
 import AddTable from "component/layout/Table/AddTableData";
 import SearchHelperModal from "component/common/helper/SearchHelperModal";
 import axios from "axios";
-import ResultModalContainer from "../resultModal/ResultModalContainer";
+import ModalContainer from "../resultModal/ModalContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { storageAction } from "redux/actions/management/storageAction";
 import fastforward from "img/fast-forward.png";
 import api from "redux/api";
+import { ReactComponent as Arrow } from "img/rightArrow.svg";
 
 const Movement = () => {
   const header = [
     { text: "순번", value: "index", width: "3%" },
     {
-      text: "품목*",
+      text: "품목",
       value: "item",
       helper: true,
       width: "15%",
+      required: true,
     },
     {
       text: "출고창고재고",
@@ -31,7 +33,7 @@ const Movement = () => {
       readonly: true,
       width: "9%",
     },
-    { text: "개수*", value: "movement", width: "9%" },
+    { text: "개수", value: "movement", width: "9%", required: true },
     { text: "비고", value: "description", width: "15%" },
   ];
   const outbound_header = [
@@ -323,30 +325,32 @@ const Movement = () => {
   const selectRowHandler = (idx, e) => {
     setSelectedRow(idx);
     //========필수항목일 경우 input 색상 변경=======
-    let inputId = e.target.id;
-    let inputHeader = inputId.match(/(?<=\w_)[a-zA-z_]+/g)[0];
-    e.target.className = e.target.className.replace("input_red", "");
-    e.target.className = e.target.className.replace("input_black", "");
-    // e.target.className=e.target.className.replace('input_blue','')
+    if (e.target.type === "text") {
+      let inputId = e.target.id;
+      let inputHeader = inputId.match(/(?<=\w_)[a-zA-z_]+/g)[0];
+      e.target.className = e.target.className.replace("input_red", "");
+      e.target.className = e.target.className.replace("input_black", "");
+      // e.target.className=e.target.className.replace('input_blue','')
 
-    // e.target.className.replace(`${productionClasses["input_red"]}`,null)
-    // e.target.className.replace(`${productionClasses["input_black"]}`,null)
-    header.map((header) => {
-      if (inputHeader === header.value) {
-        //필수항목이고 빈칸이면
-        if (header.text.includes("*") && e.target.value === "") {
-          // e.target.className= e.target.className?e.target.className+`${productionClasses[" input_red"]}`:`${productionClasses["input_red"]}`
-          e.target.className = e.target.className
-            ? e.target.className + " input_red"
-            : "input_red";
-        } else {
-          // e.target.className= e.target.className?e.target.className+`${productionClasses[" input_black"]}`:`${productionClasses["input_black"]}`
-          e.target.className = e.target.className
-            ? e.target.className + " input_black"
-            : "input_black";
+      // e.target.className.replace(`${productionClasses["input_red"]}`,null)
+      // e.target.className.replace(`${productionClasses["input_black"]}`,null)
+      header.map((header) => {
+        if (inputHeader === header.value) {
+          //필수항목이고 빈칸이면
+          if (header.required && e.target.value === "") {
+            // e.target.className= e.target.className?e.target.className+`${productionClasses[" input_red"]}`:`${productionClasses["input_red"]}`
+            e.target.className = e.target.className
+              ? e.target.className + " input_red"
+              : "input_red";
+          } else {
+            // e.target.className= e.target.className?e.target.className+`${productionClasses[" input_black"]}`:`${productionClasses["input_black"]}`
+            e.target.className = e.target.className
+              ? e.target.className + " input_black"
+              : "input_black";
+          }
         }
-      }
-    });
+      });
+    }
   };
   // 재고 가져오기
   const stockHandler = async (outbound, inbound, item, selectedRow) => {
@@ -383,8 +387,9 @@ const Movement = () => {
   return (
     <>
       {modalstate && (
-        <ResultModalContainer
+        <ModalContainer
           setModalstate={setModalstate}
+          type="result"
           linkTo="../movementsList"
         />
       )}
@@ -400,9 +405,7 @@ const Movement = () => {
                     formHandler={setOutbound}
                   />
                 </div>
-                <div className={styles.arrow}>
-                  <img src={fastforward} width={70} alt="" />
-                </div>
+                <Arrow width="3%" height="138" />
 
                 <div className={styles.right}>
                   <SearchHelperModal
@@ -411,17 +414,24 @@ const Movement = () => {
                   />
                 </div>
               </div>
-              <div className={styles.bottompanel}>
-                <SearchHelperModal headers={emp_header} formHandler={setEmp} />
-                <div>
-                  <label>재고이동일</label>
-                  <input
-                    type="date"
-                    min="1900-01-01"
-                    max="9999-12-31"
-                    defaultValue={date}
-                    onChange={(e) => setDate(e.target.value)}
-                  ></input>
+              <div className={styles.inoutCon}>
+                <div className={styles.etcCon}>
+                  <SearchHelperModal
+                    headers={emp_header}
+                    formHandler={setEmp}
+                  />
+                  <div className={styles.dateCon}>
+                    <label>재고이동일</label>
+                    <div>
+                      <input
+                        type="date"
+                        min="1900-01-01"
+                        max="9999-12-31"
+                        defaultValue={date}
+                        onChange={(e) => setDate(e.target.value)}
+                      ></input>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -441,7 +451,8 @@ const Movement = () => {
                   <p className={styles.errorTrue}>{errormessage}</p>
                 )}
                 <button
-                  className={errormessage ? styles.btnFalse : styles.btnTrue}
+                  className={errormessage ? "btn_disabled" : "btn_save"}
+                  disabled={errormessage ? true : false}
                   onClick={(e) =>
                     submitHandler(
                       outbound,

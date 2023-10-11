@@ -45,7 +45,7 @@ export const MovementsList = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [pageNumbers, setPageNumbers] = useState([]);
 
-  const pageSize = 7; // 페이지당 아이템 수
+  const pageSize = 10; // 페이지당 아이템 수
 
   useEffect(() => {
     // 페이지가 변경될 때마다 API 호출
@@ -149,6 +149,7 @@ export const MovementsList = () => {
                     formHandler={setSearchOutboundData}
                   />
                 </div>
+                <Arrow width="3%" height="138" />
 
                 <div className={styles.right}>
                   <SearchHelperModal

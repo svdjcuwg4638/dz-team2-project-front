@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import Table from "../../layout/Table/Table";
 import axios from "axios";
 import ListTable from "component/layout/Table/ListTableData";
-import styles from "style/storage/inquiry.module.css";
 import { ReactComponent as Arrow } from "img/rightArrow.svg";
 import SearchHelperModal from "component/common/helper/SearchHelperModal";
 import api from "redux/api";
+import styles from "style/storage/inquiry.module.css";
 
 const Inquiry = () => {
   // #region table headers
@@ -36,7 +36,6 @@ const Inquiry = () => {
       text: "품목코드",
       value: "item_code",
       width: "7%",
-      helper: true,
       readonly: true,
     },
     { text: "품목명", value: "item_name", width: "9%", readonly: true },
@@ -276,14 +275,11 @@ const Inquiry = () => {
             {isSearchSectionVisible && (
               <div className={styles.btnBox}>
                 <div className={styles.SearchSection}>
-                  <table>
-                    <tbody>
-                      <SearchHelperModal
-                        headers={search_headers}
-                        formHandler={formHandler}
-                      />
-                    </tbody>
-                  </table>
+                  <SearchHelperModal
+                    headers={search_headers}
+                    formHandler={formHandler}
+                  />
+
                   <div className="wrap-btn">
                     <button className="btn_save" onClick={searchHandler}>
                       조회

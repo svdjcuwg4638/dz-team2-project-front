@@ -1,24 +1,41 @@
 table {
-  width: auto !important;
+  width: auto;
 }
+
 .SectionContainer {
   display: flex;
   justify-content: center;
   width: 100%;
 }
 
-.SearchSection table tbody td {
+.SearchSection td {
   border: 0px;
-}
-
-.SearchSection table {
-  border: none;
+  width: 140px;
 }
 
 .SearchSection {
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+.SearchSection > td > div {
+  border: none;
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.SearchSection > td > div > label {
+  width: 80px;
+  font-size: 12px;
+  font-weight: 400;
+}
+.SearchSection > td > div > input {
+  width: 120px;
+  height: 25px;
+  border-radius: 2px;
+  border: 1px solid #b9b9b9;
+  background: #fff;
 }
 .middlePart {
   display: flex;
@@ -39,10 +56,10 @@ table {
 .grid04 {
 }
 .formresultStyle {
-  height: 440px;
+  height: 580px;
 }
 .tableresultStyle {
-  height: 300px;
+  height: 410px;
 }
 
 .btnWrap {
@@ -72,11 +89,14 @@ table {
 
 .toggleButton {
   flex: 1;
-  padding: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   text-align: center;
   font-weight: bold;
   cursor: pointer;
-  font-size: 10px;
+  font-size: 12px;
 }
 .toggleContainer :nth-child(1) {
   border-radius: 10px 0 0 10px;

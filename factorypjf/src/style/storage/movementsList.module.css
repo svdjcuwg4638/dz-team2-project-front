@@ -40,8 +40,7 @@
 
 .inoutCon,
 .PBtnCon,
-.inoutCon,
-.etcCon {
+.inoutCon {
   display: flex;
   justify-content: center;
 }
@@ -93,6 +92,7 @@
 
 .left,
 .right {
+  width: 250px;
   display: flex;
   flex-direction: column;
   border-radius: 10px;
@@ -101,31 +101,8 @@
   box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.25);
   padding-top: 1rem;
   padding-bottom: 1rem;
-  padding-right: 3rem;
-  padding-left: 3rem;
 }
 
-.etcCon {
-  width: 46%;
-  border-radius: 10px;
-  border: 1px solid #e9eef6;
-  background: #fff;
-  box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.25);
-  padding: 1rem;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-}
-.etcCon td input {
-  width: 85px;
-  height: 22px;
-  border-radius: 2px;
-  border: 1px solid #b9b9b9;
-  background: #fff;
-}
-
-.etcCon button {
-  margin-left: 3rem;
-}
 .left {
   margin-right: 3rem;
 }
@@ -133,21 +110,49 @@
 .right {
   margin-left: 3rem;
 }
+.left > td > div > label,
+.right > td > div > label,
+.etcCon > td > div > label,
+.dateCon > label {
+  width: 80px;
+  font-size: 12px;
+  font-weight: 400;
+}
 
-.left td input,
-.right td input {
-  /* width: 165px;
-  height: 37.5px; */
+.left > td > div > label,
+.right > td > div > label {
+  text-align: center;
+  line-height: 25px;
+}
+.left > td > div > input,
+.right > td > div > input {
   border-radius: 2px;
   border: 1px solid #b9b9b9;
   background: #fff;
+  width: 150px;
+  height: 25px;
+}
+.left > td > div,
+.right > td > div {
+  display: flex;
+  align-items: normal;
+  flex-direction: initial;
+  height: 20px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
-.inoutCon div td,
-.etcCon td {
-  border: 0px;
-  width: auto;
+.left > td,
+.right > td {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
+
+.inoutCon > div > td {
+  border: 0px;
+}
+
 .dateCon {
   font-size: 14px;
   display: flex;
@@ -156,12 +161,63 @@
 .dateCon > div {
   display: flex;
   flex-direction: row;
+  justify-content: left;
 }
 .dateCon > div input {
   border-radius: 2px;
   border: 1px solid #b9b9b9;
   background: #fff;
 }
-.etcCon > * {
+
+.etcCon {
+  width: 630px;
+  border-radius: 10px;
+  border: 1px solid #e9eef6;
+  background: #fff;
+  box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.25);
+  padding: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+.etcCon {
+  display: flex;
+  justify-content: center;
+}
+.etcCon > td {
+  border: 0px;
+  width: 140px;
+}
+.dateCon {
   margin-right: 1rem;
+}
+
+.etcCon > td > div {
+  border: none;
+  display: flex;
+  justify-content: flex-start;
+  align-items: normal;
+  width: 100%;
+  flex-direction: column;
+}
+.etcCon > td > div > label {
+  text-align: left;
+}
+.etcCon > td > div > input {
+  width: 120px;
+  height: 25px;
+  border-radius: 2px;
+  border: 1px solid #b9b9b9;
+  background: #fff;
+}
+.arrow {
+  height: 138px;
+}
+.arrow::after {
+  display: inline-block;
+  height: 100%;
+  content: "";
+  vertical-align: middle;
+}
+.arrow img {
+  vertical-align: middle;
 }
