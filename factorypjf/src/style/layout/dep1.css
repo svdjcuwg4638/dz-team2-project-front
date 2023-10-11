@@ -7,12 +7,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  border-right: none;
 }
 
 .icon_wrap > a > div {
   margin: 55px 0px;
   cursor: pointer;
   position: relative;
+  margin-left: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  padding: 10px 0;
 }
 .icon_wrap > a > div>svg {
   margin:0px 10px;

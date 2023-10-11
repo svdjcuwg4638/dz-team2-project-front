@@ -57,10 +57,9 @@ const MasterTable = ({
       <div
         style={{
           maxHeight: masterLength > 3 ? "200px" : "none",
-          overflowY: masterLength > 3 ? "auto" : "visible"
-        }}
-      >
-        <tbody>
+          overflowY: masterLength > 3 ? "auto" : "visible",
+          
+        }}>
           {boundId !== 0 && boundId && masterLength > 0 &&
             Array.from({ length: masterLength }).map((_, index) => {
               const currentBoundId = boundId + index;
@@ -93,8 +92,8 @@ const MasterTable = ({
               </button>
             </td>
           </tr>
-        </tbody>
-      </div>
+        </div>
+      
     </div>
   );
 };

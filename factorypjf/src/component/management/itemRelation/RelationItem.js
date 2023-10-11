@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { relationAction } from "redux/actions/management/relationAction";
 import api from "redux/api";
 
-
 const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
   const dispatch = useDispatch();
   const [searchData, setSearchData] = useState(null);
@@ -178,17 +177,18 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
             ))}
         </div>
       </div>
-      <form className="mt-3" onSubmit={handleSubmit}>
+      <form className="mt-3 management_inputBox" onSubmit={handleSubmit}>
         <div className="relation_input_wrap">
           <div>
             <div>
               자재코드
               <span class="wrap-search-icon">
-                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <i class="fa-solid fa-circle-info"></i>
               </span>
             </div>
             <div style={{ marginRight: "10px" }}>
               <input
+                className="inputBox"
                 ref={inputRefs.item_code}
                 type="text"
                 name="item_code"
@@ -212,7 +212,7 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
             <div>
               자재이름
               <span class="wrap-search-icon">
-                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <i class="fa-solid fa-circle-info"></i>
               </span>
             </div>
             <div style={{ marginRight: "10px" }}>
@@ -236,22 +236,28 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
               />
             </div>
             {HelperScreenState && (
-              <div
-                style={{
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  boxShadow: "0 0 10px rgba(0,0,0,0.8)",
-                  zIndex: 10,
-                }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <SearchHelper
-                  handleInputChange={handleInputChange}
-                  menu={item}
-                  searchPartner={selectedPartnerFn}
-                />
+              <div>
+                <div
+                  className="relation_back_modal"
+                  onClick={() => sedivelperScreenState(!HelperScreenState)}
+                ></div>
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    boxShadow: "0 0 10px rgba(0,0,0,0.8)",
+                    zIndex: 10,
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <SearchHelper
+                    handleInputChange={handleInputChange}
+                    menu={item}
+                    searchPartner={selectedPartnerFn}
+                  />
+                </div>
               </div>
             )}
           </div>
@@ -281,9 +287,10 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
           <button
             type="button"
             disabled={!selectId}
-            className="btn_save"
+            className="btn_delete"
             style={{
-              backgroundColor: selectCodes.length > 0 ? "red" : "#dadada",
+              backgroundColor: selectCodes.length > 0 ? "#fff" : "rgb(245, 245, 245)",
+              color: selectCodes.length > 0 ? "" : "#fff",
             }}
             onClick={handleDelete}
           >

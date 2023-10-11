@@ -53,7 +53,7 @@ const PartnerList = ({
                 style={{
                   background:
                     selectPartner?.partner_code == data?.partner_code
-                      ? "#dadada"
+                      ? "rgb(245, 245, 245)"
                       : "",
                 }}
               >

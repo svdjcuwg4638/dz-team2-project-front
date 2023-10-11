@@ -21,6 +21,7 @@ const Modal = ({ menu, handleInputChange,code_type }) => {
           left: "0",
           right: "0",
           bottom: "0",
+          textAlign:"center"
         }}
         onClick={() => setHelperScreenState(false)}
       >

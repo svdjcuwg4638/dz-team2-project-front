@@ -287,10 +287,8 @@ const UnitPriceList = ({ itemAll }) => {
       <div className="button_wrap">
         <button
           disabled={selectCodes.length > 0 ? false : true}
-          className="button"
-          style={{
-            backgroundColor: selectCodes.length > 0 ? "red" : "#dadada",
-          }}
+          className="btn_delete"
+          style={{ backgroundColor: selectCodes.length > 0 ? "#fff" :"rgb(245, 245, 245)", color:selectCodes.length > 0 ? "" : "#fff"  }}
           onClick={handleDelete}
         >
           삭제

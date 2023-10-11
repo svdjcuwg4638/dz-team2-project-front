@@ -94,7 +94,7 @@
 }
 
 .cbody .ctr:hover{
-  background-color: #dadada;
+  background-color:rgb(245, 245, 245);
 }
 
 .detail_wrap textarea{
@@ -120,7 +120,7 @@
 }
 
 .common_help_table tbody tr:hover{
-  background-color: #dadada;
+  background-color: rgb(245, 245, 245);
   cursor: pointer;
 }
 
@@ -163,6 +163,10 @@
 
 .management_checkBox{
   height:25px !important;
-  width: 40px !important;
+  width: 38px !important;
   margin-top: 8px;
+}
+
+.management_inputBox input{
+  border-radius: 5px;
 }
