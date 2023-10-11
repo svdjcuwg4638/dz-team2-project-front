@@ -85,7 +85,7 @@ const MasterTable = ({
               return null; // 삭제된 boundId에 해당하는 row는 렌더링하지 않음.
             })}
           <tr>
-            <td colSpan="15">
+            <td colSpan="1600px">
               <button className={inboundClasses.btn_add}
                       onClick={() => plustHandler()}>
                 +
