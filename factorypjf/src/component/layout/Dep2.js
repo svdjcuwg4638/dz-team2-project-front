@@ -9,7 +9,9 @@ const Dep2 = ({ bookMarkList, currentTab, subMenu }) => {
   const currentMenu = useSelector((state) => state.currentMenu.currentMenu);
 
   const location = useLocation();
-  const currentPage = "/" + location.pathname.split("/").slice(2).join("/");
+  const pathParts = location.pathname.split("/").slice(2);
+  const currentPage = pathParts.length > 0 ? "/" + pathParts.join("/") : location.pathname;
+
 
   const dispatch = useDispatch();
 
@@ -133,9 +135,9 @@ const Dep2 = ({ bookMarkList, currentTab, subMenu }) => {
         <div className="menu_sub_wrap">
           {bookMarkList &&
             bookMarkList.map((data, index) => (
-              <div to={"/" + currentTab + data.pageUrl}>
+              <div>
                 <div>
-                  <Link onClick={() => setMenu(data.pageUrl)}>
+                  <Link to={"/" + currentTab + data.pageUrl} onClick={() => setMenu(data.pageUrl)}>
                     <div>{findMenuNameByUrl(data.pageUrl)}</div>
                   </Link>
                 </div>

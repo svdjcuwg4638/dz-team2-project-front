@@ -163,6 +163,10 @@
 
 .management_checkBox{
   height:25px !important;
-  width: 40px !important;
+  width: 38px !important;
   margin-top: 8px;
+}
+
+.management_inputBox input{
+  border-radius: 5px;
 }

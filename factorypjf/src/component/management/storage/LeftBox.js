@@ -128,16 +128,14 @@ function LeftBox({ storageAll, selectId, setSelectId }) {
             </div>
           </div>
           <div className="button_wrap">
-            <button className="button" type="submit">
+            <button className="btn_save" type="submit">
               추가
             </button>
             <button
               disabled={!selectCodes.length > 0}
-              className="button"
+              className="btn_delete"
               type="button"
-              style={{
-                backgroundColor: selectCodes.length > 0 ? "red" : "#dadada",
-              }}
+              style={{ backgroundColor: selectCodes.length > 0 ? "#fff" :"#dadada", color:selectCodes.length > 0 ? "" : "#fff"  }}
               onClick={handleDelete}
             >
               삭제

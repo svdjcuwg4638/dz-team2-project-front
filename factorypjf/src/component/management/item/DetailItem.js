@@ -326,9 +326,9 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
   };
   // #endregion
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(showFlag);
-  },[showFlag])
+  }, [showFlag]);
 
   return (
     <div className="detail_wrap" style={{ width: "100%" }}>
@@ -339,7 +339,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
               <div>품목코드</div>
               <div>
                 <input
-                  className={!readOnly && 'input_red'}
+                  className={!readOnly && "input_red"}
                   ref={inputRefs.item_code}
                   readOnly={formMod == "add" ? false : true}
                   style={{
@@ -361,7 +361,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
               <div>
                 <input
                   ref={inputRefs.item_name}
-                  className={!readOnly && 'input_red'}
+                  className={!readOnly && "input_red"}
                   style={{
                     backgroundColor: readOnly ? "#F5F5F5" : "",
                     border:
@@ -422,12 +422,12 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
             </div>
           </div>
 
-          <div style={{position:"relative"}}>
+          <div style={{ position: "relative" }}>
             <div>
               <div>창고</div>
               <div>
                 <input
-                  className={!readOnly && 'input_red'}
+                  className={!readOnly && "input_red"}
                   ref={inputRefs.storage_code}
                   readOnly
                   style={{
@@ -449,7 +449,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
               <div className="flex">
                 <div>
                   <input
-                    className={!readOnly && 'input_red'}
+                    className={!readOnly && "input_red"}
                     ref={inputRefs.location_code}
                     readOnly
                     style={{

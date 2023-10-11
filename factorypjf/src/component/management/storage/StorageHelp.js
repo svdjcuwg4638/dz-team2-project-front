@@ -10,13 +10,12 @@ const StorageHelp = ({ handleInputChange, setShowFlag }) => {
   }, []);
 
   const { storageAll, locationAll } = useSelector((state) => state.storage);
-  const [filterData, setFilterData ] = useState();
+  const [filterData, setFilterData] = useState();
   useEffect(() => {
-    searchStorageData()
+    searchStorageData();
   }, [storageAll, locationAll]);
 
   function searchStorageData() {
-
     const filteredLocationData = locationAll?.data
       .filter((locdata) => locdata.location_name.includes(locationNameInput))
       .map((locdata) => {
@@ -109,7 +108,15 @@ const StorageHelp = ({ handleInputChange, setShowFlag }) => {
             </button>
           </div>
         </form>
-        <table style={{ marginTop: "10px" }}>
+        <table
+          style={{
+            padding: "21px",
+            width: "95%",
+            marginLeft: "18px",
+            textAlign: "center",
+            marginTop: "10px",
+          }}
+        >
           <thead>
             <tr>
               <th>창고코드</th>

@@ -151,17 +151,15 @@ const RightBox = ({ locationAll, selectId }) => {
             </div>
           </div>
           <div className="button_wrap">
-            <button className="button" type="submit"
+            <button className="btn_save" type="submit"
             >
               추가
             </button>
             <button
               type="button"
               disabled={!selectIds.length > 0}
-              className="button"
-              style={{
-                backgroundColor: selectIds.length > 0 ? "red" : "#dadada",
-              }}
+              className="btn_delete"
+              style={{ backgroundColor: selectIds.length > 0 ? "#fff" :"#dadada", color:selectIds.length > 0 ? "" : "#fff"  }}
               onClick={handleDelete}
             >
               삭제
