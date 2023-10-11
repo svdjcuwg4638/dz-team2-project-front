@@ -42,7 +42,7 @@ const SubTable = ({ boundId, masterLength, masterFocus, subFlag, deletedBoundIds
     if (subFlag) { // subFlag를 모든 요청이 완료되었음을 알리는 트리거로 사용합니다.
       if (allRequestsSuccessful) {
         alert('저장완료');
-        // window.location.reload();
+        window.location.reload();
       } else {
         alert('저장실패');
       }
@@ -58,8 +58,14 @@ const SubTable = ({ boundId, masterLength, masterFocus, subFlag, deletedBoundIds
 
   return (
     <div>
-      <div className="table">
-        <tbody>
+      <div
+        style={{
+          maxHeight: "300px", // 원하는 높이로 설정
+          overflowY: "auto",  // 세로 스크롤을 사용하려면 auto 또는 scroll로 설정
+          
+        }}
+              >
+        <div>
           {boundId && masterLength &&
             subRowArray.map((boundId, index) => {
               if (deletedBoundIds && !deletedBoundIds.includes(boundId) && !deletedIndex.includes(index)) {
@@ -80,11 +86,13 @@ const SubTable = ({ boundId, masterLength, masterFocus, subFlag, deletedBoundIds
               return null;
             })}
           <tr>
+          <td style={{width : "1600px"}}>
             <button className={inboundClasses.btn_add}
               onClick={() => addSubArray(masterFocus)}
             >+</button>
+          </td>
           </tr>
-        </tbody>
+        </div>
       </div>
     </div>
   );

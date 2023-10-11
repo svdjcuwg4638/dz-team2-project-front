@@ -61,7 +61,7 @@ const ItemList = ({
     <div>
       <div className="item_search_wrap">
         <form>
-          <div>
+          <div className='item_search_content'>
             <div style={{ marginRight: "20px" }}>
               <div>
                 <div>품목코드</div>
@@ -84,16 +84,16 @@ const ItemList = ({
                   />
                 </div>
               </div>
+              <div>
+                <button
+                  type="submit"
+                  className="btn_save"
+                  onClick={handleSearchSubmit}
+                >
+                  조회
+                </button>
+              </div>
             </div>
-          </div>
-          <div>
-            <button
-              type="submit"
-              className="button"
-              onClick={handleSearchSubmit}
-            >
-              조회
-            </button>
           </div>
         </form>
       </div>
@@ -101,7 +101,7 @@ const ItemList = ({
       <div>
         <div className="ctable">
           <div className="chead">
-            <div className="ctr item_row">
+            <div className="ctr item_row" style={{border:"none"}}>
               <div></div>
               <div>품목코드</div>
               <div>품목이름</div>
@@ -120,11 +120,12 @@ const ItemList = ({
                   onClick={() => setSelectItem(data)}
                   style={{
                     backgroundColor:
-                      selectItem?.item_code == data?.item_code ? "#dadada" : "",
+                      selectItem?.item_code == data?.item_code ? "rgb(245, 245, 245)" : "",
                   }}
                 >
                   <div onClick={(e) => e.stopPropagation()}>
                     <input
+                    className="management_checkBox"
                       type="checkbox"
                       checked={selectIds.includes(data.item_code)}
                       onChange={(e) => {

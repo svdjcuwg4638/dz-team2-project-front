@@ -3,10 +3,8 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useReducer } from "react";
-
-// import searchStyle from "style/common/searchStyle.module.css";
 import styles from "style/common/SearchHelperModal.module.css";
-
+// import searchStyle from "style/common/searchStyle.module.css";
 const HELPER_KEY = 113;
 const CLEAN_KEY = 115;
 const ENTER_KEY = 13;
@@ -23,7 +21,7 @@ const SearchHelperModal = ({ headers, formHandler, enterHandler }) => {
   //     setTableItems(items);
   //   }
   // }, [items]);
-  
+
   //행 추가 handler
   const [tableItems, setTableItems] = useState({});
   //검색 필터 내용 바뀔때마다 formHandler 호출
@@ -125,7 +123,11 @@ const SearchHelperModal = ({ headers, formHandler, enterHandler }) => {
       {headers.map((header, headerIdx) => (
         <td key={header.headerIdx}>
           <div className={styles.searchCom}>
-            <label> {header.text}</label>
+            <div className={header.helper?"search_label_helper":"search_label"} onClick={(e)=>buttonPressHandler(e,header)}>
+              <label> {header.text}</label>
+              {header.helper&&<i class="fa-solid fa-circle-info helper_icon"></i>}
+            </div>
+
             {header.helper ? (
               <>
                 <input
@@ -134,7 +136,7 @@ const SearchHelperModal = ({ headers, formHandler, enterHandler }) => {
                     keyUpHandler(e, header);
                   }}
                 ></input>
-                <button
+                {/* <button
                   className={styles.helperBtn}
                   onClick={(e) =>
                     buttonPressHandler(e, header, {
@@ -144,7 +146,7 @@ const SearchHelperModal = ({ headers, formHandler, enterHandler }) => {
                   }
                 >
                   ?
-                </button>
+                </button> */}
               </>
             ) : (
               <>

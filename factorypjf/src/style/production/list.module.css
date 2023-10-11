@@ -1,6 +1,4 @@
-.grid01 {
-  height: 40%;
-}
+
 table {
   /* border: solid 1px #B9B9B9; */
   width: 100%;
@@ -19,4 +17,17 @@ table {
 }
 .filter-container {
   display: flex;
+}
+.grid01,.grid02{
+  height: 30%;
+}
+.container-production_list{
+  height: 100%;
+  padding:40px 20px;
+}
+.search_date{
+  display: flex;
+}
+.search_date{
+  width: 22% !important;
 }

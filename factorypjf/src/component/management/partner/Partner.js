@@ -87,8 +87,8 @@ const Partner = () => {
             <div className="button_wrap">
               <button
                 disabled={selectCodes.length > 0 ? false : true}
-                className="button"
-                style={{ backgroundColor: selectCodes.length > 0  ? "red" : "#dadada" }}
+                className="btn_delete"
+                style={{ backgroundColor: selectCodes.length > 0 ? "#fff" :"rgb(245, 245, 245)", color:selectCodes.length > 0 ? "" : "#fff"  }}
                 onClick={handleDelete}
               >
                 삭제
@@ -99,7 +99,7 @@ const Partner = () => {
         <div className="partner_detail_wrap">
           <PartnerDetail selectPartner={selectPartner} setSelectParnter={setSelectParnter}/>
         </div>
-        <div className="partner_title">거래처관리</div>
+        <div className="partner_title"></div>
       </div>
     </div>
   );

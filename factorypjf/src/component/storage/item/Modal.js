@@ -21,6 +21,7 @@ const Modal = ({ menu, handleInputChange,code_type }) => {
           left: "0",
           right: "0",
           bottom: "0",
+          textAlign:"center"
         }}
         onClick={() => setHelperScreenState(false)}
       >
@@ -63,8 +64,10 @@ const Modal = ({ menu, handleInputChange,code_type }) => {
                     width: "30px",
                     height: "30px",
                     textAlign: "center",
-                    marginRight: "10px",
-                    marginLeft: "5px",
+                    backgroundColor: "#5390f0",
+                    color: "#fff",
+                    margin: "0 10px",
+                    borderRadius:"25px"
                   }}
                 >
                   ?

@@ -1,12 +1,14 @@
 .code_wrap {
   justify-content: space-evenly;
   height: 100%;
-  padding-top: 118px;
+  padding-top: 36px;
   position: relative;
 }
 
 .code_wrap input {
-  border-radius: 5px;
+  border: 1px solid #000;
+  width: 120px;
+
 }
 
 .code_wrap table {
@@ -14,6 +16,9 @@
 }
 
 .code_wrap > div:nth-child(2) {
+  width: 40%;
+}
+.code_wrap > div:nth-child(3) {
   width: 40%;
 }
 
@@ -72,4 +77,15 @@
 }
 .code_wrap .code_row_sub > div:nth-child(3) {
   width: 45%;
+}
+
+.common_code_list_content {
+  cursor: auto !important;
+}
+.common_code_list_content > div{
+  cursor: auto !important;
+}
+
+.common_code_list_content input{
+  cursor: pointer;
 }

@@ -19,46 +19,71 @@ const DataTable = ({ headers, Eitems, items, setItems, setErrorCount }) => {
   const [errorCell, setErrorCell] = useState([]);
   // 최초 데이터 로드
   useEffect(() => {
-    dataloadFn();
-    // setTableItems(items);
-    console.log("data table component! : ", items);
-  }, []);
+    // 데이터 로드 함수 정의
+    const loadData = async () => {
+      try {
+        const storageDataResponse = await api.post("/common/help", {
+          searchOption: "0",
+          keyword: "",
+          codeType: "storage",
+        });
 
+        const locationDataResponse = await api.get("/location/all");
+        const itemDataResponse = await api.get("/item/all");
+
+        // 데이터를 가져온 후에 다음 단계로 진행
+        const storageData = storageDataResponse.data.data;
+        const locationData = locationDataResponse.data.data;
+        const itemData = itemDataResponse.data.data;
+
+        // 데이터를 설정
+        setStorageData(storageData);
+        setLocationData(locationData);
+        setItemData(itemData);
+
+        console.log("최초 데이터 로드 완료");
+      } catch (error) {
+        console.error("전송실패", error);
+      }
+    };
+    loadData();
+    // 데이터 로드 함수 호출
+  }, []); // 빈 배열을 두 번째 인자로 전달하여 이 `useEffect`가 컴포넌트가 마운트될 때 한 번만 실행되도록 합니다.
   // 데이터 로드
-  const dataloadFn = async () => {
-    try {
-      const storageData = await api.post("/common/help", {
-        searchOption: "0",
-        keyword: "",
-        codeType: "storage",
-      });
-
-      const locationData = await api.get("/location/all");
-      const itemData = await axios.get("/item/all");
-      setStorageData(storageData.data.data);
-      setLocationData(locationData.data.data);
-      setItemData(itemData.data.data);
-    } catch (error) {
-      console.error("전송실패", error);
-    }
-  };
 
   // excel 로드
+  // Excel 로드 useEffect
   useEffect(() => {
-    let copyItems = [...Eitems];
+    var copyItemsWithItem = [];
+    var copyItemsWithLocation = [];
+    // 모든 데이터를 로드한 후에 setFieldNames를 호출
+    console.log("eitem useEffect", storageData, locationData, itemData);
+    const copyItems = setFieldNames(
+      Eitems,
+      "storage",
+      "storagename",
+      storageData
+    );
+    console.log(copyItems, copyItemsWithLocation, copyItemsWithItem);
 
-    copyItems = setFieldNames(copyItems, "storage", "storagename", storageData);
-    copyItems = setFieldNames(
+    copyItemsWithLocation = setFieldNames(
       copyItems,
       "location",
       "locationname",
       locationData
     );
-    copyItems = setFieldNames(copyItems, "item", "itemname", itemData);
+    console.log(copyItems, copyItemsWithLocation, copyItemsWithItem);
 
-    setTableItems((prevTableItems) => [...prevTableItems, ...copyItems]);
-  }, [Eitems]);
+    copyItemsWithItem = setFieldNames(
+      copyItemsWithLocation,
+      "item",
+      "itemname",
+      itemData
+    );
 
+    console.log(copyItems, copyItemsWithLocation, copyItemsWithItem);
+    setTableItems([...copyItemsWithItem]);
+  }, [Eitems, storageData, locationData, itemData]);
   // 부모로 데이터 올리기, errorstate 계산
   useEffect(() => {
     setItems(tableItems);
@@ -79,6 +104,7 @@ const DataTable = ({ headers, Eitems, items, setItems, setErrorCount }) => {
         errorCell.flat().filter((cell) => cell === true).length +
         "건 있습니다."
     );
+    console.log("222 Eitems", Eitems, "items", items, "tableItems", tableItems);
   }, [tableItems]);
 
   // row 추가
@@ -177,6 +203,7 @@ const DataTable = ({ headers, Eitems, items, setItems, setErrorCount }) => {
       }
     }
     copyItems = setFieldNames(copyItems, "storage", "storagename", storageData);
+
     copyItems = setFieldNames(
       copyItems,
       "location",
@@ -300,7 +327,7 @@ const DataTable = ({ headers, Eitems, items, setItems, setErrorCount }) => {
         // 창고 input에서 없는 창고 입력시 error 처리
         else if (fieldName === "storage") {
           if (matchingItem) {
-            codeList.map((codeitem) => {
+            codeList.map((copyItem) => {
               if (
                 copyItem["storage"] !== matchingItem["code"] ||
                 matchingItem !== undefined

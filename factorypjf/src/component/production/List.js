@@ -27,45 +27,48 @@ export default function Add() {
     { text: "선택", value: "select", width: "3%" },
     { text: "순번", value: "index", width: "3%" },
     { text: "생산번호", value: "productionCode", width: "9%", readonly: true },
-    { text: "생산일*", value: "date", width: "9%" },
+    { text: "생산일", value: "date", width: "9%",required:true },
     {
-      text: "생산품*",
+      text: "생산품",
       value: "item",
       width: "9%",
-
       gridTrigger: true,
+      readonly:true,
+      required:true
     },
-    { text: "수량*", value: "quantity", width: "3%", readonly: true },
-    { text: "생산팀*", value: "team", width: "4%", helper: true },
-    { text: "라인*", value: "line", width: "5%", helper: true },
-    { text: "창고*", value: "storage", width: "5%", helper: true },
-    { text: "장소*", value: "location", width: "5%", helper: true },
-    { text: "고객*", value: "partner", width: "9%", helper: true },
-    { text: "담당자*", value: "emp", width: "5%", helper: true },
-    { text: "소요시간*", value: "leadTime", width: "5%" },
+    { text: "수량", value: "quantity", width: "3%", readonly: true,required:true },
+    { text: "생산팀", value: "team", width: "4%", helper: true ,required:true},
+    { text: "라인", value: "line", width: "5%", helper: true ,required:true},
+    { text: "창고", value: "storage", width: "5%", helper: true ,required:true},
+    { text: "장소", value: "location", width: "5%", helper: true ,required:true},
+    { text: "고객", value: "partner", width: "9%", helper: true ,required:true},
+    { text: "담당자", value: "emp", width: "5%", helper: true ,required:true},
+    { text: "소요시간", value: "leadTime", width: "5%" ,required:true},
     { text: "작업인원", value: "workForce", width: "5%" },
 
     { text: "비고", value: "description", width: "9%" },
   ];
   const grid02_headers = [
     { text: "순번", value: "index", width: "5%" },
-    { text: "자재*", value: "item", width: "15%", readonly: true },
+    { text: "자재", value: "item", width: "15%", readonly: true,required:true },
     { text: "수량", value: "quantity", width: "8%", readonly: true },
-    { text: "창고*", value: "storage", width: "10%", helper: true },
+    { text: "총 필요수량", value: "totalQuantity", width: "8%", readonly: true },
+    { text: "창고", value: "storage", width: "10%", helper: true ,required:true, trigger: true},
 
     {
-      text: "세부장소*",
+      text: "세부장소",
       value: "location",
       width: "8%",
       helper: true,
       trigger: true,
+      required:true
     },
     {
       text: "재고",
-      value: "total",
+      value: "inventory",
       width: "5%",
       readonly: true,
-      trigger: true,
+     
     },
     { text: "비고", value: "description", width: "20%", readonly: true },
   ];
@@ -84,7 +87,8 @@ export default function Add() {
 
   const [disabledBtn, setDisabledBtn] = useState({
     state: true,
-    class: `${listStyle["btn_disabled"]}`,
+    class: "btn_disabled",
+    // class: `${listStyle["btn_disabled"]}`,
   });
 
   const [searchPeriod, setSearchPeriod] = useState({
@@ -92,14 +96,14 @@ export default function Add() {
     endDate: "",
   });
 
-  useEffect(()=>{
-    const copyFilter = {...inputFilter}
-    
-    copyFilter.start_date=searchPeriod.startDate;
-    copyFilter.end_date=searchPeriod.endDate;
+  useEffect(() => {
+    const copyFilter = { ...inputFilter };
 
-    setInputFilter({...copyFilter})
-  },[searchPeriod])
+    copyFilter.start_date = searchPeriod.startDate;
+    copyFilter.end_date = searchPeriod.endDate;
+
+    setInputFilter({ ...copyFilter });
+  }, [searchPeriod]);
 
   useEffect(() => {
     const filter = { start_date: getToday() };
@@ -108,6 +112,31 @@ export default function Add() {
 
   const gridTriggerHandler = () => {};
   const grid01SelectHandler = (idx, e) => {
+    //========필수항목일 경우 input 색상 변경=======  
+    if(e.target.type==='text'){
+      let inputId = e.target.id
+      let inputHeader = inputId.match(/(?<=\w_)[a-zA-z_]+/g)[0];
+      e.target.className=e.target.className.replace('input_red','')
+      e.target.className=e.target.className.replace('input_black','')
+      // e.target.className=e.target.className.replace('input_blue','')
+      
+      // e.target.className.replace(`${productionClasses["input_red"]}`,null)
+      // e.target.className.replace(`${productionClasses["input_black"]}`,null)
+      grid01_headers.map((header)=>{
+        if(inputHeader===header.value){
+          //필수항목이고 빈칸이면
+          if(!header.readonly&&header.required&&e.target.value===''){
+            // e.target.className= e.target.className?e.target.className+`${productionClasses[" input_red"]}`:`${productionClasses["input_red"]}`
+            e.target.className= e.target.className?e.target.className+' input_red':'input_red'
+          }else if(!header.readonly){
+            // e.target.className= e.target.className?e.target.className+`${productionClasses[" input_black"]}`:`${productionClasses["input_black"]}`
+            e.target.className= e.target.className?e.target.className+' input_black':'input_black'
+          }
+        }
+      })
+    }
+
+
     const inputArr = [...document.querySelectorAll('input[id*="grid02"]')];
     // console.log(inputArr)
 
@@ -135,10 +164,61 @@ export default function Add() {
 
   const grid02SelectHandler = (e, idx) => {};
 
-  const triggerHandler = () => {};
+  //grid 2 trigger handler (창고와 세부장소에 맞는 재고 가져오기)
+  const triggerHandler = (header, tableItems, currentCol) => {
+    let itemCode,
+      storageCode,
+      locationCode = "";
+    const rowItem = tableItems[currentCol.row];
+    
+    //trigger가 location일 경우
+    if (header.value === "location") {
+      itemCode = rowItem.itemCode;
+      storageCode = rowItem.storageCode;
+      locationCode = rowItem.locationCode;
 
-  const editHandler = (e, tableType, coordinate) => {
-    setDisabledBtn({ state: false, class: `${listStyle["btn_abled"]}` });
+      getAxios(
+        "production/add/inventory",
+        { itemCode, storageCode, locationCode },
+        success,
+        fail
+      );
+
+      function success(resData) {
+        const data = resData.data;
+        //================선택한 코드 테이블에 출력===============
+        let copyItems = tableItems;
+        let currentRow = currentCol.row;
+
+        copyItems[currentRow].inventory = data.total;
+        // set02Item([...copyItems]);
+        cacheDispatch({
+          type: "TRIGGER",
+          idx: currentCol.row,
+          items: [...copyItems],
+        });
+
+        //소요자재 재고 확인 (필요자재 > 재고이면 css 변경)
+        let totalQuantity= rowItem.totalQuantity;
+
+        if(totalQuantity>rowItem.inventory){
+          let inventoryEl = document.querySelector(`#grid02_${currentRow}_inventory`);
+          let totalQuantityEl = document.querySelector(`#grid02_${currentRow}_totalQuantity`);
+          inventoryEl.className+=` ${productionClasses['out-stock']}`
+          totalQuantityEl.className+=` ${productionClasses['out-stock']}`
+          console.log(totalQuantityEl,inventoryEl)
+        }
+      }
+
+      function fail(error) {
+        console.log(error);
+      }
+
+    }
+  };
+
+  const editHandler = (e, tableType, colInfo, coordinate) => {
+    setDisabledBtn({ state: false, class: "btn_save" });
     if (tableType === "add") {
       //grid01에 수정 표시
       let copyItem = JSON.parse(JSON.stringify(grid01_items));
@@ -333,8 +413,10 @@ export default function Add() {
     setDeleteData([...deleteArr]);
 
     cacheDispatch({ type: "DELETE_ROW", idxArr });
-    setDisabledBtn({ state: false, class: `${listStyle["btn_abled"]}` });
+    setDisabledBtn({ state: false, class: "btn_save" });
     console.log(grid02Cache);
+
+    checked.forEach((el) => (el.checked = false));
   };
   function searchResult(data) {
     console.log(data);
@@ -431,7 +513,8 @@ export default function Add() {
   const cacheReducer = (state, action) => {
     //cacheInit (행 선택하지 않음)
     if (action.type === "INIT_CACHE") {
-      return { items: [...action.data] };
+      set02Item([]);
+      return { items: action.data ? [...action.data] : [] };
     }
     //처음으로 행을 선택할때
     if (state.idx === null) {
@@ -453,7 +536,7 @@ export default function Add() {
               unDelete.push(copyItems[i]);
             }
           }
-          set02Item(unDelete[0]);
+          set02Item([]);
           return { idx: 0, items: [...unDelete] };
         }
       } else {
@@ -519,7 +602,6 @@ export default function Add() {
   const submitHandler = (type) => {
     const { grid01Data, grid02Data, deleteData } = { ...modalState.data };
     if (type === "save") {
-
       //product, product_detail 테이블 수정
       // const param={production:[],component:[],productionDelete:[]}
       const param = {};
@@ -552,10 +634,17 @@ export default function Add() {
         : [...deleteData];
       console.log(param);
       putAxios("production/list/edit", param, success, fail);
+
       function success(data) {
         console.log(data);
         modalDispatch({ type: "OFF_MODAL" });
         searchHandler();
+        let checkedArr = document.querySelectorAll(
+          'input[type="checkbox"]:checked'
+        );
+        checkedArr = Array.from(checkedArr);
+        checkedArr.forEach((el) => (el.checked = false));
+        setDisabledBtn({ state: false, class: "btn_save" });
       }
       function fail(data) {
         console.log(data);
@@ -569,14 +658,13 @@ export default function Add() {
   const enterHandler = searchHandler;
 
   return (
-    <div className={productionListClasses["production_list-container"]}>
-      <div className={productionClasses.wrap}>
-        <p className={productionClasses["sub-menu-name"]}>생산내역조회</p>
-        <div
-          className={`${searchStyle["container-search-helper"]} ${productionListClasses["filter-container"]}`}
-        >
-          <div>
-            <label> 생산일</label>
+    <div className={listStyle["container-production_list"]}>
+      <div
+        className={`${searchStyle["container-search-helper"]} ${productionListClasses["filter-container"]}`}
+      >
+        <div className={listStyle["search_date"]}>
+          <span>
+            <label style={{ marginLeft: "2px" }}>생산일</label>
             <input
               onChange={(e) =>
                 setSearchPeriod({ ...searchPeriod, startDate: e.target.value })
@@ -585,10 +673,11 @@ export default function Add() {
               min="1900-01-01"
               max="9999-12-31"
             ></input>
-          </div>
-          <span>~</span>
-          <div>
-            <label> 생산일</label>
+          </span>
+
+          <span style={{ marginTop: "20px", marginRight:'7px'}}>~</span>
+          <span>
+            <label>&nbsp;</label>
             <input
               onChange={(e) =>
                 setSearchPeriod({ ...searchPeriod, endDate: e.target.value })
@@ -597,61 +686,65 @@ export default function Add() {
               min="1900-01-01"
               max="9999-12-31"
             ></input>
-          </div>
-          <SearchHelperModal
-            headers={searchFilter}
-            formHandler={formHandler}
-            enterHandler={enterHandler}
-          ></SearchHelperModal>
-          <button className={disabledBtn.class} onClick={searchHandler}>
-            조회
-          </button>
+          </span>
         </div>
-        <div className={productionClasses.grid01}>
-          <Table headers={grid01_headers}>
-            <AddTd
-              items={grid01_items}
-              selectRowHandler={grid01SelectHandler}
-              onGridTrigger={triggerHandler}
-              emitItem={set01Item}
-              // deleteItem={deleteIdx}
-              editHandler={editHandler}
-            ></AddTd>
-          </Table>
-        </div>
-        {modalState.showModal && (
-          <AlertModal
-            offModal={offModal}
-            modalState={modalState}
-            onSubmit={submitHandler}
-          ></AlertModal>
-        )}
-        <div className={productionClasses.grid02}>
-          <Table headers={grid02_headers}>
-            <ListTd
-              items={grid02_items}
-              onTrigger={triggerHandler}
-              emitItem={set02Item}
-              selectRowHandler={grid02SelectHandler}
-              editHandler={editHandler}
-            ></ListTd>
-          </Table>
-        </div>
-        <div className={productionClasses["product_btn-wrap"]}>
-          <button
-            className={productionClasses["product_btn_delete"]}
-            onClick={deleteHandler}
-          >
-            삭제
-          </button>
-          <button
-            className={disabledBtn.class}
-            onClick={saveHandler}
-            disabled={disabledBtn.state}
-          >
-            저장
-          </button>
-        </div>
+        <SearchHelperModal
+          headers={searchFilter}
+          formHandler={formHandler}
+          enterHandler={enterHandler}
+        ></SearchHelperModal>
+        <button className="btn_save" onClick={searchHandler}>
+          조회
+        </button>
+      </div>
+      <div className={productionClasses["sub-menu-name"]}>생산품</div>
+      <div className={listStyle.grid01}>
+        <Table headers={grid01_headers}>
+          <AddTd
+            items={grid01_items}
+            selectRowHandler={grid01SelectHandler}
+            onGridTrigger={gridTriggerHandler}
+            emitItem={set01Item}
+            // deleteItem={deleteIdx}
+            editHandler={editHandler}
+          ></AddTd>
+        </Table>
+      </div>
+      {modalState.showModal && (
+        <AlertModal
+          offModal={offModal}
+          modalState={modalState}
+          onSubmit={submitHandler}
+        ></AlertModal>
+      )}
+      <div className={productionClasses["sub-menu-name"]}>소모자재</div>
+      <div className={listStyle.grid02}>
+        <Table headers={grid02_headers}>
+          <ListTd
+            items={grid02_items}
+            onTrigger={triggerHandler}
+            emitItem={set02Item}
+            selectRowHandler={grid02SelectHandler}
+            editHandler={editHandler}
+          ></ListTd>
+        </Table>
+      </div>
+      <div className="wrap-btn">
+        <button
+          class="btn_delete"
+          className={productionClasses["product_btn_delete"]}
+          onClick={deleteHandler}
+        >
+          삭제
+        </button>
+        <button
+          class="btn_save"
+          className={disabledBtn.class}
+          onClick={saveHandler}
+          disabled={disabledBtn.state}
+        >
+          저장
+        </button>
       </div>
     </div>
   );

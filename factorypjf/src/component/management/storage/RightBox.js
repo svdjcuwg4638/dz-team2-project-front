@@ -13,10 +13,15 @@ const RightBox = ({ locationAll, selectId }) => {
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
 
   const handleDelete = async () => {
-    await api.post("/location/delete", selectIds);
-    alert("선택한 세부장소가 삭제되었습니다.");
-    dispatch(storageAction.getstorageAll());
-    setSelectIds([]);
+    const result = await api.post("/location/delete", selectIds);
+    if(result.data.code != 1){
+      alert('삭제 불가\n'+result.data.data.map((data)=>data) + '\n재고가 남아있는 창고입니다.')
+      return
+    }else{
+      alert("선택한 세부장소가 삭제되었습니다.");
+      dispatch(storageAction.getstorageAll());
+      setSelectIds([]);
+    }
   };
 
   // #region 세부장소 추가코드
@@ -146,17 +151,15 @@ const RightBox = ({ locationAll, selectId }) => {
             </div>
           </div>
           <div className="button_wrap">
-            <button className="button" type="submit"
+            <button className="btn_save" type="submit"
             >
               추가
             </button>
             <button
               type="button"
               disabled={!selectIds.length > 0}
-              className="button"
-              style={{
-                backgroundColor: selectIds.length > 0 ? "red" : "#dadada",
-              }}
+              className="btn_delete"
+              style={{ backgroundColor: selectIds.length > 0 ? "#fff" :"rgb(245, 245, 245)", color:selectIds.length > 0 ? "" : "#fff"  }}
               onClick={handleDelete}
             >
               삭제

@@ -1,11 +1,8 @@
 .SectionContainer {
   display: flex;
   justify-content: center;
-  padding-right: 3rem;
-  padding-bottom: 3rem;
-  padding-left: 3rem;
   width: 100%;
-  height: 80%;
+  height: 93%;
 }
 
 .SectionContainer > div {
@@ -14,20 +11,8 @@
   justify-content: center;
 }
 
-.headerCon {
-  padding-top: 3rem;
-  margin-left: 3rem;
-}
-.headerSection {
-  border-left: 3px solid #5390f0;
-}
-.header {
-  font-weight: bold;
-  margin-left: 1rem;
-}
-
 .tableCon {
-  height: 65%;
+  height: 60%;
 }
 
 .btnBox {
@@ -55,8 +40,7 @@
 
 .inoutCon,
 .PBtnCon,
-.inoutCon,
-.etcCon {
+.inoutCon {
   display: flex;
   justify-content: center;
 }
@@ -70,27 +54,27 @@
 
 .active,
 .pbtn {
-  width: 30px;
-  border: 1px solid #4373c0;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--main-color);
   border-radius: 6px;
   font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 20;
   font-size: 13px;
-  line-height: 29px;
-  align-items: center;
-  text-align: center;
+  line-height: 12px;
+  justify-items: center;
   margin-bottom: 1rem;
 }
 
 .active {
-  background: #4373c0;
+  background: var(--main-color);
   color: #ffffff;
 }
 
 .pbtn {
   background: #ffffff;
-  color: #4373c0;
+  color: var(--main-color);
 }
 
 .PBtnBox {
@@ -108,11 +92,15 @@
 
 .left,
 .right {
+  width: 250px;
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(83, 144, 240, 0.5);
-  border-radius: 20px;
-  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid #e9eef6;
+  background: #fff;
+  box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.25);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .left {
@@ -122,14 +110,114 @@
 .right {
   margin-left: 3rem;
 }
-
-.left td input,
-.right td input {
-  width: 200px;
+.left > td > div > label,
+.right > td > div > label,
+.etcCon > td > div > label,
+.dateCon > label {
+  width: 80px;
+  font-size: 12px;
+  font-weight: 400;
 }
 
-.inoutCon div td,
-.etcCon td {
+.left > td > div > label,
+.right > td > div > label {
+  text-align: center;
+  line-height: 25px;
+}
+.left > td > div > input,
+.right > td > div > input {
+  border-radius: 2px;
+  border: 1px solid #b9b9b9;
+  background: #fff;
+  width: 150px;
+  height: 25px;
+}
+.left > td > div,
+.right > td > div {
+  display: flex;
+  align-items: normal;
+  flex-direction: initial;
+  height: 20px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.left > td,
+.right > td {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.inoutCon > div > td {
   border: 0px;
-  width: auto;
+}
+
+.dateCon {
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+}
+.dateCon > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+}
+.dateCon > div input {
+  border-radius: 2px;
+  border: 1px solid #b9b9b9;
+  background: #fff;
+}
+
+.etcCon {
+  width: 630px;
+  border-radius: 10px;
+  border: 1px solid #e9eef6;
+  background: #fff;
+  box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.25);
+  padding: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+.etcCon {
+  display: flex;
+  justify-content: center;
+}
+.etcCon > td {
+  border: 0px;
+  width: 140px;
+}
+.dateCon {
+  margin-right: 1rem;
+}
+
+.etcCon > td > div {
+  border: none;
+  display: flex;
+  justify-content: flex-start;
+  align-items: normal;
+  width: 100%;
+  flex-direction: column;
+}
+.etcCon > td > div > label {
+  text-align: left;
+}
+.etcCon > td > div > input {
+  width: 120px;
+  height: 25px;
+  border-radius: 2px;
+  border: 1px solid #b9b9b9;
+  background: #fff;
+}
+.arrow {
+  height: 138px;
+}
+.arrow::after {
+  display: inline-block;
+  height: 100%;
+  content: "";
+  vertical-align: middle;
+}
+.arrow img {
+  vertical-align: middle;
 }

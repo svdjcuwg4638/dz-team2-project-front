@@ -7,6 +7,41 @@ import Table from "../table/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { unitPriceAction } from "redux/actions/management/unitPriceAction";
 
+const styles = {
+  wrapBtn: {
+    display: "flex",
+    justifyContent: "end",
+    marginTop: "10px",
+  },
+  btnDelete: {
+    backgroundColor: "white",
+    color: "var(--red-color)",
+    border: "1px solid var(--red-color)",
+    boxShadow: "1px 1px 2px 1px grey",
+    borderRadius: "8px",
+    fontSize: "14px",
+    fontWeight: "bold",
+    width: "50px",
+    height: "30px",
+    margin: "5px",
+  },
+  btnSave: {
+    backgroundColor: "var(--main-color)",
+    color: "white",
+    border: "none",
+    boxShadow: "1px 1px 2px 1px grey",
+    borderRadius: "8px",
+    fontSize: "14px",
+    fontWeight: "bold",
+    width: "50px",
+    height: "30px",
+    margin: "5px",
+  },
+  btnSaveDelete: {
+    paddingTop: "2px",
+  },
+};
+
 const InBoundStart = () => {
   const dispatch = useDispatch();
   const { unitPriceAll } = useSelector((state) => state.unitPrice);
@@ -59,28 +94,28 @@ const InBoundStart = () => {
   };
   //#region 헤더정의
   const grid01_headers = [
-    { text: "선택", value: "select", width: "2%" },
-    { text: "문서번호", value: "boundno", width: "3%" },
-    { text: "유형", value: "type", width: "3%" },
+    { text: "선택", value: "select", width: "2.2%" },
+    { text: "문서번호", value: "boundno", width: "2.2%" },
+    { text: "유형", value: "type", width: "2.5%" },
     {
       text: "거래처",
       value: "partner",
-      width: "3%",
+      width: "2.5%",
       helper: true,
       gridTrigger: true,
     },
-    { text: "입고예정일", value: "itemName", width: "3%",},
+    { text: "입고예정일", value: "itemName", width: "2.5%",},
   ];
   const grid02_headers = [
-    { text: "선택", value: "select", width: "3%" },
-    { text: "품목코드", value: "item_code", width: "6%" ,helper: true },
-    { text: "품목명", value: "item_name", width: "6%" },
-    { text: "단가", value: "unit_price", width: "4%" },
+    { text: "선택", value: "select", width: "12.5%" },
+    { text: "품목코드", value: "item_code", width: "12.5%" ,helper: true },
+    { text: "품목명", value: "item_name", width: "12.5%" },
+    { text: "단가", value: "unit_price", width: "12.5%" },
     // { text: "재고", value: "stock", width: "4%" },
-    { text: "수량", value: "amount", width: "6%" },
-    { text: "총액", value: "tot_amount", width: "4%",  },
-    { text: "입고예정일", value: "detail_date", width: "10%" },
-    { text: "비고", value: "description", width: "10%" },
+    { text: "수량", value: "amount", width: "12.5%" },
+    { text: "총액", value: "tot_amount", width: "12.5%",  },
+    { text: "입고예정일", value: "detail_date", width: "12.5%" },
+    { text: "비고", value: "description", width: "12.5%" },
   ];
   //#endregion
 
@@ -146,6 +181,7 @@ const InBoundStart = () => {
   //#endregion
 
   return (
+    <div style={{padding:'0px'}}>  
     <div className={inboundClasses.wrap}>
       <p className={inboundClasses["sub-menu-name"]}>입고예정</p>
       <Table headers={grid01_headers}></Table>
@@ -180,8 +216,11 @@ const InBoundStart = () => {
         setCheckedSubBoundIds={setCheckedSubBoundIds}
         deletedIndex={deletedIndex}
       />
-      <button onClick={handleDeleteCheckedRows}>삭제</button>
-      <button onClick={() => handleSave()}>저장</button>
+      <div style={styles.wrapBtn}>
+        <button style={styles.btnDelete} onClick={handleDeleteCheckedRows}>삭제</button>
+        <button style={styles.btnSave} onClick={() => handleSave()}>저장</button>
+      </div>
+    </div>
     </div>
   );
 };

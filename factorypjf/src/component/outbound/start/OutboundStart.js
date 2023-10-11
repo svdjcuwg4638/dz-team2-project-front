@@ -59,30 +59,30 @@ const OutBoundStart = () => {
   };
   //#region 헤더정의
   const grid01_headers = [
-    { text: "선택", value: "select", width: "3%" },
-    { text: "문서번호", value: "boundno", width: "9%" },
-    { text: "유형", value: "type", width: "9%" },
+    { text: "선택", value: "select", width: "2.2%" },
+    { text: "문서번호", value: "boundno", width: "2.2%" },
+    { text: "유형", value: "type", width: "2.5%" },
     {
       text: "거래처",
       value: "partner",
-      width: "9%",
+      width: "2.5%",
       helper: true,
       gridTrigger: true,
     },
-    { text: "출고일", value: "itemName", width: "9%" },
+    { text: "출고일", value: "itemName", width: "2.5%" },
   ];
   const grid02_headers = [
-    { text: "선택", value: "select", width: "3%" },
-    { text: "품목코드", value: "item_code", width: "6%", helper: true },
-    { text: "품목명", value: "item_name", width: "6%" },
-    { text: "단가", value: "unit_price", width: "4%" },
-    { text: "창고", value: "storage_code", width: "4%", helper: true },
-    { text: "장소", value: "location_code", width: "4%", helper: true },
-    { text: "재고", value: "stock", width: "6%" },
-    { text: "수량", value: "amount", width: "6%" },
-    { text: "총액", value: "tot_amount", width: "4%" },
-    { text: "출고일", value: "detail_date", width: "10%" },
-    { text: "비고", value: "description", width: "10%" },
+    { text: "선택", value: "select", width: "8%" },
+    { text: "품목코드", value: "item_code", width: "8%", helper: true },
+    { text: "품목명", value: "item_name", width: "8%" },
+    { text: "단가", value: "unit_price", width: "8%" },
+    { text: "창고", value: "storage_code", width: "8%", helper: true },
+    { text: "장소", value: "location_code", width: "8%", helper: true },
+    { text: "재고", value: "stock", width: "8%" },
+    { text: "수량", value: "amount", width: "8%" },
+    { text: "총액", value: "tot_amount", width: "8%" },
+    { text: "출고일", value: "detail_date", width: "12%" },
+    { text: "비고", value: "description", width: "16%" },
   ];
   //#endregion
 
@@ -148,6 +148,7 @@ const OutBoundStart = () => {
   //#endregion
 
   return (
+  <div style={{padding: '0px'}}>
     <div className={inboundClasses.wrap}>
       <p className={inboundClasses["sub-menu-name"]}>출고예정</p>
       <Table headers={grid01_headers}></Table>
@@ -182,8 +183,11 @@ const OutBoundStart = () => {
         setCheckedSubBoundIds={setCheckedSubBoundIds}
         deletedIndex={deletedIndex}
       />
-      <button onClick={handleDeleteCheckedRows}>삭제</button>
-      <button onClick={() => handleSave()}>저장</button>
+      <div style={{ display: "flex", justifyContent: "flex-end", marginRight: "10px", marginBottom: "10px" }}>
+        <button onClick={handleDeleteCheckedRows}>삭제</button>
+        <button onClick={() => handleSave()}>저장</button>
+      </div>
+    </div>
     </div>
   );
 };

@@ -59,7 +59,7 @@ const ItemRelation = () => {
 
   return (
     <div className="flex code_wrap">
-      <div>소모자재관리</div>
+      <div></div>
       {itemAll.data && codeAllData &&
         <>
           <ProductItem itemAll={itemAll} setSelectId={setSelectId} selectId={selectId}/>

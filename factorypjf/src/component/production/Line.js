@@ -5,7 +5,7 @@ import Table from "component/layout/Table/Table";
 import HelperModal from "component/common/helper/HelperModal";
 import SearchHelperModal from "component/common/helper/SearchHelperModal";
 
-import productionListClasses from "style/production/list.module.css";
+import lineStyle from "style/production/line.module.css";
 import productionClasses from "style/production/production.module.css";
 import { getAxios, postAxios } from "function/axiosFuction";
 import { snakeToCamel } from "function/commonFunction";
@@ -46,21 +46,45 @@ export default function Line() {
   const header = [
     { text: "선택", value: "select", width: "5%" },
     { text: "순번", value: "index", width: "5%" },
-    { text: "라인명*", value: "line", width: "10%", selectBox: true },
-    { text: "라인코드*", value: "lineCode", width: "10%", readonly:true },
-    { text: "관리자명", value: "emp", width: "10%",helper:true },
+    { text: "라인명", value: "line", width: "10%", selectBox: true,required:true },
+    { text: "라인코드", value: "lineCode", width: "10%", readonly:true,required:true },
+    { text: "관리자명", value: "emp", width: "10%", helper:true },
     { text: "용도", value: "uses", width: "15%" },
     { text: "위치", value: "place", width: "15%" },
     { text: "비고", value: "description", width: "15%" },
   ];
 
   const selectHandler = (idx,e) => {
+    //========필수항목일 경우 input 색상 변경=======
+    if(e.target.type==='text'){
+      let inputId = e.target.id
+      let inputHeader = inputId.match(/(?<=\w_)[a-zA-z_]+/g)[0];
+      e.target.className=e.target.className.replace('input_red','')
+      e.target.className=e.target.className.replace('input_black','')
+      // e.target.className=e.target.className.replace('input_blue','')
+      
+      // e.target.className.replace(`${productionClasses["input_red"]}`,null)
+      // e.target.className.replace(`${productionClasses["input_black"]}`,null)
+      header.map((h)=>{
+        if(inputHeader===h.value){
+          //필수항목이고 빈칸이면
+          if(!h.readonly&&h.required&&e.target.value===''){
+            // e.target.className= e.target.className?e.target.className+`${productionClasses[" input_red"]}`:`${productionClasses["input_red"]}`
+            e.target.className= e.target.className?e.target.className+' input_red':'input_red'
+          }else if(!h.readonly){
+            // e.target.className= e.target.className?e.target.className+`${productionClasses[" input_black"]}`:`${productionClasses["input_black"]}`
+            e.target.className= e.target.className?e.target.className+' input_black':'input_black'
+          }
+        }
+      })
+    }
+
     //새로 추가된 행이면 라인코드 입력 가능
     if(item[idx].state==='add'){
       e.target.readOnly=false;
     }
   };
-  const editHandler = (e,tableType,coordinate) => {
+  const editHandler = (e,tableType,colInfo, coordinate) => {
     const copyItem=JSON.parse(JSON.stringify(item))
     copyItem[coordinate.row].state='edit';
     setItem([...copyItem])
@@ -159,9 +183,9 @@ export default function Line() {
 
 
   return (
-    <div>
-      <p className={productionClasses["sub-menu-name"]}>생산라인관리</p>
-      <div className={productionClasses.grid01}>
+    <div className={lineStyle['container-line_section']}>
+      {/* <p className={productionClasses["sub-menu-name"]}>생산라인관리</p> */}
+      <div className={lineStyle.grid01}>
         <Table headers={header}>
           <AddTd
             isBtn={true}
@@ -175,15 +199,15 @@ export default function Line() {
           ></AddTd>
         </Table>
       </div>
-      <div className={productionClasses["product_btn-wrap"]}>
+      <div className="wrap-btn">
         <button
-          className={productionClasses["product_btn_delete"]}
+          className="btn_delete"
           onClick={deleteHandler}
         >
           삭제
         </button>
         <button
-          className={productionClasses["product_btn_save"]}
+          className="btn_save"
           onClick={saveHandler}
         >
           저장

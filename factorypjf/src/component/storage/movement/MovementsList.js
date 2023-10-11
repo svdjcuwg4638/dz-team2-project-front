@@ -18,7 +18,6 @@ export const MovementsList = () => {
   const search_etc_headers = [
     { text: "품목", value: "item", helper: true },
     { text: "담당자", value: "emp", helper: true },
-    { text: "이동일", value: "date" },
   ];
   const table_headers = [
     { text: "이동일", value: "movement_date", width: "7%", readonly: true },
@@ -34,11 +33,18 @@ export const MovementsList = () => {
   const [searchOutboundData, setSearchOutboundData] = useState([]);
   const [searchInboundData, setSearchInboundData] = useState([]);
   const [searchEtcData, setSearchEtcData] = useState([]);
+
+  const [searchPeriod, setSearchPeriod] = useState({
+    startDate: "",
+    endDate: "",
+  });
+
   const [tableItems, setTableItems] = useState([]);
   const [selectedRow, setSelectedRow] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [pageNumbers, setPageNumbers] = useState([]);
+
   const pageSize = 10; // 페이지당 아이템 수
 
   useEffect(() => {
@@ -57,7 +63,8 @@ export const MovementsList = () => {
         outbound_storage_code: searchOutboundData["storageCode"],
         inbound_location_code: searchInboundData["locationCode"],
         inbound_storage_code: searchInboundData["storageCode"],
-        movement_date: searchEtcData["date"],
+        start_date: searchPeriod["startDate"],
+        end_date: searchPeriod["endDate"],
         emp_id: searchEtcData["empCode"],
         item_code: searchEtcData["itemCode"],
       };
@@ -126,11 +133,11 @@ export const MovementsList = () => {
 
   return (
     <>
-      <div className={styles.headerCon}>
+      {/* <div className={styles.headerCon}>
         <div className={styles.headerSection}>
           <h4 className={styles.header}>재고이동내역</h4>
         </div>
-      </div>
+      </div> */}
       <div className={styles.SectionContainer}>
         <div>
           <div>
@@ -142,8 +149,7 @@ export const MovementsList = () => {
                     formHandler={setSearchOutboundData}
                   />
                 </div>
-
-                <Arrow width="2%" height="110" />
+                <Arrow width="3%" height="138" />
 
                 <div className={styles.right}>
                   <SearchHelperModal
@@ -152,22 +158,54 @@ export const MovementsList = () => {
                   />
                 </div>
               </div>
-              <div className={styles.etcCon}>
-                <SearchHelperModal
-                  headers={search_etc_headers}
-                  formHandler={setSearchEtcData}
-                />
-              </div>
-              <div className={styles.btnBox}>
-                <button
-                  className={styles.btn}
-                  onClick={(e) => {
-                    fetchData(1);
-                    setCurrentPage(1);
-                  }}
-                >
-                  조회
-                </button>
+              <div className={styles.inoutCon}>
+                <div className={styles.etcCon}>
+                  <SearchHelperModal
+                    headers={search_etc_headers}
+                    formHandler={setSearchEtcData}
+                  />
+                  <div className={styles.dateCon}>
+                    <label>재고이동일</label>
+                    <div>
+                      <input
+                        onChange={(e) =>
+                          setSearchPeriod({
+                            ...searchPeriod,
+                            startDate: e.target.value,
+                          })
+                        }
+                        type="date"
+                        min="1900-01-01"
+                        max="9999-12-31"
+                      ></input>
+
+                      <span>~</span>
+                      <div>
+                        <label> </label>
+                        <input
+                          onChange={(e) =>
+                            setSearchPeriod({
+                              ...searchPeriod,
+                              endDate: e.target.value,
+                            })
+                          }
+                          type="date"
+                          min="1900-01-01"
+                          max="9999-12-31"
+                        ></input>
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    className="btn_save"
+                    onClick={(e) => {
+                      fetchData(1);
+                      setCurrentPage(1);
+                    }}
+                  >
+                    조회
+                  </button>
+                </div>
               </div>
             </div>
             <div className={styles.tableCon}>

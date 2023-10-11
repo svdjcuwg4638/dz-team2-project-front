@@ -2,8 +2,10 @@ import React, { useEffect, useMemo, useReducer, useRef, useState } from "react";
 import axios from "axios";
 import HelperModal from "component/common/helper/HelperModal";
 import { getAxios } from "function/axiosFuction";
+
 import tableStyle from "style/layout/dataTable/table.module.css";
 import addStyle from "style/layout/dataTable/addTableData.module.css";
+import productionStyle from "style/production/production.module.css"
 
 //도움창 단축키 코드
 const HELPER_KEY = 113;
@@ -21,8 +23,8 @@ export default function AddTableData({
   editHandler,
   addRowEmit
 }) {
-  //첫 렌더링시 빈 테이블 3줄
-  const DEFAULT_ROW = 3;
+  //첫 렌더링시 테이블 행수
+  const DEFAULT_ROW = 1;
   const DEFAULT_ARR = useMemo(() => {
     let row = {};
     headers.forEach((header) => {
@@ -115,13 +117,13 @@ export default function AddTableData({
       setCurrentCol({ ...coordinate });
       //모달 켜기
       onModalHanlder(colInfo.value, colInfo.text);
-      if (editHandler) editHandler(e, "add", coordinate);
-    } else if (e.which === 8 || (e.which === CLEAN_KEY && colInfo.helper)) {
+      if (editHandler) editHandler(e, "add", colInfo, coordinate);
+    } else if (e.which === CLEAN_KEY && colInfo.helper) {
       e.preventDefault();
       setCurrentCol({ ...coordinate });
       let copyItems = [...tableItems];
-      copyItems[currentCol.row] = {
-        ...copyItems[currentCol.row],
+      copyItems[coordinate.row] = {
+        ...copyItems[coordinate.row],
         [colInfo.value]: "",
         [`${colInfo.value}Code`]: "",
       };
@@ -138,7 +140,7 @@ export default function AddTableData({
       setTableItems([...copyItem])
       console.log(tableItems)
     }else{
-      if (editHandler) editHandler(e,'add',coordinate);
+      if (editHandler) editHandler(e,'add',colInfo, coordinate);
     }
   };
 
@@ -146,13 +148,14 @@ export default function AddTableData({
     e.preventDefault();
     //이벤트가 tr>td>input에서 발생하기 때문에 부모의 부모 노드 선택
     let row = e.target.parentNode.parentNode;
+    
     if(e.type==='mouseover'){
-      row.className = addStyle["add-table-focus"];
+      // console.log(addStyle[" add-table-focus"])
+      row.className += row.className?` ${addStyle["add-table-focus"]}`:`${addStyle["add-table-focus"]}`;
       setOverRow(row);
     }
-    if(e.type==='mouseout'&&focusRow!==overRow){
-     
-      overRow.className = addStyle[""];
+    if(e.type==='mouseout'){
+      overRow.className = overRow.className.replace(`${addStyle["add-table-focus"]}`,'');
     }
   }
 
@@ -200,9 +203,9 @@ export default function AddTableData({
   const selectRow = (e, idx) => {
     //클릭 이벤트가 tr>td>input에서 발생하기 때문에 부모의 부모 노드 선택
     let row = e.target.parentNode.parentNode;
-    row.className = addStyle["add-table-focus"];
+    row.className += row.className?` ${addStyle["add-table-focus"]}`:`${addStyle["add-table-focus"]}`;
     if (focusRow && focusRow !== row) {
-      focusRow.className = addStyle[""];
+      focusRow.className = focusRow.className.replace(`${addStyle["add-table-focus"]}`,'');
     }
     setFocusRow(row);
 
@@ -255,6 +258,8 @@ export default function AddTableData({
                       keyUpHandler(e, header, { row: idx, col: headerIdx });
                     }}
                     defaultValue={item ? item[header.value] : ""}
+                    type="text"
+                    className={header.readonly&&`${productionStyle['input_read-only']}`}
                   ></input>
                 ) : header.value === "date" ? (
                   <input
@@ -276,6 +281,7 @@ export default function AddTableData({
                       keyUpHandler(e, header, { row: idx, col: headerIdx });
                     }}
                     defaultValue={item ? item[header.value] : ""}
+                    type="text"
                   ></input>
                 )}
               </td>

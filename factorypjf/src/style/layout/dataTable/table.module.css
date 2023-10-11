@@ -1,12 +1,14 @@
 /* table common */
 table {
+  border: none;
 }
 table th,
-td {
+.tbl_body_data td {
   border-bottom: solid 1px var(--border-color-light);
   text-align: center;
   padding: 0px;
-  height: 2rem;
+  height: 3rem;
+  font-size: 14px;
 }
 
 /* input {
@@ -14,31 +16,46 @@ td {
   line-height: 80px;
 } */
 
-th:first-child {
+.tbl_container th:first-child {
   border-radius: 10px 0 0 0;
 }
-td:first-child {
-  border-radius: 10px 0 0 10px;
-}
+/* td:first-child {
+  border-radius: 0 10px 0 0;
+} */
 
-th:last-child {
+.tbl_container th:last-child {
   border-radius: 0 10px 0 0;
 }
-td:last-child {
+/* .tbl_container td:last-child {
   border-radius: 0 10px 10px 0;
-}
+} */
 input {
-  border: solid 1px var(--border-color-light);
+  /* border-bottom: solid 1px var(--border-color-light); */
   text-align: center;
   padding: 0px;
 }
 table th {
   /* border-bottom: 1px solid #4473bf; */
 }
-td > input {
+td>input{
   width: 100%;
-  border: none;
+  /* height: 60%; */
   background-color: transparent;
+  border-radius: 5px;
+  border-width: 2px;
+  font-size: 14px;
+  padding-top:5px;
+}
+td input[type="text"]{
+  height: 80%;
+}
+input[type="date"]{
+  margin-bottom: 4px;
+}
+
+
+td > input:empty {
+  /* border: solid 3px white; */
 }
 thead {
   background-color: #e9eef6;
@@ -55,7 +72,7 @@ thead {
 /* table_body */
 .tbl_body_wrap {
   /* 각자 css를 설정할 수 있게 100%로 수정 (0911 HJ)*/
-  max-height: 100%;
+  max-height: 70%;
   overflow-y: auto;
 }
 .btn_add {

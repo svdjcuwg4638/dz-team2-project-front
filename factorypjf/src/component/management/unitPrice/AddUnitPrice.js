@@ -265,7 +265,7 @@ const AddUnitPrice = ({ itemAll }) => {
         <div className="detail_button_wrap">
           <button
             type="button"
-            className="button"
+            className="btn_save"
             onClick={submitHandler}
             style={{ marginRight: "60px" }}
           >

@@ -10,4 +10,40 @@
     text-align: start;
     padding-left: 10px;
 }
+.container-search-helper{
+    border-radius: 10px;
+    border: 1px solid #E9EEF6;
+    background: #FFF;
+    box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 15px;
+    height: 80px;
+    margin-bottom: 20px;
+}
+
+.container-search-helper>div{
+   width: 8%;
+   font-size: 14px;
+}
+.container-search-helper>td{
+    width: 8%;
+    font-size: 14px;
+}
+.container-search-helper input{
+    width: 90%;
+}
+.container-search-helper label{
+    margin-left: 10px;
+}
+.container-search-helper button{
+    margin-top: 18px;
+    height: 25px;
+}
+.container-search-helper input[type='date']{
+    border: 1px solid var(--border-color-light);
+}
+
+
+
 

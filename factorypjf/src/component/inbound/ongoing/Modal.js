@@ -1,9 +1,78 @@
 import { useEffect, useState } from "react";
 import SearchHelper from "./SearchHelper";
 
+const rowHoverStyle = {
+    backgroundColor: "#f0f0f0", // 원하는 배경색으로 변경하세요.
+  };
+  const styles = {
+    wrapBtn: {
+      display: "flex",
+      justifyContent: "end",
+      marginTop: "10px",
+    },
+    btnDelete: {
+      backgroundColor: "white",
+      color: "var(--red-color)",
+      border: "1px solid var(--red-color)",
+      boxShadow: "1px 1px 2px 1px grey",
+      borderRadius: "8px",
+      fontSize: "14px",
+      fontWeight: "bold",
+      width: "50px",
+      height: "30px",
+      margin: "5px",
+    },
+    btnSave: {
+      backgroundColor: "var(--main-color)",
+      color: "white",
+      border: "none",
+      boxShadow: "1px 1px 2px 1px grey",
+      borderRadius: "8px",
+      fontSize: "14px",
+      fontWeight: "bold",
+      width: "50px",
+      height: "30px",
+      margin: "5px",
+    },
+    btnSave1: {
+        backgroundColor: "var(--main-color)",
+        color: "white",
+        border: "none",
+        boxShadow: "1px 1px 2px 1px grey",
+        borderRadius: "8px",
+        fontSize: "14px",
+        fontWeight: "bold",
+        width: "65px",
+        height: "30px",
+        margin: "5px",
+      },
+    btnSaveDelete: {
+      paddingTop: "2px",
+    },
+  };
 
 function Modal({ isOpen, onClose, boundId, details = [], locationAll, storageAll, setUpdatedDetails}) { // 기본값 설정
 // 연결된 bound_id를 기반으로 상세 정보를 필터링합니다.
+
+
+  // 각 <tr> 요소마다 hover 상태를 관리하기 위한 상태 변수
+  const [hoveredRows, setHoveredRows] = useState({});
+
+  // 마우스가 특정 행 위로 올라갔을 때 호출되는 이벤트 핸들러
+  const handleMouseEnter = (detailId) => {
+    setHoveredRows((prevHoveredRows) => ({
+      ...prevHoveredRows,
+      [detailId]: true, // 해당 detailId의 행을 hover 상태로 설정
+    }));
+  };
+
+  // 마우스가 특정 행 위에서 벗어났을 때 호출되는 이벤트 핸들러
+  const handleMouseLeave = (detailId) => {
+    setHoveredRows((prevHoveredRows) => ({
+      ...prevHoveredRows,
+      [detailId]: false, // 해당 detailId의 행을 hover 해제 상태로 설정
+    }));
+  };
 
 const matchingDetails = details.filter(detail => detail.bound_id === boundId && detail.detail_state === 'ongoing');
 const [formData, setFormData] = useState([]);
@@ -106,7 +175,7 @@ return (
         <div style={{
            backgroundColor: 'white',
            padding: '20px',
-           maxWidth: '800px',
+           maxWidth: '1200px',
            width: '90%',
            borderRadius: '10px',
         }}>
@@ -124,38 +193,48 @@ return (
                         <th>장소</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody style={{textAlign: 'center'}}>
                     {matchingDetails.map((detail, index) => (
-                        <tr key={index}>
+                        <tr key={index}
+                        style={
+                            hoveredRows[detail.detail_id] // 해당 행의 hover 상태에 따라 스타일 적용
+                              ? rowHoverStyle
+                              : {}
+                          }
+                          onMouseEnter={() => handleMouseEnter(detail.detail_id)} // 해당 행의 hover 상태를 true로 설정
+                          onMouseLeave={() => handleMouseLeave(detail.detail_id)} // 해당 행의 hover 상태를 false로 설정
+                        >
                             <td>{detail.item_code}</td>
                             <td>{detail.item_name}</td>
                             <td>{detail.amount}</td>
                             <td>{detail.unit_price}</td>
                             <td>{detail.tot_amount}</td>
                             <td>{detail.detail_date}</td>
-                            <td>{detail.decription}</td>
-                            <td>
+                            <td style={{width: '500px'}}>{detail.decription}</td>
+                            <td style={{width: '200px'}}>
                                 <input
                                     data-detail-id={detail.detail_id}
                                     name="storage_code"
                                     value={formData.find(fd => fd.detail_id === detail.detail_id)?.storage_name || ''}
                                 />
-                                 <button onClick={() => handleButtonClick('storage',detail.detail_id)}>창고선택</button>
+                                 <button style={styles.btnSave1} onClick={() => handleButtonClick('storage',detail.detail_id)}>창고선택</button>
                             </td>
-                            <td>
+                            <td style={{width: '200px'}}>
                                 <input
                                     data-detail-id={detail.detail_id} 
                                     name="location_code"
                                     value={formData.find(fd => fd.detail_id === detail.detail_id)?.location_name || ''}
                                 />
-                                <button onClick={() => handleButtonClick('location',detail.detail_id)}>장소선택</button>
+                                <button style={styles.btnSave1} onClick={() => handleButtonClick('location',detail.detail_id)}>장소선택</button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-            <button onClick={handleSaveChanges}>저장</button>
-            <button onClick={onClose}>닫기</button>
+            <div style={styles.wrapBtn}>
+            <button style={styles.btnDelete}onClick={onClose}>닫기</button>
+            <button style={styles.btnSave}onClick={handleSaveChanges}>저장</button>
+            </div>
         </div>
         {HelperScreenState && (
             <div
