@@ -99,7 +99,7 @@ const Partner = () => {
         <div className="partner_detail_wrap">
           <PartnerDetail selectPartner={selectPartner} setSelectParnter={setSelectParnter}/>
         </div>
-        <div className="partner_title">거래처관리</div>
+        <div className="partner_title"></div>
       </div>
     </div>
   );

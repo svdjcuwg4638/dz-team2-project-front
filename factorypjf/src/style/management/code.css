@@ -1,7 +1,7 @@
 .code_wrap {
   justify-content: space-evenly;
   height: 100%;
-  padding-top: 118px;
+  padding-top: 20px;
   position: relative;
 }
 
@@ -75,4 +75,15 @@
 }
 .code_wrap .code_row_sub > div:nth-child(3) {
   width: 45%;
+}
+
+.common_code_list_content {
+  cursor: auto !important;
+}
+.common_code_list_content > div{
+  cursor: auto !important;
+}
+
+.common_code_list_content input{
+  cursor: pointer;
 }

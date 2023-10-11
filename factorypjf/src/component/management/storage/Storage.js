@@ -46,7 +46,7 @@ const Storage = () => {
 
   return (
     <div className="storage_wrap">
-      <div>창고관리</div>
+      <div></div>
       <div>
         <div style={{width:"40%"}}>
           {storageAll && (
