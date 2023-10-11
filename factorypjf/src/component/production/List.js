@@ -84,7 +84,8 @@ export default function Add() {
 
   const [disabledBtn, setDisabledBtn] = useState({
     state: true,
-    class: `${listStyle["btn_disabled"]}`,
+    class: "btn_disabled",
+    // class: `${listStyle["btn_disabled"]}`,
   });
 
   const [searchPeriod, setSearchPeriod] = useState({
@@ -92,14 +93,14 @@ export default function Add() {
     endDate: "",
   });
 
-  useEffect(()=>{
-    const copyFilter = {...inputFilter}
-    
-    copyFilter.start_date=searchPeriod.startDate;
-    copyFilter.end_date=searchPeriod.endDate;
+  useEffect(() => {
+    const copyFilter = { ...inputFilter };
 
-    setInputFilter({...copyFilter})
-  },[searchPeriod])
+    copyFilter.start_date = searchPeriod.startDate;
+    copyFilter.end_date = searchPeriod.endDate;
+
+    setInputFilter({ ...copyFilter });
+  }, [searchPeriod]);
 
   useEffect(() => {
     const filter = { start_date: getToday() };
@@ -138,7 +139,7 @@ export default function Add() {
   const triggerHandler = () => {};
 
   const editHandler = (e, tableType, colInfo, coordinate) => {
-    setDisabledBtn({ state: false, class: `${listStyle["btn_abled"]}` });
+    setDisabledBtn({ state: false, class: "btn_save" });
     if (tableType === "add") {
       //grid01에 수정 표시
       let copyItem = JSON.parse(JSON.stringify(grid01_items));
@@ -333,10 +334,10 @@ export default function Add() {
     setDeleteData([...deleteArr]);
 
     cacheDispatch({ type: "DELETE_ROW", idxArr });
-    setDisabledBtn({ state: false, class: `${listStyle["btn_abled"]}` });
+    setDisabledBtn({ state: false, class: "btn_save" });
     console.log(grid02Cache);
 
-    checked.forEach(el=>el.checked=false)
+    checked.forEach((el) => (el.checked = false));
   };
   function searchResult(data) {
     console.log(data);
@@ -434,7 +435,7 @@ export default function Add() {
     //cacheInit (행 선택하지 않음)
     if (action.type === "INIT_CACHE") {
       set02Item([]);
-      return { items: action.data?[...action.data]:[] };
+      return { items: action.data ? [...action.data] : [] };
     }
     //처음으로 행을 선택할때
     if (state.idx === null) {
@@ -522,7 +523,6 @@ export default function Add() {
   const submitHandler = (type) => {
     const { grid01Data, grid02Data, deleteData } = { ...modalState.data };
     if (type === "save") {
-
       //product, product_detail 테이블 수정
       // const param={production:[],component:[],productionDelete:[]}
       const param = {};
@@ -560,10 +560,12 @@ export default function Add() {
         console.log(data);
         modalDispatch({ type: "OFF_MODAL" });
         searchHandler();
-        let checkedArr = document.querySelectorAll('input[type="checkbox"]:checked')
-        checkedArr=Array.from(checkedArr);
-        checkedArr.forEach(el=>el.checked=false)
-        setDisabledBtn({ state: false, class: `${listStyle["btn_abled"]}` });
+        let checkedArr = document.querySelectorAll(
+          'input[type="checkbox"]:checked'
+        );
+        checkedArr = Array.from(checkedArr);
+        checkedArr.forEach((el) => (el.checked = false));
+        setDisabledBtn({ state: false, class: "btn_save" });
       }
       function fail(data) {
         console.log(data);
@@ -577,14 +579,13 @@ export default function Add() {
   const enterHandler = searchHandler;
 
   return (
-    <div className={productionListClasses["production_list-container"]}>
-      <div className={productionClasses.wrap}>
-        <p className={productionClasses["sub-menu-name"]}>생산내역조회</p>
-        <div
-          className={`${searchStyle["container-search-helper"]} ${productionListClasses["filter-container"]}`}
-        >
-          <div>
-            <label> 생산일</label>
+    <div className={listStyle["production_list-container"]}>
+      <div
+        className={`${searchStyle["container-search-helper"]} ${productionListClasses["filter-container"]}`}
+      >
+        <div className={listStyle["search_date"]}>
+          <span>
+            <label style={{ marginLeft: "2px" }}>생산일</label>
             <input
               onChange={(e) =>
                 setSearchPeriod({ ...searchPeriod, startDate: e.target.value })
@@ -593,10 +594,11 @@ export default function Add() {
               min="1900-01-01"
               max="9999-12-31"
             ></input>
-          </div>
-          <span>~</span>
-          <div>
-            <label> 생산일</label>
+          </span>
+
+          <span style={{ marginTop: "20px", marginRight:'7px'}}>~</span>
+          <span>
+            <label> </label>
             <input
               onChange={(e) =>
                 setSearchPeriod({ ...searchPeriod, endDate: e.target.value })
@@ -605,61 +607,65 @@ export default function Add() {
               min="1900-01-01"
               max="9999-12-31"
             ></input>
-          </div>
-          <SearchHelperModal
-            headers={searchFilter}
-            formHandler={formHandler}
-            enterHandler={enterHandler}
-          ></SearchHelperModal>
-          <button className={disabledBtn.class} onClick={searchHandler}>
-            조회
-          </button>
+          </span>
         </div>
-        <div className={productionClasses.grid01}>
-          <Table headers={grid01_headers}>
-            <AddTd
-              items={grid01_items}
-              selectRowHandler={grid01SelectHandler}
-              onGridTrigger={triggerHandler}
-              emitItem={set01Item}
-              // deleteItem={deleteIdx}
-              editHandler={editHandler}
-            ></AddTd>
-          </Table>
-        </div>
-        {modalState.showModal && (
-          <AlertModal
-            offModal={offModal}
-            modalState={modalState}
-            onSubmit={submitHandler}
-          ></AlertModal>
-        )}
-        <div className={productionClasses.grid02}>
-          <Table headers={grid02_headers}>
-            <ListTd
-              items={grid02_items}
-              onTrigger={triggerHandler}
-              emitItem={set02Item}
-              selectRowHandler={grid02SelectHandler}
-              editHandler={editHandler}
-            ></ListTd>
-          </Table>
-        </div>
-        <div className={productionClasses["product_btn-wrap"]}>
-          <button
-            className={productionClasses["product_btn_delete"]}
-            onClick={deleteHandler}
-          >
-            삭제
-          </button>
-          <button
-            className={disabledBtn.class}
-            onClick={saveHandler}
-            disabled={disabledBtn.state}
-          >
-            저장
-          </button>
-        </div>
+        <SearchHelperModal
+          headers={searchFilter}
+          formHandler={formHandler}
+          enterHandler={enterHandler}
+        ></SearchHelperModal>
+        <button className="btn_save" onClick={searchHandler}>
+          조회
+        </button>
+      </div>
+      <div className={productionClasses["sub-menu-name"]}>생산품</div>
+      <div className={listStyle.grid01}>
+        <Table headers={grid01_headers}>
+          <AddTd
+            items={grid01_items}
+            selectRowHandler={grid01SelectHandler}
+            onGridTrigger={triggerHandler}
+            emitItem={set01Item}
+            // deleteItem={deleteIdx}
+            editHandler={editHandler}
+          ></AddTd>
+        </Table>
+      </div>
+      {modalState.showModal && (
+        <AlertModal
+          offModal={offModal}
+          modalState={modalState}
+          onSubmit={submitHandler}
+        ></AlertModal>
+      )}
+      <div className={productionClasses["sub-menu-name"]}>소모자재</div>
+      <div className={listStyle.grid02}>
+        <Table headers={grid02_headers}>
+          <ListTd
+            items={grid02_items}
+            onTrigger={triggerHandler}
+            emitItem={set02Item}
+            selectRowHandler={grid02SelectHandler}
+            editHandler={editHandler}
+          ></ListTd>
+        </Table>
+      </div>
+      <div className="wrap-btn">
+        <button
+          class="btn_delete"
+          className={productionClasses["product_btn_delete"]}
+          onClick={deleteHandler}
+        >
+          삭제
+        </button>
+        <button
+          class="btn_save"
+          className={disabledBtn.class}
+          onClick={saveHandler}
+          disabled={disabledBtn.state}
+        >
+          저장
+        </button>
       </div>
     </div>
   );

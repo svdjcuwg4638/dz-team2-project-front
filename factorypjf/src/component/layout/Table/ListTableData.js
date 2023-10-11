@@ -70,12 +70,11 @@ export default function ListTable({
     //이벤트가 tr>td>input에서 발생하기 때문에 부모의 부모 노드 선택
     let row = e.target.parentNode.parentNode;
     if(e.type==='mouseover'){
-      row.className = listStyle["add-table-focus"];
+      row.className += row.className?` ${listStyle["add-table-focus"]}`:`${listStyle[" add-table-focus"]}`;
       setOverRow(row);
     }
     if(e.type==='mouseout'){
-     
-      overRow.className = listStyle[""];
+      overRow.className = overRow.className.replace(`${listStyle["add-table-focus"]}`,'');
     }
   }
 
