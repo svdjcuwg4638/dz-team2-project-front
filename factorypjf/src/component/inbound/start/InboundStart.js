@@ -183,7 +183,7 @@ const InBoundStart = () => {
   return (
     <div style={{padding:'0px'}}>  
     <div className={inboundClasses.wrap}>
-      <p className={inboundClasses["sub-menu-name"]}>입고예정</p>
+      {/* <p className={inboundClasses["sub-menu-name"]}>입고예정</p> */}
       <Table headers={grid01_headers}></Table>
       <MasterTable
         masterLength={masterLength}

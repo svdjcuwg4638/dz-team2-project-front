@@ -257,7 +257,12 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
 
   return (
     <>
-      <tr style={{display:masterFocus == formData["bound_id"] ? "block":"none"}}
+      <tr style={{
+          display: masterFocus === formData["bound_id"] ? "block" : "none",
+          ...hovered ? rowHoverStyle : {},
+        }}
+      onMouseEnter={handleMouseEnter} // 마우스 호버 이벤트 리스너 추가
+      onMouseLeave={handleMouseLeave} // 마우스 이탈 이벤트 리스너 추가
       >
         <td style={{width: '8%'}}>
           <input
@@ -398,7 +403,7 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
         <div className="subRowBk" onClick={()=>sedivelperScreenState(!HelperScreenState)}></div>
             <div
                 style={{
-                    position: "absolute",
+                    position: "fixed",
                     top: "50%",
                     left: "50%",
                     transform: "translate(-50%, -50%)",
