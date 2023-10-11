@@ -27,45 +27,48 @@ export default function Add() {
     { text: "선택", value: "select", width: "3%" },
     { text: "순번", value: "index", width: "3%" },
     { text: "생산번호", value: "productionCode", width: "9%", readonly: true },
-    { text: "생산일*", value: "date", width: "9%" },
+    { text: "생산일", value: "date", width: "9%",required:true },
     {
-      text: "생산품*",
+      text: "생산품",
       value: "item",
       width: "9%",
-
       gridTrigger: true,
+      readonly:true,
+      required:true
     },
-    { text: "수량*", value: "quantity", width: "3%", readonly: true },
-    { text: "생산팀*", value: "team", width: "4%", helper: true },
-    { text: "라인*", value: "line", width: "5%", helper: true },
-    { text: "창고*", value: "storage", width: "5%", helper: true },
-    { text: "장소*", value: "location", width: "5%", helper: true },
-    { text: "고객*", value: "partner", width: "9%", helper: true },
-    { text: "담당자*", value: "emp", width: "5%", helper: true },
-    { text: "소요시간*", value: "leadTime", width: "5%" },
+    { text: "수량", value: "quantity", width: "3%", readonly: true,required:true },
+    { text: "생산팀", value: "team", width: "4%", helper: true ,required:true},
+    { text: "라인", value: "line", width: "5%", helper: true ,required:true},
+    { text: "창고", value: "storage", width: "5%", helper: true ,required:true},
+    { text: "장소", value: "location", width: "5%", helper: true ,required:true},
+    { text: "고객", value: "partner", width: "9%", helper: true ,required:true},
+    { text: "담당자", value: "emp", width: "5%", helper: true ,required:true},
+    { text: "소요시간", value: "leadTime", width: "5%" ,required:true},
     { text: "작업인원", value: "workForce", width: "5%" },
 
     { text: "비고", value: "description", width: "9%" },
   ];
   const grid02_headers = [
     { text: "순번", value: "index", width: "5%" },
-    { text: "자재*", value: "item", width: "15%", readonly: true },
+    { text: "자재", value: "item", width: "15%", readonly: true,required:true },
     { text: "수량", value: "quantity", width: "8%", readonly: true },
-    { text: "창고*", value: "storage", width: "10%", helper: true },
+    { text: "총 필요수량", value: "totalQuantity", width: "8%", readonly: true },
+    { text: "창고", value: "storage", width: "10%", helper: true ,required:true, trigger: true},
 
     {
-      text: "세부장소*",
+      text: "세부장소",
       value: "location",
       width: "8%",
       helper: true,
       trigger: true,
+      required:true
     },
     {
       text: "재고",
-      value: "total",
+      value: "inventory",
       width: "5%",
       readonly: true,
-      trigger: true,
+     
     },
     { text: "비고", value: "description", width: "20%", readonly: true },
   ];
@@ -109,6 +112,31 @@ export default function Add() {
 
   const gridTriggerHandler = () => {};
   const grid01SelectHandler = (idx, e) => {
+    //========필수항목일 경우 input 색상 변경=======  
+    if(e.target.type==='text'){
+      let inputId = e.target.id
+      let inputHeader = inputId.match(/(?<=\w_)[a-zA-z_]+/g)[0];
+      e.target.className=e.target.className.replace('input_red','')
+      e.target.className=e.target.className.replace('input_black','')
+      // e.target.className=e.target.className.replace('input_blue','')
+      
+      // e.target.className.replace(`${productionClasses["input_red"]}`,null)
+      // e.target.className.replace(`${productionClasses["input_black"]}`,null)
+      grid01_headers.map((header)=>{
+        if(inputHeader===header.value){
+          //필수항목이고 빈칸이면
+          if(!header.readonly&&header.required&&e.target.value===''){
+            // e.target.className= e.target.className?e.target.className+`${productionClasses[" input_red"]}`:`${productionClasses["input_red"]}`
+            e.target.className= e.target.className?e.target.className+' input_red':'input_red'
+          }else if(!header.readonly){
+            // e.target.className= e.target.className?e.target.className+`${productionClasses[" input_black"]}`:`${productionClasses["input_black"]}`
+            e.target.className= e.target.className?e.target.className+' input_black':'input_black'
+          }
+        }
+      })
+    }
+
+
     const inputArr = [...document.querySelectorAll('input[id*="grid02"]')];
     // console.log(inputArr)
 
@@ -136,7 +164,58 @@ export default function Add() {
 
   const grid02SelectHandler = (e, idx) => {};
 
-  const triggerHandler = () => {};
+  //grid 2 trigger handler (창고와 세부장소에 맞는 재고 가져오기)
+  const triggerHandler = (header, tableItems, currentCol) => {
+    let itemCode,
+      storageCode,
+      locationCode = "";
+    const rowItem = tableItems[currentCol.row];
+    
+    //trigger가 location일 경우
+    if (header.value === "location") {
+      itemCode = rowItem.itemCode;
+      storageCode = rowItem.storageCode;
+      locationCode = rowItem.locationCode;
+
+      getAxios(
+        "production/add/inventory",
+        { itemCode, storageCode, locationCode },
+        success,
+        fail
+      );
+
+      function success(resData) {
+        const data = resData.data;
+        //================선택한 코드 테이블에 출력===============
+        let copyItems = tableItems;
+        let currentRow = currentCol.row;
+
+        copyItems[currentRow].inventory = data.total;
+        // set02Item([...copyItems]);
+        cacheDispatch({
+          type: "TRIGGER",
+          idx: currentCol.row,
+          items: [...copyItems],
+        });
+
+        //소요자재 재고 확인 (필요자재 > 재고이면 css 변경)
+        let totalQuantity= rowItem.totalQuantity;
+
+        if(totalQuantity>rowItem.inventory){
+          let inventoryEl = document.querySelector(`#grid02_${currentRow}_inventory`);
+          let totalQuantityEl = document.querySelector(`#grid02_${currentRow}_totalQuantity`);
+          inventoryEl.className+=` ${productionClasses['out-stock']}`
+          totalQuantityEl.className+=` ${productionClasses['out-stock']}`
+          console.log(totalQuantityEl,inventoryEl)
+        }
+      }
+
+      function fail(error) {
+        console.log(error);
+      }
+
+    }
+  };
 
   const editHandler = (e, tableType, colInfo, coordinate) => {
     setDisabledBtn({ state: false, class: "btn_save" });
@@ -579,7 +658,7 @@ export default function Add() {
   const enterHandler = searchHandler;
 
   return (
-    <div className={listStyle["production_list-container"]}>
+    <div className={listStyle["container-production_list"]}>
       <div
         className={`${searchStyle["container-search-helper"]} ${productionListClasses["filter-container"]}`}
       >
@@ -598,7 +677,7 @@ export default function Add() {
 
           <span style={{ marginTop: "20px", marginRight:'7px'}}>~</span>
           <span>
-            <label> </label>
+            <label>&nbsp;</label>
             <input
               onChange={(e) =>
                 setSearchPeriod({ ...searchPeriod, endDate: e.target.value })
@@ -624,7 +703,7 @@ export default function Add() {
           <AddTd
             items={grid01_items}
             selectRowHandler={grid01SelectHandler}
-            onGridTrigger={triggerHandler}
+            onGridTrigger={gridTriggerHandler}
             emitItem={set01Item}
             // deleteItem={deleteIdx}
             editHandler={editHandler}

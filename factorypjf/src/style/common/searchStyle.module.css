@@ -34,7 +34,7 @@
     width: 90%;
 }
 .container-search-helper label{
-    margin-left: 12px;
+    margin-left: 10px;
 }
 .container-search-helper button{
     margin-top: 18px;
@@ -43,6 +43,7 @@
 .container-search-helper input[type='date']{
     border: 1px solid var(--border-color-light);
 }
+
 
 
 

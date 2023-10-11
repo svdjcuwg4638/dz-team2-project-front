@@ -21,8 +21,9 @@ table {
 .grid01,.grid02{
   height: 30%;
 }
-.production_list-container{
+.container-production_list{
   height: 100%;
+  padding:40px 20px;
 }
 .search_date{
   display: flex;
