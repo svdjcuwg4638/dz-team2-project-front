@@ -9,6 +9,7 @@ import SearchHelper from "./SearchHelper";
 import { partnerAction } from "redux/actions/management/partnerAction";
 import { itemAction } from "redux/actions/management/itemAction";
 import api from "redux/api";
+import '../../../style/inbound/overlay.css'
 
 const styles = {
   btnSave: {
@@ -369,6 +370,8 @@ function InboundEnd() {
       </div>
 
       {HelperScreenState && (
+      <div>
+        <div className="subRowBk" onClick={()=>sedivelperScreenState(!HelperScreenState)}></div>
         <div
           style={{
             position: "absolute",
@@ -386,6 +389,7 @@ function InboundEnd() {
             searchPartner={selectedPartnerFn}
           />
         </div>
+      </div>
       )}
     </div>
     </div>

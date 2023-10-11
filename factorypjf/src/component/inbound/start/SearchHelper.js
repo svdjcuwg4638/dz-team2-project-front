@@ -4,6 +4,8 @@ import { partnerAction } from "../../../redux/actions/management/partnerAction";
 import { itemAction } from "../../../redux/actions/management/itemAction";
 import { storageAction } from "../../../redux/actions/management/storageAction";
 import { codeAction } from "redux/actions/management/codeAction";
+import '../../../style/inbound/overlay.css'
+
 const styles = {
   btnSave: {
       backgroundColor: "var(--main-color)",
@@ -110,6 +112,7 @@ const SearchHelper = ({
     setInputboxText(e.target[0].value);
   };
   return (
+    <div class="md_overlay1">
     <div
       style={{
         border: "1px solid black",
@@ -195,6 +198,7 @@ const SearchHelper = ({
           </table>
         </div>
       </div>
+    </div>
     </div>
   );
 };

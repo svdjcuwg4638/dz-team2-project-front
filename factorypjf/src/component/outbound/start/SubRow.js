@@ -4,6 +4,7 @@ import SearchHelper from "../start/SearchHelper";
 import { useDispatch, useSelector } from "react-redux";
 import { unitPriceAction } from "redux/actions/management/unitPriceAction";
 import LocationSearchHelper from "./LocationSearchHelper";
+import '../../../style/inbound/overlay.css'
 
 const rowHoverStyle = {
   backgroundColor: "#f0f0f0", // 원하는 배경색으로 변경하세요.
@@ -393,6 +394,8 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
         </div>
       )}
       {AHelperScreenState && (
+        <div>
+        <div className="subRowBk" onClick={()=>sedivelperScreenState(!HelperScreenState)}></div>
             <div
                 style={{
                     position: "absolute",
@@ -411,6 +414,7 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
                     currentDetailId={currentDetailId}
                 />
             </div>
+          </div>
         )}
       </>
   );

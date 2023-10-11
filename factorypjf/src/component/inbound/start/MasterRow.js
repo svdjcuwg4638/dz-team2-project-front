@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import api from "redux/api";
 import SearchHelper from "component/storage/item/SearchHelper";
 import inboundClasses from '../../../style/inbound/inbound.module.css';
+import '../../../style/inbound/overlay.css'
 
 const rowHoverStyle = {
   backgroundColor: "#f0f0f0", // 원하는 배경색으로 변경하세요.
@@ -192,6 +193,8 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
       </td>
     </tr>
     {HelperScreenState && (
+            <div>
+              <div className="subRowBk" onClick={()=>sedivelperScreenState(!HelperScreenState)}></div>
               <div
                 style={{
                   position: "absolute",
@@ -208,6 +211,7 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
                   menu={item}
                   searchPartner={selectedPartnerFn}
                 />
+              </div>
               </div>
             )}
     </>

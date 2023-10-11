@@ -10,6 +10,8 @@ import { partnerAction } from "redux/actions/management/partnerAction";
 import { itemAction } from "redux/actions/management/itemAction";
 import api from "redux/api";
 import { outboundAction } from "redux/actions/outbound/outboundAction";
+import '../../../style/inbound/overlay.css'
+
 const styles = {
   btnSave: {
           backgroundColor: "var(--main-color)",
@@ -350,6 +352,8 @@ function OutboundEnd() {
       <SubTable filteredDetailData={filteredDetailData} />
 
       {HelperScreenState && (
+      <div>
+        <div className="subRowBk" onClick={()=>sedivelperScreenState(!HelperScreenState)}></div>
         <div
           style={{
             position: "absolute",
@@ -367,6 +371,7 @@ function OutboundEnd() {
             searchPartner={selectedPartnerFn}
           />
         </div>
+      </div>
       )}
     </div>
     </div>
