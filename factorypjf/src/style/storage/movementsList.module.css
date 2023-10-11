@@ -1,7 +1,6 @@
 .SectionContainer {
   display: flex;
   justify-content: center;
-  padding: 3rem;
   width: 100%;
   height: 93%;
 }
@@ -13,7 +12,7 @@
 }
 
 .tableCon {
-  height: 65%;
+  height: 60%;
 }
 
 .btnBox {
@@ -56,27 +55,27 @@
 
 .active,
 .pbtn {
-  width: 30px;
-  border: 1px solid #4373c0;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--main-color);
   border-radius: 6px;
   font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 20;
   font-size: 13px;
-  line-height: 29px;
-  align-items: center;
-  text-align: center;
+  line-height: 12px;
+  justify-items: center;
   margin-bottom: 1rem;
 }
 
 .active {
-  background: #4373c0;
+  background: var(--main-color);
   color: #ffffff;
 }
 
 .pbtn {
   background: #ffffff;
-  color: #4373c0;
+  color: var(--main-color);
 }
 
 .PBtnBox {
@@ -100,17 +99,21 @@
   border: 1px solid #e9eef6;
   background: #fff;
   box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.25);
-  padding: 3rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-right: 3rem;
+  padding-left: 3rem;
 }
 
 .etcCon {
+  width: 46%;
   border-radius: 10px;
   border: 1px solid #e9eef6;
   background: #fff;
   box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.25);
   padding: 1rem;
   margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 .etcCon td input {
   width: 85px;
@@ -133,8 +136,8 @@
 
 .left td input,
 .right td input {
-  width: 165px;
-  height: 37.5px;
+  /* width: 165px;
+  height: 37.5px; */
   border-radius: 2px;
   border: 1px solid #b9b9b9;
   background: #fff;
@@ -144,4 +147,21 @@
 .etcCon td {
   border: 0px;
   width: auto;
+}
+.dateCon {
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+}
+.dateCon > div {
+  display: flex;
+  flex-direction: row;
+}
+.dateCon > div input {
+  border-radius: 2px;
+  border: 1px solid #b9b9b9;
+  background: #fff;
+}
+.etcCon > * {
+  margin-right: 1rem;
 }

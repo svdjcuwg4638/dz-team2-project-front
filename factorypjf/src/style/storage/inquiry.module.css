@@ -1,9 +1,9 @@
+table {
+  width: auto !important;
+}
 .SectionContainer {
   display: flex;
   justify-content: center;
-  padding-left: 3rem;
-  padding-right: 3rem;
-  padding-bottom: 3rem;
   width: 100%;
 }
 
@@ -11,25 +11,19 @@
   border: 0px;
 }
 
-.headerCon {
-  padding-top: 3rem;
-  margin-left: 3rem;
-}
-.headerSection {
-  border-left: 3px solid #5390f0;
-}
 .SearchSection table {
   border: none;
 }
 
-.header {
-  font-weight: bold;
-  margin-left: 1rem;
+.SearchSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
-
 .middlePart {
   display: flex;
   flex-direction: row;
+  margin-top: 1rem;
 }
 
 .arrow {
@@ -43,37 +37,62 @@
   height: 150px;
 }
 .grid04 {
-  margin-bottom: 3rem;
-  height: 500px;
+}
+.formresultStyle {
+  height: 440px;
+}
+.tableresultStyle {
+  height: 300px;
 }
 
-.searchBtn {
-  width: 70px;
-  background: #4373c0;
-  border: none;
-  border-radius: 15px;
-
-  line-height: 29px;
-  text-align: center;
-  color: #ffffff;
-  margin-bottom: 1rem;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-  font: bold;
-  padding: 0.3rem 1rem;
-
-  margin-bottom: 1rem;
-}
-
-.btnBox {
+.btnWrap {
   width: 100%;
   display: flex;
   justify-content: right;
 }
 
-/* 토글 버튼 스타일링 */
+.btnBox {
+  /* width: 100%;
+  justify-content: right; */
+
+  border-radius: 10px;
+  border: 1px solid #e9eef6;
+  background: #fff;
+  box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.25);
+  padding: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.toggleContainer {
+  display: flex;
+  width: 200px; /* 원하는 너비 설정 */
+  margin: 0 auto; /* 가운데 정렬을 위한 스타일 */
+}
+
 .toggleButton {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
   cursor: pointer;
-  color: blue;
-  text-decoration: underline;
+  font-size: 10px;
+}
+.toggleContainer :nth-child(1) {
+  border-radius: 10px 0 0 10px;
+}
+.toggleContainer :nth-child(2) {
+  border-radius: 0 10px 10px 0;
+}
+/* 활성화된 쪽에 배경색 적용 */
+.active {
+  background-color: var(--main-color); /* 원하는 배경색 설정 */
+  color: #fff; /* 텍스트 색상 설정 */
+}
+
+/* 활성화되지 않은 쪽에 배경색 지우기 */
+.inactive {
+  background-color: #fff;
+  color: var(--main-color);
+  border: 1px solid var(--main-color);
 }

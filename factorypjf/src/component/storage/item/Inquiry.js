@@ -252,38 +252,47 @@ const Inquiry = () => {
 
   return (
     <>
-      <div className={styles.headerCon}>
-        <div className={styles.headerSection}>
-          <h4 className={styles.header}> 재고 조회</h4>
-        </div>
-      </div>
-
       <div className={styles.SectionContainer}>
         <div>
           <div>
-            <div className={styles.toggleButton} onClick={toggleSearchSection}>
-              {isSearchSectionVisible ? "" : "폼 검색"}
+            <div className={styles.toggleContainer}>
+              <div
+                className={`${styles.toggleButton} ${
+                  isSearchSectionVisible ? styles.active : styles.inactive
+                }`}
+                onClick={toggleSearchSection}
+              >
+                폼 검색
+              </div>
+              <div
+                className={`${styles.toggleButton} ${
+                  isSearchSectionVisible ? styles.inactive : styles.active
+                }`}
+                onClick={toggleSearchSection}
+              >
+                테이블 검색
+              </div>
             </div>
             {isSearchSectionVisible && (
-              <div className={styles.SearchSection}>
-                <table>
-                  <tbody>
-                    <SearchHelperModal
-                      headers={search_headers}
-                      formHandler={formHandler}
-                    />
-                  </tbody>
-                </table>
-                <div className={styles.btnBox}>
-                  <button className={styles.searchBtn} onClick={searchHandler}>
-                    조회
-                  </button>
+              <div className={styles.btnBox}>
+                <div className={styles.SearchSection}>
+                  <table>
+                    <tbody>
+                      <SearchHelperModal
+                        headers={search_headers}
+                        formHandler={formHandler}
+                      />
+                    </tbody>
+                  </table>
+                  <div className="wrap-btn">
+                    <button className="btn_save" onClick={searchHandler}>
+                      조회
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
-            <div className={styles.toggleButton} onClick={toggleSearchSection}>
-              {!isSearchSectionVisible ? "" : "테이블 검색"}
-            </div>
+
             {!isSearchSectionVisible && (
               <>
                 <div className={styles.middlePart}>
@@ -332,9 +341,9 @@ const Inquiry = () => {
                     </Table>
                   </div>
                 </div>
-                <div className={styles.btnBox}>
+                <div className={styles.btnWrap}>
                   <button
-                    className={styles.searchBtn}
+                    className="btn_save"
                     onClick={(e) => inventoryInquirykFn(e)}
                   >
                     조회
@@ -343,7 +352,13 @@ const Inquiry = () => {
               </>
             )}
 
-            <div className={styles.grid04}>
+            <div
+              className={`${styles.grid04} ${
+                isSearchSectionVisible
+                  ? styles.formresultStyle
+                  : styles.tableresultStyle
+              }`}
+            >
               <Table headers={grid04_headers}>
                 <ListTable items={grid04_items} />
               </Table>
