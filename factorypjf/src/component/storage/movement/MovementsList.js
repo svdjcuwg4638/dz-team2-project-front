@@ -149,6 +149,7 @@ export const MovementsList = () => {
                     formHandler={setSearchOutboundData}
                   />
                 </div>
+                <Arrow width="3%" height="138" />
 
                 <div className={styles.right}>
                   <SearchHelperModal
@@ -157,51 +158,55 @@ export const MovementsList = () => {
                   />
                 </div>
               </div>
-              <div className={styles.etcCon}>
-                <SearchHelperModal
-                  headers={search_etc_headers}
-                  formHandler={setSearchEtcData}
-                />
-                <div>
-                  <label>재고이동일</label>
-                  <input
-                    onChange={(e) =>
-                      setSearchPeriod({
-                        ...searchPeriod,
-                        startDate: e.target.value,
-                      })
-                    }
-                    type="date"
-                    min="1900-01-01"
-                    max="9999-12-31"
-                  ></input>
+              <div className={styles.inoutCon}>
+                <div className={styles.etcCon}>
+                  <SearchHelperModal
+                    headers={search_etc_headers}
+                    formHandler={setSearchEtcData}
+                  />
+                  <div className={styles.dateCon}>
+                    <label>재고이동일</label>
+                    <div>
+                      <input
+                        onChange={(e) =>
+                          setSearchPeriod({
+                            ...searchPeriod,
+                            startDate: e.target.value,
+                          })
+                        }
+                        type="date"
+                        min="1900-01-01"
+                        max="9999-12-31"
+                      ></input>
+
+                      <span>~</span>
+                      <div>
+                        <label> </label>
+                        <input
+                          onChange={(e) =>
+                            setSearchPeriod({
+                              ...searchPeriod,
+                              endDate: e.target.value,
+                            })
+                          }
+                          type="date"
+                          min="1900-01-01"
+                          max="9999-12-31"
+                        ></input>
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    className="btn_save"
+                    onClick={(e) => {
+                      fetchData(1);
+                      setCurrentPage(1);
+                    }}
+                  >
+                    조회
+                  </button>
                 </div>
-                <span>~</span>
-                <div>
-                  <label> </label>
-                  <input
-                    onChange={(e) =>
-                      setSearchPeriod({
-                        ...searchPeriod,
-                        endDate: e.target.value,
-                      })
-                    }
-                    type="date"
-                    min="1900-01-01"
-                    max="9999-12-31"
-                  ></input>
-                </div>
-                <button
-                  className={styles.btn}
-                  onClick={(e) => {
-                    fetchData(1);
-                    setCurrentPage(1);
-                  }}
-                >
-                  조회
-                </button>
               </div>
-              <div className={styles.btnBox}></div>
             </div>
             <div className={styles.tableCon}>
               <Table className={styles.tableHeader} headers={table_headers}>
