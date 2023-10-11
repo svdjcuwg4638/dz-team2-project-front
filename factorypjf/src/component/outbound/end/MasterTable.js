@@ -32,7 +32,7 @@ function TableRow({ rowData, onRowClick }) {
   return (
     <tr
       onClick={() => onRowClick(rowData.bound_id)}
-      style={hovered ? rowHoverStyle : {}}
+      style={{ ...(hovered ? rowHoverStyle : {}), textAlign: 'center' }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

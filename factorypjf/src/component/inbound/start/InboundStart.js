@@ -181,6 +181,7 @@ const InBoundStart = () => {
   //#endregion
 
   return (
+    <div style={{padding:'0px'}}>  
     <div className={inboundClasses.wrap}>
       <p className={inboundClasses["sub-menu-name"]}>입고예정</p>
       <Table headers={grid01_headers}></Table>
@@ -219,6 +220,7 @@ const InBoundStart = () => {
         <button style={styles.btnDelete} onClick={handleDeleteCheckedRows}>삭제</button>
         <button style={styles.btnSave} onClick={() => handleSave()}>저장</button>
       </div>
+    </div>
     </div>
   );
 };

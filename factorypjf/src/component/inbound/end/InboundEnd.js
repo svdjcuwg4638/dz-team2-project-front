@@ -31,7 +31,8 @@ const styles = {
         alignItems: 'flex-start', 
 
         width: '120px',
-        height: '80px'
+        height: '80px',
+        position: 'relative'
       },
 
       container1_sons1: {
@@ -51,8 +52,20 @@ const styles = {
         alignItems: 'flex-start', 
 
         width: '80px',
+        height: '80px',
+        position: 'relative'
+      },
+
+      container1_sons3: {
+        display: "flex",
+        flexDirection: 'column',
+        justifyContent: "center",
+        alignItems: 'flex-start', 
+
+        width: '125px',
         height: '80px'
       },
+
 
       container1_last_child_bottom: {
         display: 'flex',
@@ -72,7 +85,9 @@ const styles = {
         width: '100%',
         height: '20px',
         
-      }
+      },
+
+      
    };
 
 
@@ -219,20 +234,23 @@ function InboundEnd() {
   }, [inboundAll, inboundDetailAll]);
 
   return (
+   <div style={{padding : '0px'}}>
     <div className={inboundClasses.wrap}>
       <p className={inboundClasses["sub-menu-name"]}>입고현황</p>
 
-      <div style={{border: '2px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+      <div style={{border: '1px solid #E9EEF6', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '10px', backgroundColor:'white', boxShadow:'1px 1px 4px 0px rgba(0, 0, 0, 0.25)',}}>
         <div className="container1" style={{  display: 'flex', width: '55%', justifyContent: "space-around", alignItems: 'center' }}>
-          <div style={styles.container1_sons}>
+          <div style={styles.container1_sons3}>
             <p style={styles.container1_sons_upper}>문서번호</p>
-            <input style={{width: '125px', height: '40px'}}
-              type="text"
-              value={searchSectionData.master.bound_no}
-              onChange={(e) =>
-                handleInputChange("master", "bound_no", e.target.value)
-            }
-            />
+            <div style={{height: '40px', display: 'flex', alignItems: 'center',}}>
+              <input style={{width: '130px', height: '25px' ,border : '1px solid black'}}
+                type="text"
+                value={searchSectionData.master.bound_no}
+                onChange={(e) =>
+                  handleInputChange("master", "bound_no", e.target.value)
+              }
+              />
+            </div>
           </div>
           <div style={styles.container1_sons}>
             <p style={styles.container1_sons_upper}>유형</p>
@@ -249,8 +267,9 @@ function InboundEnd() {
           <div style={styles.container1_sons}>
             <p style={styles.container1_sons_upper}>거래처명</p>
             <div style={styles.container1_last_child_bottom}>
-              <input type="text" value={searchSectionData.master.partner_code} style={{width: '120px', height: '40px'}}/>
+              <input type="text" value={searchSectionData.master.partner_code} style={{width: '120px', height: '25PX', border : '1px solid black' }}/>
               <button
+              style={{border: '0px', color : '#ffffff',  background: '#5390f0', borderRadius: '10px', padding: '0px', width: '30px', height: '30px', textAlign:'center', marginLeft: '5px', position: 'absolute', right: '-39px'}}
                 onClick={(e) => {
                   setSelectedHelperItem(item);
                   sedivelperScreenState(!HelperScreenState);
@@ -261,7 +280,7 @@ function InboundEnd() {
             </div>
           </div>
           <div style={styles.container1_sons1}>
-            <p style={styles.container1_sons_upper}>&nbsp;&nbsp;입고일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;입고일</p>
+            <p style={styles.container1_sons_upper}>&nbsp;&nbsp;&nbsp;입고일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;입고일</p>
             <div style={styles.container1_last_child_bottom}>
               <input
               type="date"
@@ -285,9 +304,10 @@ function InboundEnd() {
           <div style={styles.container1_sons2}>
             <p style={styles.container1_sons_upper}>품목명</p>
             <div style={styles.container1_last_child_bottom}>
-              <input style={{width: '120px', height: '40px'}}
+              <input style={{width: '120px', height: '25px', border : '1px solid black'}}
               type="text" value={searchSectionData.detail.item_name} />
               <button
+              style={{border: '0px', color : '#ffffff',  background: '#5390f0', borderRadius: '10px', padding: '0px', width: '30px', height: '30px', textAlign:'center', marginLeft: '5px', position: 'absolute', right: '-60px'}}
                 onClick={(e) => {
                   setSelectedHelperItem(item2);
                   sedivelperScreenState(!HelperScreenState);
@@ -319,81 +339,14 @@ function InboundEnd() {
           </div>
         </div>
       </div>
-      {/* <div style={{display:"flex", justifyContent:"space-between"}}> */}
-        {/* <div className="container3" style={{border: '3px solid blue', width:'55%', display:"flex", justifyContent:"space-between"}}>
-          <input
-          type="text"
-          value={searchSectionData.master.bound_no}
-          onChange={(e) =>
-            handleInputChange("master", "bound_no", e.target.value)
-          }
-          />
-          <select onChange={handleBoundTypeChange}>
-            <option value="" disabled selected hidden></option>
-            <option value="구매">구매</option>
-            <option value="재작업입고">재작업입고</option>
-            <option value="유상사급입고">유상사급입고</option>
-            <option value="기타입고">기타입고</option>
-          </select>
-          <input type="text" value={searchSectionData.master.partner_code}/>
-          <button
-            onClick={(e) => {
-              setSelectedHelperItem(item);
-              sedivelperScreenState(!HelperScreenState);
-            }}
-          >
-            ?
-          </button>
-          <input
-          type="date"
-          value={searchSectionData.master.bound_start_date}
-          onChange={(e) =>
-            handleInputChange("master", "bound_start_date", e.target.value)
-          }
-          />
-          <input
-          type="date"
-          value={searchSectionData.master.bound_end_date}
-          onChange={(e) =>
-            handleInputChange("master", "bound_end_date", e.target.value)
-          }
-            />
-          <button style={styles.btnSave} onClick={handleMasterSearch}>조회</button>
-        </div> */}
-        {/* <div className="container4" style={{border: '3px solid black', width:'45%', display:"flex", justifyContent:"space-between"}}>
-          <input type="text" value={searchSectionData.detail.item_name} />
-          <button
-            onClick={(e) => {
-              setSelectedHelperItem(item2);
-              sedivelperScreenState(!HelperScreenState);
-            }}
-          >
-            ?
-          </button>
-          <input
-          type="date"
-          value={searchSectionData.detail.detail_start_date}
-          onChange={(e) =>
-            handleInputChange("detail", "detail_start_date", e.target.value)
-          }
-          />
-          <input
-          type="date"
-          value={searchSectionData.detail.detail_end_date}
-          onChange={(e) =>
-            handleInputChange("detail", "detail_end_date", e.target.value)
-          }
-          />
-          <button style={styles.btnSave} onClick={handleDetailSearch}>조회</button>
-        </div> */}
-      {/* </div> */}
 
+      <div>&nbsp;</div>
 
       <Table headers={grid01_headers}></Table>
       <div
         id="mastertable-container"
         style={{
-          maxHeight: "300px", // 원하는 높이로 설정
+          maxHeight: "200px", // 원하는 높이로 설정
           overflowY: "auto",  // 수직 스크롤만 필요한 경우 설정
           border: "1px solid #ccc", // 테이블 주위에 경계선을 추가할 수 있습니다.
         }}
@@ -434,6 +387,7 @@ function InboundEnd() {
           />
         </div>
       )}
+    </div>
     </div>
   );
 }

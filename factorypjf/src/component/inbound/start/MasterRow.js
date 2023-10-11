@@ -151,7 +151,7 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
           readOnly
         ></input>
       </td>
-      <td style={{ width: '3%' }}>
+      <td style={{ width: '3%', textAlign: 'center' }}>
         <select
           name="bound_category"
           value={formData.bound_category}

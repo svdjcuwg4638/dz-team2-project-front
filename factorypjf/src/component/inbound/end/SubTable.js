@@ -49,7 +49,7 @@ function SubTableRow({ rowData, storageAll, locationAll }) {
 
   return (
     <tr
-      style={hovered ? rowHoverStyle : {}}
+      style={{ textAlign: 'center', ...(hovered ? rowHoverStyle : {}) }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

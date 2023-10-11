@@ -193,7 +193,7 @@ return (
                         <th>장소</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody style={{textAlign: 'center'}}>
                     {matchingDetails.map((detail, index) => (
                         <tr key={index}
                         style={
