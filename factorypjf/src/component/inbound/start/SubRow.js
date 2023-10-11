@@ -6,7 +6,7 @@ import { unitPriceAction } from "redux/actions/management/unitPriceAction";
 
 
 const rowHoverStyle = {
-  backgroundColor: "#ffffff", // 원하는 배경색으로 변경하세요.
+  backgroundColor: "#f0f0f0", // 원하는 배경색으로 변경하세요.
 };
 
 const SubRow = ({ boundId, masterFocus, subFlag, handleRequestFail, handleRequestSuccess, checkedSubBoundIds, setCheckedSubBoundIds, index, itemAll }) => {
@@ -269,7 +269,7 @@ const SubRow = ({ boundId, masterFocus, subFlag, handleRequestFail, handleReques
           <div className="subRowBk" onClick={()=>sedivelperScreenState(!HelperScreenState)}></div>
           <div
             style={{
-              position: "absolute",
+              position: "fixed",
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",

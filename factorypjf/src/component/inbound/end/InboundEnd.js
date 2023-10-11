@@ -237,7 +237,7 @@ function InboundEnd() {
   return (
    <div style={{padding : '0px'}}>
     <div className={inboundClasses.wrap}>
-      <p className={inboundClasses["sub-menu-name"]}>입고현황</p>
+      {/* <p className={inboundClasses["sub-menu-name"]}>입고현황</p> */}
 
       <div style={{border: '1px solid #E9EEF6', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '10px', backgroundColor:'white', boxShadow:'1px 1px 4px 0px rgba(0, 0, 0, 0.25)',}}>
         <div className="container1" style={{  display: 'flex', width: '55%', justifyContent: "space-around", alignItems: 'center' }}>
@@ -374,7 +374,7 @@ function InboundEnd() {
         <div className="subRowBk" onClick={()=>sedivelperScreenState(!HelperScreenState)}></div>
         <div
           style={{
-            position: "absolute",
+            position: "fixed",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
