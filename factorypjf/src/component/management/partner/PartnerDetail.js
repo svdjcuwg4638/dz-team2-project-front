@@ -195,9 +195,9 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
     //#endregion
 
   return (
-    <div className="detail_wrap" style={{width :"100%"}}>
+    <div className="detail_wrap" style={{width :"100%",padding:"0"}}>
       <form className="detail_wrap_sub" onSubmit={submitHandler}>
-        <div className="detail_content_wrap">
+        <div className="detail_content_wrap partner_detail_content_wrap">
           <div>
             <div>
               <div>거래처코드 </div>
