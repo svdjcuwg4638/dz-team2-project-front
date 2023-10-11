@@ -22,3 +22,8 @@
     left: 0;
     opacity: 0.5;
   }
+
+  .common_help_table tbody tr:hover{
+    background-color: #dadada;
+    cursor: pointer;
+  }

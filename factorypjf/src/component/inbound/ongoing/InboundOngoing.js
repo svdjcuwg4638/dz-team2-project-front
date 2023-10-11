@@ -168,7 +168,7 @@ function InboundOngoing() {
   return (
   <div style={{padding:'0px'}}>
       <div className={inboundClasses.wrap}>
-        <p className={inboundClasses["sub-menu-name"]}>입고등록</p>
+        {/* <p className={inboundClasses["sub-menu-name"]}>입고등록</p> */}
         <Table headers={grid01_headers}></Table>
         <div style={{overflow: "auto", maxHeight: "400px", textAlign: 'center'}}>
           {matchingMasters && matchingMasters.length > 0 ? (
