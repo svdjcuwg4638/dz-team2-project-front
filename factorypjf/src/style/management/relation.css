@@ -46,7 +46,7 @@
 
 .relation_input_wrap {
   display: flex;
-  font-weight: bold;
+  justify-content: flex-end;
 }
 .code_wrap > div:nth-child(3) .relation_row_sub >div{
   cursor: auto;

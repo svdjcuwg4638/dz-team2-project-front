@@ -184,7 +184,7 @@ const UnitPriceList = ({ itemAll }) => {
             <div style={{ flexFlow: "column" ,margin:"0"}}>
               <div>입고/출고</div>
               <div>
-                <select name="type" onChange={handleInputChange}>
+                <select name="type" onChange={handleInputChange} style={{height:"22.8px"}}>
                   <option value=""></option>
                   <option value="inbound">입고</option>
                   <option value="outbound">출고</option>
@@ -202,8 +202,8 @@ const UnitPriceList = ({ itemAll }) => {
               </div>
             </div>
           </div>
-          <div style={{display:"flex", alignItems:"center"}}>
-            <button type="button" className="button" onClick={filterData}>
+          <div>
+            <button type="button" className="btn_save" onClick={filterData}>
               조회
             </button>
           </div>
@@ -249,13 +249,14 @@ const UnitPriceList = ({ itemAll }) => {
         </div>
       </div>
       <div className="ctable">
-        <div className="cbody">
+        <div className="cbody" style={{height:"38vh"}}>
           {unitPriceAll &&
             searchList?.map((data) => (
               <div className="ctr unitprice_row">
                 <div>
                   <input
                     type="checkbox"
+                    className="management_checkBox"
                     checked={selectCodes?.includes(data?.partner_code)}
                     onChange={() => handleCheckboxChange(data?.partner_code)}
                   />

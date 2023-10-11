@@ -150,6 +150,7 @@ const CommonCode = ({ selectId, codeAll, setCodeAllData }) => {
               <div className="ctr code_row_sub common_code_list_content ">
                 <div>
                   <input
+                  className="management_checkBox"
                     type="checkbox"
                     checked={selectCodes.includes(data)}
                     onChange={() => handleCheckboxChange(data)}

@@ -37,7 +37,7 @@ const SearchPartner = ({ setSearchData }) => {
           <div>
             <div>분류</div>
             <div>
-              <select name="searchCategory" onChange={handleSearchChange}>
+              <select name="searchCategory" onChange={handleSearchChange} style={{height:"22.8px"}}>
                 <option value="partner_name">거래처명</option>
                 <option value="partner_code">거래처코드</option>
                 <option value="representative">대표자명</option>
@@ -59,7 +59,7 @@ const SearchPartner = ({ setSearchData }) => {
             </div>
           </div>
           <div className="button_wrap">
-            <button className="button">조회</button>
+            <button className="btn_save">조회</button>
           </div>
         </div>
       </form>

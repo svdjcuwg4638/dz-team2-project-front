@@ -59,6 +59,7 @@ const PartnerList = ({
               >
                 <div>
                   <input
+                    className="management_checkBox"
                     type="checkbox"
                     checked={selectCodes?.includes(data?.partner_code)}
                     onChange={() => handleCheckboxChange(data?.partner_code)}

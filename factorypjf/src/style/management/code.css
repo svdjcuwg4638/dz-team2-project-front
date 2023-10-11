@@ -1,12 +1,14 @@
 .code_wrap {
   justify-content: space-evenly;
   height: 100%;
-  padding-top: 20px;
+  padding-top: 36px;
   position: relative;
 }
 
 .code_wrap input {
-  border-radius: 5px;
+  border: 1px solid #000;
+  width: 120px;
+
 }
 
 .code_wrap table {

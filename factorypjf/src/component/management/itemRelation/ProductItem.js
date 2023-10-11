@@ -58,7 +58,7 @@ const ProductItem = ({ itemAll, setSelectId, selectId }) => {
             </div>
           </div>
           <div>
-            <button className="button" onClick={handleSearchSubmit}>
+            <button className="btn_save" onClick={handleSearchSubmit}>
               조회
             </button>
           </div>
