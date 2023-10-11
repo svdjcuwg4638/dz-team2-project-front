@@ -32,8 +32,8 @@ const SearchPartner = ({ setSearchData }) => {
 
   return (
     <>
-      <form onSubmit={handleSearchSubmit}>
-        <div className="partner_search_wrap">
+      <form onSubmit={handleSearchSubmit} className="management_search_wrap">
+        <div className="management_search_content">
           <div>
             <div>분류</div>
             <div>
@@ -44,6 +44,7 @@ const SearchPartner = ({ setSearchData }) => {
                 <option value="ph_num">연락처</option>
                 <option value="email">이메일</option>
                 <option value="collect_date">수금/지급 예정일</option>
+                <option value="post_num">우편번호</option>
               </select>
             </div>
           </div>
@@ -57,8 +58,6 @@ const SearchPartner = ({ setSearchData }) => {
               />
             </div>
           </div>
-        </div>
-        <div>
           <div className="button_wrap">
             <button className="button">조회</button>
           </div>

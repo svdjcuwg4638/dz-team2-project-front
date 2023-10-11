@@ -51,7 +51,6 @@
 
 .detail_content_wrap > div{
   display: flex;
-  margin: 2% 0;
 }
 .detail_content_wrap > div > div{
   width: 50%;

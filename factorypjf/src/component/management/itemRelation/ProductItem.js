@@ -80,27 +80,15 @@ const ProductItem = ({ itemAll, setSelectId, selectId }) => {
               <div
                 className="ctr relation_row"
                 onClick={() => setSelectId(data)}
+                style={{
+                  backgroundColor:
+                    selectId?.item_code == data.item_code
+                      ? "#dadada"
+                      : "transparent",
+                }}
               >
-                <div
-                  style={{
-                    backgroundColor:
-                      selectId?.item_code == data.item_code
-                        ? "#dadada"
-                        : "transparent",
-                  }}
-                >
-                  {data.item_code}
-                </div>
-                <div
-                  style={{
-                    backgroundColor:
-                      selectId?.item_code == data.item_code
-                        ? "#dadada"
-                        : "transparent",
-                  }}
-                >
-                  {data.item_name}
-                </div>
+                <div>{data.item_code}</div>
+                <div>{data.item_name}</div>
               </div>
             ))}
         </div>
