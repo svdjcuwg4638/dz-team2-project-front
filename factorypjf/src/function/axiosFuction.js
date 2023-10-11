@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const DEV_URL = "http://localhost:9091/";
+const DEV_URL = "https://backapp-7bb14242f8f4.herokuapp.com/";
 const OP_URL = "https://backapp-7bb14242f8f4.herokuapp.com/";
 
 
