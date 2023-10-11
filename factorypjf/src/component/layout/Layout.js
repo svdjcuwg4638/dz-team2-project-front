@@ -222,7 +222,7 @@ const Layout = ({ children }) => {
           />
           <div className="section_wrap">
             <div className="section_top">
-              <div className="tab_wrap">
+              <div className="tab_wrap" style={{overflowX:"hidden"}}>
                 {tabs.map((tab) => (
                   <div
                     className="tab_sub_wrap"
@@ -271,12 +271,12 @@ const Layout = ({ children }) => {
                           style={{
                             display: tabs.length > 1 ? "" : "none",
                           }}
-                          className="tab-x-button"
+                          className="header-tab-x-button"
                           onClick={() => removeTab(tab)}
                         >
                           <TiDeleteOutline
                             size={20}
-                            color="#000"
+                            color="#fff"
                           ></TiDeleteOutline>
                         </button>
                       </>
@@ -320,7 +320,7 @@ const Layout = ({ children }) => {
                           style={{
                             display: tabs.length > 1 ? "" : "none",
                           }}
-                          className="tab-x-button"
+                          className="header-tab-x-button"
                           onClick={(e) => {
                             e.stopPropagation();
                             removeTab(tab);
@@ -337,8 +337,7 @@ const Layout = ({ children }) => {
                 ))}
                 <div className="tab_add_button_wrap" style={{ width: "30px" }}>
                   <button
-                    className="tab_add_button"
-                    style={{ margin: "10px" }}
+                    className="header_add_tab_wrap"
                     onClick={() => addTab()}
                   >
                     +
