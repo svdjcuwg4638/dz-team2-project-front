@@ -74,7 +74,7 @@ const ProductItem = ({ itemAll, setSelectId, selectId }) => {
       </div>
 
       <div className="ctable">
-        <div className="cbody" style={{ height: "26vh" }}>
+        <div className="cbody">
           {itemList &&
             itemList.map((data) => (
               <div

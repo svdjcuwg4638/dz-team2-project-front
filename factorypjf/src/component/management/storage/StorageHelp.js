@@ -115,6 +115,9 @@ const StorageHelp = ({ handleInputChange, setShowFlag }) => {
             marginLeft: "18px",
             textAlign: "center",
             marginTop: "10px",
+            maxHeight: "332px",
+            overflowY: "scroll",
+            display: "block",
           }}
         >
           <thead>

@@ -28,11 +28,13 @@ const SearchHelper = ({
     if (menu.name === "공통코드") dispatch(codeAction.getCodeAll());
   }, []);
 
+  const [dataLoaded, setDataLoaded] = useState(false);
+
   let filteredData = [];
 
   const lowerCasedSearchTerm = searchTerm.toLowerCase();
 
-  if (menu.dataAll[menu.type_all].data) {
+  if (dataLoaded && menu.dataAll[menu.type_all].data) {
     filteredData = menu.dataAll[menu.type_all].data;
 
     if (Category === "default") {
@@ -70,6 +72,7 @@ const SearchHelper = ({
   const clickFn = (e) => {
     e.preventDefault();
     setSearchTerm(inputValue);
+    setDataLoaded(true);
   };
 
   const rowClickHandler = (datarow) => {
@@ -175,9 +178,9 @@ const SearchHelper = ({
         </div>
       </div>
       <div>
-        <div
+        <div 
           className="body m-3"
-          style={{ height: "400px", overflowY: "scroll" }}
+          style={{ height: "337px", overflowY: "scroll" }}
         >
           <table
             style={{ color: "#000", textAlign: "center" }}

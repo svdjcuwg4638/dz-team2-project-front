@@ -139,7 +139,7 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
   };
 
   return (
-    <div>
+    <div style={{marginTop:"96px"}}>
       <div className="ctable">
         <div className="chead">
           <div className="ctr relation_row_sub">
@@ -152,7 +152,7 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
       </div>
 
       <div className="ctable">
-        <div className="cbody" onWheel={handleScroll}>
+        <div className="cbody" style={{height:"40vh"}} onWheel={handleScroll}>
           {searchData &&
             searchData?.map((data) => (
               <div className="ctr relation_row_sub">

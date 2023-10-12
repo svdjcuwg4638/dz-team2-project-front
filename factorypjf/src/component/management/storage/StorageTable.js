@@ -51,7 +51,7 @@ function StorageTable({
                 style={{
                   backgroundColor:
                     data.storage_code == selectId?.storage_code
-                      ? "#dadada"
+                      ? "rgb(245, 245, 245)"
                       : "",
                 }}
               >

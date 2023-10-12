@@ -44,7 +44,7 @@ const PartnerList = ({
       </div>
 
       <div className="ctable">
-        <div className="cbody" style={{height:"38vh"}} onWheel={handleScroll}>
+        <div className="cbody" onWheel={handleScroll}>
           {partnerAll &&
             partnerAll.length > 0 &&
             partnerAll.map((data) => (

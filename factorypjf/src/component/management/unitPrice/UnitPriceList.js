@@ -148,7 +148,7 @@ const UnitPriceList = ({ itemAll }) => {
 
   return (
     <div>
-      <form className="management_search_wrap">
+      <form className="management_search_wrap" style={{marginTop:"15px"}}>
         <div className="management_search_content">
           <div style={{ display: "flex" }}>
             <div>
@@ -235,7 +235,7 @@ const UnitPriceList = ({ itemAll }) => {
       </div>
 
       <div className="ctable">
-        <div className="chead" style={{ width: "99.2%" }}>
+        <div className="chead" style={{ width: "99.2%", marginTop:"109px"}}>
           <div className="ctr unitprice_row">
             <div></div>
             <div>품목코드</div>
