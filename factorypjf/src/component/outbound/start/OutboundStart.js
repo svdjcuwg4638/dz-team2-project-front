@@ -6,7 +6,40 @@ import inboundClasses from "../../../style/inbound/inbound.module.css";
 import Table from "./table/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { unitPriceAction } from "redux/actions/management/unitPriceAction";
-
+const styles = {
+  wrapBtn: {
+    display: "flex",
+    justifyContent: "end",
+    marginTop: "10px",
+  },
+  btnDelete: {
+    backgroundColor: "white",
+    color: "var(--red-color)",
+    border: "1px solid var(--red-color)",
+    boxShadow: "1px 1px 2px 1px grey",
+    borderRadius: "8px",
+    fontSize: "14px",
+    fontWeight: "bold",
+    width: "50px",
+    height: "30px",
+    margin: "5px",
+  },
+  btnSave: {
+    backgroundColor: "var(--main-color)",
+    color: "white",
+    border: "none",
+    boxShadow: "1px 1px 2px 1px grey",
+    borderRadius: "8px",
+    fontSize: "14px",
+    fontWeight: "bold",
+    width: "50px",
+    height: "30px",
+    margin: "5px",
+  },
+  btnSaveDelete: {
+    paddingTop: "2px",
+  },
+};
 const OutBoundStart = () => {
   const dispatch = useDispatch();
   const { unitPriceAll } = useSelector((state) => state.unitPrice);
@@ -184,8 +217,8 @@ const OutBoundStart = () => {
         deletedIndex={deletedIndex}
       />
       <div style={{ display: "flex", justifyContent: "flex-end", marginRight: "10px", marginBottom: "10px" }}>
-        <button onClick={handleDeleteCheckedRows}>삭제</button>
-        <button onClick={() => handleSave()}>저장</button>
+        <button style={styles.btnDelete} onClick={handleDeleteCheckedRows}>삭제</button>
+        <button style={styles.btnSave} onClick={() => handleSave()}>저장</button>
       </div>
     </div>
     </div>

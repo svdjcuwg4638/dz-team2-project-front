@@ -169,9 +169,11 @@ const SubRow = ({ boundId, masterFocus, subFlag, handleRequestFail, handleReques
   return (
     <>
       <tr
+        
         style={{
           display: masterFocus === formData["bound_id"] ? "block" : "none",
           ...hovered ? rowHoverStyle : {},
+          borderBottom: '1px solid #d9d9d9'
         }}
         onMouseEnter={handleMouseEnter} // 마우스 호버 이벤트 리스너 추가
         onMouseLeave={handleMouseLeave} // 마우스 이탈 이벤트 리스너 추가
@@ -199,6 +201,7 @@ const SubRow = ({ boundId, masterFocus, subFlag, handleRequestFail, handleReques
                 setFormData(prev => ({ ...prev, unit_price: "" }));
               }
             }}
+            readOnly
           ></input>
         </td>
         <td>
