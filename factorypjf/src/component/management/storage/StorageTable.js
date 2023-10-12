@@ -36,7 +36,7 @@ function StorageTable({
           <div className="ctr storage_row">
             <div></div>
             <div>창고코드</div>
-            <div>창고이름</div>
+            <div>창고명</div>
           </div>
         </div>
       </div>
@@ -51,7 +51,7 @@ function StorageTable({
                 style={{
                   backgroundColor:
                     data.storage_code == selectId?.storage_code
-                      ? "#dadada"
+                      ? "rgb(245, 245, 245)"
                       : "",
                 }}
               >

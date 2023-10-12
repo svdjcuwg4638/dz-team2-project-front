@@ -165,7 +165,7 @@ const CommonCode = ({ selectId, codeAll, setCodeAllData }) => {
       <form className="mt-3" onSubmit={handleSubmit}>
         <div className="input_wrap management_inputBox">
           <div>
-            <div>코드</div>
+            <div>{selectId?.management_name}코드</div>
             <div  style={{ marginRight: "10px" }}>
               <input
               ref={inputRefs.common_code}
@@ -183,7 +183,7 @@ const CommonCode = ({ selectId, codeAll, setCodeAllData }) => {
             </div>
           </div>
           <div>
-            <div>이름</div>
+            <div>{selectId?.management_name}이름</div>
             <div  style={{ marginRight: "10px" }}>
               <input
                 ref={inputRefs.common_name}

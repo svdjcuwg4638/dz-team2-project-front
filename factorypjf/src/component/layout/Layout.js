@@ -252,8 +252,10 @@ const Layout = ({ children }) => {
                           <div
                             style={{
                               color: "#fff",
-                              "margin-left": "10px",
-                              "margin-top": "5px",
+                              "margin-left": "4px",
+                              "margin-top": "8px",
+                              overflow:"hidden",
+                              padding:"1px",
                             }}
                           >
                             {sessionStorage.getItem("current_page") &&
@@ -302,8 +304,10 @@ const Layout = ({ children }) => {
                           <div
                             style={{
                               color: "#000",
-                              "margin-left": "10px",
-                              "margin-top": "5px",
+                              "margin-left": "4px",
+                              "margin-top": "8px",
+                              overflow:"hidden",
+                              padding:"1px",
                             }}
                           >
                             {getNameByLink(

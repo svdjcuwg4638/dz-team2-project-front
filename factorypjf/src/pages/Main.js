@@ -33,6 +33,8 @@ const Main = () => {
     console.log(data);
   }
 
+
+
   const productionHandler = () => {
     dispatch(menuActions.production());
   };
@@ -48,6 +50,10 @@ const Main = () => {
   const managementHandler = () => {
     dispatch(menuActions.management());
   };
+
+  const [currentTab, setCurrentTab] = useState(
+    sessionStorage.getItem("current_tab") || 1
+  );
 
   return (
     <div className="section-main">
@@ -103,38 +109,38 @@ const Main = () => {
           </div>
         </div>
         <div className="content_right">
-          <a href="production/add"  onClick={productionHandler}>
+          <Link to={`/${currentTab}/production/add`}  onClick={productionHandler}>
             <div className="menu-link">
               <div className="link_text">생산관리 + </div>
               <div className="link_icon">
                 <i class="fa-solid fa-industry"></i>
               </div>
             </div>
-          </a>
-          <a href="storage/list" onClick={storageHandler}>
+          </Link>
+          <Link to={`/${currentTab}/storage/list`} onClick={storageHandler}>
             <div className="menu-link">
               <div className="link_text">재고관리 + </div>
               <div className="link_icon">
                 <i class="fa-solid fa-box"></i>
               </div>
             </div>
-          </a>
-          <a href="inbound/start" onClick={inboundHandler}>
+          </Link>
+          <Link to={`/${currentTab}/inbound/start`} onClick={inboundHandler}>
             <div className="menu-link">
               <div className="link_text">입고관리 + </div>
               <div className="link_icon">
                 <i class="fa-solid fa-right-to-bracket"></i>
               </div>
             </div>
-          </a>
-          <a href="outbound/start" onClick={outboundHandler}>
+          </Link>
+          <Link to={`/${currentTab}/outbound/start`} onClick={outboundHandler}>
             <div className="menu-link">
               <div className="link_text">출고관리 + </div>
               <div className="link_icon">
                 <i class="fa-solid fa-right-from-bracket"></i>
               </div>
             </div>
-          </a>
+          </Link>
         </div>
       </div>
     </div>

@@ -139,20 +139,20 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
   };
 
   return (
-    <div>
+    <div style={{marginTop:"96px"}}>
       <div className="ctable">
         <div className="chead">
           <div className="ctr relation_row_sub">
             <div></div>
             <div>자재코드</div>
-            <div>자재이름</div>
-            <div>소모수량</div>
+            <div>자재명</div>
+            <div>필요수량</div>
           </div>
         </div>
       </div>
 
       <div className="ctable">
-        <div className="cbody" onWheel={handleScroll}>
+        <div className="cbody" style={{height:"40vh"}} onWheel={handleScroll}>
           {searchData &&
             searchData?.map((data) => (
               <div className="ctr relation_row_sub">
@@ -210,7 +210,7 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
           </div>
           <div>
             <div>
-              자재이름
+              자재명
               <span class="wrap-search-icon">
                 <i class="fa-solid fa-circle-info"></i>
               </span>
@@ -243,7 +243,7 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
                 ></div>
                 <div
                   style={{
-                    position: "absolute",
+                    position: "fixed",
                     top: "50%",
                     left: "50%",
                     transform: "translate(-50%, -50%)",
@@ -262,7 +262,7 @@ const RelationItem = ({ selectId, itemAll, codeAllData, setCodeAllData }) => {
             )}
           </div>
           <div>
-            <div>소모수량</div>
+            <div>필요수량</div>
             <div style={{ marginRight: "10px" }}>
               <input
                 ref={inputRefs.quantity}

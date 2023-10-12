@@ -51,6 +51,7 @@
 
 .detail_content_wrap > div{
   display: flex;
+  margin-bottom: 22px;
 }
 .detail_content_wrap > div > div{
   width: 50%;
@@ -103,7 +104,7 @@
 
 .cbody{
   display: block;
-  height:  41vh;
+  height:  47vh;
   overflow: scroll;
   box-sizing: unset;
 }
