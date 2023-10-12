@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../../../style/inbound/overlay.css'
 
 const rowHoverStyle = {
   backgroundColor: "#f0f0f0", // 원하는 배경색으로 변경하세요.
@@ -31,6 +32,7 @@ function TableRow({ rowData, onRowClick }) {
 
   return (
     <tr
+      className='bottom'
       onClick={() => onRowClick(rowData.bound_id)}
       style={{ textAlign: 'center', ...(hovered ? rowHoverStyle : {}) }}
       onMouseEnter={handleMouseEnter}

@@ -47,7 +47,7 @@ const ProductItem = ({ itemAll, setSelectId, selectId }) => {
           </div>
           <div>
             <div>
-              <div>품목이름</div>
+              <div>품목명</div>
               <div>
                 <input
                   type="text"
@@ -68,7 +68,7 @@ const ProductItem = ({ itemAll, setSelectId, selectId }) => {
         <div className="chead">
           <div className="ctr relation_row">
             <div style={{ widdiv: "150px" }}>품목코드</div>
-            <div>품목이름</div>
+            <div>품목명</div>
           </div>
         </div>
       </div>

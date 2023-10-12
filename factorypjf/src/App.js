@@ -44,10 +44,14 @@ function App() {
   }, [location]);
   //#endregion
 
+  const [currentTab, setCurrentTab] = useState(
+    sessionStorage.getItem("current_tab") || 1
+  );
+
   return (
     <Layout>
       <Routes>
-        <Route path="/:tabId/" element={<Main />} />
+        <Route path={"/:tabId/"} element={<Main />} />
 
         <Route path="/:tabId/storage" element={<StorageRoutes />}>
           <Route index path="list" element={<StorageInquiry />} />

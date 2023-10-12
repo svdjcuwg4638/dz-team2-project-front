@@ -357,7 +357,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
               </div>
             </div>
             <div>
-              <div>품목이름</div>
+              <div>품목명</div>
               <div>
                 <input
                   ref={inputRefs.item_name}
@@ -381,7 +381,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
 
           <div>
             <div>
-              <div>카태고리</div>
+              <div>카테고리</div>
               <div className="flex">
                 <input
                   readOnly

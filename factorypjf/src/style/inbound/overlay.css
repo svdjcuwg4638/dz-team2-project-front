@@ -27,3 +27,12 @@
     background-color: #dadada;
     cursor: pointer;
   }
+
+  .bottom td{
+    border-bottom: 1px solid #d9d9d9;
+  }
+
+  .bottom select{
+    /* border: 1px solid whi; */
+    border-radius: 4px;
+  }

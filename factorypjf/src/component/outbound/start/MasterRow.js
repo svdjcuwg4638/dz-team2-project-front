@@ -150,7 +150,8 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
 
   return (
     <>
-    <tr onClick={() => setMaseterFocus(formData["bound_id"])}
+    <tr className="bottom"
+    onClick={() => setMaseterFocus(formData["bound_id"])}
     style={hovered ? rowHoverStyle : {}} // 마우스 호버 상태에 따라 스타일 적용
     onMouseEnter={handleMouseEnter} // 마우스 호버 이벤트 리스너 추가
     onMouseLeave={handleMouseLeave} // 마우스 이탈 이벤트 리스너 추가

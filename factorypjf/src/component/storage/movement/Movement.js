@@ -110,10 +110,12 @@ const Movement = () => {
 
     if (!foundMatch) {
       if (target === "outbound")
-        // 일치하는 것을 찾지 못한 경우 에러 메시지 설정
-        errors.push("출고 창고 혹은 장소가 적절하지 않습니다.");
+        if (errors.length === 0)
+          // 일치하는 것을 찾지 못한 경우 에러 메시지 설정
+          errors.push("출고 창고 혹은 장소가 적절하지 않습니다.");
       if (target === "inbound")
-        errors.push("입고 창고 혹은 장소가 적절하지 않습니다.");
+        if (errors.length === 0)
+          errors.push("입고 창고 혹은 장소가 적절하지 않습니다.");
     }
   }
 
@@ -126,19 +128,20 @@ const Movement = () => {
       !inbound.storageCode ||
       !inbound.locationCode
     ) {
-      errors.push("창고 및 장소는 필수 입력 항목입니다.");
+      if (errors.length === 0)
+        errors.push("창고 및 장소는 필수 입력 항목입니다.");
     }
 
     if (!emp || !emp.empCode) {
-      errors.push("담당자는 필수 입력 항목입니다.");
+      if (errors.length === 0) errors.push("담당자는 필수 입력 항목입니다.");
     }
 
     if (!date) {
-      errors.push("날짜는 필수 입력 항목입니다.");
+      if (errors.length === 0) errors.push("날짜는 필수 입력 항목입니다.");
     }
 
     if (!tableItems || tableItems.length === 0) {
-      errors.push("테이블에 입력된 항목이 없습니다.");
+      if (errors.length === 0) errors.push("테이블에 입력된 항목이 없습니다.");
     }
     if (locationAll.data && locationAll.data.length > 0) {
       outbound &&
