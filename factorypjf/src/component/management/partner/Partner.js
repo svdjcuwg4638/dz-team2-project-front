@@ -88,7 +88,7 @@ const Partner = () => {
               <button
                 disabled={selectCodes.length > 0 ? false : true}
                 className="btn_delete"
-                style={{ backgroundColor: selectCodes.length > 0 ? "#fff" :"#dadada", color:selectCodes.length > 0 ? "" : "#fff"  }}
+                style={{ backgroundColor: selectCodes.length > 0 ? "#fff" :"rgb(245, 245, 245)", color:selectCodes.length > 0 ? "" : "#fff"  }}
                 onClick={handleDelete}
               >
                 삭제

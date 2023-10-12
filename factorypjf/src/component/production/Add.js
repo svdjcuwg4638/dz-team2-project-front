@@ -230,7 +230,7 @@ export default function List() {
     }
   }
 
-  //grid2 trigger handler (창고와 세부장소에 맞는 재고 가져오기)
+  //grid 2 trigger handler (창고와 세부장소에 맞는 재고 가져오기)
   const triggerHandler = (header, tableItems, currentCol) => {
     let itemCode,
       storageCode,
@@ -283,7 +283,10 @@ export default function List() {
   };
 
   const saveHandler = () => {
-    if (!grid01_items.find((data) => data.item)) return;
+    if (!grid01_items.find((data) => data.item)){
+      alert("저장할 내역이 없습니다.");
+      return;
+    } 
     //====================테이블의 모든 input 가져오기====================
     const inputArr = [...document.querySelectorAll('[id*="grid"]')];
     let grid01Data = [];
@@ -431,10 +434,10 @@ export default function List() {
       grid01_headers.map((header)=>{
         if(inputHeader===header.value){
           //필수항목이고 빈칸이면
-          if(header.required&&e.target.value===''){
+          if(!header.readonly&&header.required&&e.target.value===''){
             // e.target.className= e.target.className?e.target.className+`${productionClasses[" input_red"]}`:`${productionClasses["input_red"]}`
             e.target.className= e.target.className?e.target.className+' input_red':'input_red'
-          }else{
+          }else if(!header.readonly){
             // e.target.className= e.target.className?e.target.className+`${productionClasses[" input_black"]}`:`${productionClasses["input_black"]}`
             e.target.className= e.target.className?e.target.className+' input_black':'input_black'
           }
@@ -495,7 +498,7 @@ export default function List() {
 
   return (
     <>
-      <div>
+      <div className={productionClasses['container-section_add']}>
         <div className={productionClasses["sub-menu-name"]}>생산품</div>
         <div className={productionClasses.grid01}>
           <Table headers={grid01_headers}>

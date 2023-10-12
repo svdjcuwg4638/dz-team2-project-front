@@ -159,7 +159,7 @@ const RightBox = ({ locationAll, selectId }) => {
               type="button"
               disabled={!selectIds.length > 0}
               className="btn_delete"
-              style={{ backgroundColor: selectIds.length > 0 ? "#fff" :"#dadada", color:selectIds.length > 0 ? "" : "#fff"  }}
+              style={{ backgroundColor: selectIds.length > 0 ? "#fff" :"rgb(245, 245, 245)", color:selectIds.length > 0 ? "" : "#fff"  }}
               onClick={handleDelete}
             >
               삭제

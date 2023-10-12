@@ -135,7 +135,7 @@ function LeftBox({ storageAll, selectId, setSelectId }) {
               disabled={!selectCodes.length > 0}
               className="btn_delete"
               type="button"
-              style={{ backgroundColor: selectCodes.length > 0 ? "#fff" :"#dadada", color:selectCodes.length > 0 ? "" : "#fff"  }}
+              style={{ backgroundColor: selectCodes.length > 0 ? "#fff" :"rgb(245, 245, 245)", color:selectCodes.length > 0 ? "" : "#fff"  }}
               onClick={handleDelete}
             >
               삭제
