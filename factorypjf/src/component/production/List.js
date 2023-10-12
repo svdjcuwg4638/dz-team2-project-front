@@ -41,7 +41,7 @@ export default function Add() {
     { text: "라인", value: "line", width: "5%", helper: true ,required:true},
     { text: "창고", value: "storage", width: "5%", helper: true ,required:true},
     { text: "장소", value: "location", width: "5%", helper: true ,required:true},
-    { text: "고객", value: "partner", width: "9%", helper: true ,required:true},
+    { text: "거래처", value: "partner", width: "9%", helper: true ,required:true},
     { text: "담당자", value: "emp", width: "5%", helper: true ,required:true},
     { text: "소요시간", value: "leadTime", width: "5%" ,required:true},
     { text: "작업인원", value: "workForce", width: "5%" },
