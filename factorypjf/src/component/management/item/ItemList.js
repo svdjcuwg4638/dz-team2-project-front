@@ -75,7 +75,7 @@ const ItemList = ({
                 </div>
               </div>
               <div>
-                <div>품목이름</div>
+                <div>품목명</div>
                 <div>
                   <input
                     type="text"
@@ -104,7 +104,7 @@ const ItemList = ({
             <div className="ctr item_row" style={{border:"none"}}>
               <div></div>
               <div>품목코드</div>
-              <div>품목이름</div>
+              <div>품목명</div>
               <div>규격</div>
               <div>단위</div>
             </div>

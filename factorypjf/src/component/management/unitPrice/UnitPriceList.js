@@ -152,7 +152,7 @@ const UnitPriceList = ({ itemAll }) => {
         <div className="management_search_content">
           <div style={{ display: "flex" }}>
             <div>
-              <div>품목이름</div>
+              <div>품목명</div>
               <div  style={{ display: "flex" }}>
                 <input
                   style={{width:"100px"}}
@@ -239,7 +239,7 @@ const UnitPriceList = ({ itemAll }) => {
           <div className="ctr unitprice_row">
             <div></div>
             <div>품목코드</div>
-            <div>품목이름</div>
+            <div>품목명</div>
             <div>거래처</div>
             <div>단가</div>
             <div>입고/출고</div>
