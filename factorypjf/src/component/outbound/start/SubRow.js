@@ -279,6 +279,7 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
             name="item_code"
             value={formData["item_code"]}
             onChange={handleInputChange}
+            readOnly
             onKeyDown={(e) => {
               if (e.key === "F2") {
                 sedivelperScreenState(!HelperScreenState);
@@ -341,6 +342,7 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
             name="stock"
             value={formData["stock"]}
             onChange={handleInputChange}
+            readOnly
           ></input>
         </td>
         <td style={{width: '8%'}}>

@@ -198,6 +198,7 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
               setFormData(prev => ({ ...prev, partner_code: "" }));
           }
           }}
+          readOnly
         ></input>
       </td>
       <td style={{ width: '3%' }}>
