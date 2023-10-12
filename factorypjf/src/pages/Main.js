@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { ImUserTie } from "react-icons/im";
 import { getAxios } from "function/axiosFuction";
+import { Link } from "react-router-dom";
+import { menuActions } from "redux/reducers/menu";
 const Main = () => {
   const dispatch = useDispatch();
 
@@ -30,6 +32,22 @@ const Main = () => {
   function fail(data) {
     console.log(data);
   }
+
+  const productionHandler = () => {
+    dispatch(menuActions.production());
+  };
+  const inboundHandler = () => {
+    dispatch(menuActions.inbound());
+  };
+  const outboundHandler = () => {
+    dispatch(menuActions.outbound());
+  };
+  const storageHandler = () => {
+    dispatch(menuActions.storage());
+  };
+  const managementHandler = () => {
+    dispatch(menuActions.management());
+  };
 
   return (
     <div className="section-main">
@@ -85,7 +103,7 @@ const Main = () => {
           </div>
         </div>
         <div className="content_right">
-          <a href="production/add">
+          <a href="production/add"  onClick={productionHandler}>
             <div className="menu-link">
               <div className="link_text">생산관리 + </div>
               <div className="link_icon">
@@ -93,29 +111,29 @@ const Main = () => {
               </div>
             </div>
           </a>
-          <a href="storage/list">
-          <div className="menu-link">
-            <div className="link_text">재고관리 + </div>
-            <div className="link_icon">
-              <i class="fa-solid fa-box"></i>
+          <a href="storage/list" onClick={storageHandler}>
+            <div className="menu-link">
+              <div className="link_text">재고관리 + </div>
+              <div className="link_icon">
+                <i class="fa-solid fa-box"></i>
+              </div>
             </div>
-          </div>
           </a>
-          <a href="inbound/start">
-          <div className="menu-link">
-            <div className="link_text">입고관리 + </div>
-            <div className="link_icon">
-              <i class="fa-solid fa-right-to-bracket"></i>
+          <a href="inbound/start" onClick={inboundHandler}>
+            <div className="menu-link">
+              <div className="link_text">입고관리 + </div>
+              <div className="link_icon">
+                <i class="fa-solid fa-right-to-bracket"></i>
+              </div>
             </div>
-          </div>
           </a>
-          <a href="outbound/start">
-          <div className="menu-link">
-            <div className="link_text">출고관리 + </div>
-            <div className="link_icon">
-              <i class="fa-solid fa-right-from-bracket"></i>
+          <a href="outbound/start" onClick={outboundHandler}>
+            <div className="menu-link">
+              <div className="link_text">출고관리 + </div>
+              <div className="link_icon">
+                <i class="fa-solid fa-right-from-bracket"></i>
+              </div>
             </div>
-          </div>
           </a>
         </div>
       </div>
