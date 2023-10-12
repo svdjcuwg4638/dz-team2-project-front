@@ -155,6 +155,7 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
       </td>
       <td style={{ width: '3%', textAlign: 'center' }}>
         <select
+          className="input_red"
           name="bound_category"
           value={formData.bound_category}
           onChange={handleInputChange}
@@ -168,6 +169,7 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
       </td>
       <td style={{ width: '3%' }}>
         <input
+          className="input_red"
            type="text"
            value={formData.partner_code}
            name="partner_code"
@@ -185,6 +187,7 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
       </td>
       <td style={{ width: '3%' }}>
       <input
+        className="input_red"
         type="date"
         min="1900-01-01"
         max="9999-12-31"
