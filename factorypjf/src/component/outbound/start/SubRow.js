@@ -257,9 +257,11 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
 
   return (
     <>
-      <tr style={{
+      <tr 
+      style={{
           display: masterFocus === formData["bound_id"] ? "block" : "none",
           ...hovered ? rowHoverStyle : {},
+          borderBottom: '1px solid #d9d9d9'
         }}
       onMouseEnter={handleMouseEnter} // 마우스 호버 이벤트 리스너 추가
       onMouseLeave={handleMouseLeave} // 마우스 이탈 이벤트 리스너 추가

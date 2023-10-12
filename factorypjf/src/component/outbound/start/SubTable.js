@@ -86,7 +86,7 @@ const SubTable = ({ boundId, masterLength, masterFocus, subFlag, deletedBoundIds
               return null;
             })}
           <tr>
-          <td style={{width : "1600px"}}>
+          <td style={{width : "1600px", borderBottom: '1px solid #d9d9d9'}}>
             <button className={inboundClasses.btn_add}
               onClick={() => addSubArray(masterFocus)}
             >+</button>
