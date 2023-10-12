@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import SearchHelper from "./SearchHelper";
+import '../../../style/inbound/overlay.css'
 
 const rowHoverStyle = {
     backgroundColor: "#f0f0f0", // 원하는 배경색으로 변경하세요.
@@ -195,7 +196,8 @@ return (
                 </thead>
                 <tbody style={{textAlign: 'center'}}>
                     {matchingDetails.map((detail, index) => (
-                        <tr key={index}
+                        <tr className="bottom"
+                        key={index}
                         style={
                             hoveredRows[detail.detail_id] // 해당 행의 hover 상태에 따라 스타일 적용
                               ? rowHoverStyle
@@ -220,6 +222,7 @@ return (
                                  <button style={styles.btnSave1} onClick={() => handleButtonClick('storage',detail.detail_id)}>창고선택</button>
                             </td>
                             <td style={{width: '200px'}}>
+                                
                                 <input
                                     data-detail-id={detail.detail_id} 
                                     name="location_code"

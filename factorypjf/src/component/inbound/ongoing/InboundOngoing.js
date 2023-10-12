@@ -182,14 +182,14 @@ function InboundOngoing() {
                 {grid01_headers.map((header) => {
                   if (!header.value) {
                     return (
-                      <td key="warehouse-location" style={{ flex: "20%" }}>
+                      <td key="warehouse-location" style={{ flex: "20%", borderBottom: '1px solid #d9d9d9' , padding: '3px' }}>
                         <button style={styles.btnSave1} onClick={() => handleOpenModal(data.bound_id)}>
                           창고/장소 선택
                         </button>
                       </td>
                     );
                   }
-                  return <td key={header.value} style={{ flex: "20%" }}>{data[header.value]}</td>
+                  return <td key={header.value} style={{ flex: "20%", borderBottom: '1px solid #d9d9d9', padding: '11px'}}>{data[header.value]}</td>
                 })}
               </div>
 
