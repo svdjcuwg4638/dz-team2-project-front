@@ -583,3 +583,6 @@ td {
   overflow-y: hidden;
   margin-top: 25px;
 }
+#keyword{
+  width: 50%;
+}

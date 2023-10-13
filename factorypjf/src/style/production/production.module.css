@@ -37,8 +37,8 @@
 } */
 
 .out-stock{
-    color:var(--red-color);
-    font-weight: bold;
+    color:var(--red-color)!important;
+    font-weight: bold!important;
 }
 td>input[type='text']{
     height: 70%;
