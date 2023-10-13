@@ -270,6 +270,9 @@ td {
   font-weight: bold;
   color:var(--font-color);
   font-size:25px;
+  text-decoration: underline;
+  text-decoration-color: var(--font-color) ;
+  /* text-decoration-line: underlin; */
 }
 .content_middle{
   width: 30%;
@@ -543,7 +546,9 @@ td {
 /* 검색섹션 */
 .wrap-search-icon{
   vertical-align: top;
-
+}
+.wrap-search-icon:hover,.wrap-search-icon a:hover{
+  cursor: default;
 }
 .search_icon{
   font-size: 12px;
@@ -586,3 +591,4 @@ td {
 #keyword{
   width: 50%;
 }
+
