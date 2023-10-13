@@ -85,6 +85,7 @@ export default function Line() {
     }
   };
   const editHandler = (e,tableType,colInfo, coordinate) => {
+    if(item[coordinate.row].state==='add')return;
     const copyItem=JSON.parse(JSON.stringify(item))
     copyItem[coordinate.row].state='edit';
     setItem([...copyItem])
@@ -97,9 +98,8 @@ export default function Line() {
   }
   const deleteHandler = () => {
     //체크된 input 요소 가져오기
-    const checked = Array.from(
-      ...[document.querySelectorAll('input[type="checkbox"]:checked')]
-    );
+    const checkedEl = document.querySelectorAll('input[type="checkbox"]:checked')
+    const checked = Array.from(      checkedEl);
     let deleteKey = [];
     let idxArr=[];
     //input row idx 담은 배열 만들기
@@ -108,9 +108,12 @@ export default function Line() {
       idxArr.push(parseInt(row))
       deleteKey.push(item[row].lineCode);
     }
-
+    
     setDeleteKey([...deleteKey]);
     setDeleteIdx([...idxArr]);
+    checkedEl.forEach(el => {
+      el.checked=false
+    });
   };
   const saveHandler = () => {
     //====================테이블의 모든 input 가져오기====================
@@ -173,6 +176,7 @@ export default function Line() {
 
     function print(data) {
       alert(`변경사항이 저장되었습니다.`)
+      window.location.reload();
     }
     function errorHandler(error){
       console.log(error)
