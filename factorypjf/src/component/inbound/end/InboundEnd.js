@@ -257,7 +257,7 @@ function InboundEnd() {
             <p style={styles.container1_sons_upper}>유형</p>
             <div style={{height: '40px', display: 'flex', alignItems: 'center'}}>
               <select style={{ height: '25px'}} onChange={handleBoundTypeChange}>
-                <option value="" disabled selected hidden></option>
+                <option value=""></option>
                 <option value="구매">구매</option>
                 <option value="재작업입고">재작업입고</option>
                 <option value="유상사급입고">유상사급입고</option>

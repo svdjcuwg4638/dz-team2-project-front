@@ -180,7 +180,7 @@ const SearchHelper = ({
       <div>
         <div 
           className="body m-3"
-          style={{ height: "337px", overflowY: "scroll" }}
+          style={{ height: "400px", overflowY: "scroll", maxHeight: '300px' }}
         >
           <table
             style={{ color: "#000", textAlign: "center" }}

@@ -36,3 +36,18 @@
     /* border: 1px solid whi; */
     border-radius: 4px;
   }
+  /* 포커스됐을 때 input 테두리 red */
+.input_red:focus{
+  border:3px solid var(--red-color) !important;
+  outline: none;
+}
+/* 포커스됐을 때 input 테두리 black */
+.input_black:focus{
+  border:2px solid var(--font-color) !important;
+  outline: none;
+}
+/* 포커스됐을 때 input 테두리 blue */
+.input_blue:focus{
+  border:3px solid var(--main-color) !important;
+  outline: none;
+}

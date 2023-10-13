@@ -41,8 +41,10 @@ const SearchHelper = ({
     if (menu.name === "공통코드") dispatch(codeAction.getCodeAll());
   }, [InputboxText]);
 
+  const [dataLoaded, setDataLoaded] = useState(false);
+  
   let filteredData = [];
-  if (menu.dataAll[menu.type_all].data) {
+  if (dataLoaded && menu.dataAll[menu.type_all].data) {
     filteredData = menu.dataAll[menu.type_all].data;
 
     if (Category === "default") {
@@ -92,6 +94,7 @@ const SearchHelper = ({
   const clickFn = (e) => {
     e.preventDefault();
     setInputboxText(e.target[0].value);
+    setDataLoaded(true);
   };
   return (
     <div

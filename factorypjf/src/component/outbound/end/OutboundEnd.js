@@ -260,7 +260,7 @@ function OutboundEnd() {
             <p style={styles.container1_sons_upper}>유형</p>
             <div style={{height: '40px', display: 'flex', alignItems: 'center'}}>
               <select style={{ height: '25px'}} onChange={handleBoundTypeChange}>
-                <option value="" disabled selected hidden></option>
+                <option value=""></option>
                 <option value="판매">판매</option>
                 <option value="유상사급출고">유상사급출고</option>
                 <option value="기타출고">기타출고</option>
