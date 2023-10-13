@@ -123,9 +123,16 @@ const SearchHelperModal = ({ headers, formHandler, enterHandler }) => {
       {headers.map((header, headerIdx) => (
         <td key={header.headerIdx}>
           <div className={styles.searchCom}>
-            <div className={header.helper?"search_label_helper":"search_label"} onClick={(e)=>buttonPressHandler(e,header)}>
-              <label> {header.text}</label>
-              {header.helper&&<i class="fa-solid fa-circle-info helper_icon"></i>}
+            <div
+              className={header.helper ? "search_label_helper" : "search_label"}
+              onClick={(e) => buttonPressHandler(e, header)}
+            >
+             
+                <label style={{color:'var(--font-color)'}} title="클릭시 도움창 팝업"> {header.text}</label>
+                {header.helper && (
+                  <i class="fa-solid fa-circle-info helper_icon"></i>
+                )}
+              
             </div>
 
             {header.helper ? (

@@ -94,17 +94,23 @@ const Main = () => {
           <div className="summary_wrap">
             <div className="wrap-summary">
               <h4 className="summary_title">입고량</h4>
-              <div className="summary_content">{summary.inBound}&nbsp;건</div>
+              <a href={`/${currentTab}/inbound/end`} onClick={inboundHandler}>
+                <div className="summary_content">{summary.inBound}&nbsp;건</div>
+              </a>
             </div>
             <div className="wrap-summary">
               <h4 className="summary_title">출고량</h4>
+              <a href={`/${currentTab}/outbound/end`} onClick={outboundHandler}>
               <div className="summary_content">{summary.outBound}&nbsp;건</div>
+              </a>
             </div>
             <div className="wrap-summary">
               <h4 className="summary_title">생산량</h4>
+              <a href={`/${currentTab}/production/list`} onClick={productionHandler}>
               <div className="summary_content">
                 {summary.production}&nbsp;건
               </div>
+              </a>
             </div>
           </div>
         </div>
