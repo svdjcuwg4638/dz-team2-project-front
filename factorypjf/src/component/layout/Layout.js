@@ -86,7 +86,6 @@ const Layout = ({ children }) => {
   };
   //#endregion
 
-  sessionStorage.setItem("current_tab", 1);
 
   const initialTabList = JSON.parse(sessionStorage.getItem("tab_list")) || [1];
   const [tabs, setTabs] = useState(initialTabList);
