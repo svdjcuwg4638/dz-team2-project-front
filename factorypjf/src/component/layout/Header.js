@@ -2,11 +2,11 @@ import React from "react";
 import "../../style/layout/header.css";
 import mainLogo from "../../img/mainLogo.png";
 
-const Header = () => {
+const Header = ({currentTab}) => {
   return (
     <div>
       <div className="header_wrap">
-        <a href="/">
+        <a href={`/${currentTab}`}>
           <div>
             <img src={mainLogo} width={70} />
           </div>

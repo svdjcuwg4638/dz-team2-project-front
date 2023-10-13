@@ -212,7 +212,7 @@ const Layout = ({ children }) => {
       <Dep1 
         currentTab={currentTab}/>
       <div className="wd-100p">
-        <Header />
+        <Header currentTab={currentTab}/>
         <div className="flex">
           <Dep2
             bookMarkList={bookMarkList}
