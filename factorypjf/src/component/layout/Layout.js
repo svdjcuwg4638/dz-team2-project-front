@@ -177,7 +177,7 @@ const Layout = ({ children }) => {
       case "management":
         return <BsInfoCircle size={20} color="#fff" />;
       default:
-        return null;
+        return <AiOutlineHome size={20} color="#fff" />;
     }
   };
 
@@ -196,7 +196,7 @@ const Layout = ({ children }) => {
       case "management":
         return <BsInfoCircle size={20} color="#000" />;
       default:
-        return null;
+        return <AiOutlineHome size={20} color="#000" />;
     }
   };
 
