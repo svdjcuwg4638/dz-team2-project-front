@@ -348,7 +348,7 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
             name="stock"
             value={formData["stock"]}
             onChange={handleInputChange}
-            readOnly
+            
           ></input>
         </td>
         <td style={{width: '8%'}}>
