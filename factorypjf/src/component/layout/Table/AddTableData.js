@@ -74,6 +74,8 @@ export default function AddTableData({
 
   //focus된 행 state
   const [focusRow, setFocusRow] = useState();
+  //focus된 col
+  const [focusElement, setFocusElement] = useState();
   //mouseOver된 행 state
   const [overRow, setOverRow]=useState();
 
@@ -175,16 +177,10 @@ export default function AddTableData({
         itemKey = key;
       }
 
-      //같은 행에 이미 데이터가 들어있으면 코드데이터만 바뀜
-      // if (copyItems[currentCol.row]) {
         copyItems[currentCol.row] = {
           ...copyItems[currentCol.row],
           [itemKey]: codeRow[key],
         };
-      // //비어있는 행이면 
-      // } else {
-      //   copyItems[currentCol.row] = { [itemKey]: codeRow[key] };
-      // }
     }
     // setTableItems(copyItems);
     emitItem([...copyItems]);
@@ -198,6 +194,7 @@ export default function AddTableData({
       }
     });
     // console.log(tableItems)
+    focusElement.focus();
   };
 
   const selectRow = (e, idx) => {
@@ -208,7 +205,7 @@ export default function AddTableData({
       focusRow.className = focusRow.className.replace(`${addStyle["add-table-focus"]}`,'');
     }
     setFocusRow(row);
-
+    setFocusElement(e.target)
     selectRowHandler(idx, e);
   };
 

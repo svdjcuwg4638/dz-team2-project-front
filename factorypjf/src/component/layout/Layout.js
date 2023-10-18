@@ -23,9 +23,9 @@ const Layout = ({ children }) => {
 
   const subMenu = {
     production: [
+      { link: "/line", name: "생산라인관리" },
       { link: "/add", name: "생산등록" },
       { link: "/list", name: "생산내역조회" },
-      { link: "/line", name: "생산라인관리" },
     ],
     inbound: [
       { link: "/start", name: "입고예정" },
@@ -86,7 +86,6 @@ const Layout = ({ children }) => {
   };
   //#endregion
 
-  sessionStorage.setItem("current_tab", 1);
 
   const initialTabList = JSON.parse(sessionStorage.getItem("tab_list")) || [1];
   const [tabs, setTabs] = useState(initialTabList);
@@ -178,7 +177,7 @@ const Layout = ({ children }) => {
       case "management":
         return <BsInfoCircle size={20} color="#fff" />;
       default:
-        return null;
+        return <AiOutlineHome size={20} color="#fff" />;
     }
   };
 
@@ -197,7 +196,7 @@ const Layout = ({ children }) => {
       case "management":
         return <BsInfoCircle size={20} color="#000" />;
       default:
-        return null;
+        return <AiOutlineHome size={20} color="#000" />;
     }
   };
 
@@ -213,7 +212,7 @@ const Layout = ({ children }) => {
       <Dep1 
         currentTab={currentTab}/>
       <div className="wd-100p">
-        <Header />
+        <Header currentTab={currentTab}/>
         <div className="flex">
           <Dep2
             bookMarkList={bookMarkList}

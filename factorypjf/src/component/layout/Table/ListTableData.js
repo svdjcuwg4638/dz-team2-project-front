@@ -88,6 +88,7 @@ export default function ListTable({
       //모달 켜기
       onModalHanlder(colInfo.value, colInfo.text);
       if(editHandler)editHandler(e,'list',colInfo,coordinate)
+      //도움창 컬럼 아닐때
     } else if (e.which === HELPER_KEY && !colInfo.helper) {
       console.log("도움창이 제공되지 않는 코드입니다.");
       //도움창 컬럼 지우기
@@ -99,6 +100,7 @@ export default function ListTable({
       setTableItems([...copyItem])
       console.log(tableItems)
     }else{
+      if(colInfo.readonly===true){alert('수정할 수 없는 컬럼입니다.');return;}
       if(editHandler)editHandler(e,'list',coordinate)
     }
   };

@@ -24,12 +24,14 @@ export default function DataTable({ headers, onModal, children }) {
           <tr>
             {headers.map((header, idx) => (
               <th key={idx}>
+                <label title="도움창 팝업 (F2)">
                 {header.text}
                 {header.helper && (
-                  <span class="wrap-search-icon">
-                    <i class="fa-solid fa-circle-info helper_icon"></i>
+                  <span class="wrap-search-icon" >
+                      <i class="fa-solid fa-circle-info helper_icon"></i>
                   </span>
                 )}
+                </label>
               </th>
             ))}
           </tr>
