@@ -34,7 +34,7 @@ const Dep1 = ({ currentTab }) => {
   return (
     <div className="dap1">
       <div className="icon_wrap">
-        <Link to={currentTab + "/production/add"} onClick={productionHandler}>
+        <Link to={currentTab + "/production/line"} onClick={productionHandler}>
           <div
             title="생산관리"
             style={{
