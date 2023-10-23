@@ -71,7 +71,7 @@ function HelperOverlay({ modalState, onSelectCode }) {
   // }, [modalState, codeURL, codeValue]);
 
 
-  //테이블 headers
+  //테이블 headers 
   const headers = [
     {
       text: `${codeName.replace('*','')}코드`,
