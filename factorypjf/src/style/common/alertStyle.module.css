@@ -1,0 +1,47 @@
+.alert_modal_overlay {
+    position: fixed;
+    left: 40%;
+    top: 20%;
+    box-shadow: 2px 4px 10px grey;
+    width: 400px;
+    height: 65%;
+    border-radius: 20px;
+    background-color: white;
+    z-index: 100;
+    padding: 15px 10px;
+    align-items: center;
+    display: flex;
+    flex-direction: column
+}
+.modal_title{
+    margin-bottom:20px;
+}
+.modal_notice{
+    margin-bottom: 20px;
+}
+
+.wrap-alert_table {
+    height: 20%;
+    margin: 5px 0px 25px 0px;
+    width: 98%;
+}
+
+.alert_table_head {
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+}
+
+.alert_table_body {
+    text-align: center;
+    font-size: 13px;
+}
+
+.wrap-alert_table_body {
+    height: 70px;
+    overflow-y: scroll;
+}
+.table_title{
+    margin: 0px 0px 0px 10px;
+    font-weight: bold;
+}

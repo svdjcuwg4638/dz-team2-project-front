@@ -3,6 +3,7 @@ import { putAxios } from "function/axiosFuction";
 import { useEffect } from "react";
 
 import helperStyle from "style/common/helperModal.module.css";
+import alertStyle from "style/common/alertStyle.module.css";
 
 //======================모달 back =========================
 function HelperBackdrop({ offModal }) {
@@ -15,60 +16,95 @@ function HelperBackdrop({ offModal }) {
   );
 }
 
-function HelperOverlay({ modalState,onSubmit }) {
+function HelperOverlay({ modalState, onSubmit }) {
   useEffect(() => {
     console.log(modalState);
   });
 
-  const submitHandler=(type)=>{
+  const submitHandler = (type) => {
     onSubmit(type);
-  }
+  };
 
   return (
-    <div className={helperStyle.overlay}>
-      <h1>{modalState.headLine}</h1>
-      <div>{modalState.title}</div>
+    <div className={alertStyle["alert_modal_overlay"]}>
+      <h4 className={alertStyle["modal_title"]}>{modalState.headLine}</h4>
+      <div className={alertStyle["modal_notice"]}>{modalState.title}</div>
       <div>
         {modalState.table.map((table, idx) => (
           <div>
-          <h4>{table.name}</h4>
-          <table key={idx} items={table.tableItem}>
-            <thead>
-              <tr>
-                {table.header.map((el, headerCol) => (
-                  <td key={headerCol}>{el.text}</td>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {table.tableItem.map((item, itemCol) => {
-                return (
+            <div className={alertStyle['table_title']}>{table.name}</div>
+            <div
+              className={alertStyle["wrap-alert_table"]}
+              key={idx}
+              items={table.tableItem}
+            >
+              <table className={alertStyle["alert_table_head"]}>
+                <thead>
                   <tr>
-                    {table.header.map((el)=>{
-                      return <td>{item[el.value]}</td>
-                    })}
+                    {table.header.map((el, headerCol) => (
+                      <td key={headerCol}>{el.text}</td>
+                    ))}
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                </thead>
+              </table>
+              <div className={alertStyle['wrap-alert_table_body']}>
+
+              <table className={alertStyle["alert_table_body"]}>
+                <tbody>
+                  {table.tableItem.map((item, itemCol) => {
+                    return (
+                      <tr>
+                        {table.header.map((el) => {
+                          return <td>{item[el.value]}</td>;
+                        })}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+                  </div>
+            </div>
           </div>
         ))}
       </div>
-
-      <button onClick={()=>{submitHandler('cancel')}}>취소</button>
-      <button onClick={()=>{submitHandler('save')}}>확인</button>
+      <div className="wrap-btn">
+        <button
+          onClick={() => {
+            submitHandler("cancel");
+          }}
+          className="btn_delete"
+        >
+          취소
+        </button>
+        <button
+          onClick={() => {
+            submitHandler("save");
+          }}
+          className="btn_save"
+        >
+          확인
+        </button>
+      </div>
     </div>
   );
 }
 
 //======================모달 root=========================
-export default function HelperModal({ offModal, modalState, onSelectCode,onSubmit }) {
+export default function HelperModal({
+  offModal,
+  modalState,
+  onSelectCode,
+  onSubmit,
+}) {
   return (
     <>
       <div className={helperStyle["helper-modal"]}>
         <HelperBackdrop offModal={offModal} />
-        <HelperOverlay offModal={offModal} modalState={modalState} onSubmit={onSubmit} />
+        <HelperOverlay
+          offModal={offModal}
+          modalState={modalState}
+          onSubmit={onSubmit}
+        />
       </div>
     </>
   );
