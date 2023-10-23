@@ -130,7 +130,7 @@ const SearchHelper = ({
               textAlign: "center",
             }}
           >
-            {menu.name}코드
+            {menu.name}
           </div>
         </div>
         <div>
@@ -146,7 +146,7 @@ const SearchHelper = ({
               }}
             >
               <option value="default">공통</option>
-              <option value="code">{menu.name}코드</option>
+              <option value="code">{menu.name}</option>
               <option value="name">{menu.name}명</option>
             </select>
             <input
@@ -188,7 +188,7 @@ const SearchHelper = ({
           >
             <thead>
               <tr>
-                <th style={{ width: "50%" }}>{menu.name}코드</th>
+                <th style={{ width: "50%" }}>{menu.name}</th>
                 <th style={{ width: "50%" }}>{menu.name}명</th>
               </tr>
             </thead>
