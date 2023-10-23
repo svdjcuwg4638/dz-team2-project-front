@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { partnerAction } from "redux/actions/management/partnerAction";
 import api from "redux/api";
 import AddressApi from "./AddressApi";
+import Modal from "component/storage/item/Modal";
 
 const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
     account_holder: "",
     collect_date: "",
     account_code: "",
-    fax_num:"",
+    fax_num: "",
   });
 
   const handleInputChange = (event) => {
@@ -53,7 +54,7 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
         account_holder: selectPartner?.account_holder,
         collect_date: selectPartner?.collect_date,
         account_code: selectPartner?.account_code,
-        fax_num:selectPartner?.fax_num,
+        fax_num: selectPartner?.fax_num,
       });
     }
   }, [selectPartner]);
@@ -69,11 +70,7 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
   const submitHandler = async (event) => {
     event.preventDefault();
 
-    const fieldsToCheck = [
-      "partner_code",
-      "bizNum",
-      "partner_name",
-    ];
+    const fieldsToCheck = ["partner_code", "bizNum", "partner_name"];
 
     const fieldNames = {
       partner_code: "거래처코드",
@@ -95,19 +92,18 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
     };
     try {
       if (formMod == "modify") {
-        const response = await api.post("/partner/modify", submitData)
-        alert(submitData.partner_name +' 수정되었습니다.');
-        window.location.reload()
+        const response = await api.post("/partner/modify", submitData);
+        alert(submitData.partner_name + " 수정되었습니다.");
+        window.location.reload();
       }
       if (formMod == "add") {
-        const response = await api.post("/partner/add", submitData)
-        if(response.data.code == 1){
-          alert(submitData.partner_name + '추가되었습니다.')
-          window.location.reload()
-        }else{
-          alert('이미 등록된 거래처코드 입니다.')
+        const response = await api.post("/partner/add", submitData);
+        if (response.data.code == 1) {
+          alert(submitData.partner_name + "추가되었습니다.");
+          window.location.reload();
+        } else {
+          alert("이미 등록된 거래처코드 입니다.");
         }
-        ;
       }
     } catch (error) {
       console.error("Error submitting data:", error);
@@ -142,7 +138,7 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
         account_holder: "",
         collect_date: "",
         account_code: "",
-        fax_num:"",
+        fax_num: "",
       });
 
       if (!readOnly) {
@@ -176,26 +172,39 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
   }, [formData.address, formData.post_num]);
   //#endregion
 
-    //#region 미입력 input창 입력시 빨간색 테두리제거
-    useEffect(() => {
-      if (errorField == "bizNum") {
-        setErrorField(null);
-      }
-    }, [formData.bizNum]);
-    useEffect(() => {
-      if (errorField == "partner_code") {
-        setErrorField(null);
-      }
-    }, [formData.partner_code]);
-    useEffect(() => {
-      if (errorField == "partner_name") {
-        setErrorField(null);
-      }
-    }, [formData.partner_name]);
-    //#endregion
+  //#region 미입력 input창 입력시 빨간색 테두리제거
+  useEffect(() => {
+    if (errorField == "bizNum") {
+      setErrorField(null);
+    }
+  }, [formData.bizNum]);
+  useEffect(() => {
+    if (errorField == "partner_code") {
+      setErrorField(null);
+    }
+  }, [formData.partner_code]);
+  useEffect(() => {
+    if (errorField == "partner_name") {
+      setErrorField(null);
+    }
+  }, [formData.partner_name]);
+  //#endregion
+
+  const { codeAll } = useSelector((state) => state.code);
+
+  const bankCode = {
+    name: "공통코드",
+    guide: true,
+    type_all: "codeAll",
+    code_column: "common_code",
+    name_column: "common_name",
+    dataAll: { codeAll },
+    common_code_type: "BANK",
+    trigger_type: "search",
+  };
 
   return (
-    <div className="detail_wrap" style={{width :"100%",padding:"0"}}>
+    <div className="detail_wrap" style={{ width: "100%", padding: "0" }}>
       <form className="detail_wrap_sub" onSubmit={submitHandler}>
         <div className="detail_content_wrap partner_detail_content_wrap">
           <div>
@@ -207,11 +216,11 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
                 style={{
                   backgroundColor: formMod != "add" ? "rgb(245, 245, 245)" : "",
                   border:
-                  !readOnly && errorField === "partner_code"
-                    ? "3px solid red"
-                    : "",
+                    !readOnly && errorField === "partner_code"
+                      ? "3px solid red"
+                      : "",
                 }}
-                className={!readOnly && 'input_red'}
+                className={!readOnly && "input_red"}
                 type="text"
                 name="partner_code"
                 value={formData.partner_code}
@@ -221,15 +230,13 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
             <div>
               <div>사업자번호</div>
               <input
-              className={!readOnly && 'input_red'}
-              ref={inputRefs.bizNum}
+                className={!readOnly && "input_red"}
+                ref={inputRefs.bizNum}
                 readOnly={readOnly}
                 style={{
                   backgroundColor: readOnly ? "rgb(245, 245, 245)" : "",
                   border:
-                  !readOnly && errorField === "bizNum"
-                    ? "3px solid red"
-                    : "",
+                    !readOnly && errorField === "bizNum" ? "3px solid red" : "",
                 }}
                 type="text"
                 name="bizNum"
@@ -243,15 +250,15 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
             <div>
               <div>거래처명 </div>
               <input
-              className={!readOnly && 'input_red'}
+                className={!readOnly && "input_red"}
                 ref={inputRefs.partner_name}
                 readOnly={readOnly}
                 style={{
                   backgroundColor: readOnly ? "rgb(245, 245, 245)" : "",
                   border:
-                  !readOnly && errorField === "partner_name"
-                    ? "3px solid red"
-                    : "",
+                    !readOnly && errorField === "partner_name"
+                      ? "3px solid red"
+                      : "",
                 }}
                 type="text"
                 name="partner_name"
@@ -292,7 +299,9 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
             <div>
               <div>이메일 </div>
               <input
-                style={{ backgroundColor: readOnly ? "rgb(245, 245, 245)" : "" }}
+                style={{
+                  backgroundColor: readOnly ? "rgb(245, 245, 245)" : "",
+                }}
                 readOnly={readOnly}
                 type="text"
                 name="email"
@@ -306,7 +315,9 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
             <div>
               <div>팩스번호</div>
               <input
-                style={{ backgroundColor: readOnly ? "rgb(245, 245, 245)" : "" }}
+                style={{
+                  backgroundColor: readOnly ? "rgb(245, 245, 245)" : "",
+                }}
                 readOnly={readOnly}
                 type="text"
                 name="fax_num"
@@ -321,7 +332,7 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
             <div>
               <div>우편번호</div>
               <input
-                readOnly={readOnly}
+                readOnly
                 onChange={handleInputChange}
                 style={{
                   backgroundColor: readOnly ? "rgb(245, 245, 245)" : "",
@@ -333,7 +344,11 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
             </div>
             {!readOnly && (
               <button
-                style={{ width: "150px" ,marginTop: "11px", backgroundColor:"#5390F0"}}
+                style={{
+                  width: "150px",
+                  marginTop: "11px",
+                  backgroundColor: "#5390F0",
+                }}
                 onClick={handleComplete}
                 className="btn_save"
                 type="button"
@@ -344,10 +359,14 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
           </div>
           {popup && (
             <div className="postmodal">
-              <div style={{width:"100%"}}>
+              <div style={{ width: "100%" }}>
                 <div>
                   <button
-                    style={{ width: "30px", borderRadius: "5px", color:"#fff" }}
+                    style={{
+                      width: "30px",
+                      borderRadius: "5px",
+                      color: "#fff",
+                    }}
                     onClick={() => handleComplete()}
                   >
                     X
@@ -369,7 +388,7 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
                   backgroundColor: readOnly ? "rgb(245, 245, 245)" : "",
                   width: "200%",
                 }}
-                readOnly={readOnly}
+                readOnly
                 type="text"
                 name="address"
                 value={formData.address}
@@ -412,7 +431,7 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
           </div>
 
           <div>
-            <div>
+            <div className="partner_input_bank_wrap">
               <div>은행이름 </div>
               <input
                 onChange={handleInputChange}
@@ -424,6 +443,15 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
                 name="account_code"
                 value={formData.account_code}
               />
+              <div>
+              {!readOnly && (
+                <Modal
+                  code_type={"account_code"}
+                  menu={bankCode}
+                  handleInputChange={handleInputChange}
+                />
+              )}
+              </div>
             </div>
             <div>
               <div>예금주 </div>
@@ -445,7 +473,9 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
               <div>계좌번호 </div>
               <input
                 onChange={handleInputChange}
-                style={{ backgroundColor: readOnly ? "rgb(245, 245, 245)" : "" }}
+                style={{
+                  backgroundColor: readOnly ? "rgb(245, 245, 245)" : "",
+                }}
                 readOnly={readOnly}
                 type="text"
                 name="account_num"
@@ -474,8 +504,7 @@ const PartnerDetail = ({ selectPartner, setSelectParnter }) => {
             </div>
           </div>
         </div>
-        <div 
-        className="detail_button_wrap">
+        <div className="detail_button_wrap">
           <button
             type="button"
             className="btn_save"
