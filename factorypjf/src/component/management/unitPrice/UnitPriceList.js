@@ -142,7 +142,7 @@ const UnitPriceList = ({ itemAll }) => {
     e.preventDefault();
     await api.post("/unitprice/delete", selectCodes);
     alert('삭제되었습니다.')
-    dispatch(partnerAction.getPartnerAll());
+    window.location.reload()
     setSelectCodes([]);
   };
   // #endregion
