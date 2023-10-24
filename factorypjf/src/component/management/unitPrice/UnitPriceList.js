@@ -141,6 +141,7 @@ const UnitPriceList = ({ itemAll }) => {
   const handleDelete = async (e) => {
     e.preventDefault();
     await api.post("/unitprice/delete", selectCodes);
+    alert('삭제되었습니다.')
     dispatch(partnerAction.getPartnerAll());
     setSelectCodes([]);
   };
@@ -257,8 +258,8 @@ const UnitPriceList = ({ itemAll }) => {
                   <input
                     type="checkbox"
                     className="management_checkBox"
-                    checked={selectCodes?.includes(data?.partner_code)}
-                    onChange={() => handleCheckboxChange(data?.partner_code)}
+                    checked={selectCodes?.includes(data?.unit_price_id)}
+                    onChange={() => handleCheckboxChange(data?.unit_price_id)}
                   />
                 </div>
                 <div>{data.item_code}</div>
