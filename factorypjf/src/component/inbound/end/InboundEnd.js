@@ -237,7 +237,7 @@ function InboundEnd() {
   return (
    <div style={{padding : '0px'}}>
     <div className={inboundClasses.wrap}>
-      <p className={inboundClasses["sub-menu-name"]}>입고현황</p>
+      {/* <p className={inboundClasses["sub-menu-name"]}>입고현황</p> */}
 
       <div style={{border: '1px solid #E9EEF6', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '10px', backgroundColor:'white', boxShadow:'1px 1px 4px 0px rgba(0, 0, 0, 0.25)',}}>
         <div className="container1" style={{  display: 'flex', width: '55%', justifyContent: "space-around", alignItems: 'center' }}>
@@ -257,7 +257,7 @@ function InboundEnd() {
             <p style={styles.container1_sons_upper}>유형</p>
             <div style={{height: '40px', display: 'flex', alignItems: 'center'}}>
               <select style={{ height: '25px'}} onChange={handleBoundTypeChange}>
-                <option value="" disabled selected hidden></option>
+                <option value=""></option>
                 <option value="구매">구매</option>
                 <option value="재작업입고">재작업입고</option>
                 <option value="유상사급입고">유상사급입고</option>
@@ -374,7 +374,7 @@ function InboundEnd() {
         <div className="subRowBk" onClick={()=>sedivelperScreenState(!HelperScreenState)}></div>
         <div
           style={{
-            position: "absolute",
+            position: "fixed",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",

@@ -28,11 +28,13 @@ const SearchHelper = ({
     if (menu.name === "공통코드") dispatch(codeAction.getCodeAll());
   }, []);
 
+  const [dataLoaded, setDataLoaded] = useState(false);
+
   let filteredData = [];
 
   const lowerCasedSearchTerm = searchTerm.toLowerCase();
 
-  if (menu.dataAll[menu.type_all].data) {
+  if (dataLoaded && menu.dataAll[menu.type_all].data) {
     filteredData = menu.dataAll[menu.type_all].data;
 
     if (Category === "default") {
@@ -70,6 +72,7 @@ const SearchHelper = ({
   const clickFn = (e) => {
     e.preventDefault();
     setSearchTerm(inputValue);
+    setDataLoaded(true);
   };
 
   const rowClickHandler = (datarow) => {
@@ -127,7 +130,7 @@ const SearchHelper = ({
               textAlign: "center",
             }}
           >
-            {menu.name}코드
+            {menu.name}
           </div>
         </div>
         <div>
@@ -143,7 +146,7 @@ const SearchHelper = ({
               }}
             >
               <option value="default">공통</option>
-              <option value="code">{menu.name}코드</option>
+              <option value="code">{menu.name}</option>
               <option value="name">{menu.name}명</option>
             </select>
             <input
@@ -175,9 +178,9 @@ const SearchHelper = ({
         </div>
       </div>
       <div>
-        <div
+        <div 
           className="body m-3"
-          style={{ height: "400px", overflowY: "scroll" }}
+          style={{ height: "400px", overflowY: "scroll", maxHeight: '300px' }}
         >
           <table
             style={{ color: "#000", textAlign: "center" }}
@@ -185,7 +188,7 @@ const SearchHelper = ({
           >
             <thead>
               <tr>
-                <th style={{ width: "50%" }}>{menu.name}코드</th>
+                <th style={{ width: "50%" }}>{menu.name}</th>
                 <th style={{ width: "50%" }}>{menu.name}명</th>
               </tr>
             </thead>

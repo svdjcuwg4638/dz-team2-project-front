@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const DEV_URL = "https://dzback-0313054dd3dc.herokuapp.com/";
+const DEV_URL = "https://backapp-1abe2a68e118.herokuapp.com/";
 const OP_URL = "https://dzback-0313054dd3dc.herokuapp.com/";
 
 

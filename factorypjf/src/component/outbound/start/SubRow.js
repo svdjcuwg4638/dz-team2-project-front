@@ -257,7 +257,14 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
 
   return (
     <>
-      <tr style={{display:masterFocus == formData["bound_id"] ? "block":"none"}}
+      <tr 
+      style={{
+          display: masterFocus === formData["bound_id"] ? "block" : "none",
+          ...hovered ? rowHoverStyle : {},
+          borderBottom: '1px solid #d9d9d9'
+        }}
+      onMouseEnter={handleMouseEnter} // 마우스 호버 이벤트 리스너 추가
+      onMouseLeave={handleMouseLeave} // 마우스 이탈 이벤트 리스너 추가
       >
         <td style={{width: '8%'}}>
           <input
@@ -268,10 +275,12 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
         </td>
         <td style={{width: '8%'}}>
           <input
+            className="input_red"
             type="text"
             name="item_code"
             value={formData["item_code"]}
             onChange={handleInputChange}
+            readOnly
             onKeyDown={(e) => {
               if (e.key === "F2") {
                 sedivelperScreenState(!HelperScreenState);
@@ -286,6 +295,7 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
         </td>
         <td style={{width: '8%'}}>
           <input
+            className="input_red"
             type="text"
             name="item_name"
             value={formData["item_name"]}
@@ -295,6 +305,7 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
         </td>
         <td style={{width: '8%'}}>
           <input
+            className="input_red"
             type="text"
             name="unit_price"
             value={formData["unit_price"]}
@@ -304,6 +315,7 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
         </td>
         <td style={{width: '8%'}}>
           <input
+            className="input_red"
             type="text"
             name="storage_code"
             value={formData["storage_name"]}
@@ -317,6 +329,7 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
         </td>
         <td style={{width: '8%'}}>
           <input
+            className="input_red"
             type="text"
             name="location_code"
             value={formData["location_name"]}
@@ -330,14 +343,17 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
         </td>
         <td style={{width: '8%'}}>
           <input
+            className="input_red"
             type="text"
             name="stock"
             value={formData["stock"]}
             onChange={handleInputChange}
+            readOnly
           ></input>
         </td>
         <td style={{width: '8%'}}>
           <input
+            className="input_red"
             type="text"
             name="amount"
             value={formData["amount"]}
@@ -348,6 +364,7 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
         </td>
         <td style={{width: '8%'}}>
           <input
+            className="input_red"
             type="text"
             name="tot_amount"
             value={formData["tot_amount"]}
@@ -357,6 +374,7 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
         </td>
         <td style={{width: '12%'}}>
         <input
+            className="input_red"
              type="date"
              min="1900-01-01"
              max="9999-12-31"
@@ -375,9 +393,11 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
         </td>
       </tr>
       {HelperScreenState && (
+      <div>
+        <div className="subRowBk" onClick={()=>sedivelperScreenState(!HelperScreenState)}></div>
         <div
           style={{
-            position: "absolute",
+            position: "fixed",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
@@ -392,13 +412,14 @@ const SubRow = ({ boundId,masterFocus,subFlag, handleRequestFail, handleRequestS
             searchPartner={selectedPartnerFn}
           />
         </div>
+      </div>
       )}
       {AHelperScreenState && (
         <div>
-        <div className="subRowBk" onClick={()=>sedivelperScreenState(!HelperScreenState)}></div>
+        <div className="subRowBk" onClick={()=>setAhelperScreenState(!AHelperScreenState)}></div>
             <div
                 style={{
-                    position: "absolute",
+                    position: "fixed",
                     top: "50%",
                     left: "50%",
                     transform: "translate(-50%, -50%)",

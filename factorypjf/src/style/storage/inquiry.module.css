@@ -40,6 +40,7 @@ table {
   display: flex;
   flex-direction: row;
   margin-top: 1rem;
+  height: 150px;
 }
 
 .arrow {
@@ -62,6 +63,7 @@ table {
 }
 
 .btnWrap {
+  margin-bottom: 1rem;
   width: 100%;
   display: flex;
   justify-content: right;

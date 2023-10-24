@@ -4,6 +4,8 @@ import { partnerAction } from "../../../redux/actions/management/partnerAction";
 import { itemAction } from "../../../redux/actions/management/itemAction";
 import { storageAction } from "../../../redux/actions/management/storageAction";
 import { codeAction } from "redux/actions/management/codeAction";
+import '../../../style/inbound/overlay.css'
+
 const styles = {
   btnSave: {
       backgroundColor: "var(--main-color)",
@@ -41,8 +43,10 @@ const SearchHelper = ({
     if (menu.name === "공통코드") dispatch(codeAction.getCodeAll());
   }, [InputboxText]);
 
+  const [dataLoaded, setDataLoaded] = useState(false);
+
   let filteredData = [];
-  if (menu.dataAll[menu.type_all].data) {
+  if (dataLoaded && menu.dataAll[menu.type_all].data) {
     filteredData = menu.dataAll[menu.type_all].data;
 
     if (Category === "default") {
@@ -108,6 +112,7 @@ const SearchHelper = ({
   const clickFn = (e) => {
     e.preventDefault();
     setInputboxText(e.target[0].value);
+    setDataLoaded(true);
   };
   return (
     <div
@@ -172,7 +177,8 @@ const SearchHelper = ({
           className="body m-3"
           style={{ height: "400px", overflowY: "scroll" }}
         >
-          <table style={{color:"#000"}}>
+            <table style={{ color: "#000", textAlign: "center" }}
+            className="common_help_table">
             <thead>
               <tr>
                 <th>{menu.name}코드</th>

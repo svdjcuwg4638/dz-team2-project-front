@@ -174,11 +174,11 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
       item_name: formData["item_name"],
       location_code: locationData.location_code,
       storage_code: locationData.storage_code,
-      width: formData["width"] + unitData["width"],
-      length: formData["length"] + unitData["length"],
-      height: formData["height"] + unitData["height"],
-      volume: formData["volume"] + unitData["volume"],
-      weight: formData["weight"] + unitData["weight"],
+      width: formData["width"] == "" ? "" : formData["width"] + unitData["width"],
+      length: formData["length"] == "" ? "" : formData["length"] + unitData["length"],
+      height: formData["height"] == "" ? "" : formData["height"] + unitData["height"],
+      volume: formData["volume"] == "" ? "" : formData["volume"] + unitData["volume"],
+      weight: formData["weight"] == "" ? "" : formData["weight"] + unitData["weight"],
       description: formData["description"],
       category: formData["category"],
       standard: formData["standard"],
@@ -357,7 +357,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
               </div>
             </div>
             <div>
-              <div>품목이름</div>
+              <div>품목명</div>
               <div>
                 <input
                   ref={inputRefs.item_name}
@@ -381,7 +381,7 @@ const DetailItem = ({ selectItem, setSelectItem }) => {
 
           <div>
             <div>
-              <div>카태고리</div>
+              <div>카테고리</div>
               <div className="flex">
                 <input
                   readOnly

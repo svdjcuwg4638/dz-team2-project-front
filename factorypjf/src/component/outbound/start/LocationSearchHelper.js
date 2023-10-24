@@ -42,8 +42,10 @@ const LocationSearchHelper = ({
     if (menu.name === "공통코드") dispatch(codeAction.getCodeAll());
   }, [InputboxText]);
 
+  const [dataLoaded, setDataLoaded] = useState(false);
+
   let filteredData = [];
-  if (menu.dataAll[menu.type_all].data) {
+  if (dataLoaded && menu.dataAll[menu.type_all].data) {
     filteredData = menu.dataAll[menu.type_all].data;
 
     if (Category === "default") {
@@ -97,6 +99,7 @@ const LocationSearchHelper = ({
   const clickFn = (e) => {
     e.preventDefault();
     setInputboxText(e.target[0].value);
+    setDataLoaded(true);
   };
   return (
     <div
@@ -127,7 +130,11 @@ const LocationSearchHelper = ({
           <select
             onChange={(e) => setCategory(e.target.value)}
             className="mt-3"
-            style={{ width: "25%", height: "30px" }}
+            style={{ width: "25%",
+            height: "30px",
+            margin: "0 5px",
+            border: "1px solid #d9d9d9",
+            textAlign: "center",}}
           >
             <option value="default">전체</option>
             <option value="code">{menu.name}코드</option>

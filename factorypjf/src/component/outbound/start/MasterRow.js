@@ -150,7 +150,8 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
 
   return (
     <>
-    <tr onClick={() => setMaseterFocus(formData["bound_id"])}
+    <tr className="bottom"
+    onClick={() => setMaseterFocus(formData["bound_id"])}
     style={hovered ? rowHoverStyle : {}} // 마우스 호버 상태에 따라 스타일 적용
     onMouseEnter={handleMouseEnter} // 마우스 호버 이벤트 리스너 추가
     onMouseLeave={handleMouseLeave} // 마우스 이탈 이벤트 리스너 추가
@@ -173,6 +174,7 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
       </td>
       <td style={{ width: '3%', textAlign:'center' }}>
         <select
+          className="input_red"
           name="bound_category"
           value={formData.bound_category}
           onChange={handleInputChange}
@@ -185,6 +187,7 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
       </td>
       <td style={{ width: '3%' }}>
         <input
+           className="input_red"
            type="text"
            value={formData.partner_code}
            name="partner_code"
@@ -197,10 +200,12 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
               setFormData(prev => ({ ...prev, partner_code: "" }));
           }
           }}
+          readOnly
         ></input>
       </td>
       <td style={{ width: '3%' }}>
       <input
+        className="input_red"
         type="date"
         min="1900-01-01"
         max="9999-12-31"
@@ -215,7 +220,7 @@ const MasterRow = ({ boundId,boundNo, key, setMaseterFocus, masterFlag,setSubFla
             <div className="subRowBk" onClick={()=>sedivelperScreenState(!HelperScreenState)}></div>
               <div
                 style={{
-                  position: "absolute",
+                  position: "fixed",
                   top: "50%",
                   left: "50%",
                   transform: "translate(-50%, -50%)",

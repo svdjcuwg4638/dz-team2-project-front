@@ -41,7 +41,7 @@ export default function Add() {
     { text: "라인", value: "line", width: "5%", helper: true ,required:true},
     { text: "창고", value: "storage", width: "5%", helper: true ,required:true},
     { text: "장소", value: "location", width: "5%", helper: true ,required:true},
-    { text: "고객", value: "partner", width: "9%", helper: true ,required:true},
+    { text: "거래처", value: "partner", width: "9%", helper: true ,required:true},
     { text: "담당자", value: "emp", width: "5%", helper: true ,required:true},
     { text: "소요시간", value: "leadTime", width: "5%" ,required:true},
     { text: "작업인원", value: "workForce", width: "5%" },
@@ -51,8 +51,8 @@ export default function Add() {
   const grid02_headers = [
     { text: "순번", value: "index", width: "5%" },
     { text: "자재", value: "item", width: "15%", readonly: true,required:true },
-    { text: "수량", value: "quantity", width: "8%", readonly: true },
-    { text: "총 필요수량", value: "totalQuantity", width: "8%", readonly: true },
+    { text: "필요 수량", value: "quantity", width: "8%", readonly: true },
+    { text: "총 투입수량", value: "totalQuantity", width: "8%", readonly: true },
     { text: "창고", value: "storage", width: "10%", helper: true ,required:true, trigger: true},
 
     {
@@ -63,13 +63,13 @@ export default function Add() {
       trigger: true,
       required:true
     },
-    {
-      text: "재고",
-      value: "inventory",
-      width: "5%",
-      readonly: true,
+    // {
+    //   text: "재고",
+    //   value: "inventory",
+    //   width: "5%",
+    //   readonly: true,
      
-    },
+    // },
     { text: "비고", value: "description", width: "20%", readonly: true },
   ];
   const searchFilter = [
@@ -78,7 +78,7 @@ export default function Add() {
     { text: "생산팀", value: "team", width: "3%", helper: true },
     { text: "창고", value: "storage", width: "3%", helper: true },
     { text: "장소", value: "location", width: "3%", helper: true },
-    { text: "고객", value: "partner", width: "3%", helper: true },
+    { text: "거래처", value: "partner", width: "3%", helper: true },
     { text: "담당자", value: "emp", width: "3%", helper: true },
     { text: "비고", value: "description", width: "3%" },
   ];

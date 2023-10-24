@@ -3,10 +3,11 @@ import api from "redux/api";
 import SearchHelper from "../start/SearchHelper";
 import { useDispatch, useSelector } from "react-redux";
 import { unitPriceAction } from "redux/actions/management/unitPriceAction";
+import '../../../style/inbound/overlay.css'
 
 
 const rowHoverStyle = {
-  backgroundColor: "#ffffff", // 원하는 배경색으로 변경하세요.
+  backgroundColor: "#f0f0f0", // 원하는 배경색으로 변경하세요.
 };
 
 const SubRow = ({ boundId, masterFocus, subFlag, handleRequestFail, handleRequestSuccess, checkedSubBoundIds, setCheckedSubBoundIds, index, itemAll }) => {
@@ -169,9 +170,11 @@ const SubRow = ({ boundId, masterFocus, subFlag, handleRequestFail, handleReques
   return (
     <>
       <tr
+        
         style={{
           display: masterFocus === formData["bound_id"] ? "block" : "none",
           ...hovered ? rowHoverStyle : {},
+          borderBottom: '1px solid #d9d9d9'
         }}
         onMouseEnter={handleMouseEnter} // 마우스 호버 이벤트 리스너 추가
         onMouseLeave={handleMouseLeave} // 마우스 이탈 이벤트 리스너 추가
@@ -185,6 +188,7 @@ const SubRow = ({ boundId, masterFocus, subFlag, handleRequestFail, handleReques
         </td>
         <td>
           <input
+            className="input_red"
             type="text"
             name="item_code"
             value={formData["item_code"]}
@@ -199,10 +203,12 @@ const SubRow = ({ boundId, masterFocus, subFlag, handleRequestFail, handleReques
                 setFormData(prev => ({ ...prev, unit_price: "" }));
               }
             }}
+            readOnly
           ></input>
         </td>
         <td>
           <input
+            className="input_red"
             type="text"
             name="item_name"
             value={formData["item_name"]}
@@ -212,6 +218,7 @@ const SubRow = ({ boundId, masterFocus, subFlag, handleRequestFail, handleReques
         </td>
         <td>
           <input
+            className="input_red"
             type="text"
             name="unit_price"
             value={formData["unit_price"]}
@@ -229,6 +236,7 @@ const SubRow = ({ boundId, masterFocus, subFlag, handleRequestFail, handleReques
         </td> */}
         <td>
           <input
+            className="input_red"
             type="text"
             name="amount"
             value={formData["amount"]}
@@ -238,6 +246,7 @@ const SubRow = ({ boundId, masterFocus, subFlag, handleRequestFail, handleReques
         </td>
         <td>
           <input
+            className="input_red"
             type="text"
             name="tot_amount"
             value={formData["tot_amount"]}
@@ -247,6 +256,7 @@ const SubRow = ({ boundId, masterFocus, subFlag, handleRequestFail, handleReques
         </td>
         <td>
           <input
+            className="input_red"
             type="date"
             min="1900-01-01"
             max="9999-12-31"
@@ -257,6 +267,7 @@ const SubRow = ({ boundId, masterFocus, subFlag, handleRequestFail, handleReques
         </td>
         <td>
           <input
+            className="input_black"
             type="text"
             name="description"
             value={formData["description"]}
@@ -269,7 +280,7 @@ const SubRow = ({ boundId, masterFocus, subFlag, handleRequestFail, handleReques
           <div className="subRowBk" onClick={()=>sedivelperScreenState(!HelperScreenState)}></div>
           <div
             style={{
-              position: "absolute",
+              position: "fixed",
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",

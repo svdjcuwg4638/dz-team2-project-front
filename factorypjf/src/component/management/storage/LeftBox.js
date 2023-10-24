@@ -108,7 +108,7 @@ function LeftBox({ storageAll, selectId, setSelectId }) {
               </div>
             </div>
             <div>
-              <div style={{ marginRight: "10px" }}>창고이름</div>
+              <div style={{ marginRight: "10px" }}>창고명</div>
               <div>
                 <input
                   ref={inputRefs.storage_name}

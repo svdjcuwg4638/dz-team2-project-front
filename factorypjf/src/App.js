@@ -39,15 +39,17 @@ function App() {
     navi("/1/");
   }
   useEffect(() => {
+    console.log('crtab',sessionStorage.getItem('current_tab'));
     setCurrentPage(location.pathname);
     sessionStorage.setItem("current_page", location.pathname);
+    sessionStorage.setItem('currnet_tab',location.pathname.split('/')[1])
   }, [location]);
   //#endregion
 
   return (
     <Layout>
       <Routes>
-        <Route path="/:tabId/" element={<Main />} />
+        <Route path={"/:tabId/"} element={<Main />} />
 
         <Route path="/:tabId/storage" element={<StorageRoutes />}>
           <Route index path="list" element={<StorageInquiry />} />

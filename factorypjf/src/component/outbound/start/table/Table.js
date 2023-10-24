@@ -39,7 +39,11 @@ export default function DataTable({ headers, onModal, children }) {
             {headers.map((header, idx) => (
               <th key={idx}>
                 {header.text}
-                {header.helper && <BsSearch></BsSearch>}
+                {header.helper && (
+                  <span class="wrap-search-icon">
+                    <i class="fa-solid fa-circle-info helper_icon"></i>
+                  </span>
+                )}
 
                 {/* {header.helper && (
                   <img

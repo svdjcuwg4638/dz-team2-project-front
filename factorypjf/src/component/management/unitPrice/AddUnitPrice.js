@@ -171,7 +171,7 @@ const AddUnitPrice = ({ itemAll }) => {
               </div>
             </div>
             <div>
-              <div>품목이름</div>
+              <div>품목명</div>
               <div>
                 <input
                   readOnly

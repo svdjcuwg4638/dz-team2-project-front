@@ -141,18 +141,19 @@ const UnitPriceList = ({ itemAll }) => {
   const handleDelete = async (e) => {
     e.preventDefault();
     await api.post("/unitprice/delete", selectCodes);
-    dispatch(partnerAction.getPartnerAll());
+    alert('삭제되었습니다.')
+    window.location.reload()
     setSelectCodes([]);
   };
   // #endregion
 
   return (
     <div>
-      <form className="management_search_wrap">
+      <form className="management_search_wrap" style={{marginTop:"15px"}}>
         <div className="management_search_content">
           <div style={{ display: "flex" }}>
             <div>
-              <div>품목이름</div>
+              <div>품목명</div>
               <div  style={{ display: "flex" }}>
                 <input
                   style={{width:"100px"}}
@@ -235,11 +236,11 @@ const UnitPriceList = ({ itemAll }) => {
       </div>
 
       <div className="ctable">
-        <div className="chead" style={{ width: "99.2%" }}>
+        <div className="chead" style={{ width: "99.2%", marginTop:"109px"}}>
           <div className="ctr unitprice_row">
             <div></div>
             <div>품목코드</div>
-            <div>품목이름</div>
+            <div>품목명</div>
             <div>거래처</div>
             <div>단가</div>
             <div>입고/출고</div>
@@ -257,8 +258,8 @@ const UnitPriceList = ({ itemAll }) => {
                   <input
                     type="checkbox"
                     className="management_checkBox"
-                    checked={selectCodes?.includes(data?.partner_code)}
-                    onChange={() => handleCheckboxChange(data?.partner_code)}
+                    checked={selectCodes?.includes(data?.unit_price_id)}
+                    onChange={() => handleCheckboxChange(data?.unit_price_id)}
                   />
                 </div>
                 <div>{data.item_code}</div>

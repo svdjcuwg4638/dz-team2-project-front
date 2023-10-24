@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { storageAction } from "redux/actions/management/storageAction";
+import '../../../style/inbound/overlay.css'
 
 const rowHoverStyle = {
   backgroundColor: "#f0f0f0", // 원하는 배경색으로 변경하세요.
@@ -49,6 +50,7 @@ function SubTableRow({ rowData, storageAll, locationAll }) {
 
   return (
     <tr
+      className='bottom'
       style={{ textAlign: 'center', ...(hovered ? rowHoverStyle : {}) }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}

@@ -126,6 +126,16 @@
 }
 
 .partner_detail_content_wrap > div{
-  margin-bottom: 6px;
+  margin-bottom: 20px;
   font-size: 13px;
+}
+
+.partner_input_bank_wrap{
+  position: relative;
+}
+
+.partner_input_bank_wrap > div:nth-child(3){
+  position: absolute;
+  right: 0;
+  top: 16px;
 }

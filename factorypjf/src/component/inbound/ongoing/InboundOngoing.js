@@ -168,9 +168,9 @@ function InboundOngoing() {
   return (
   <div style={{padding:'0px'}}>
       <div className={inboundClasses.wrap}>
-        <p className={inboundClasses["sub-menu-name"]}>입고등록</p>
+        {/* <p className={inboundClasses["sub-menu-name"]}>입고등록</p> */}
         <Table headers={grid01_headers}></Table>
-        <div style={{overflow: "auto", maxHeight: "400px", textAlign: 'center'}}>
+        <div style={{overflow: "auto", maxHeight: "600px", textAlign: 'center'}}>
           {matchingMasters && matchingMasters.length > 0 ? (
             matchingMasters.map((data, index) => (
               <div
@@ -182,14 +182,14 @@ function InboundOngoing() {
                 {grid01_headers.map((header) => {
                   if (!header.value) {
                     return (
-                      <td key="warehouse-location" style={{ flex: "20%" }}>
+                      <td key="warehouse-location" style={{ flex: "20%", borderBottom: '1px solid #d9d9d9' , padding: '3px' }}>
                         <button style={styles.btnSave1} onClick={() => handleOpenModal(data.bound_id)}>
                           창고/장소 선택
                         </button>
                       </td>
                     );
                   }
-                  return <td key={header.value} style={{ flex: "20%" }}>{data[header.value]}</td>
+                  return <td key={header.value} style={{ flex: "20%", borderBottom: '1px solid #d9d9d9', padding: '11px'}}>{data[header.value]}</td>
                 })}
               </div>
 

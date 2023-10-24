@@ -55,6 +55,7 @@ const MasterTable = ({
     <div>
         <div
         style={{
+          height: '200px',
           maxHeight: masterLength > 3 ? "200px" : "none",
           overflowY: masterLength > 3 ? "auto" : "visible"
         }}
@@ -83,14 +84,14 @@ const MasterTable = ({
               }
               return null; // 삭제된 boundId에 해당하는 row는 렌더링하지 않음.
             })}
-          <tr>
-            <td colSpan="15">
+          <div>
+            <td style={{width : "1600px", borderBottom: '1px solid #d9d9d9'}}>
               <button className={inboundClasses.btn_add}
                       onClick={() => plustHandler()}>
                 +
               </button>
             </td>
-          </tr>
+          </div>
         </div>
       </div>
     </div>
