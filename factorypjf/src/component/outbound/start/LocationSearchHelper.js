@@ -160,7 +160,7 @@ const LocationSearchHelper = ({
       <div>
         <div
           className="body m-3"
-          style={{ height: "400px", overflowY: "scroll" }}
+          style={{ height: "300px", overflowY: "scroll" }}
         >
           <table style={{color:"#000"}}>
             <thead>

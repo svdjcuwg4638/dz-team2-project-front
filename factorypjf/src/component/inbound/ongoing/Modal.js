@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import SearchHelper from "./SearchHelper";
 import '../../../style/inbound/overlay.css'
 
+//#region css
 const rowHoverStyle = {
     backgroundColor: "#f0f0f0", // 원하는 배경색으로 변경하세요.
   };
@@ -51,9 +52,10 @@ const rowHoverStyle = {
       paddingTop: "2px",
     },
   };
+//#endregion
 
 function Modal({ isOpen, onClose, boundId, details = [], locationAll, storageAll, setUpdatedDetails}) { // 기본값 설정
-// 연결된 bound_id를 기반으로 상세 정보를 필터링합니다.
+// 연결된 bound_id를 기반으로 상세 정보를 필터링
 
 
   // 각 <tr> 요소마다 hover 상태를 관리하기 위한 상태 변수

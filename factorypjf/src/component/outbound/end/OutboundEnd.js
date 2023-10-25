@@ -243,7 +243,7 @@ function OutboundEnd() {
     <div className={inboundClasses.wrap}>
       {/* <p className={inboundClasses["sub-menu-name"]}>출고현황</p> */}
       <div style={{border: '1px solid #E9EEF6', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '10px', backgroundColor:'white', boxShadow:'1px 1px 4px 0px rgba(0, 0, 0, 0.25)',}}>
-        <div className="container1" style={{  display: 'flex', width: '55%', justifyContent: "space-around", alignItems: 'center' }}>
+        <div className="container1" style={{  display: 'flex', width: '62%', justifyContent: "space-around", alignItems: 'center' }}>
           <div style={styles.container1_sons3}>
             <p style={styles.container1_sons_upper}>문서번호</p>
             <div style={{height: '40px', display: 'flex', alignItems: 'center',}}>
@@ -283,16 +283,19 @@ function OutboundEnd() {
             </div>
           </div>
           <div style={styles.container1_sons1}>
-            <p style={styles.container1_sons_upper}>&nbsp;&nbsp;&nbsp;입고일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;입고일</p>
+            <p style={styles.container1_sons_upper}>&nbsp;입고일</p>
             <div style={styles.container1_last_child_bottom}>
               <input
+              style={{border: '1px solid black'}}
               type="date"
               value={searchSectionData.detail.detail_start_date}
               onChange={(e) =>
                 handleInputChange("detail", "detail_start_date", e.target.value)
               }
               />
+              ~
               <input
+              style={{border: '1px solid black'}}
               type="date"
               value={searchSectionData.detail.detail_end_date}
               onChange={(e) =>
@@ -303,7 +306,7 @@ function OutboundEnd() {
             </div>
           </div>
         </div>
-        <div className="container2" style={{ display: 'flex', width: '45%', justifyContent:"space-around", alignItems: 'center'}}>
+        <div className="container2" style={{ display: 'flex', width: '38%', justifyContent:"space-around", alignItems: 'center'}}>
           <div style={styles.container1_sons2}>
             <p style={styles.container1_sons_upper}>품목명</p>
             <div style={styles.container1_last_child_bottom}>
@@ -321,16 +324,19 @@ function OutboundEnd() {
             </div>
           </div>
           <div style={styles.container1_sons1}>
-            <p style={styles.container1_sons_upper}>&nbsp;&nbsp;품목입고일&nbsp; &nbsp;~ &nbsp;&nbsp;품목입고일</p>
+            <p style={styles.container1_sons_upper}>&nbsp;품목입고일</p>
             <div style={styles.container1_last_child_bottom}>
               <input
+              style={{border: '1px solid black'}}
               type="date"
               value={searchSectionData.detail.detail_start_date}
               onChange={(e) =>
                 handleInputChange("detail", "detail_start_date", e.target.value)
               }
               />
+              ~
               <input
+              style={{border: '1px solid black'}}
               type="date"
               value={searchSectionData.detail.detail_end_date}
               onChange={(e) =>
@@ -343,14 +349,31 @@ function OutboundEnd() {
         </div>
       </div>
       <div>&nbsp;</div>
+      <div
+      style={{
+        height : "220px",
+        maxHeight: "220px", // 원하는 높이로 설정
+        overflowY: "auto",  // 수직 스크롤만 필요한 경우 설정
+        border: "1px solid #ccc", // 테이블 주위에 경계선을 추가할 수 있습니다.
+      }}
+      >
       <Table headers={grid01_headers}></Table>
       <MasterTable
         searchData={searchData}
         onRowClick={(boundId) => setSelectedBoundId(boundId)}
       />
+      </div>
       <Table headers={grid02_headers}></Table>
+      <div
+      style={{
+        height : "220px",
+        maxHeight: "220px", // 원하는 높이로 설정
+        overflowY: "auto",  // 수직 스크롤만 필요한 경우 설정
+        border: "1px solid #ccc", // 테이블 주위에 경계선을 추가할 수 있습니다.
+      }}
+      >
       <SubTable filteredDetailData={filteredDetailData} />
-
+      </div>
       {HelperScreenState && (
       <div>
         <div className="subRowBk" onClick={()=>sedivelperScreenState(!HelperScreenState)}></div>
